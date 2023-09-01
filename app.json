@@ -2,6 +2,7 @@
   "expo": {
     "name": "growthvine",
     "slug": "growthvine",
+	"plugins": ["@react-native-google-signin/google-signin"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,13 +19,20 @@
       "supportsTablet": true
     },
     "android": {
+	"googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.amitthakur.growthvine"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "256b6b10-abed-4297-b271-0b1ce9ecea26"
+      }
     }
   }
 }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "707482261977",
+    "project_id": "reactnative-8bcdf",
+    "storage_bucket": "reactnative-8bcdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707482261977:android:9fa2bda1972fdc3b2a21c8",
+        "android_client_info": {
+          "package_name": "com.amitthakur.growthvine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "707482261977-g8ghtudvjrdqged1onl298pit27mtdgj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amitthakur.growthvine",
+            "certificate_hash": "689e574a9017d7c05cccd049d4b5e7667b656888"
+          }
+        },
+        {
+          "client_id": "707482261977-qieflpsbrdj56598ockrijpi9ntuctqh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.amitthakur.growthvine",
+            "certificate_hash": "2dbd5377d57ada49fe26c2d93193118a8e6c046e"
+          }
+        },
+        {
+          "client_id": "707482261977-29se785gg5o3l51r7vnr6cp0pslvgh1f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCeREXFkUPDoCwokwVkAR5Gv8KlmDWmsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "707482261977-29se785gg5o3l51r7vnr6cp0pslvgh1f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
