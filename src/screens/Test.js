@@ -55,6 +55,9 @@ export default Test = () => {
   if (!user) {
     return (
       <View>
+        <Text style={{ color: "red", fontWeight: "bold", textAlign: "center" }}>
+          this is sign in with google page
+        </Text>
         <GoogleSigninButton onPress={onGoogleButtonPress} />
       </View>
     );

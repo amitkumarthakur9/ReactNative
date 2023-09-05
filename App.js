@@ -1,13 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Test from "./src/screens/Test";
+import Getstarted from "./src/screens/Welcomescreens/Getstarted";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>
-        <Test />
-      </Text>
+      <Getstarted />
+      {/* <Test /> */}
       <StatusBar style="auto" />
     </View>
   );
