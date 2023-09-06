@@ -13,17 +13,17 @@ const { width, height } = Dimensions.get("window");
 
 const carouselData = [
   {
-    image: require("./assets/images/getstarted1.png"),
+    image: require("./assets/images/getstarted1.jpg"),
     text: "Let your money earn for you",
     desc: "Invest in customized portfolios of Mutual Funds, Bonds & Investments based on your risk appetite and watch your earnings grow",
   },
   {
-    image: require("./assets/images/getstarted2.png"),
+    image: require("./assets/images/getstarted2.jpg"),
     text: "Invest for your Goals",
     desc: "Create your goals, set targets and we’ll help you find the right investments to achieve your goals.",
   },
   {
-    image: require("./assets/images/getstarted3.png"),
+    image: require("./assets/images/getstarted3.jpg"),
     text: "Risk Calculation",
     desc: "We provide you with tools to gauge your financial health, risk appetite and help grow your wealth wisely",
   },
@@ -101,9 +101,12 @@ const Carousels = () => {
       <View style={styles.polygonImages}>
         <Image
           source={require("./assets/images/Polygon2.png")}
-          style={{ bottom: -165 }}
+          style={{ width: width, height: height * 0.22,bottom:-165}}
         />
-        <Image source={require("./assets/images/Polygon1.png")} />
+        <Image
+          source={require("./assets/images/Polygon.png")}
+          style={{ width: width, height: height * 0.22 }}
+        />
       </View>
     </View>
   );
@@ -123,8 +126,8 @@ const styles = StyleSheet.create({
     height: height * 0.5, // Adjust the height as needed (e.g., half the screen height)
   },
   image: {
-    // width: width,
-    // height: height * 0.6,
+    width: width,
+    height: height * 0.55,
   },
   imageText: {
     width: width * 0.8, // Adjust the width as needed (e.g., 80% of the screen width)
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
   },
   getStartedButton: {
     position: "absolute",
-    bottom: height * 0.15, // Adjust the position based on screen height
+    bottom: height * 0.16, // Adjust the position based on screen height
     left: "50%",
     marginLeft: -width * 0.2, // Adjust the margin based on screen width
     width: width * 0.4, // Adjust the width based on screen width
