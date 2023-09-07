@@ -30,7 +30,7 @@ const carouselData = [
   // Add more screens as needed
 ];
 
-const Carousels = () => {
+const Carousels = ({ navigation }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const flatListRef = useRef(null);
 
@@ -92,7 +92,7 @@ const Carousels = () => {
       <Button
         mode="contained"
         style={styles.getStartedButton}
-        onPress={scrollToNextItem}
+        onPress={() => navigation.push("Signup")}
         icon="arrow-right-bold"
         contentStyle={{ flexDirection: "row-reverse" }}
       >
@@ -101,7 +101,11 @@ const Carousels = () => {
       <View style={styles.polygonImages}>
         <Image
           source={require("./assets/images/Polygon2.png")}
-          style={{ width: width, height: height * 0.22,bottom:-165}}
+          style={{
+            width: width,
+            height: height * 0.22,
+            bottom: -165,
+          }}
         />
         <Image
           source={require("./assets/images/Polygon.png")}
@@ -115,6 +119,7 @@ const Carousels = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   renderContainer: {
     width: width,
@@ -171,6 +176,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 53, 102, 1)",
     alignItems: "center", // Center the content horizontally
     justifyContent: "center", // Center the content vertically
+    zIndex: 1,
   },
   polygonImages: {
     position: "absolute",
