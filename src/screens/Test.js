@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "expo-dev-client";
 import { View, Text, Button } from "react-native";
 import {
   GoogleSignin,
@@ -54,7 +53,9 @@ export default Test = () => {
 
   if (!user) {
     return (
-      <View>
+      <View
+        style={{ top: 300, justifyContent: "center", alignItems: "center" }}
+      >
         <Text style={{ color: "red", fontWeight: "bold", textAlign: "center" }}>
           this is sign in with google page
         </Text>
@@ -64,7 +65,7 @@ export default Test = () => {
   }
 
   return (
-    <View>
+    <View style={{ top: 300, justifyContent: "center", alignItems: "center" }}>
       <Text>Welcome {user.email}</Text>
       <Button title="Sign Out" onPress={signOut} />
     </View>
