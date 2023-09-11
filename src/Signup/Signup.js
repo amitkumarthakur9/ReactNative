@@ -1,75 +1,128 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { Button } from "react-native-paper";
 import Footer from "../screens/Welcomescreens/Footer";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from "@react-native-google-signin/google-signin";
+import auth from "@react-native-firebase/auth";
+import GlSuccessful from "./GlSuccessful";
 
 const { width, height } = Dimensions.get("window");
 
 export default Signup = () => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.imagecontainer}>
-        <Image
-          source={require("../../assets/signup/signup.png")}
-          style={styles.image}
-        />
-      </View>
-      <Text style={styles.header}>
-        Welcome to <Text style={{ fontWeight: "600" }}>Growthvine</Text>
-      </Text>
-      <View style={styles.signupContainer}>
-        <Button
-          icon={() => (
-            <View>
-              <Image
-                source={require("../../assets/signup/Call.png")}
-                style={styles.icon}
-              />
-            </View>
-          )}
-          mode="outlined"
-          textColor="rgba(2, 48, 71, 1)"
-          onPress={() => console.log("pressed")}
-          style={styles.phoneSignUp}
-          labelStyle={styles.buttonLabel}
-        >
-          Sign up with Phone
-        </Button>
-        <Button
-          icon={() => (
-            <View style={styles.iconContainer}>
-              <Image
-                source={require("../../assets/signup/Group.png")} // Replace with your image source
-                style={styles.icon}
-              />
-            </View>
-          )}
-          mode="outlined"
-          textColor="rgba(2, 48, 71, 1)"
-          onPress={() => console.log("pressed")}
-          style={styles.googleSignUp}
-          labelStyle={styles.buttonLabel}
-        >
-          Sign up with Google
-        </Button>
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
 
-        <Text></Text>
-      </View>
-      <Text style={styles.alreayRegistered}>
-        Already registered ?{" "}
-        <Text
-          style={{
-            fontSize: width * 0.045,
-            color: "rgba(251, 133, 0, 1)",
-            lineHeight: width * 0.06,
-          }}
-        >
-          Sign In
+  GoogleSignin.configure({
+    webClientId:
+      "707482261977-29se785gg5o3l51r7vnr6cp0pslvgh1f.apps.googleusercontent.com",
+  });
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  const onGoogleButtonPress = async () => {
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(googleCredential);
+  };
+
+  signOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await auth().signOut();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if (initializing) return null;
+
+  if (!user) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.imagecontainer}>
+          <Image
+            source={require("../../assets/signup/signup.png")}
+            style={styles.image}
+          />
+        </View>
+        <Text style={styles.header}>
+          Welcome to <Text style={{ fontWeight: "600" }}>Growthvine</Text>
         </Text>
-      </Text>
-      <Footer />
-    </View>
-  );
+        <View style={styles.signupContainer}>
+          <Button
+            icon={() => (
+              <View>
+                <Image
+                  source={require("../../assets/signup/Call.png")}
+                  style={styles.icon}
+                />
+              </View>
+            )}
+            mode="outlined"
+            textColor="rgba(2, 48, 71, 1)"
+            onPress={() => console.log("pressed")}
+            style={styles.phoneSignUp}
+            labelStyle={styles.buttonLabel}
+          >
+            Sign up with Phone
+          </Button>
+          <Button
+            icon={() => (
+              <View style={styles.iconContainer}>
+                <Image
+                  source={require("../../assets/signup/Group.png")} // Replace with your image source
+                  style={styles.icon}
+                />
+              </View>
+            )}
+            mode="outlined"
+            textColor="rgba(2, 48, 71, 1)"
+            onPress={onGoogleButtonPress}
+            style={styles.googleSignUp}
+            labelStyle={styles.buttonLabel}
+          >
+            Sign up with Google
+          </Button>
+
+          <Text></Text>
+        </View>
+        <Text style={styles.alreayRegistered}>
+          Already registered ?{" "}
+          <Text
+            style={{
+              fontSize: width * 0.045,
+              color: "rgba(251, 133, 0, 1)",
+              lineHeight: width * 0.06,
+            }}
+          >
+            Sign In
+          </Text>
+        </Text>
+        <Footer />
+      </View>
+    );
+  }
+  return <GlSuccessful user={user} />;
 };
 
 const styles = StyleSheet.create({
