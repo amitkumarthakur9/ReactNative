@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Text, Button } from "react-native-paper";
+import Footer from "./Footer";
 
 const { width, height } = Dimensions.get("window");
 
@@ -98,20 +99,7 @@ const Carousels = ({ navigation }) => {
       >
         Get Started
       </Button>
-      <View style={styles.polygonImages}>
-        <Image
-          source={require("./assets/images/Polygon2.png")}
-          style={{
-            width: width,
-            height: height * 0.22,
-            bottom: -165,
-          }}
-        />
-        <Image
-          source={require("./assets/images/Polygon.png")}
-          style={{ width: width, height: height * 0.22 }}
-        />
-      </View>
+      <Footer />
     </View>
   );
 };
@@ -176,12 +164,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 53, 102, 1)",
     alignItems: "center", // Center the content horizontally
     justifyContent: "center", // Center the content vertically
-    zIndex: 1,
-  },
-  polygonImages: {
-    position: "absolute",
-    bottom: 0,
-    width: width,
+    zIndex: 100,
   },
 });
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { Button } from "react-native-paper";
+import Footer from "../screens/Welcomescreens/Footer";
 
 const { width, height } = Dimensions.get("window");
 
@@ -66,20 +67,7 @@ export default Signup = () => {
           Sign In
         </Text>
       </Text>
-      <View style={styles.polygonImages}>
-        <Image
-          source={require("../screens/Welcomescreens/assets/images/Polygon2.png")}
-          style={{
-            width: width,
-            height: height * 0.22,
-            bottom: -165,
-          }}
-        />
-        <Image
-          source={require("../screens/Welcomescreens/assets/images/Polygon.png")}
-          style={{ width: width, height: height * 0.22 }}
-        />
-      </View>
+      <Footer />
     </View>
   );
 };
@@ -155,10 +143,5 @@ const styles = StyleSheet.create({
     width: width * 0.06,
     height: width * 0.06,
     left: -width * 0.04,
-  },
-  polygonImages: {
-    position: "absolute",
-    bottom: 0,
-    width: width,
   },
 });
