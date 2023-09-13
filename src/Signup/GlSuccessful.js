@@ -11,7 +11,7 @@ import Footer from "../screens/Welcomescreens/Footer";
 
 const { width, height } = Dimensions.get("window");
 
-export default GLSuccessful = (props) => {
+export default GLSuccessful = () => {
   return (
     <View style={styles.container}>
       <View style={styles.gliContainer}>
@@ -23,7 +23,6 @@ export default GLSuccessful = (props) => {
       <Button title="Sign Out" mode="contained" onPress={signOut}>
         Sign Out
       </Button>
-      <Text>{console.log(props.user)}</Text>
       <Footer />
     </View>
   );
@@ -34,6 +33,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center", // Center horizontally
     justifyContent: "center", // Center vertically
+    backgroundColor: "white",
   },
   glsImage: {
     resizeMode: "contain",

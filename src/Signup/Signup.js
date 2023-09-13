@@ -11,7 +11,7 @@ import GlSuccessful from "./GlSuccessful";
 
 const { width, height } = Dimensions.get("window");
 
-export default Signup = () => {
+export default Signup = ({ navigation }) => {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -80,7 +80,7 @@ export default Signup = () => {
             )}
             mode="outlined"
             textColor="rgba(2, 48, 71, 1)"
-            onPress={() => console.log("pressed")}
+            onPress={() => navigation.push("swphone")}
             style={styles.phoneSignUp}
             labelStyle={styles.buttonLabel}
           >
