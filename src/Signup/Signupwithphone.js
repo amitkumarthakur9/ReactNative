@@ -109,11 +109,13 @@ const styles = StyleSheet.create({
     width: width,
     height: height,
     flex: 1,
+    backgroundColor: "white",
   },
   signupContainer: {
-    padding: width * 0.056,
-    width: width,
-    marginTop: height * 0.1,
+    left: "50%",
+    width: width * 0.9,
+    marginLeft: -width * 0.45,
+    marginTop: height * 0.15,
   },
   signupText: {
     marginBottom: height * 0.04,
@@ -134,6 +136,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.04,
     lineHeight: width * 0.06,
     color: "rgba(2, 48, 71, 1)",
+    textAlign: "justify",
   },
   phoneContainer: {
     marginTop: height * 0.02,
@@ -163,6 +166,7 @@ const styles = StyleSheet.create({
   numberInput: {
     marginLeft: width * 0.02, // Add margin here for spacing
     flex: 1,
+    backgroundColor: "white",
   },
   checkContainer: {
     marginTop: height * 0.02,
@@ -175,6 +179,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.04,
     lineHeight: width * 0.07,
     color: "rgba(2, 48, 71, 1)",
+    flex: 1,
   },
   enabledButton: {
     marginTop: height * 0.05,
