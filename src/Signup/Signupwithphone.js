@@ -1,11 +1,22 @@
-import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { Button, TextInput, Checkbox } from "react-native-paper";
 import Footer from "../screens/Welcomescreens/Footer";
 
 const { width, height } = Dimensions.get("window");
 
-export default Singupwithphone = () => {
+export default Singupwithphone = ({ navigation }) => {
+  const [checked, setChecked] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [phonevalidation, setPhonevalidation] = useState(false);
+
+  const handlePhone = (number) => {
+    const phonePattern = /^[0-9]{10}$/;
+    setPhone(number);
+    const numberValidation = phonePattern.test(number);
+    setPhonevalidation(numberValidation);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.signupContainer}>
@@ -13,7 +24,7 @@ export default Singupwithphone = () => {
         <View>
           <View>
             <Text style={styles.signupDescHeader}>
-              Enter your phone number below.{" "}
+              Enter your phone number below.
             </Text>
             <Text style={styles.signupDesc}>
               We will send a 6 digit verification code to verify your phone
@@ -31,13 +42,32 @@ export default Singupwithphone = () => {
               placeholder="Enter Phone Number"
               style={[styles.numberInput, { marginTop: -width * 0.017 }]}
               outlineStyle={styles.outlines}
+              cursorColor="rgb(2, 48, 71)"
+              textColor="rgb(2, 48, 71)"
+              keyboardType="numeric"
+              maxLength={10}
+              onChangeText={handlePhone}
+              value={phone}
             />
           </View>
+          {!phonevalidation && phone !== "" && (
+            <Text style={styles.errorText}>
+              <Image
+                source={require("../../assets/signup/errorText.png")}
+                style={{
+                  width: width * 0.07,
+                  height: height * 0.035,
+                }}
+              />
+              {"   "}Invalid Phone number. Please enter a valid phone number
+            </Text>
+          )}
           <View style={styles.checkContainer}>
             <Checkbox
-              onPress={() => {
-                console.log("pressed");
-              }}
+              status={checked ? "checked" : "unchecked"}
+              onPress={() => setChecked(!checked)}
+              color="rgb(2, 48, 71)"
+              uncheckedColor="red"
             />
             <Text style={styles.terms}>
               I agree to the Terms & Conditions set by growthvine
@@ -45,11 +75,16 @@ export default Singupwithphone = () => {
           </View>
           <Button
             mode="contained"
-            onPress={() => console.log("Pressed")}
-            style={styles.submit}
             labelStyle={styles.buttonLabel}
+            disabled={!phonevalidation || !checked}
+            onPress={() => navigation.push("Otp")}
+            style={
+              phonevalidation && checked
+                ? styles.enabledButton
+                : styles.disabledButton
+            }
           >
-            Sign UP
+            Sign Up
           </Button>
           <Text style={styles.alreayRegistered}>
             Already registered ?{" "}
@@ -65,7 +100,6 @@ export default Singupwithphone = () => {
           </Text>
         </View>
       </View>
-      <Footer />
     </View>
   );
 };
@@ -106,7 +140,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   phoneText: {
-    marginTop: height * 0.05,
+    marginTop: height * 0.04,
     fontWeight: "600",
     fontSize: width * 0.05,
     lineHeight: width * 0.07,
@@ -131,7 +165,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   checkContainer: {
-    marginTop: height * 0.03,
+    marginTop: height * 0.02,
     flexDirection: "row",
   },
   terms: {
@@ -142,7 +176,7 @@ const styles = StyleSheet.create({
     lineHeight: width * 0.07,
     color: "rgba(2, 48, 71, 1)",
   },
-  submit: {
+  enabledButton: {
     marginTop: height * 0.05,
     height: height * 0.065,
     borderRadius: height * 0.013,
@@ -151,13 +185,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  disabledButton: {
+    marginTop: height * 0.05,
+    height: height * 0.065,
+    borderRadius: height * 0.013,
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgb(204, 204, 204)",
+    opacity: 0.9,
+  },
   buttonLabel: {
     fontSize: width * 0.05, // Adjust the font size based on screen width
     fontWeight: "bold",
     color: "white",
   },
   alreayRegistered: {
-    top: width * 0.12,
+    marginTop: width * 0.05,
     width: width * 0.6,
     fontSize: width * 0.04,
     color: "rgb(166, 166, 166)",
@@ -167,5 +211,11 @@ const styles = StyleSheet.create({
   outlines: {
     borderRadius: 8,
     borderColor: "rgba(72, 72, 74, 0.5)",
+  },
+  errorText: {
+    color: "rgba(186, 27, 27, 1)",
+    fontWeight: "500",
+    fontSize: width * 0.036,
+    lineHeight: width * 0.06,
   },
 });

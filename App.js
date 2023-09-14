@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Signup from "./src/Signup/Signup";
 import Signupwithphone from "./src/Signup/Signupwithphone";
+import Otp from "./src/Signup/Otp";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
         <Stack.Screen name="Getstarted" component={Getstarted} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="swphone" component={Signupwithphone} />
+        <Stack.Screen name="Otp" component={Otp} />
       </Stack.Navigator>
     </NavigationContainer>
   );
