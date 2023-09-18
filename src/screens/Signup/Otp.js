@@ -1,8 +1,7 @@
 import React, { useState, useRef } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { TextInput, Button } from "react-native-paper";
-
-const { width, height } = Dimensions.get("window");
+import { width, height } from "../../Dimension";
 
 export default Otp = () => {
   const [otp, setOtp] = useState(["", "", "", "", ""]);

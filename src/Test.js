@@ -5,6 +5,7 @@ import {
   GoogleSigninButton,
 } from "@react-native-google-signin/google-signin";
 import auth from "@react-native-firebase/auth";
+import { width, height } from "../../Dimension";
 
 export default Test = () => {
   GoogleSignin.configure({

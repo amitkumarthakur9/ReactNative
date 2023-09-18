@@ -8,23 +8,22 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Text, Button } from "react-native-paper";
-import Footer from "./Footer";
-
-const { width, height } = Dimensions.get("window");
+import Footer from "../../Footer";
+import { width, height } from "../../Dimension";
 
 const carouselData = [
   {
-    image: require("./assets/images/getstarted1.jpg"),
+    image: require("../../../assets/getStarted/1.gif"),
     text: "Let your money earn for you",
     desc: "Invest in customized portfolios of Mutual Funds, Bonds & Investments based on your risk appetite and watch your earnings grow",
   },
   {
-    image: require("./assets/images/getstarted2.jpg"),
+    image: require("../../../assets/getStarted/2.gif"),
     text: "Invest for your Goals",
     desc: "Create your goals, set targets and we’ll help you find the right investments to achieve your goals.",
   },
   {
-    image: require("./assets/images/getstarted3.jpg"),
+    image: require("../../../assets/getStarted/3.gif"),
     text: "Risk Calculation",
     desc: "We provide you with tools to gauge your financial health, risk appetite and help grow your wealth wisely",
   },

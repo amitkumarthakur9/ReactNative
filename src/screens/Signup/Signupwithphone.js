@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { Button, TextInput, Checkbox } from "react-native-paper";
-import Footer from "../screens/Welcomescreens/Footer";
-
-const { width, height } = Dimensions.get("window");
+import Footer from "../../Footer";
+import { width, height } from "../../Dimension";
 
 export default Singupwithphone = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
@@ -53,7 +52,7 @@ export default Singupwithphone = ({ navigation }) => {
           {!phonevalidation && phone !== "" && (
             <Text style={styles.errorText}>
               <Image
-                source={require("../../assets/signup/errorText.png")}
+                source={require("../../../assets/signup/errorText.png")}
                 style={{
                   width: width * 0.07,
                   height: height * 0.035,

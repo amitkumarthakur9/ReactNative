@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { Button } from "react-native-paper";
-import Footer from "../screens/Welcomescreens/Footer";
+import Footer from "../../Footer";
 import {
   GoogleSignin,
   GoogleSigninButton,
 } from "@react-native-google-signin/google-signin";
 import auth from "@react-native-firebase/auth";
 import GlSuccessful from "./GlSuccessful";
-
-const { width, height } = Dimensions.get("window");
+import { width, height } from "../../Dimension";
 
 export default Signup = ({ navigation }) => {
   // Set an initializing state whilst Firebase connects
@@ -61,7 +60,7 @@ export default Signup = ({ navigation }) => {
       <View style={styles.container}>
         <View style={styles.imagecontainer}>
           <Image
-            source={require("../../assets/signup/signup.png")}
+            source={require("../../../assets/signup/signup.png")}
             style={styles.image}
           />
         </View>
@@ -73,7 +72,7 @@ export default Signup = ({ navigation }) => {
             icon={() => (
               <View>
                 <Image
-                  source={require("../../assets/signup/Call.png")}
+                  source={require("../../../assets/signup/Call.png")}
                   style={styles.icon}
                 />
               </View>
@@ -90,7 +89,7 @@ export default Signup = ({ navigation }) => {
             icon={() => (
               <View style={styles.iconContainer}>
                 <Image
-                  source={require("../../assets/signup/Group.png")} // Replace with your image source
+                  source={require("../../../assets/signup/Group.png")} // Replace with your image source
                   style={styles.icon}
                 />
               </View>

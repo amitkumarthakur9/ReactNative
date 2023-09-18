@@ -1,13 +1,13 @@
 import React from "react";
 import { View, StyleSheet, Dimensions, Image } from "react-native";
 
-const { width, height } = Dimensions.get("window");
+import { width, height } from "./Dimension";
 
 const Footer = () => {
   return (
     <View style={styles.polygonImages}>
       <Image
-        source={require("./assets/images/Polygon.png")}
+        source={require("../assets/Polygon.png")}
         style={{
           width: width,
           height: height * 0.22,
@@ -16,7 +16,7 @@ const Footer = () => {
         }}
       />
       <Image
-        source={require("./assets/images/Polygon2.png")}
+        source={require("../assets/Polygon2.png")}
         style={{
           position: "absolute",
           width: width,
