@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   imagecontainer: {
     width: width,
-    marginTop: height * 0.1,
+    marginTop: height * 0.05,
   },
   image: {
     width: width,

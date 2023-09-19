@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Signup from "./src/screens/Signup/Signup";
 import Signupwithphone from "./src/screens/Signup/Signupwithphone";
 import Otp from "./src/screens/Signup/Otp";
+import Splash from "./src/Splash";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,7 +14,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Getstarted"
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
         }}
@@ -22,7 +23,9 @@ export default function App() {
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="swphone" component={Signupwithphone} />
         <Stack.Screen name="Otp" component={Otp} />
+        <Stack.Screen name="Splash" component={Splash} />
       </Stack.Navigator>
+      <StatusBar />
     </NavigationContainer>
   );
 }

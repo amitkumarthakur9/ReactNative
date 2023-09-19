@@ -86,8 +86,7 @@ const styles = StyleSheet.create({
     left: "50%",
     width: width * 0.9,
     marginLeft: -width * 0.45,
-    marginTop: height * 0.15,
-    // backgroundColor: "yellow",
+    marginTop: height * 0.05,
   },
   header: {
     color: "rgba(2, 48, 71, 1)",

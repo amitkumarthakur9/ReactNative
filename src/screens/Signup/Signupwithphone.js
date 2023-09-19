@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     left: "50%",
     width: width * 0.9,
     marginLeft: -width * 0.45,
-    marginTop: height * 0.15,
+    marginTop: height * 0.05,
   },
   signupText: {
     marginBottom: height * 0.04,

@@ -8,9 +8,10 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash1.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+	   "duration": 3000 // Set the duration in milliseconds (e.g., 3000ms = 3 seconds)
     },
     "assetBundlePatterns": [
       "**/*"

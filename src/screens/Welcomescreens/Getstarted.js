@@ -45,7 +45,7 @@ const Carousels = ({ navigation }) => {
   };
 
   useEffect(() => {
-    const timer = setInterval(scrollToNextItem, 3000); // Change slide every 3 seconds
+    const timer = setInterval(scrollToNextItem, 5000); // Change slide every 3 seconds
     return () => clearInterval(timer);
   }, [activeIndex]);
 
@@ -111,15 +111,15 @@ const styles = StyleSheet.create({
   renderContainer: {
     width: width,
     alignItems: "center",
-    top: height * 0.05,
+    marginTop: height * 0.05,
   },
   imageContainer: {
     width: width,
-    height: height * 0.5, // Adjust the height as needed (e.g., half the screen height)
+    height: height * 0.46, // Adjust the height as needed (e.g., half the screen height)
   },
   image: {
     width: width,
-    height: height * 0.55,
+    height: height * 0.42,
   },
   imageText: {
     width: width * 0.8, // Adjust the width as needed (e.g., 80% of the screen width)
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   getStartedButton: {
     position: "absolute",
-    bottom: height * 0.16, // Adjust the position based on screen height
+    bottom: height * 0.2, // Adjust the position based on screen height
     left: "50%",
     marginLeft: -width * 0.2, // Adjust the margin based on screen width
     width: width * 0.4, // Adjust the width based on screen width
