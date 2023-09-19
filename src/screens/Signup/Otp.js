@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     left: "50%",
     width: width * 0.9,
     marginLeft: -width * 0.45,
-    marginTop: height * 0.05,
+    marginTop: height * 0.1,
   },
   header: {
     color: "rgba(2, 48, 71, 1)",
@@ -116,11 +116,12 @@ const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
     borderBottomColor: "rgba(2, 48, 71, 1",
-    fontSize: 24,
-    padding: 1,
+    fontSize: width * 0.07,
+    margin: width * 0.01,
     textAlign: "center",
     color: "rgba(2, 48, 71, 1)",
     backgroundColor: "white",
+    flex: 1,
   },
   resend: {
     fontWeight: "600",
