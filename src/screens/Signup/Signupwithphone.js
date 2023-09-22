@@ -82,7 +82,7 @@ export default Singupwithphone = ({ navigation }) => {
             <TextInput
               mode="outlined"
               placeholder="Enter Phone Number"
-              style={[styles.numberInput, { marginTop: -width * 0.017 }]}
+              style={styles.numberInput}
               outlineStyle={styles.outlines}
               cursorColor="rgb(2, 48, 71)"
               textColor="rgb(2, 48, 71)"
