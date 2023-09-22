@@ -1,13 +1,31 @@
 import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { width, height } from "../../Dimension";
+import { useRoute } from "@react-navigation/native";
 
 export default Otp = () => {
-  const [otp, setOtp] = useState(["", "", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
 
   const inputRefs = useRef([]);
+
+  const route = useRoute();
+  const { confirmation } = route.params; // Access the confirmation object
+
+  console.log(confirmation);
+
+  async function confirmCode() {
+    try {
+      const stringOtp = otp.join("");
+      const con = await confirmation.confirm(stringOtp);
+      Alert.alert("Success", "You Have been Logged In Successfully");
+      console.log("success");
+    } catch (error) {
+      console.log("Invalid code.", error);
+      Alert.alert("Failed", error.message);
+    }
+  }
 
   const handleOtpChange = (oneTimePassword, index) => {
     const newOtp = [...otp];
@@ -69,6 +87,7 @@ export default Otp = () => {
           style={
             isSignUpDisabled ? styles.disabledButton : styles.enabledButton
           }
+          onPress={confirmCode}
         >
           Sign Up
         </Button>

@@ -45,12 +45,15 @@ export default Signup = ({ navigation }) => {
   };
 
   signOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await auth().signOut();
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   await GoogleSignin.revokeAccess();
+    //   await auth().signOut();
+    // } catch (error) {
+    //   console.error(error);
+    // }
+    auth()
+      .signOut()
+      .then(() => console.log("User signed out!"));
   };
 
   if (initializing) return null;
