@@ -13,16 +13,16 @@ export default Otp = () => {
   const route = useRoute();
   const { confirmation } = route.params; // Access the confirmation object
 
-  console.log(confirmation);
+//   console.log(confirmation);
 
   async function confirmCode() {
     try {
       const stringOtp = otp.join("");
       const con = await confirmation.confirm(stringOtp);
       Alert.alert("Success", "You Have been Logged In Successfully");
-      console.log("success");
+    //   console.log("success");
     } catch (error) {
-      console.log("Invalid code.", error);
+    //   console.log("Invalid code.", error);
       Alert.alert("Failed", error.message);
     }
   }

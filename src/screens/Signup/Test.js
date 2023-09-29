@@ -28,14 +28,14 @@ export default function PhoneSignIn() {
   async function signInWithPhoneNumber(phoneNumber) {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
-    console.log(confirmation);
+    // console.log(confirmation);
   }
 
   async function confirmCode() {
     try {
       await confirm.confirm(code);
     } catch (error) {
-      console.log("Invalid code.");
+      //   console.log("Invalid code.");
     }
   }
 

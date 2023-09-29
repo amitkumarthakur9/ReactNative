@@ -92,7 +92,7 @@ const Carousels = ({ navigation }) => {
       <Button
         mode="contained"
         style={styles.getStartedButton}
-        onPress={() => navigation.push("Signup")}
+        onPress={() => navigation.push("Optionscreen")}
         icon="arrow-right-bold"
         contentStyle={{ flexDirection: "row-reverse" }}
       >
