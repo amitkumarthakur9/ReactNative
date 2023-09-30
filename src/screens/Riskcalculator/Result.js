@@ -3,19 +3,13 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { Button } from "react-native-paper";
 import { width, height } from "../../Dimension";
 
-const Riskcalculator = ({ navigation }) => {
+const Result = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Text style={styles.skip}>Skip</Text>
-        <Image
-          source={require("../../../assets/riskCalculator/1.png")}
-          style={styles.image}
-        />
-        <Text style={styles.header}>Calculate Risk Profile</Text>
+        <Text style={styles.header}>Your Risk Score</Text>
         <Text style={styles.desc}>
-          This will help us understand your risk appetite and suggest relevant
-          investment options for you
+          *Calculated based on your responses to the questions
         </Text>
         <View>
           <Button
@@ -44,13 +38,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     marginTop: height * 0.1,
   },
-  skip: {
-    fontWeight: "600",
-    fontSize: width * 0.045,
-    lineHeight: height * 0.03,
-    color: "rgba(63, 148, 182, 1)",
-    left: width * 0.85,
-  },
   image: {
     width: width,
     height: height * 0.2,
@@ -59,14 +46,14 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: height * 0.05,
-    fontWeight: "700",
-    fontSize: width * 0.08,
+    fontWeight: "600",
+    fontSize: width * 0.06,
     lineHeight: height * 0.04,
     textAlign: "center",
     color: "rgba(2, 48, 71, 1)",
   },
   desc: {
-    marginTop: height * 0.02,
+    marginTop: height * 0.01,
     fontWeight: "500",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
@@ -88,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Riskcalculator;
+export default Result;

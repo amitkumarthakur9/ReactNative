@@ -8,7 +8,9 @@ import Signupwithphone from "./src/screens/Signup/Signupwithphone";
 import Otp from "./src/screens/Signup/Otp";
 import Splash from "./src/Splash";
 import Optionscreen from "./src/screens/Optionscreen";
-import Riskcalculator from "./src/screens/Riskcalculator";
+import Riskcalculator from "./src/screens/Riskcalculator/Index";
+import Rpscreens from "./src/screens/Riskcalculator/Rpscreens";
+import Result from "./src/screens/Riskcalculator/Result";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +30,8 @@ export default function App() {
         <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Optionscreen" component={Optionscreen} />
         <Stack.Screen name="Riskcalculator" component={Riskcalculator} />
+        <Stack.Screen name="Rpscreens" component={Rpscreens} />
+        <Stack.Screen name="Result" component={Result} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>
