@@ -4,13 +4,12 @@ import { Button } from "react-native-paper";
 import { width, height } from "../../Dimension";
 import MCQ from "./Mcq";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native"; // Import the useNavigation hook
+import { useNavigation } from "@react-navigation/native";
 
 export default Questions = ({ data, updateActiveIndex }) => {
   const mcq = MCQ;
   const { activeIndex } = data;
-
-  const navigation = useNavigation(); // Access the navigation object
+  const navigation = useNavigation();
 
   const storeData = async (key, value) => {
     try {
@@ -20,33 +19,15 @@ export default Questions = ({ data, updateActiveIndex }) => {
     }
   };
 
-  const getAllKeys = async () => {
-    try {
-      const allKeys = await AsyncStorage.getAllKeys();
-      const allData = await AsyncStorage.multiGet(allKeys);
-
-      console.log(allData);
-
-      // 'allData' is an array of key-value pairs, so you can loop through it to access the data
-      //   allData.forEach(([key, value]) => {
-      //     console.log(`Key: ${key}, Value: ${value}`);
-      //     // Handle the data as needed
-      //   });
-    } catch (e) {
-      console.error("Error fetching keys:", e);
-    }
-  };
-
   const handleOption = async (newIndex, activeIndex, index) => {
     try {
-      const key = `question_${activeIndex}`; // Unique key for each question
-      await storeData(key, index.toString());
-      // Data was successfully stored, now call getAllKeys
+      const key = `question_${activeIndex}`;
+      const ans = index + 1;
+      await storeData(key, ans.toString());
       updateActiveIndex(newIndex);
       if (activeIndex == 9) {
         navigation.push("Result");
       }
-      // getAllKeys();
     } catch (error) {
       console.error("Error storing data:", error);
     }

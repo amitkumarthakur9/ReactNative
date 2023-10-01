@@ -7,7 +7,12 @@ const Riskcalculator = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Text style={styles.skip}>Skip</Text>
+        <Text
+          style={styles.skip}
+          onPress={() => navigation.push("Optionscreen")}
+        >
+          Skip
+        </Text>
         <Image
           source={require("../../../assets/riskCalculator/1.png")}
           style={styles.image}
