@@ -54,9 +54,9 @@ const Riskcalculator = ({ navigation }) => {
             inActiveStrokeColor={"rgba(42, 42, 42, 0.1)"}
             inActiveStrokeWidth={12}
             activeStrokeWidth={12}
-            onAnimationComplete={() => {
-              alert("Your score is :" + finalscore);
-            }}
+            // onAnimationComplete={() => {
+            //   alert("Your score is :" + finalscore);
+            // }}
           />
         </View>
         <Text style={styles.text}>
@@ -83,7 +83,7 @@ const Riskcalculator = ({ navigation }) => {
             }}
             labelStyle={styles.buttonLabel} // Increase text size and change text color
             onPress={() => {
-              navigation.push("Signup");
+              navigation.push("Account");
             }}
           >
             Continue

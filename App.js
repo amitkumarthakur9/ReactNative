@@ -11,6 +11,7 @@ import Optionscreen from "./src/screens/Optionscreen";
 import Riskcalculator from "./src/screens/Riskcalculator/Index";
 import Rpscreens from "./src/screens/Riskcalculator/Rpscreens";
 import Result from "./src/screens/Riskcalculator/Result";
+import Account from "./src/screens/Account/Index";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ export default function App() {
         <Stack.Screen name="Riskcalculator" component={Riskcalculator} />
         <Stack.Screen name="Rpscreens" component={Rpscreens} />
         <Stack.Screen name="Result" component={Result} />
+        <Stack.Screen name="Account" component={Account} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>
