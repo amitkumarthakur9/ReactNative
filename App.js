@@ -12,6 +12,7 @@ import Riskcalculator from "./src/screens/Riskcalculator/Index";
 import Rpscreens from "./src/screens/Riskcalculator/Rpscreens";
 import Result from "./src/screens/Riskcalculator/Result";
 import Account from "./src/screens/Account/Index";
+import Assetpreview from "./src/screens/Assetpreview/Index";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Splash"
+        initialRouteName="Assetpreview"
         screenOptions={{
           headerShown: false,
         }}
@@ -34,6 +35,7 @@ export default function App() {
         <Stack.Screen name="Rpscreens" component={Rpscreens} />
         <Stack.Screen name="Result" component={Result} />
         <Stack.Screen name="Account" component={Account} />
+        <Stack.Screen name="Assetpreview" component={Assetpreview} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>
