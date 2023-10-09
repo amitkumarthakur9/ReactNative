@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    padding: width * 0.02,
+    padding: width * 0.06,
   },
   formContainer: {
     marginTop: height * 0.01,

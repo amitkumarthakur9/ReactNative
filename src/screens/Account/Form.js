@@ -78,7 +78,9 @@ const Form = ({ data }) => {
             <Avatar.Image
               size={width * 0.36}
               source={
-                image ? { uri: image } : require("../../../assets/icon.png")
+                image
+                  ? { uri: image }
+                  : require("../../../assets/upload/Avatar.png")
               }
               style={{ backgroundColor: "white" }}
             />

@@ -13,8 +13,8 @@ export default Overview = () => {
             style={[
               styles.header,
               {
-                width: height * 0.07,
-                height: height * 0.06,
+                width: height * 0.09,
+                height: height * 0.1,
                 resizeMode: "contain",
               },
             ]}
@@ -28,6 +28,7 @@ export default Overview = () => {
                   fontSize: width * 0.045,
                   fontWeight: "600",
                   lineHeight: height * 0.035,
+                  textAlign: "left",
                 },
               ]}
             >
@@ -140,8 +141,9 @@ const styles = StyleSheet.create({
   },
   titleBox: {
     flex: 1, // This makes the title take up the available space
-    alignItems: "center", // Center horizontally
+    // alignItems: "center", // Center horizontally
     justifyContent: "center", // Center vertically
+    marginLeft: width * 0.02,
   },
   desc: {
     fontSize: width * 0.03,
