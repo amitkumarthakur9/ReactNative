@@ -17,25 +17,13 @@ export default Assetheader = ({ navigation }) => {
         />
         <Text style={styles.header}>Axis Multicap Gowth Fund</Text>
         <View style={styles.flexContainer}>
-          <Button
-            mode="outlined"
-            style={styles.mfTypeButtons}
-            labelStyle={styles.labelStyle}
-          >
-            Equity
-          </Button>
-          <Button
-            mode="outlined"
-            style={styles.mfTypeButtons}
-            labelStyle={styles.labelStyle}
-          >
-            Large Cap
-          </Button>
+          <Text style={styles.mfTypeButtons}>Equity</Text>
+          <Text style={styles.mfTypeButtons}>Large Cap</Text>
         </View>
         <View
           style={[
             styles.flexContainer,
-            { marginTop: height * 0.01, marginBottom: height * 0.01 },
+            { marginTop: height * 0.02, marginBottom: height * 0.01 },
           ]}
         >
           <View style={styles.view}>
@@ -68,21 +56,22 @@ const styles = StyleSheet.create({
     borderColor: "orange",
     borderBottomLeftRadius: width * 0.08,
     borderBottomRightRadius: width * 0.08,
+    paddingLeft: width * 0.04,
   },
   headerContainer: {
     backgroundColor: "orange",
-    marginTop: height * 0.05,
-    padding: width * 0.02,
+    marginTop: height * 0.07,
+    // padding: width * 0.02,
     borderBottomLeftRadius: width * 0.08,
     borderBottomRightRadius: width * 0.08,
   },
   header: {
-    // marginTop: height * 0.01,
+    marginTop: height * 0.02,
     fontWeight: "600",
-    fontSize: width * 0.065,
+    fontSize: width * 0.056,
     color: "rgba(255, 255, 255, 1)",
     lineHeight: height * 0.04,
-    opacity: 0.8,
+    marginLeft: width * 0.01,
   },
   flexContainer: {
     flexDirection: "row",
@@ -90,9 +79,13 @@ const styles = StyleSheet.create({
   },
   mfTypeButtons: {
     margin: width * 0.01,
+    borderWidth: width * 0.002,
     borderColor: "white",
     borderRadius: width * 0.03,
     opacity: 0.7,
+    color: "white",
+    padding: width * 0.02,
+    fontSize: width * 0.036,
   },
   labelStyle: {
     color: "white",
@@ -101,19 +94,19 @@ const styles = StyleSheet.create({
   view: {
     borderRightWidth: width * 0.002,
     borderColor: "white",
-    paddingRight: width * 0.08,
+    paddingRight: width * 0.05,
     margin: width * 0.02,
   },
   duration: {
-    fontSize: width * 0.04,
+    fontSize: width * 0.035,
     color: "rgba(255, 255, 255, 1)",
     opacity: 0.6,
     fontWeight: "500",
+    lineHeight: height * 0.025,
   },
   percentage: {
-    fontSize: width * 0.04,
+    fontSize: width * 0.035,
     color: "rgba(255, 255, 255, 1)",
     fontWeight: "600",
-    opacity: 0.8,
   },
 });

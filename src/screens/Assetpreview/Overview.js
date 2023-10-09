@@ -13,8 +13,8 @@ export default Overview = () => {
             style={[
               styles.header,
               {
-                width: width * 0.2,
-                height: height * 0.07,
+                width: height * 0.07,
+                height: height * 0.06,
                 resizeMode: "contain",
               },
             ]}
@@ -25,8 +25,9 @@ export default Overview = () => {
                 styles.header,
                 {
                   color: "rgba(2, 48, 71, 1)",
-                  fontSize: width * 0.053,
+                  fontSize: width * 0.045,
                   fontWeight: "600",
+                  lineHeight: height * 0.035,
                 },
               ]}
             >
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   overviewContainer: {
     backgroundColor: "white",
     flex: 1,
-    padding: width * 0.02,
+    // padding: width * 0.02,
   },
   headerContainer: {
     flexDirection: "row",
@@ -143,9 +144,11 @@ const styles = StyleSheet.create({
     justifyContent: "center", // Center vertically
   },
   desc: {
+    fontSize: width * 0.03,
     color: "rgba(2, 48, 71, 1)",
     fontWeight: "500",
     opacity: 0.6,
+    lineHeight: height * 0.02,
   },
   view: {
     borderRightWidth: width * 0.003,
@@ -154,16 +157,17 @@ const styles = StyleSheet.create({
     margin: width * 0.032,
   },
   duration: {
-    fontSize: width * 0.04,
-    fontWeight: "600",
-    lineHeight: width * 0.1,
+    fontSize: width * 0.035,
+    fontWeight: "500",
+    lineHeight: height * 0.025,
     color: "rgba(0, 0, 0, 1)",
-    opacity: 0.6,
+    opacity: 0.3,
   },
   percentage: {
-    fontSize: width * 0.04,
-    color: "black",
+    fontSize: width * 0.039,
+    color: "rgba(73, 69, 79, 1)",
     fontWeight: "600",
+    lineHeight: height * 0.03,
   },
   typeContainer: {
     flexDirection: "row",
@@ -174,19 +178,20 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flexDirection: "columns",
-    marginBottom: height * 0.04,
+    marginBottom: height * 0.02,
   },
   detailsName: {
     fontSize: width * 0.035,
-    fontWeight: "600",
-    lineHeight: width * 0.07,
-    color: "rgba(0, 0, 0, 1)",
+    fontWeight: "500",
+    lineHeight: width * 0.045,
+    color: "rgba(2, 48, 71, 1)",
     opacity: 0.6,
   },
   detailsPercentage: {
-    fontSize: width * 0.04,
-    color: "black",
-    fontWeight: "600",
+    fontSize: width * 0.036,
+    color: "rgba(2, 48, 71, 1)",
+    fontWeight: "500",
+    lineHeight: height * 0.025,
   },
   detailsView: {
     borderBottomWidth: width * 0.004,
@@ -196,9 +201,9 @@ const styles = StyleSheet.create({
   },
   fundManagerHeader: {
     color: "rgba(2, 48, 71, 1)",
-    fontSize: width * 0.055,
+    fontSize: width * 0.046,
     fontWeight: "600",
-    marginBottom: height * 0.02,
+    marginBottom: height * 0.01,
   },
   cart: {
     flexDirection: "row",
@@ -212,25 +217,25 @@ const styles = StyleSheet.create({
   cardTitle: {
     marginTop: height * 0.02,
     color: "rgba(0, 0, 0, 1)",
-    fontSize: width * 0.05,
+    fontSize: width * 0.046,
+    lineHeight: height * 0.035,
     fontWeight: "600",
     textAlign: "center",
   },
   cardDesc: {
     marginTop: height * 0.015,
     color: "rgba(2, 48, 71, 1)",
-    fontSize: width * 0.04,
+    fontSize: width * 0.03,
     fontWeight: "500",
     textAlign: "center",
-    lineHeight: height * 0.025,
+    lineHeight: height * 0.02,
     opacity: 0.6,
   },
   moreDetails: {
-    marginTop: height * 0.03,
     color: "rgba(33, 158, 188, 1)",
-    fontSize: width * 0.04,
-    fontWeight: "500",
+    fontSize: width * 0.03,
+    fontWeight: "600",
     textAlign: "center",
-    lineHeight: height * 0.03,
+    lineHeight: height * 0.02,
   },
 });

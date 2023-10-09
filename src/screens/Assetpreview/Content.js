@@ -26,5 +26,6 @@ export default Content = () => {
 const styles = StyleSheet.create({
   tabContainer: {
     flex: 1,
+    padding: width * 0.06,
   },
 });
