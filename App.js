@@ -9,7 +9,7 @@ import Otp from "./src/screens/Signup/Otp";
 import Splash from "./src/Splash";
 import Optionscreen from "./src/screens/Optionscreen";
 import Riskcalculator from "./src/screens/Riskcalculator/Index";
-import Rpscreens from "./src/screens/Riskcalculator/Rpscreens";
+import Rpscreens from "./src/screens/Riskcalculator/Rpscreens";    
 import Result from "./src/screens/Riskcalculator/Result";
 import Account from "./src/screens/Account/Index";
 import Assetpreview from "./src/screens/Assetpreview/Index";
