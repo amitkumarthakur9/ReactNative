@@ -9,7 +9,7 @@ const Riskcalculator = ({ navigation }) => {
       <View style={styles.contentContainer}>
         <Text
           style={styles.skip}
-          onPress={() => navigation.push("Optionscreen")}
+          onPress={() => navigation.push("Navigatescreens")}
         >
           Skip
         </Text>

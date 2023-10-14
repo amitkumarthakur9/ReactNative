@@ -16,6 +16,13 @@ const OptionScreen = ({ navigation }) => {
         >
           Risk Profile
         </Button>
+
+        <Button
+          mode="contained"
+          onPress={(e) => navigation.push("Assetpreview")}
+        >
+          Assetpreview
+        </Button>
       </View>
     </View>
   );
@@ -30,7 +37,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: "row",
     justifyContent: "space-between", // Equal space between items
-    marginHorizontal: 50, // Adjust horizontal spacing
+    // marginHorizontal: 50, // Adjust horizontal spacing
   },
 });
 

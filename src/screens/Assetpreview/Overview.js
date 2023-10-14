@@ -6,7 +6,7 @@ import { Card, Button, Avatar } from "react-native-paper";
 export default Overview = () => {
   return (
     <View style={styles.overviewContainer}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.headerContainer}>
           <Image
             source={require("../../../assets/icon.png")}

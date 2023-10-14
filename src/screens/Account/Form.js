@@ -62,7 +62,10 @@ const Form = ({ data }) => {
   };
 
   return (
-    <ScrollView style={styles.formContainer}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={styles.formContainer}
+    >
       {currentForm === 0 ? (
         <View>
           <Text style={styles.desc}>

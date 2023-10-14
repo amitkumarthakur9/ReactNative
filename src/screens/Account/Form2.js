@@ -17,7 +17,7 @@ const Form2 = () => {
   const [ifsc, setIfsc] = useState();
   const [proof, setProof] = useState();
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Payment
       </Text>
