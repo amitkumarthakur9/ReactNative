@@ -14,6 +14,8 @@ import Result from "./src/screens/Riskcalculator/Result";
 import Account from "./src/screens/Account/Index";
 import Assetpreview from "./src/screens/Assetpreview/Index";
 import Navigatescreens from "./src/screens/Navigatescreens/Index";
+import Index from "./src/screens/Components/Index";
+import Education from "./src/screens/Goal/Education";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +23,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Assetpreview"
+        initialRouteName="Index"
         screenOptions={{
           headerShown: false,
         }}
@@ -38,6 +40,8 @@ export default function App() {
         <Stack.Screen name="Account" component={Account} />
         <Stack.Screen name="Assetpreview" component={Assetpreview} />
         <Stack.Screen name="Navigatescreens" component={Navigatescreens} />
+        <Stack.Screen name="Index" component={Index} />
+        <Stack.Screen name="Education" component={Education} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>
