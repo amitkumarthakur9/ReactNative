@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { Button, TextInput, Checkbox } from "react-native-paper";
 import auth from "@react-native-firebase/auth"; // Import Firebase auth
 import { width, height } from "../../Dimension";
+import { Ionicons } from "@expo/vector-icons";
 
 export default Singupwithphone = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
@@ -32,7 +41,7 @@ export default Singupwithphone = ({ navigation }) => {
       //   console.log(confirmation);
       return confirmation;
     } catch (error) {
-      console.error("Error sending verification code:", error);
+      //   console.error("Error sending verification code:", error);
       return null;
     }
   }
@@ -52,96 +61,106 @@ export default Singupwithphone = ({ navigation }) => {
         // console.log(confirmation);
         navigation.navigate("Otp", { confirmation }); // Navigate to the "Otp" screen
       } else {
-        console.error("No confirmation object received.");
+        // console.error("No confirmation object received.");
       }
     } catch (error) {
-      console.error("Error sending verification code:", error);
+      //   console.error("Error sending verification code:", error);
     }
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.signupContainer}>
-        <Text style={styles.signupText}>Sign Up </Text>
-        <View>
+      <ScrollView>
+        <View style={styles.signupContainer}>
+          <Ionicons
+            name="arrow-back"
+            size={width * 0.06}
+            color="rgba(56, 102, 100, 1)"
+            onPress={() => navigation.goBack()}
+            style={{ marginBottom: height * 0.03 }}
+          />
+          <Text style={styles.signupText}>Sign Up </Text>
           <View>
-            <Text style={styles.signupDescHeader}>
-              Enter your phone number below.
-            </Text>
-            <Text style={styles.signupDesc}>
-              We will send a 6 digit verification code to verify your phone
-              number.
-            </Text>
-          </View>
-
-          <Text style={styles.phoneText}>Phone number</Text>
-          <View style={styles.phoneContainer}>
-            <View style={styles.countryCodeContainer}>
-              <Text style={styles.countryCode}> +91 </Text>
+            <View>
+              <Text style={styles.signupDescHeader}>
+                Enter your phone number below.
+              </Text>
+              <Text style={styles.signupDesc}>
+                We will send a 6 digit verification code to verify your phone
+                number.
+              </Text>
             </View>
-            <TextInput
-              mode="outlined"
-              placeholder="Enter Phone Number"
-              style={styles.numberInput}
-              outlineStyle={styles.outlines}
-              cursorColor="rgb(2, 48, 71)"
-              textColor="rgb(2, 48, 71)"
-              keyboardType="numeric"
-              maxLength={10}
-              onChangeText={handlePhone}
-              value={phone}
-            />
-          </View>
-          {!phonevalidation && phone !== "" && (
-            <Text style={styles.errorText}>
-              <Image
-                source={require("../../../assets/signup/errorText.png")}
-                style={{
-                  width: width * 0.07,
-                  height: height * 0.035,
-                }}
+
+            <Text style={styles.phoneText}>Phone number</Text>
+            <View style={styles.phoneContainer}>
+              <View style={styles.countryCodeContainer}>
+                <Text style={styles.countryCode}> +91 </Text>
+              </View>
+              <TextInput
+                mode="outlined"
+                placeholder="Enter Phone Number"
+                style={styles.numberInput}
+                outlineStyle={styles.outlines}
+                cursorColor="rgb(2, 48, 71)"
+                textColor="rgb(2, 48, 71)"
+                keyboardType="numeric"
+                maxLength={10}
+                onChangeText={handlePhone}
+                value={phone}
               />
-              {"   "}Invalid Phone number. Please enter a valid phone number
-            </Text>
-          )}
-          <View style={styles.checkContainer}>
-            <Checkbox
-              status={checked ? "checked" : "unchecked"}
-              onPress={() => setChecked(!checked)}
-              color="rgb(2, 48, 71)"
-              uncheckedColor="red"
-            />
-            <Text style={styles.terms}>
-              I agree to the Terms & Conditions set by growthvine
+            </View>
+            {!phonevalidation && phone !== "" && (
+              <Text style={styles.errorText}>
+                <Image
+                  source={require("../../../assets/signup/errorText.png")}
+                  style={{
+                    width: width * 0.07,
+                    height: height * 0.035,
+                  }}
+                />
+                {"   "}Invalid Phone number. Please enter a valid phone number
+              </Text>
+            )}
+            <View style={styles.checkContainer}>
+              <Checkbox
+                status={checked ? "checked" : "unchecked"}
+                onPress={() => setChecked(!checked)}
+                color="rgb(2, 48, 71)"
+                uncheckedColor="red"
+              />
+              <Text style={styles.terms}>
+                I agree to the Terms & Conditions set by growthvine
+              </Text>
+            </View>
+            <TouchableOpacity onPress={handleSignup}>
+              <Button
+                mode="contained"
+                labelStyle={styles.buttonLabel}
+                disabled={!phonevalidation || !checked}
+                style={
+                  phonevalidation && checked
+                    ? styles.enabledButton
+                    : styles.disabledButton
+                }
+              >
+                Sign Up
+              </Button>
+            </TouchableOpacity>
+            <Text style={styles.alreayRegistered}>
+              Already registered ?{" "}
+              <Text
+                style={{
+                  fontSize: width * 0.045,
+                  color: "rgba(251, 133, 0, 1)",
+                  lineHeight: width * 0.06,
+                }}
+              >
+                Sign In
+              </Text>
             </Text>
           </View>
-          <Button
-            mode="contained"
-            labelStyle={styles.buttonLabel}
-            disabled={!phonevalidation || !checked}
-            onPress={handleSignup}
-            style={
-              phonevalidation && checked
-                ? styles.enabledButton
-                : styles.disabledButton
-            }
-          >
-            Sign Up
-          </Button>
-          <Text style={styles.alreayRegistered}>
-            Already registered ?{" "}
-            <Text
-              style={{
-                fontSize: width * 0.045,
-                color: "rgba(251, 133, 0, 1)",
-                lineHeight: width * 0.06,
-              }}
-            >
-              Sign In
-            </Text>
-          </Text>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };

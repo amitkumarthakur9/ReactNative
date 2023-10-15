@@ -13,7 +13,7 @@ export default Assetheader = ({ navigation }) => {
           name="arrow-back"
           size={width * 0.07}
           color="white"
-          onPress={() => navigation.goBack()}
+          //   onPress={() => navigation.goBack()}
         />
         <Text style={styles.header}>Axis Multicap Gowth Fund</Text>
         <View style={styles.flexContainer}>

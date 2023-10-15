@@ -1,10 +1,18 @@
 import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { width, height } from "../../Dimension";
 import { useRoute } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
-export default Otp = () => {
+export default Otp = ({ navigation }) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
 
@@ -13,16 +21,17 @@ export default Otp = () => {
   const route = useRoute();
   const { confirmation } = route.params; // Access the confirmation object
 
-//   console.log(confirmation);
+  //   console.log(confirmation);
 
   async function confirmCode() {
     try {
       const stringOtp = otp.join("");
       const con = await confirmation.confirm(stringOtp);
       Alert.alert("Success", "You Have been Logged In Successfully");
-    //   console.log("success");
+      navigation.push("Index");
+      //   console.log("success");
     } catch (error) {
-    //   console.log("Invalid code.", error);
+      //   console.log("Invalid code.", error);
       Alert.alert("Failed", error.message);
     }
   }
@@ -47,51 +56,61 @@ export default Otp = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.otpContainer}>
-        <Text style={styles.header}>Phone Verification</Text>
-        <Text style={styles.desc}>
-          Please enter the 6-digit verification code sent to your phone.
-        </Text>
-        <Text style={styles.verificationHeader}>Verification Code</Text>
-        <View style={styles.inputContainer}>
-          {otp.map((digit, index) => (
-            <TextInput
-              key={index}
-              style={styles.input}
-              keyboardType="numeric"
-              maxLength={1}
-              onChangeText={(oneTimePassword) =>
-                handleOtpChange(oneTimePassword, index)
-              }
-              value={digit}
-              ref={(ref) => (inputRefs.current[index] = ref)}
-            />
-          ))}
-        </View>
-        <Text style={styles.resend}>
-          Didn't receive the code ?
-          <Text
-            style={{
-              color: "rgba(251, 133, 0, 1)",
-              fontWeight: "600",
-              fontSize: width * 0.045,
-            }}
-          >
-            Resend Code
+      <ScrollView>
+        <View style={styles.otpContainer}>
+          <Ionicons
+            name="arrow-back"
+            size={width * 0.06}
+            color="rgba(56, 102, 100, 1)"
+            onPress={() => navigation.goBack()}
+            style={{ marginBottom: height * 0.03 }}
+          />
+          <Text style={styles.header}>Phone Verification</Text>
+          <Text style={styles.desc}>
+            Please enter the 6-digit verification code sent to your phone.
           </Text>
-        </Text>
-        <Button
-          mode="contained"
-          labelStyle={styles.buttonLabel}
-          disabled={isSignUpDisabled}
-          style={
-            isSignUpDisabled ? styles.disabledButton : styles.enabledButton
-          }
-          onPress={confirmCode}
-        >
-          Sign Up
-        </Button>
-      </View>
+          <Text style={styles.verificationHeader}>Verification Code</Text>
+          <View style={styles.inputContainer}>
+            {otp.map((digit, index) => (
+              <TextInput
+                key={index}
+                style={styles.input}
+                keyboardType="numeric"
+                maxLength={1}
+                onChangeText={(oneTimePassword) =>
+                  handleOtpChange(oneTimePassword, index)
+                }
+                value={digit}
+                ref={(ref) => (inputRefs.current[index] = ref)}
+              />
+            ))}
+          </View>
+          <Text style={styles.resend}>
+            Didn't receive the code ?
+            <Text
+              style={{
+                color: "rgba(251, 133, 0, 1)",
+                fontWeight: "600",
+                fontSize: width * 0.045,
+              }}
+            >
+              Resend Code
+            </Text>
+          </Text>
+          <TouchableOpacity onPress={confirmCode}>
+            <Button
+              mode="contained"
+              labelStyle={styles.buttonLabel}
+              disabled={isSignUpDisabled}
+              style={
+                isSignUpDisabled ? styles.disabledButton : styles.enabledButton
+              }
+            >
+              Sign Up
+            </Button>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };

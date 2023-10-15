@@ -46,7 +46,7 @@ export default Test = () => {
       await GoogleSignin.revokeAccess();
       await auth().signOut();
     } catch (error) {
-      console.error(error);
+      //console.error(error);
     }
   };
 

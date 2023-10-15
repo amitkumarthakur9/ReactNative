@@ -1,63 +1,103 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { height, width } from "../../Dimension";
 
 const Navigatescreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <Text style={styles.topHeading}>Getting Started</Text>
-        <Text style={styles.toppara}>
-          Choose one of the options below to begin your journey with Growthvine
-        </Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.topHeading}>Getting Started</Text>
+          <Text style={styles.toppara}>
+            Choose one of the options below to begin your journey with
+            Growthvine
+          </Text>
 
-        <TouchableOpacity onPress={() => navigation.push("Riskcalculator")}>
-          <View style={styles.buttonContainer}>
-            <Image
-              source={require("../../../assets/navigateScreens/image4.png")}
-              style={styles.imageA}
-            />
-            <Text style={styles.textA}>Calculate your Risk Profile</Text>
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.push("Riskcalculator")}>
+            <View style={styles.buttonContainer}>
+              <Image
+                source={require("../../../assets/navigateScreens/image4.png")}
+                style={styles.imageA}
+              />
+              <Text style={styles.textA}>Calculate your Risk Profile</Text>
+            </View>
+          </TouchableOpacity>
 
-        <TouchableOpacity>
-          <View style={styles.buttonContainer}>
-            <Image
-              source={require("../../../assets/navigateScreens/image5.png")}
-              style={styles.imageB}
-            />
-            <Text style={styles.textB}>
-              Upload existing Mutual Fund {"\n"}Investment
-            </Text>
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.push("Upload")}>
+            <View style={styles.buttonContainer}>
+              <Image
+                source={require("../../../assets/navigateScreens/image5.png")}
+                style={styles.imageB}
+              />
+              <Text style={styles.textB}>
+                Upload existing Mutual Fund {"\n"}Investment
+              </Text>
+            </View>
+          </TouchableOpacity>
 
-        <TouchableOpacity>
-          <View style={styles.buttonContainer}>
-            <Image
-              source={require("../../../assets/navigateScreens/image6.png")}
-              style={styles.imageC}
-            />
-            <Text style={styles.textC}>
-              How to Create an Emergency {"\n"}Corpus of 1Cr
-            </Text>
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <Image
+                source={require("../../../assets/navigateScreens/image6.png")}
+                style={styles.imageC}
+              />
+              <Text style={styles.textC}>
+                How to Create an Emergency {"\n"}Corpus of 1Cr
+              </Text>
+            </View>
+          </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.push("Signup")}>
-          <View style={styles.buttonContainer}>
-            <Image
+          <TouchableOpacity onPress={() => navigation.push("Signup")}>
+            <View style={styles.buttonContainer}>
+              <Image
+                source={require("../../../assets/navigateScreens/image7.png")}
+                style={styles.imageD}
+              />
+              <Text style={styles.textD}>
+                Create Account / Login to existing{"\n"}Account
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.push("Assetpreview")}>
+            <View style={styles.buttonContainer}>
+              {/* <Image
               source={require("../../../assets/navigateScreens/image7.png")}
               style={styles.imageD}
-            />
-            <Text style={styles.textD}>
-              Create Account / Login to existing{"\n"}Account
-            </Text>
-          </View>
-        </TouchableOpacity>
+            /> */}
+              <Text style={styles.textD}>Navigate Asset Preview</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.push("Index")}>
+            <View style={styles.buttonContainer}>
+              {/* <Image
+              source={require("../../../assets/navigateScreens/image7.png")}
+              style={styles.imageD}
+            /> */}
+              <Text style={styles.textD}>Navigate Goal Screens</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.push("Account")}>
+            <View style={styles.buttonContainer}>
+              {/* <Image
+              source={require("../../../assets/navigateScreens/image7.png")}
+              style={styles.imageD}
+            /> */}
+              <Text style={styles.textD}>Navigate Account Screens</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

@@ -16,6 +16,7 @@ import Assetpreview from "./src/screens/Assetpreview/Index";
 import Navigatescreens from "./src/screens/Navigatescreens/Index";
 import Index from "./src/screens/Components/Index";
 import Education from "./src/screens/Goal/Education";
+import Upload from "./src/screens/Uploadscreens/Index";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +24,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Index"
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
         }}
@@ -42,6 +43,7 @@ export default function App() {
         <Stack.Screen name="Navigatescreens" component={Navigatescreens} />
         <Stack.Screen name="Index" component={Index} />
         <Stack.Screen name="Education" component={Education} />
+        <Stack.Screen name="Upload" component={Upload} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>

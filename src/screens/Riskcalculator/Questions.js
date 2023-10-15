@@ -15,7 +15,7 @@ export default Questions = ({ data, updateActiveIndex }) => {
     try {
       await AsyncStorage.setItem(key, value);
     } catch (e) {
-      console.log(e);
+     // console.log(e);
     }
   };
 
@@ -29,7 +29,7 @@ export default Questions = ({ data, updateActiveIndex }) => {
         navigation.push("Result");
       }
     } catch (error) {
-      console.error("Error storing data:", error);
+     // console.error("Error storing data:", error);
     }
   };
 

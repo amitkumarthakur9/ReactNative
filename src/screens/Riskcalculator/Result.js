@@ -83,7 +83,7 @@ const Riskcalculator = ({ navigation }) => {
             }}
             labelStyle={styles.buttonLabel} // Increase text size and change text color
             onPress={() => {
-              navigation.push("Account");
+              navigation.push("Signup");
             }}
           >
             Continue
