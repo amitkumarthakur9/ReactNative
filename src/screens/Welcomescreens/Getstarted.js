@@ -98,7 +98,7 @@ const Carousels = ({ navigation }) => {
       >
         Get Started
       </Button>
-      <Footer />
+      {/* <Footer /> */}
     </View>
   );
 };

@@ -22,7 +22,7 @@ export default GLSuccessful = () => {
       <Button title="Sign Out" mode="contained" onPress={signOut}>
         Sign Out
       </Button>
-      <Footer />
+      {/* <Footer /> */}
     </View>
   );
 };

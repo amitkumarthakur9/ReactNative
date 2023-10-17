@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, ImageBackground } from "react-native";
 import React from "react";
 import { height, width } from "../../Dimension";
 
@@ -6,7 +6,7 @@ export default Footercorpus = () => {
   return (
     <View style={styles.footer}>
       <Image
-        style={[styles.footerImage, { width: "auto", height: 288 }]}
+        style={[styles.footerImage, { width: "auto", height: height * 0.32 }]}
         source={require("../../../assets/corpusIcon/Corpus.png")}
       />
       <View style={styles.totalWealthContainer}>

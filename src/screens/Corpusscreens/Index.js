@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Slider } from "@miblanchard/react-native-slider";
 // import { Button } from "react-native-paper";
 import Footercorpus from "./Footercorpus";
+import Header from "../Components/Header";
 
 export default Uploadscreens = () => {
   const [MonthlyInvestment, setMonthlyInvestment] = useState(1000);
@@ -79,7 +80,7 @@ export default Uploadscreens = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.arrowContainer}>
+      {/* <View style={styles.arrowContainer}>
         <TouchableOpacity style={styles.arrow}>
           <Ionicons
             style={styles.iconArrow}
@@ -92,7 +93,9 @@ export default Uploadscreens = () => {
             How to create an Emergency Corpus..
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
+
+      <Header title="Corpus" showPlusSign={false} />
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.chartContainer}>
@@ -247,7 +250,7 @@ const styles = StyleSheet.create({
 
   chartContainer: {
     padding: width * 0.08,
-    marginTop: height * 0.12,
+    // marginTop: height * 0.12,
     // backgroundColor: "white",
     // borderWidth: width * 0.002,
     // borderRadius: width * 0.045,
