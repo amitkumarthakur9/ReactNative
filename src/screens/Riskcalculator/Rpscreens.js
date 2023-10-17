@@ -4,6 +4,7 @@ import { Button } from "react-native-paper";
 import { width, height } from "../../Dimension";
 import Pagination from "./Pagination";
 import Questions from "./Questions";
+import { Ionicons } from "@expo/vector-icons";
 
 export default Rpscreens = ({ navigation }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -14,14 +15,23 @@ export default Rpscreens = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <Pagination
-        data={{ activeIndex: activeIndex, totalDots: totalDots }}
-        updateActiveIndex={updateActiveIndex}
-      />
-      <Questions
-        data={{ activeIndex: activeIndex, totalDots: totalDots }}
-        updateActiveIndex={updateActiveIndex}
-      />
+      <View style={styles.contentContainer}>
+        <Ionicons
+          name="arrow-back"
+          size={width * 0.08}
+          color="rgba(56, 102, 100, 1)"
+          onPress={() => navigation.goBack()}
+          style={{ marginBottom: height * 0.03 }}
+        />
+        <Pagination
+          data={{ activeIndex: activeIndex, totalDots: totalDots }}
+          updateActiveIndex={updateActiveIndex}
+        />
+        <Questions
+          data={{ activeIndex: activeIndex, totalDots: totalDots }}
+          updateActiveIndex={updateActiveIndex}
+        />
+      </View>
     </View>
   );
 };
@@ -32,9 +42,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   contentContainer: {
-    marginTop: height * 0.1,
-    padding: width * 0.02,
-    resizeMode: "contain",
+    marginTop: height * 0.07,
+    // padding: width * 0.05,
+    // resizeMode: "contain",
   },
   header: {
     color: "rgba(2, 48, 71, 1)",

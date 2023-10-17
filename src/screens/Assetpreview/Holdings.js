@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.035,
     borderColor: "rgb(230, 230, 230)",
     backgroundColor: "white",
-    elevation: width * 0.02,
+    elevation: width * 0.01,
   },
   bullet: {
     width: width * 0.035,

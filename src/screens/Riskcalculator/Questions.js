@@ -15,7 +15,7 @@ export default Questions = ({ data, updateActiveIndex }) => {
     try {
       await AsyncStorage.setItem(key, value);
     } catch (e) {
-     // console.log(e);
+      // console.log(e);
     }
   };
 
@@ -29,7 +29,7 @@ export default Questions = ({ data, updateActiveIndex }) => {
         navigation.push("Result");
       }
     } catch (error) {
-     // console.error("Error storing data:", error);
+      // console.error("Error storing data:", error);
     }
   };
 
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   contentContainer: {
-    marginTop: height * 0.05,
+    marginTop: height * 0.03,
     padding: width * 0.02,
     resizeMode: "contain",
   },

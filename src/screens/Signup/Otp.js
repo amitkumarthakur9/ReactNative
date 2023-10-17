@@ -60,7 +60,7 @@ export default Otp = ({ navigation }) => {
         <View style={styles.otpContainer}>
           <Ionicons
             name="arrow-back"
-            size={width * 0.06}
+            size={width * 0.08}
             color="rgba(56, 102, 100, 1)"
             onPress={() => navigation.goBack()}
             style={{ marginBottom: height * 0.03 }}
@@ -121,10 +121,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   otpContainer: {
-    left: "50%",
-    width: width * 0.9,
-    marginLeft: -width * 0.45,
-    marginTop: height * 0.1,
+    // left: "50%",
+    // width: width * 0.9,
+    // marginLeft: -width * 0.45,
+    // marginTop: height * 0.1,
+    marginTop: height * 0.05,
+    padding: width * 0.05,
   },
   header: {
     color: "rgba(2, 48, 71, 1)",

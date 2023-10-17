@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   contentContainer: {
-    marginTop: height * 0.1,
     padding: width * 0.02,
     resizeMode: "contain",
   },

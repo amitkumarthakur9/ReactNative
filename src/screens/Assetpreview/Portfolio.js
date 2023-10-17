@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     borderWidth: width * 0.002,
     borderRadius: width * 0.045,
     borderColor: "rgb(230, 230, 230)",
-    elevation: width * 0.02,
+    elevation: width * 0.01,
     marginBottom: height * 0.005,
   },
   Trend: {

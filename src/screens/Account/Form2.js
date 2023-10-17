@@ -25,11 +25,8 @@ const Form2 = () => {
       <Text style={styles.header}>Account Details</Text>
       <TextInput
         mode="outlined"
-        label={
-          <Text style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}>
-            Account Number
-          </Text>
-        }
+        placeholder="Account Number"
+        placeholderTextColor="rgb(191, 191, 191)"
         value={accountNumber}
         onChangeText={(e) => setAccountNumber(e)}
         style={[styles.input]}
@@ -76,11 +73,8 @@ const Form2 = () => {
 
       <TextInput
         mode="outlined"
-        label={
-          <Text style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}>
-            Bank IFSC Code
-          </Text>
-        }
+        placeholder="Bank IFSC Code"
+        placeholderTextColor="rgb(191, 191, 191)"
         value={ifsc}
         onChangeText={(e) => setIfsc(e)}
         style={[styles.input, { marginBottom: height * 0.03 }]}

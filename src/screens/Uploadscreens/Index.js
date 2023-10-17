@@ -19,7 +19,7 @@ export default Uploadscreens = ({ navigation }) => {
           <Ionicons
             style={styles.iconArrow}
             name="arrow-back"
-            size={30}
+            size={width * 0.08}
             color="white"
             onPress={() => navigation.goBack()}
           />
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     flexDirection: "row",
-    marginTop: 70,
+    marginTop: height * 0.09,
     paddingLeft: width * 0.04,
     position: "absolute",
   },

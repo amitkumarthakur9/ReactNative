@@ -42,7 +42,7 @@ const Navigatescreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.push("Corpus")}>
             <View style={styles.buttonContainer}>
               <Image
                 source={require("../../../assets/navigateScreens/image6.png")}

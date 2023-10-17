@@ -45,81 +45,85 @@ const Goal = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Goals" />
-      <View style={styles.contentContainer}>
-        <Image
-          source={require("../../../assets/Goal/1.png")}
-          style={styles.circleImage}
-        />
-        <TouchableOpacity style={styles.circleContainer}>
+      <Header title="Goals" showPlusSign={true} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.contentContainer}>
           <Image
-            source={require("../../../assets/Goal/profile.png")}
-            style={styles.profileImage}
+            source={require("../../../assets/Goal/1.png")}
+            style={styles.circleImage}
           />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.mobileImagecircleContainer}>
-          <Image
-            source={require("../../../assets/Goal/mobile.png")}
-            style={styles.mobileImage}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tripImagecircleContainer}>
-          <Image
-            source={require("../../../assets/Goal/trip.png")}
-            style={styles.tripImage}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.homeImagecircleContainer}>
-          <Image
-            source={require("../../../assets/Goal/Home.png")}
-            style={styles.homeImage}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.educationImagecircleContainer}
-          onPress={() => navigation.navigate("Education")}
-        >
-          <Image
-            source={require("../../../assets/Goal/education.png")}
-            style={styles.educationImage}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.sliderContainer}>
-        <ScrollView
-          ref={scrollViewRef}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onMomentumScrollEnd={(event) => {
-            const slide = Math.floor(event.nativeEvent.contentOffset.x / width);
-            setActiveSlide(slide);
-          }}
-        >
-          {contentItems.map((item, index) => (
-            <View key={index} style={styles.slider}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.desc}>{item.desc}</Text>
-            </View>
-          ))}
-        </ScrollView>
-        <View style={styles.pagination}>
-          {contentItems.map((_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.dot,
-                {
-                  backgroundColor:
-                    index === activeSlide
-                      ? "rgba(0, 53, 102, 1)"
-                      : "rgba(33, 158, 188, 0.09)",
-                },
-              ]}
+          <TouchableOpacity style={styles.circleContainer}>
+            <Image
+              source={require("../../../assets/Goal/profile.png")}
+              style={styles.profileImage}
             />
-          ))}
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.mobileImagecircleContainer}>
+            <Image
+              source={require("../../../assets/Goal/mobile.png")}
+              style={styles.mobileImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tripImagecircleContainer}>
+            <Image
+              source={require("../../../assets/Goal/trip.png")}
+              style={styles.tripImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.homeImagecircleContainer}>
+            <Image
+              source={require("../../../assets/Goal/Home.png")}
+              style={styles.homeImage}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.educationImagecircleContainer}
+            onPress={() => navigation.navigate("Education")}
+          >
+            <Image
+              source={require("../../../assets/Goal/education.png")}
+              style={styles.educationImage}
+            />
+          </TouchableOpacity>
         </View>
-      </View>
+        <View style={styles.sliderContainer}>
+          <ScrollView
+            ref={scrollViewRef}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onMomentumScrollEnd={(event) => {
+              const slide = Math.floor(
+                event.nativeEvent.contentOffset.x / width
+              );
+              setActiveSlide(slide);
+            }}
+          >
+            {contentItems.map((item, index) => (
+              <View key={index} style={styles.slider}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.desc}>{item.desc}</Text>
+              </View>
+            ))}
+          </ScrollView>
+          <View style={styles.pagination}>
+            {contentItems.map((_, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.dot,
+                  {
+                    backgroundColor:
+                      index === activeSlide
+                        ? "rgba(0, 53, 102, 1)"
+                        : "rgba(33, 158, 188, 0.09)",
+                  },
+                ]}
+              />
+            ))}
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -130,11 +134,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    position: "relative",
     justifyContent: "center",
     alignItems: "center",
-    resizeMode: "contain",
-    marginTop: -height * 0.01,
+    bottom: 0,
   },
   circleImage: {
     alignSelf: "center",
@@ -144,8 +146,6 @@ const styles = StyleSheet.create({
   profileImage: {
     width: width * 0.21,
     height: width * 0.21,
-    justifyContent: "center",
-    alignItems: "center",
   },
   circleContainer: {
     position: "absolute",
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.03,
   },
   sliderContainer: {
-    marginTop: -height * 0.08,
+    bottom: height * 0.08,
   },
 });
 

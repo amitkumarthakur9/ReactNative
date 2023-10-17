@@ -1,10 +1,11 @@
-import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 export default Header = (Props) => {
+  const { title, showPlusSign } = Props;
   const navigation = useNavigation();
   return (
     <View>
@@ -17,11 +18,15 @@ export default Header = (Props) => {
             onPress={() => navigation.goBack()}
             style={styles.item}
           />
-          <Text style={[styles.item, styles.goal]}>{Props.title}</Text>
-          <Image
-            source={require("../../../assets/Goal/plus.png")}
-            style={[styles.plusImage]}
-          />
+          <Text style={[styles.item, styles.goal]}>{title}</Text>
+          {showPlusSign && (
+            <TouchableOpacity onPress={() => navigation.push("Goalform")}>
+              <Image
+                source={require("../../../assets/Goal/plus.png")}
+                style={[styles.plusImage]}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>

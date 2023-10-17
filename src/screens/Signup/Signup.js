@@ -108,7 +108,7 @@ export default Signup = ({ navigation }) => {
 
           <Text></Text>
         </View>
-        <Text style={styles.alreayRegistered}>
+        {/* <Text style={styles.alreayRegistered}>
           Already registered ?{" "}
           <Text
             style={{
@@ -119,8 +119,8 @@ export default Signup = ({ navigation }) => {
           >
             Sign In
           </Text>
-        </Text>
-        <Footer />
+        </Text> */}
+        {/* <Footer /> */}
       </View>
     );
   }

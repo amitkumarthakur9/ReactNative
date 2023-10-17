@@ -17,6 +17,8 @@ import Navigatescreens from "./src/screens/Navigatescreens/Index";
 import Index from "./src/screens/Components/Index";
 import Education from "./src/screens/Goal/Education";
 import Upload from "./src/screens/Uploadscreens/Index";
+import Corpus from "./src/screens/Corpusscreens/Index";
+import Goalform from "./src/screens/Goalsscreens/Index";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +46,8 @@ export default function App() {
         <Stack.Screen name="Index" component={Index} />
         <Stack.Screen name="Education" component={Education} />
         <Stack.Screen name="Upload" component={Upload} />
+        <Stack.Screen name="Corpus" component={Corpus} />
+        <Stack.Screen name="Goalform" component={Goalform} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>

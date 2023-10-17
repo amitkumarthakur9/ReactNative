@@ -33,7 +33,7 @@ const Accountpagination = ({ data }) => {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    marginTop: height * 0.1,
+    // marginTop: height * 0.1,
   },
   header: {
     color: "rgba(2, 48, 71, 1)",

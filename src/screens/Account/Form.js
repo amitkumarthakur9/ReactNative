@@ -91,11 +91,8 @@ const Form = ({ data }) => {
           <Text style={styles.header}>About</Text>
           <TextInput
             mode="outlined"
-            label={
-              <Text style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}>
-                Full Name
-              </Text>
-            }
+            placeholder="Full Name"
+            placeholderTextColor="rgb(191, 191, 191)"
             value={fullName}
             onChangeText={(e) => setFullName(e)}
             style={[styles.input, { marginBottom: height * 0.005 }]}
@@ -106,11 +103,8 @@ const Form = ({ data }) => {
 
           <TextInput
             mode="outlined"
-            label={
-              <Text style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}>
-                Occupation
-              </Text>
-            }
+            placeholder="Occupation"
+            placeholderTextColor="rgb(191, 191, 191)"
             value={occupation}
             onChangeText={(e) => setOccupation(e)}
             style={[styles.input, { marginBottom: height * 0.01 }]}
@@ -122,13 +116,8 @@ const Form = ({ data }) => {
           <TouchableOpacity onPress={handleDatePress}>
             <TextInput
               mode="outlined"
-              label={
-                <Text
-                  style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}
-                >
-                  Date Of Birth
-                </Text>
-              }
+              placeholder="Date Of Birth"
+              placeholderTextColor="rgb(191, 191, 191)"
               value={date.toDateString()}
               editable={false}
               style={[styles.input, { marginBottom: height * 0.005 }]}
@@ -152,11 +141,8 @@ const Form = ({ data }) => {
           </Text>
           <TextInput
             mode="outlined"
-            label={
-              <Text style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}>
-                Mobile Number
-              </Text>
-            }
+            placeholder="Mobile Number"
+            placeholderTextColor="rgb(191, 191, 191)"
             value={mobile}
             onChangeText={(e) => setMobile(e)}
             style={[styles.input, { marginBottom: height * 0.005 }]}
@@ -167,11 +153,8 @@ const Form = ({ data }) => {
           />
           <TextInput
             mode="outlined"
-            label={
-              <Text style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}>
-                Email
-              </Text>
-            }
+            placeholder="Email"
+            placeholderTextColor="rgb(191, 191, 191)"
             value={email}
             onChangeText={(e) => setEmail(e)}
             style={styles.input}
@@ -335,7 +318,7 @@ const Form = ({ data }) => {
 
 const styles = StyleSheet.create({
   formContainer: {
-    marginTop: height * 0.01,
+    // marginTop: height * 0.01,
   },
   desc: {
     color: "rgba(2, 48, 71, 1)",

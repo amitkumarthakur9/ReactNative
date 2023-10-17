@@ -7,6 +7,7 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import { height, width } from "../../Dimension";
 import Header from "../Components/Header";
@@ -17,8 +18,8 @@ import { Card, Avatar, Button } from "react-native-paper";
 export default Education = () => {
   return (
     <View style={styles.container}>
+      <Header title="Education" showPlusSign={true} />
       <ScrollView>
-        <Header title="Education" />
         <View style={styles.contentContainer}>
           <View style={styles.chartItem}>
             <View style={styles.profileImageContainer}>
@@ -80,7 +81,12 @@ export default Education = () => {
               <Text style={styles.amount}> ₹ 80.4k</Text>
               <Text style={styles.percentOf}> 20% of 2L </Text>
             </View>
-            <View style={styles.fundDetails}>
+            {/* <View
+              style={[
+                styles.fundDetails,
+                { borderLeftColor: "rgba(220, 110, 216, 1)" },
+              ]}
+            >
               <Text style={styles.fundName}>Axis Multi Cap...</Text>
               <Text style={styles.fundAmount}> ₹ 20.4k</Text>
               <View style={{ flexDirection: "row" }}>
@@ -90,7 +96,12 @@ export default Education = () => {
                 </Text>
               </View>
             </View>
-            <View style={styles.fundDetails}>
+            <View
+              style={[
+                styles.fundDetails,
+                { borderLeftColor: "rgba(232, 193, 135, 1)" },
+              ]}
+            >
               <Text style={styles.fundName}>Axis Multi Cap...</Text>
               <Text style={styles.fundAmount}> ₹ 20.4k</Text>
               <View style={{ flexDirection: "row" }}>
@@ -100,7 +111,14 @@ export default Education = () => {
                 </Text>
               </View>
             </View>
-            <View style={styles.fundDetails}>
+            <View
+              style={[
+                styles.fundDetails,
+                {
+                  borderLeftColor: "rgba(169, 190, 244, 1)",
+                },
+              ]}
+            >
               <Text style={styles.fundName}>Axis Multi Cap...</Text>
               <Text style={styles.fundAmount}> ₹ 20.4k</Text>
               <View style={{ flexDirection: "row" }}>
@@ -109,112 +127,162 @@ export default Education = () => {
                   15% <Fontisto name="angle-up" />
                 </Text>
               </View>
-            </View>
+            </View> */}
           </View>
         </View>
-        <View style={styles.recommended}>
-          <Text style={styles.recommendedHeader}>Recommended Investments</Text>
+        <View style={styles.your}>
+          <Text style={styles.yourHeader}> Your Investment</Text>
           <View style={styles.cart}>
-            <Card style={styles.individualCarts}>
-              <Avatar.Image
-                size={width * 0.2}
-                source={require("../../../assets/icon.png")}
-                style={{ alignSelf: "center" }}
-              />
-              <Card.Content>
-                <Text variant="titleLarge" style={styles.cardTitle}>
-                  Axis Multicap Gowth Fund
-                </Text>
-                <Text variant="bodyMedium" style={styles.cardDesc}>
-                  Lorem impsome delmonto elsondn oklsdoliston amdelo toydj
-                  jojsdojf osjko.
-                </Text>
-                <View style={styles.cardDetailsContainer}>
-                  <Text style={styles.cardDetails}>Risk</Text>
-                  <Text style={styles.cardDetails}>Moderate</Text>
+            <View style={styles.individualCarts}>
+              <ImageBackground
+                source={require("../../../assets/Goal/rectengal.png")}
+              >
+                <Image
+                  source={require("../../../assets/Goal/sideImage.png")}
+                  style={styles.sideImage}
+                />
+                <Image
+                  source={require("../../../assets/Goal/rectengal2.png")}
+                  style={styles.rectengal2}
+                />
+                <View style={styles.investmentContainer}>
+                  <View style={styles.flexRow}>
+                    <Avatar.Image
+                      size={width * 0.2}
+                      source={require("../../../assets/icon.png")}
+                      style={{ marginTop: height * 0.01 }}
+                    />
+                    <Text style={styles.investmentHeader}>
+                      Axis Multicap Growth Fund
+                    </Text>
+                  </View>
+                  <View style={[styles.flexRow, { marginLeft: width * 0.02 }]}>
+                    <Text style={styles.descHeader}>Current</Text>
+                    <Text style={styles.descHeader}>Goal</Text>
+                    <Text style={styles.descHeader}>Gain</Text>
+                  </View>
+                  <View style={[styles.flexRow, { marginLeft: width * 0.02 }]}>
+                    <Text style={styles.descValue}> ₹ 80.4k</Text>
+                    <Text style={styles.descValue}>₹ 10</Text>
+                    <Text style={styles.descValue}>3.8%</Text>
+                  </View>
                 </View>
-                <View style={styles.cardDetailsContainer}>
-                  <Text style={styles.cardDetailsValue}>Returns</Text>
-                  <Text
-                    style={[
-                      styles.cardDetailsValue,
-                      { color: "rgba(61, 193, 84, 1)" },
-                    ]}
-                  >
-                    32.8%
-                  </Text>
+              </ImageBackground>
+            </View>
+          </View>
+          <View style={styles.cart}>
+            <View style={styles.individualCarts}>
+              <ImageBackground
+                source={require("../../../assets/Goal/rectengal.png")}
+              >
+                <Image
+                  source={require("../../../assets/Goal/sideImage.png")}
+                  style={styles.sideImage}
+                />
+                <Image
+                  source={require("../../../assets/Goal/rectengal2.png")}
+                  style={styles.rectengal2}
+                />
+                <View style={styles.investmentContainer}>
+                  <View style={styles.flexRow}>
+                    <Avatar.Image
+                      size={width * 0.2}
+                      source={require("../../../assets/icon.png")}
+                      style={{ marginTop: height * 0.01 }}
+                    />
+                    <Text style={styles.investmentHeader}>
+                      Axis Multicap Growth Fund
+                    </Text>
+                  </View>
+                  <View style={[styles.flexRow, { marginLeft: width * 0.02 }]}>
+                    <Text style={styles.descHeader}>Current</Text>
+                    <Text style={styles.descHeader}>Goal</Text>
+                    <Text style={styles.descHeader}>Gain</Text>
+                  </View>
+                  <View style={[styles.flexRow, { marginLeft: width * 0.02 }]}>
+                    <Text style={styles.descValue}> ₹ 80.4k</Text>
+                    <Text style={styles.descValue}>₹ 10</Text>
+                    <Text style={styles.descValue}>3.8%</Text>
+                  </View>
                 </View>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    mode="contained"
-                    style={[styles.buttonStyle, { backgroundColor: "white" }]}
-                    labelStyle={styles.labelStyle}
-                  >
-                    Know More
-                  </Button>
-                  <Button
-                    mode="contained"
-                    style={[
-                      styles.buttonStyle,
-                      { backgroundColor: "rgba(2, 48, 71, 1)" },
-                    ]}
-                    labelStyle={[styles.labelStyle, { color: "white" }]}
-                  >
-                    Invest
-                  </Button>
+              </ImageBackground>
+            </View>
+          </View>
+          <View style={styles.cart}>
+            <View style={styles.individualCarts}>
+              <ImageBackground
+                source={require("../../../assets/Goal/rectengal.png")}
+              >
+                <Image
+                  source={require("../../../assets/Goal/sideImage.png")}
+                  style={styles.sideImage}
+                />
+                <Image
+                  source={require("../../../assets/Goal/rectengal2.png")}
+                  style={styles.rectengal2}
+                />
+                <View style={styles.investmentContainer}>
+                  <View style={styles.flexRow}>
+                    <Avatar.Image
+                      size={width * 0.2}
+                      source={require("../../../assets/icon.png")}
+                      style={{ marginTop: height * 0.01 }}
+                    />
+                    <Text style={styles.investmentHeader}>
+                      Axis Multicap Growth Fund
+                    </Text>
+                  </View>
+                  <View style={[styles.flexRow, { marginLeft: width * 0.02 }]}>
+                    <Text style={styles.descHeader}>Current</Text>
+                    <Text style={styles.descHeader}>Goal</Text>
+                    <Text style={styles.descHeader}>Gain</Text>
+                  </View>
+                  <View style={[styles.flexRow, { marginLeft: width * 0.02 }]}>
+                    <Text style={styles.descValue}> ₹ 80.4k</Text>
+                    <Text style={styles.descValue}>₹ 10</Text>
+                    <Text style={styles.descValue}>3.8%</Text>
+                  </View>
                 </View>
-              </Card.Content>
-            </Card>
-            <Card style={styles.individualCarts}>
-              <Avatar.Image
-                size={width * 0.2}
-                source={require("../../../assets/icon.png")}
-                style={{ alignSelf: "center" }}
-              />
-              <Card.Content>
-                <Text variant="titleLarge" style={styles.cardTitle}>
-                  Axis Multicap Gowth Fund
-                </Text>
-                <Text variant="bodyMedium" style={styles.cardDesc}>
-                  Lorem impsome delmonto elsondn oklsdoliston amdelo toydj
-                  jojsdojf osjko.
-                </Text>
-                <View style={styles.cardDetailsContainer}>
-                  <Text style={styles.cardDetails}>Risk</Text>
-                  <Text style={styles.cardDetails}>Moderate</Text>
+              </ImageBackground>
+            </View>
+          </View>
+          <View style={styles.cart}>
+            <View style={styles.individualCarts}>
+              <ImageBackground
+                source={require("../../../assets/Goal/rectengal.png")}
+              >
+                <Image
+                  source={require("../../../assets/Goal/sideImage.png")}
+                  style={styles.sideImage}
+                />
+                <Image
+                  source={require("../../../assets/Goal/rectengal2.png")}
+                  style={styles.rectengal2}
+                />
+                <View style={styles.investmentContainer}>
+                  <View style={styles.flexRow}>
+                    <Avatar.Image
+                      size={width * 0.2}
+                      source={require("../../../assets/icon.png")}
+                      style={{ marginTop: height * 0.01 }}
+                    />
+                    <Text style={styles.investmentHeader}>
+                      Axis Multicap Growth Fund
+                    </Text>
+                  </View>
+                  <View style={[styles.flexRow, { marginLeft: width * 0.02 }]}>
+                    <Text style={styles.descHeader}>Current</Text>
+                    <Text style={styles.descHeader}>Goal</Text>
+                    <Text style={styles.descHeader}>Gain</Text>
+                  </View>
+                  <View style={[styles.flexRow, { marginLeft: width * 0.02 }]}>
+                    <Text style={styles.descValue}> ₹ 80.4k</Text>
+                    <Text style={styles.descValue}>₹ 10</Text>
+                    <Text style={styles.descValue}>3.8%</Text>
+                  </View>
                 </View>
-                <View style={styles.cardDetailsContainer}>
-                  <Text style={styles.cardDetailsValue}>Returns</Text>
-                  <Text
-                    style={[
-                      styles.cardDetailsValue,
-                      { color: "rgba(61, 193, 84, 1)" },
-                    ]}
-                  >
-                    32.8%
-                  </Text>
-                </View>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    mode="contained"
-                    style={[styles.buttonStyle, { backgroundColor: "white" }]}
-                    labelStyle={styles.labelStyle}
-                  >
-                    Know More
-                  </Button>
-                  <Button
-                    mode="contained"
-                    style={[
-                      styles.buttonStyle,
-                      { backgroundColor: "rgba(2, 48, 71, 1)" },
-                    ]}
-                    labelStyle={[styles.labelStyle, { color: "white" }]}
-                  >
-                    Invest
-                  </Button>
-                </View>
-              </Card.Content>
-            </Card>
+              </ImageBackground>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -225,6 +293,7 @@ export default Education = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
+    flex: 1,
   },
   contentContainer: {
     marginTop: height * 0.04,
@@ -308,7 +377,6 @@ const styles = StyleSheet.create({
   fundDetails: {
     marginTop: height * 0.02,
     borderLeftWidth: width * 0.01,
-    borderLeftColor: "rgba(234, 162, 236, 1)",
     padding: width * 0.02,
   },
   fundpercentOf: {
@@ -324,28 +392,25 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.02,
     fontWeight: "500",
   },
-  recommended: {
+  your: {
     marginTop: height * 0.07,
   },
-  recommendedHeader: {
+  yourHeader: {
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.045,
     lineHeight: height * 0.035,
     fontWeight: "600",
+    left: width * 0.05,
   },
   cart: {
-    flexDirection: "row",
+    flexDirection: "column",
   },
   individualCarts: {
-    width: width * 0.7,
-    margin: height * 0.02,
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: width * 0.002,
-    borderRadius: width * 0.04,
-    borderColor: "rgba(0, 0, 0, 0.15)",
-    paddingTop: width * 0.05,
+    margin: height * 0.01,
+    // backgroundColor: "white",
+    // borderWidth: width * 0.002,
+    // borderRadius: width * 0.04,
+    // borderColor: "rgba(0, 0, 0, 0.15)",
   },
   cardTitle: {
     marginTop: height * 0.02,
@@ -408,5 +473,50 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.02,
     fontWeight: "500",
     textAlign: "center",
+  },
+  sideImage: {
+    height: height * 0.2,
+    resizeMode: "contain",
+    left: -width * 0.02,
+  },
+  investmentContainer: {
+    position: "absolute",
+    marginLeft: width * 0.08,
+  },
+  investmentHeader: {
+    color: "rgba(2, 48, 71, 1)",
+    fontWeight: "600",
+    fontSize: width * 0.045,
+    lineHeight: height * 0.035,
+    margin: width * 0.05,
+    width: width * 0.45,
+  },
+  flexRow: {
+    flexDirection: "row",
+  },
+  rectengal2: {
+    position: "absolute",
+    height: height * 0.18,
+    resizeMode: "contain",
+    right: -width * 0.14,
+    top: -height * 0.03,
+    zIndex: -1,
+  },
+  descHeader: {
+    marginLeft: width * 0.01,
+    color: "rgba(0, 0, 0, 1)",
+    lineHeight: height * 0.025,
+    fontSize: width * 0.035,
+    fontWeight: "500",
+    opacity: 0.3,
+    flex: 1,
+  },
+  descValue: {
+    marginLeft: width * 0.01,
+    color: "rgba(73, 69, 79, 1)",
+    lineHeight: height * 0.025,
+    fontSize: width * 0.035,
+    fontWeight: "600",
+    flex: 1,
   },
 });
