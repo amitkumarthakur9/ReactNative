@@ -76,13 +76,13 @@ const Navigatescreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.push("Index")}>
+          <TouchableOpacity onPress={() => navigation.push("Dashboard")}>
             <View style={styles.buttonContainer}>
               {/* <Image
               source={require("../../../assets/navigateScreens/image7.png")}
               style={styles.imageD}
             /> */}
-              <Text style={styles.textD}>Navigate Goal Screens</Text>
+              <Text style={styles.textD}>Navigate Dashboard</Text>
             </View>
           </TouchableOpacity>
 
@@ -93,6 +93,16 @@ const Navigatescreen = ({ navigation }) => {
               style={styles.imageD}
             /> */}
               <Text style={styles.textD}>Navigate Account Screens</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.push("Goal")}>
+            <View style={styles.buttonContainer}>
+              {/* <Image
+              source={require("../../../assets/navigateScreens/image7.png")}
+              style={styles.imageD}
+            /> */}
+              <Text style={styles.textD}>Navigate Goal Dashboard</Text>
             </View>
           </TouchableOpacity>
         </View>

@@ -2,8 +2,14 @@
   "expo": {
     "name": "growthvine",
     "slug": "growthvine",
-	"plugins": ["@react-native-google-signin/google-signin","@react-native-firebase/app", "@react-native-firebase/auth", "@react-native-firebase/perf",
-      "@react-native-firebase/crashlytics","expo-image-picker"],
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-firebase/perf",
+      "@react-native-firebase/crashlytics",
+      "expo-image-picker"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,7 +18,7 @@
       "image": "./assets/splash1.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff",
-	   "duration": 3000 // Set the duration in milliseconds (e.g., 3000ms = 3 seconds)
+      "duration": 3000
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,12 +27,15 @@
       "supportsTablet": true
     },
     "android": {
-	"googleServicesFile": "./google-services.json",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.amitthakur.growthvine"
+      "package": "com.amitthakur.growthvine",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

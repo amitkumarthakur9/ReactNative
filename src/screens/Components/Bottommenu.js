@@ -1,20 +1,140 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Text, Image, View } from "react-native";
+import {
+  Text,
+  Image,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import { height, width } from "../../Dimension";
 import Goal from "../Goal/Index";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
+import { Ionicons, EvilIcons } from "@expo/vector-icons";
+import Menunavigator from "../Dashboard/Menunavigator";
 
 const Tab = createBottomTabNavigator();
 
-const Home = () => <Text style={{ marginTop: 100 }}>amit</Text>;
+// function Feed() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+//       <Text>Feed Screen</Text>
+//     </View>
+//   );
+// }
+
+// function Article() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+//       <Text>Article Screen</Text>
+//     </View>
+//   );
+// }
+
+const Drawer = createDrawerNavigator();
+
+// function Home() {
+//   return (
+//     <Drawer.Navigator
+//       initialRouteName="Feed"
+//       screenOptions={{
+//         headerTitle: "Hello, Sumesh!",
+//         headerBackground: () => (
+//           <ImageBackground
+//             source={require("../../../assets/icons/header.png")}
+//             style={{ width: width, height: height * 0.29 }}
+//             resizeMode="stretch"
+//           >
+//             <View
+//               style={{
+//                 flexDirection: "row",
+//                 alignSelf: "flex-end",
+//                 marginTop: height * 0.1,
+//                 marginRight: 20,
+//               }}
+//             >
+//               <TouchableOpacity style={{ marginLeft: 10 }}>
+//                 <EvilIcons name="search" size={24} color="white" />
+//               </TouchableOpacity>
+//               <TouchableOpacity style={{ marginLeft: 10 }}>
+//                 <Ionicons
+//                   name="notifications-outline"
+//                   size={24}
+//                   color="white"
+//                 />
+//               </TouchableOpacity>
+//             </View>
+//           </ImageBackground>
+//         ),
+//         headerStyle: {
+//           height: height * 0.17,
+//         },
+//         headerTitleStyle: {
+//           color: "yellow",
+//         },
+//       }}
+//     >
+//       <Drawer.Screen name="Feed" component={Feed} />
+//       <Drawer.Screen name="Article" component={Article} />
+//     </Drawer.Navigator>
+//   );
+// }
+
+// function Notifications() {
+//   return (
+//     <Drawer.Navigator
+//       screenOptions={{
+//         headerTitle: "Hello, Sumesh!",
+//         headerBackground: () => (
+//           <ImageBackground
+//             source={require("../../../assets/icons/header.png")}
+//             style={{ width: width, height: height * 0.29 }}
+//             resizeMode="stretch"
+//           >
+//             <View
+//               style={{
+//                 flexDirection: "row",
+//                 alignSelf: "flex-end",
+//                 marginTop: height * 0.1,
+//               }}
+//             >
+//               <TouchableOpacity style={{ marginLeft: 10 }}>
+//                 <EvilIcons name="search" size={24} color="white" />
+//               </TouchableOpacity>
+//               <TouchableOpacity style={{ marginLeft: 10 }}>
+//                 <Ionicons
+//                   name="notifications-outline"
+//                   size={24}
+//                   color="white"
+//                 />
+//               </TouchableOpacity>
+//             </View>
+//           </ImageBackground>
+//         ),
+//         headerStyle: {
+//           height: height * 0.17,
+//         },
+//         headerTitleStyle: {
+//           color: "yellow",
+//         },
+//       }}
+//     >
+//       <Drawer.Screen name="Feed" component={Feed} />
+//       <Drawer.Screen name="Article" component={Article} />
+//     </Drawer.Navigator>
+//   );
+// }
+
+const Home1 = () => <Text style={{ marginTop: 100 }}>amit</Text>;
 const Notifications = () => <Text>amit</Text>;
 const Profile = () => <Text>amit</Text>;
 const Profiles = () => <Text>amit</Text>;
 const Profiless = () => <Text>amit</Text>;
 
-const Footer = () => {
+const Menu = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="TabHome"
       screenOptions={{
         tabBarActiveTintColor: "rgba(2, 48, 71, 1)",
         tabBarInactiveTintColor: "rgba(202, 196, 208, 1)",
@@ -36,8 +156,8 @@ const Footer = () => {
       }}
     >
       <Tab.Screen
-        name="Home"
-        component={Goal}
+        name="TabHome"
+        component={Menunavigator}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size, focused }) => {
@@ -176,4 +296,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default Menu;
