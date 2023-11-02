@@ -11,119 +11,12 @@ import Goal from "../Goal/Index";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons, EvilIcons } from "@expo/vector-icons";
-import Menunavigator from "../Dashboard/Menunavigator";
+import Home from "../Dashboard/Home";
+import Explore from "../Dashboard/Explore";
 
 const Tab = createBottomTabNavigator();
 
-// function Feed() {
-//   return (
-//     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//       <Text>Feed Screen</Text>
-//     </View>
-//   );
-// }
-
-// function Article() {
-//   return (
-//     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-//       <Text>Article Screen</Text>
-//     </View>
-//   );
-// }
-
 const Drawer = createDrawerNavigator();
-
-// function Home() {
-//   return (
-//     <Drawer.Navigator
-//       initialRouteName="Feed"
-//       screenOptions={{
-//         headerTitle: "Hello, Sumesh!",
-//         headerBackground: () => (
-//           <ImageBackground
-//             source={require("../../../assets/icons/header.png")}
-//             style={{ width: width, height: height * 0.29 }}
-//             resizeMode="stretch"
-//           >
-//             <View
-//               style={{
-//                 flexDirection: "row",
-//                 alignSelf: "flex-end",
-//                 marginTop: height * 0.1,
-//                 marginRight: 20,
-//               }}
-//             >
-//               <TouchableOpacity style={{ marginLeft: 10 }}>
-//                 <EvilIcons name="search" size={24} color="white" />
-//               </TouchableOpacity>
-//               <TouchableOpacity style={{ marginLeft: 10 }}>
-//                 <Ionicons
-//                   name="notifications-outline"
-//                   size={24}
-//                   color="white"
-//                 />
-//               </TouchableOpacity>
-//             </View>
-//           </ImageBackground>
-//         ),
-//         headerStyle: {
-//           height: height * 0.17,
-//         },
-//         headerTitleStyle: {
-//           color: "yellow",
-//         },
-//       }}
-//     >
-//       <Drawer.Screen name="Feed" component={Feed} />
-//       <Drawer.Screen name="Article" component={Article} />
-//     </Drawer.Navigator>
-//   );
-// }
-
-// function Notifications() {
-//   return (
-//     <Drawer.Navigator
-//       screenOptions={{
-//         headerTitle: "Hello, Sumesh!",
-//         headerBackground: () => (
-//           <ImageBackground
-//             source={require("../../../assets/icons/header.png")}
-//             style={{ width: width, height: height * 0.29 }}
-//             resizeMode="stretch"
-//           >
-//             <View
-//               style={{
-//                 flexDirection: "row",
-//                 alignSelf: "flex-end",
-//                 marginTop: height * 0.1,
-//               }}
-//             >
-//               <TouchableOpacity style={{ marginLeft: 10 }}>
-//                 <EvilIcons name="search" size={24} color="white" />
-//               </TouchableOpacity>
-//               <TouchableOpacity style={{ marginLeft: 10 }}>
-//                 <Ionicons
-//                   name="notifications-outline"
-//                   size={24}
-//                   color="white"
-//                 />
-//               </TouchableOpacity>
-//             </View>
-//           </ImageBackground>
-//         ),
-//         headerStyle: {
-//           height: height * 0.17,
-//         },
-//         headerTitleStyle: {
-//           color: "yellow",
-//         },
-//       }}
-//     >
-//       <Drawer.Screen name="Feed" component={Feed} />
-//       <Drawer.Screen name="Article" component={Article} />
-//     </Drawer.Navigator>
-//   );
-// }
 
 const Home1 = () => <Text style={{ marginTop: 100 }}>amit</Text>;
 const Notifications = () => <Text>amit</Text>;
@@ -157,7 +50,7 @@ const Menu = () => {
     >
       <Tab.Screen
         name="TabHome"
-        component={Menunavigator}
+        component={Home}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size, focused }) => {
@@ -212,8 +105,8 @@ const Menu = () => {
         }}
       />
       <Tab.Screen
-        name="explore"
-        component={Profile}
+        name="Explore"
+        component={Explore}
         options={{
           tabBarLabel: "Explore",
           tabBarIcon: ({ color, size }) => (
