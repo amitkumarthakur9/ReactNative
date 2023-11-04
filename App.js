@@ -20,6 +20,7 @@ import Corpus from "./src/screens/Corpusscreens/Index";
 import Goalform from "./src/screens/Goalsscreens/Index";
 import Goal from "./src/screens/Goal/Index";
 import Dashboard from "./src/screens/Dashboard/Index";
+import Portfolio from "./src/screens/Portfolio/Index";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +51,7 @@ export default function App() {
         <Stack.Screen name="Goalform" component={Goalform} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Goal" component={Goal} />
+        <Stack.Screen name="Portfolio" component={Portfolio} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>

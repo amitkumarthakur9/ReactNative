@@ -105,6 +105,15 @@ const Navigatescreen = ({ navigation }) => {
               <Text style={styles.textD}>Navigate Goal Dashboard</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.push("Portfolio")}>
+            <View style={styles.buttonContainer}>
+              {/* <Image
+              source={require("../../../assets/navigateScreens/image7.png")}
+              style={styles.imageD}
+            /> */}
+              <Text style={styles.textD}>Navigate Portfolio</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

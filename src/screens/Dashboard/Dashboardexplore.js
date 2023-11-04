@@ -6,6 +6,7 @@ import {
   Image,
   ImageBackground,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import {
   TextInput,
@@ -16,7 +17,6 @@ import {
 } from "react-native-paper";
 import { width, height } from "../../Dimension";
 import { Foundation, SimpleLineIcons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Dashboardexplore = () => {
   return (
@@ -106,7 +106,6 @@ const Dashboardexplore = () => {
             <Text style={styles.rightContent}>View all</Text>
           </View>
         </View>
-
         <View style={styles.trendingSchemesContainer}>
           <ImageBackground
             source={require("../../../assets/dashboard/topImage.png")}
@@ -236,10 +235,8 @@ const styles = StyleSheet.create({
   searchInput: {
     height: height * 0.05,
     marginTop: -height * 0.025,
-    textColor: "red",
   },
   contentStyle: {
-    color: "red",
     marginLeft: width * 0.02,
   },
   NfoContainer: {
@@ -337,7 +334,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: width * 0.03,
   },
-  trendingSchemesContainer: {},
+  trendingSchemesContainer: {
+    marginBottom: width * 0.05,
+  },
   flexItem: {
     margin: width * 0.04,
   },

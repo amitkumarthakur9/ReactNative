@@ -5,8 +5,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "react-native-paper";
 import Holdings from "./Holdings";
-import Overview from "./Overview";
-import Portfolio from "./Portfolio";
+import Analysis from "./Analysis";
+import Reports from "./Reports";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 const Tab = createMaterialTopTabNavigator();
@@ -23,9 +23,9 @@ export default Content = () => {
           },
         }}
       >
-        <Tab.Screen name="Overview" component={Overview} />
-        <Tab.Screen name="Portfolio" component={Portfolio} />
+        <Tab.Screen name="Analysis" component={Analysis} />
         <Tab.Screen name="Holdings" component={Holdings} />
+        <Tab.Screen name="Reports" component={Reports} />
       </Tab.Navigator>
     </View>
   );
@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
   tabContainer: {
     flex: 1,
     padding: width * 0.06,
-    marginTop: -height * 0.01,
+    marginTop: -height * 0.04,
   },
 });
