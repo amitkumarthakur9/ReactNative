@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ import {
 import { width, height } from "../../Dimension";
 import { Foundation, SimpleLineIcons } from "@expo/vector-icons";
 
-const Dashboardexplore = () => {
+const Dashboardexplore = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -29,6 +29,7 @@ const Dashboardexplore = () => {
           outlineStyle={{ borderRadius: width * 0.06, borderColor: "white" }}
           right={<TextInput.Icon icon="microphone" />}
           contentStyle={styles.contentStyle}
+          onFocus={(e) => navigation.push("Searchbox")}
         />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>

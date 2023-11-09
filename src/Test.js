@@ -1,74 +1,93 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button } from "react-native";
+import { createUser } from "./api/services/endpoints/userEndpoints";
 import {
-  GoogleSignin,
-  GoogleSigninButton,
-} from "@react-native-google-signin/google-signin";
-import auth from "@react-native-firebase/auth";
-import { width, height } from "../../Dimension";
+  searchFund,
+  Nfo,
+  Trendingschemes,
+} from "./api/services/endpoints/exploreEndpoints";
 
-export default Test = () => {
-  GoogleSignin.configure({
-    webClientId:
-      "707482261977-29se785gg5o3l51r7vnr6cp0pslvgh1f.apps.googleusercontent.com",
-  });
+const UserScreen = () => {
+  const [user, setUser] = useState(null);
 
-  // Set an initializing state whilst Firebase connects
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+  const handleLogin = () => {
+    // Create a new user
+    const newUser = {
+      //   action: "login",
+      //   email: "amitskumar15041995@gmail.com",
+      //   password: "Amit123@",
+      //   //   ifaLogin: false,
+      //   addedBy: 186100,
+      //   ref: "App",
+    };
 
-  // Handle user state changes
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
+    const jsonData = JSON.parse(JSON.stringify(newUser));
 
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
+    // console.log(jsonData.email);
 
-  const onGoogleButtonPress = async () => {
-    // Check if your device supports Google Play
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(googleCredential);
+    createUser(jsonData)
+      .then((response) => {
+        console.log("User data:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error login:", error);
+      });
   };
 
-  signOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await auth().signOut();
-    } catch (error) {
-      //console.error(error);
-    }
+  const handleSearch = () => {
+    const funddata = {
+      //   term: "aditya % 20birla",
+      //   optiontype: "GROWTH",
+    };
+
+    searchFund(funddata)
+      .then((response) => {
+        console.log("search data:", response.data);
+      })
+      .catch((error) => {
+        console.error("search failed:", error);
+      });
   };
 
-  if (initializing) return null;
+  const handleNfo = () => {
+    const funddata = {
+      //   term: "aditya % 20birla",
+      //   optiontype: "GROWTH",
+    };
 
-  if (!user) {
-    return (
-      <View
-        style={{ top: 300, justifyContent: "center", alignItems: "center" }}
-      >
-        <Text style={{ color: "red", fontWeight: "bold", textAlign: "center" }}>
-          this is sign in with google page
-        </Text>
-        <GoogleSigninButton onPress={onGoogleButtonPress} />
-      </View>
-    );
-  }
+    Nfo(funddata)
+      .then((response) => {
+        console.log("nfo data:", response.data);
+      })
+      .catch((error) => {
+        console.error("nfo failed:", error);
+      });
+  };
+
+  const handleTrendingSchemes = () => {
+    const funddata = {
+      //   term: "aditya % 20birla",
+      //   optiontype: "GROWTH",
+    };
+
+    Trendingschemes(funddata)
+      .then((response) => {
+        console.log("schemes data:", response.data);
+      })
+      .catch((error) => {
+        console.error("schemes failed:", error);
+      });
+  };
 
   return (
-    <View style={{ top: 300, justifyContent: "center", alignItems: "center" }}>
-      <Text>Welcome {user.email}</Text>
-      <Button title="Sign Out" onPress={signOut} />
+    <View style={{ marginTop: 100 }}>
+      <Button title="User Login" onPress={handleLogin} />
+
+      <Button title="search axis" onPress={handleSearch} />
+      <Button title="get Nfo" onPress={handleNfo} />
+      <Button title="Trending Schemes" onPress={handleTrendingSchemes} />
     </View>
   );
 };
+
+export default UserScreen;

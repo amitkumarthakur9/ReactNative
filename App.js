@@ -21,6 +21,8 @@ import Goalform from "./src/screens/Goalsscreens/Index";
 import Goal from "./src/screens/Goal/Index";
 import Dashboard from "./src/screens/Dashboard/Index";
 import Portfolio from "./src/screens/Portfolio/Index";
+import Searchbox from "./src/screens/Dashboard/Searchbox";
+import Test from "./src/Test";
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +54,8 @@ export default function App() {
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Goal" component={Goal} />
         <Stack.Screen name="Portfolio" component={Portfolio} />
+        <Stack.Screen name="Searchbox" component={Searchbox} />
+        <Stack.Screen name="Test" component={Test} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>
