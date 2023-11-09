@@ -16,11 +16,7 @@ import {
   Button,
   Avatar,
 } from "react-native-paper";
-import {
-  searchFund,
-  Nfo,
-  Trendingschemes,
-} from "../../api/services/endpoints/exploreEndpoints";
+import { searchFund } from "../../api/services/endpoints/exploreEndpoints";
 import { Foundation, SimpleLineIcons } from "@expo/vector-icons";
 
 export default Searchbox = () => {
@@ -28,11 +24,9 @@ export default Searchbox = () => {
   const [searchData, setSearchData] = useState();
   const handleSearch = (text) => {
     setSearch(text);
-    console.log(text);
     searchFund(text)
       .then((response) => {
         setSearchData(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.error("search data error:", error);
@@ -41,6 +35,24 @@ export default Searchbox = () => {
 
   const clearText = () => {
     setSearch("");
+  };
+
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <Foundation
+          key={i}
+          name="star"
+          size={width * 0.04}
+          style={[
+            styles.star,
+            { color: i <= rating ? "rgba(255, 195, 0, 1)" : "gray" },
+          ]}
+        />
+      );
+    }
+    return stars;
   };
 
   const renderItem = ({ item }) => {
@@ -68,42 +80,40 @@ export default Searchbox = () => {
         <View style={styles.trendCardContainer}>
           <View style={[styles.flexRow]}>
             <View style={styles.cagrContainer}>
-              <Text style={styles.cagr}>
-                CAGR (
-                {item.fiveYearReturns
-                  ? "5yr"
-                  : item.threeYearReturns
-                  ? "3yr"
-                  : item.oneYearReturns
-                  ? "1yr"
-                  : "N/A"}
-                )
-              </Text>
+              <Text style={styles.cagr}>1Y Return</Text>
               <Text style={styles.Cagrpercentage}>
-                {item.fiveYearReturns
-                  ? item.fiveYearReturns
-                  : item.threeYearReturns
-                  ? item.threeYearReturns
-                  : item.oneYearReturns
-                  ? item.oneYearReturns
+                {item.oneYearReturns
+                  ? item.oneYearReturns.toFixed(2) + "%"
+                  : "N/A"}
+              </Text>
+            </View>
+            <View style={styles.cagrContainer}>
+              <Text style={styles.cagr}>3Y Return</Text>
+              <Text style={styles.Cagrpercentage}>
+                {item.threeYearReturns
+                  ? item.threeYearReturns.toFixed(2) + "%"
                   : "N/A"}
               </Text>
             </View>
             <View style={styles.benchmarkContainer}>
+              <Text style={styles.cagr}>3Y Return</Text>
+              <Text style={styles.Cagrpercentage}>
+                {item.fiveYearReturns
+                  ? item.fiveYearReturns.toFixed(2) + "%"
+                  : "N/A"}
+              </Text>
+            </View>
+            {/* <View style={styles.benchmarkContainer}>
               <Text style={styles.benchmarkReturn}>
                 Benchmark Returns (5yr)
               </Text>
               <Text style={styles.benchmarkPercentage}> 20.2% </Text>
-            </View>
+            </View> */}
           </View>
-          <View
-            style={[
-              styles.flexRow,
-              { alignSelf: "center", alignItems: "center" },
-            ]}
-          >
-            <SimpleLineIcons name="speedometer" style={styles.speedIcon} />
-            <Text style={styles.riskText}>Very High Risk</Text>
+          <View style={[styles.flexRow, { alignSelf: "center" }]}>
+            {/* <SimpleLineIcons name="speedometer" style={styles.speedIcon} /> */}
+            {/* <Text style={styles.riskText}>Very High Risk</Text> */}
+            {renderStars(item.rating)}
           </View>
           <View style={styles.flexRow}>
             <TouchableOpacity style={styles.Button}>
@@ -155,7 +165,10 @@ export default Searchbox = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    backgroundColor: "white",
+    flex: 1,
+  },
   searchInput: {
     height: height * 0.05,
     marginTop: -height * 0.1,
@@ -201,6 +214,7 @@ const styles = StyleSheet.create({
     padding: width * 0.015,
     borderLeftWidth: 0,
     borderTopWidth: 0,
+    alignItems: "center",
   },
   cagr: {
     color: "rgba(0, 0, 0, 1)",
@@ -224,7 +238,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderRightWidth: 0,
     flex: 1,
-    alignItems: "flex-start",
+    // alignItems: "flex-start",
+    alignItems: "center",
   },
   benchmarkReturn: {
     color: "rgba(0, 0, 0, 1)",
@@ -272,5 +287,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: width * 0.037,
     fontWeight: "700",
+  },
+  star: {
+    marginTop: height * 0.02,
+    color: "rgba(255, 195, 0, 1)",
+    marginBottom: height * 0.01,
+    margin: width * 0.01,
   },
 });

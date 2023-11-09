@@ -7,7 +7,7 @@ export const searchFund = (fundName) => {
   );
 };
 
-export const Nfo = () => {
+export const TrendingNfo = () => {
   return apiClient.get(
     "app/mutualfund?action=getNFOFundsAddedBy&addedBy=186100"
   );
