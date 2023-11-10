@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -10,8 +10,19 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { Avatar } from "react-native-paper";
 import { width, height } from "../../Dimension";
+import { Userlogin } from "../../api/services/endpoints/userEndpoints";
 
 const Dashboardhome = () => {
+  useEffect(() => {
+    Userlogin()
+      .then((response) => {
+        // console.log(response.data);
+      })
+      .catch((error) => {
+        console.warn("login failed:", error);
+      });
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.cart}>
