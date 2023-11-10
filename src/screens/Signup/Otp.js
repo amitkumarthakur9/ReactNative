@@ -28,7 +28,7 @@ export default Otp = ({ navigation }) => {
       const stringOtp = otp.join("");
       const con = await confirmation.confirm(stringOtp);
       Alert.alert("Success", "You Have been Logged In Successfully");
-      navigation.push("Index");
+      navigation.push("Dashboard");
       //   console.log("success");
     } catch (error) {
       //   console.log("Invalid code.", error);
