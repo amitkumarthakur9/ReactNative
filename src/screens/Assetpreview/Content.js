@@ -11,7 +11,8 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 
 const Tab = createMaterialTopTabNavigator();
 
-export default Content = () => {
+export default Content = (props) => {
+  const Data = props.mfData;
   return (
     <View style={styles.tabContainer}>
       <Tab.Navigator
@@ -23,7 +24,11 @@ export default Content = () => {
           },
         }}
       >
-        <Tab.Screen name="Overview" component={Overview} />
+        <Tab.Screen
+          name="Overview"
+          component={Overview}
+          initialParams={{ mfData: Data }}
+        />
         <Tab.Screen name="Portfolio" component={Portfolio} />
         <Tab.Screen name="Holdings" component={Holdings} />
       </Tab.Navigator>
@@ -35,6 +40,6 @@ const styles = StyleSheet.create({
   tabContainer: {
     flex: 1,
     padding: width * 0.06,
-    marginTop: -height * 0.01,
+    marginTop: -height * 0.02,
   },
 });

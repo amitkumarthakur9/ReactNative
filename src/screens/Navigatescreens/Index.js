@@ -66,15 +66,15 @@ const Navigatescreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.push("Assetpreview")}>
+          {/* <TouchableOpacity onPress={() => navigation.push("Assetpreview")}>
             <View style={styles.buttonContainer}>
-              {/* <Image
+              <Image
               source={require("../../../assets/navigateScreens/image7.png")}
               style={styles.imageD}
-            /> */}
+            />
               <Text style={styles.textD}>Navigate Asset Preview</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity onPress={() => navigation.push("Dashboard")}>
             <View style={styles.buttonContainer}>

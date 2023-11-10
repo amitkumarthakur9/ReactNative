@@ -18,8 +18,9 @@ import {
 } from "react-native-paper";
 import { searchFund } from "../../api/services/endpoints/exploreEndpoints";
 import { Foundation, SimpleLineIcons } from "@expo/vector-icons";
+import Formatfundname from "../Components/Formatfundname";
 
-export default Searchbox = () => {
+export default Searchbox = ({ navigation }) => {
   const [search, setSearch] = useState();
   const [searchData, setSearchData] = useState();
   const handleSearch = (text) => {
@@ -55,6 +56,10 @@ export default Searchbox = () => {
     return stars;
   };
 
+  const handleInvest = (mfId) => {
+    navigation.navigate("Assetpreview", { mfId });
+  };
+
   const renderItem = ({ item }) => {
     return (
       <View style={styles.trendingSchemesContainer}>
@@ -73,7 +78,9 @@ export default Searchbox = () => {
               />
             </View>
             <View style={styles.flexItem}>
-              <Text style={styles.trendingFundName}>{item.name}</Text>
+              <Text style={styles.trendingFundName}>
+                {Formatfundname(item.name)}
+              </Text>
             </View>
           </View>
         </ImageBackground>
@@ -124,6 +131,7 @@ export default Searchbox = () => {
                 styles.Button,
                 { backgroundColor: "rgba(33, 158, 188, 1)" },
               ]}
+              onPress={() => handleInvest(item.id)}
             >
               <Text style={styles.invest}>Invest</Text>
             </TouchableOpacity>

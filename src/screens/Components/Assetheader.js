@@ -4,8 +4,30 @@ import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import { Foundation } from "@expo/vector-icons";
 
-export default Assetheader = ({ navigation }) => {
+export default Assetheader = (props) => {
+  const Data = props.mfData;
+  const navigation = useNavigation();
+
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <Foundation
+          key={i}
+          name="star"
+          size={width * 0.04}
+          style={[
+            styles.star,
+            { color: i <= rating ? "rgba(255, 195, 0, 1)" : "gray" },
+          ]}
+        />
+      );
+    }
+    return stars;
+  };
   return (
     <ImageBackground
       source={require("../../../assets/icons/header.png")}
@@ -17,34 +39,44 @@ export default Assetheader = ({ navigation }) => {
             name="arrow-back"
             size={width * 0.08}
             color="white"
-            //   onPress={() => navigation.goBack()}
+            onPress={() => navigation.goBack()}
           />
-          <Text style={styles.header}>Axis Multicap Gowth Fund</Text>
+          <Text style={styles.header}>{Data.name}</Text>
           <View style={styles.flexContainer}>
-            <Text style={styles.mfTypeButtons}>Equity</Text>
-            <Text style={styles.mfTypeButtons}>Large Cap</Text>
+            <Text style={styles.mfTypeButtons}>{Data.schemeType}</Text>
+            <Text style={styles.mfTypeButtons}>{Data.type}</Text>
           </View>
-          <View
-            style={[
-              styles.flexContainer,
-              { marginTop: height * 0.02, marginBottom: height * 0.02 },
-            ]}
-          >
+          <View style={{ flexDirection: "row" }}>
+            {renderStars(Data.rating)}
+          </View>
+          <View style={[styles.flexContainer, { marginBottom: height * 0.02 }]}>
             <View style={styles.view}>
               <Text style={styles.duration}>1 yr</Text>
-              <Text style={styles.percentage}>16%</Text>
+              <Text style={styles.percentage}>
+                {Data.oneYearReturn
+                  ? Data.oneYearReturn.toFixed(2) + "%"
+                  : "N/A"}
+              </Text>
             </View>
             <View style={styles.view}>
               <Text style={styles.duration}>3 yr</Text>
-              <Text style={styles.percentage}>20%</Text>
+              <Text style={styles.percentage}>
+                {Data.threeYearReturns
+                  ? Data.threeYearReturns.toFixed(2) + "%"
+                  : "N/A"}
+              </Text>
             </View>
             <View style={styles.view}>
               <Text style={styles.duration}>5 yr</Text>
-              <Text style={styles.percentage}>22.8%</Text>
+              <Text style={styles.percentage}>
+                {Data.fiveYearReturns
+                  ? Data.fiveYearReturns.toFixed(2) + "%"
+                  : "N/A"}
+              </Text>
             </View>
             <View style={[styles.view, { borderRightWidth: 0 }]}>
               <Text style={styles.duration}>Risk </Text>
-              <Text style={styles.percentage}>Moderate</Text>
+              <Text style={styles.percentage}>{Data.schemeRisk}</Text>
             </View>
           </View>
           <StatusBar hidden={false} />
@@ -103,5 +135,10 @@ const styles = StyleSheet.create({
     fontSize: width * 0.035,
     color: "rgba(255, 255, 255, 1)",
     fontWeight: "600",
+  },
+  star: {
+    marginTop: height * 0.02,
+    color: "rgba(255, 195, 0, 1)",
+    margin: width * 0.01,
   },
 });

@@ -1,15 +1,32 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { height, width } from "../../Dimension";
 import { Card, Button, Avatar } from "react-native-paper";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 export default Overview = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const data = route.params.mfData;
+
+  const handleLinkPress = (url) => {
+    Linking.openURL(url);
+  };
+
   return (
     <View style={styles.overviewContainer}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.headerContainer}>
           <Image
-            source={require("../../../assets/icon.png")}
+            source={{ uri: data.fundHouse.logoUrl }}
             style={[
               styles.header,
               {
@@ -27,19 +44,18 @@ export default Overview = () => {
                   color: "rgba(2, 48, 71, 1)",
                   fontSize: width * 0.045,
                   fontWeight: "600",
-                  lineHeight: height * 0.035,
+                  lineHeight: height * 0.03,
                   textAlign: "left",
                 },
               ]}
             >
-              Axis Multicap Growth Fund
+              {data.name}
             </Text>
           </View>
         </View>
-        <Text style={styles.desc}>
-          Lorem impsome delmonto elsondn oklsdoliston amdelo toydj jojsdojf
-          osjko.
-        </Text>
+        {/* <Text style={styles.desc}>
+          {data.fundHouse.description} description ka key batao
+        </Text> */}
         <View style={styles.typeContainer}>
           <View style={styles.view}>
             <Text style={styles.duration}>Fund Type</Text>
@@ -51,38 +67,76 @@ export default Overview = () => {
           </View>
           <View style={[styles.view, { borderColor: "white" }]}>
             <Text style={styles.duration}>As On Date</Text>
-            <Text style={styles.percentage}>31st Aug</Text>
+            <Text style={styles.percentage}>
+              {data.navUpdatedOn.split(" ")[0]}
+            </Text>
           </View>
         </View>
 
         <View style={styles.detailsContainer}>
           <View style={styles.detailsView}>
+            <Text style={styles.detailsName}>
+              Nav (
+              {data.navChange >= 0 ? (
+                <Text style={{ color: "green" }}>
+                  {data.navChange.toFixed(2)}
+                </Text>
+              ) : (
+                <Text style={{ color: "red" }}>
+                  {data.navChange.toFixed(2)}
+                </Text>
+              )}
+              )
+            </Text>
+            <Text style={styles.detailsPercentage}>{data.nav.toFixed(2)}</Text>
+          </View>
+          <View style={styles.detailsView}>
             <Text style={styles.detailsName}>Scheme Asset Size</Text>
-            <Text style={styles.detailsPercentage}>₹211.3 Cr</Text>
+            <Text style={styles.detailsPercentage}>
+              ₹{data.schemeSize.toFixed(2)}
+            </Text>
           </View>
           <View style={styles.detailsView}>
             <Text style={styles.detailsName}>Expense Ratio</Text>
-            <Text style={styles.detailsPercentage}>20%</Text>
+            <Text style={styles.detailsPercentage}>{data.expenseRatio}%</Text>
           </View>
           <View style={styles.detailsView}>
-            <Text style={styles.detailsName}>Cash Holdings</Text>
-            <Text style={styles.detailsPercentage}>22.8%</Text>
+            <Text style={styles.detailsName}>Minimum Purchase Amount</Text>
+            <Text style={styles.detailsPercentage}>{data.minPurchase}</Text>
           </View>
           <View style={styles.detailsView}>
+            <Text style={styles.detailsName}>Minimum SIP Amount</Text>
+            <Text style={styles.detailsPercentage}>{data.minSIPAmount}</Text>
+          </View>
+          <View style={styles.detailsView}>
+            <Text style={styles.detailsName}>Morning Star Data</Text>
+            <TouchableOpacity onPress={() => handleLinkPress(data.msurl)}>
+              <Text style={styles.detailsPercentage}>Click here</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.detailsView}>
+            <Text style={styles.detailsName}>Fundhouse</Text>
+            <TouchableOpacity
+              onPress={() => handleLinkPress(data.fundHouse.website)}
+            >
+              <Text style={styles.detailsPercentage}>
+                {data.fundHouse.name}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {/* <View style={styles.detailsView}>
             <Text style={styles.detailsName}>Exit Load </Text>
             <Text style={styles.detailsPercentage}>
               Exit Load of 1 year if redeemed within 1 year
             </Text>
-          </View>
+          </View> */}
           <View style={styles.detailsView}>
             <Text style={styles.detailsName}>Scheme Benchmark </Text>
-            <Text style={styles.detailsPercentage}>
-              Nifty Small Cap 250 total return index
-            </Text>
+            <Text style={styles.detailsPercentage}>{data.benchMark}</Text>
           </View>
         </View>
-        <Text style={styles.fundManagerHeader}>Fund Managers</Text>
-        <View style={styles.cart}>
+        {/* <Text style={styles.fundManagerHeader}>Fund Managers</Text> */}
+        {/* <View style={styles.cart}>
           <Card style={styles.individualCarts}>
             <Avatar.Image
               size={width * 0.3}
@@ -120,7 +174,7 @@ export default Overview = () => {
               </Text>
             </Card.Content>
           </Card>
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );
@@ -137,7 +191,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.01,
   },
   header: {
-    // margin: width * 0.01,
+    margin: width * 0.01,
   },
   titleBox: {
     flex: 1, // This makes the title take up the available space
@@ -173,7 +227,7 @@ const styles = StyleSheet.create({
   },
   typeContainer: {
     flexDirection: "row",
-    marginTop: height * 0.02,
+    // marginTop: height * 0.01,
     borderBottomWidth: width * 0.004,
     borderBottomColor: "rgb(230, 230, 230)",
     paddingBottom: height * 0.01,
