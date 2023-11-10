@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   ImageBackground,
   ScrollView,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import {
   TextInput,
@@ -17,21 +18,190 @@ import {
 } from "react-native-paper";
 import { width, height } from "../../Dimension";
 import { Foundation, SimpleLineIcons } from "@expo/vector-icons";
+import {
+  TrendingNfo,
+  Trendingschemes,
+} from "../../api/services/endpoints/exploreEndpoints";
 
 const Dashboardexplore = ({ navigation }) => {
+  const [trendingschemes, setTrendingschemes] = useState();
+  const [trendingNfo, setTrendingNfo] = useState();
+  const [currentPage, setCurrentPage] = useState(0);
+
+  useEffect(() => {
+    Trendingschemes()
+      .then((response) => {
+        setTrendingschemes(response.data.funds);
+      })
+      .catch((error) => {
+        console.error("schemes failed:", error);
+      });
+
+    TrendingNfo()
+      .then((response) => {
+        setTrendingNfo(response.data);
+      })
+      .catch((error) => {
+        console.error("nfo failed:", error);
+      });
+  }, []);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const renderItem = ({ item }) => {
+    return (
+      <View style={styles.trendingSchemesContainer}>
+        <ImageBackground
+          source={require("../../../assets/dashboard/topImage.png")}
+          style={styles.topImage}
+          resizeMode="stretch"
+        >
+          <View style={styles.flexRow}>
+            <View style={styles.flexItem}>
+              <Avatar.Image
+                size={width * 0.07}
+                source={{
+                  uri: item.fundHouse.logoUrl,
+                }}
+              />
+            </View>
+            <View style={styles.flexItem}>
+              <Text style={styles.trendingFundName}>{item.name}</Text>
+            </View>
+          </View>
+        </ImageBackground>
+        <View style={styles.trendCardContainer}>
+          <View style={[styles.flexRow]}>
+            <View style={styles.cagrContainer}>
+              <Text style={styles.cagr}>
+                CAGR (
+                {item.fiveYearReturns
+                  ? "5yr"
+                  : item.threeYearReturns
+                  ? "3yr"
+                  : item.oneYearReturns
+                  ? "1yr"
+                  : "N/A"}
+                )
+              </Text>
+              <Text style={styles.Cagrpercentage}>
+                {item.fiveYearReturns
+                  ? item.fiveYearReturns.toFixed(2) + "%"
+                  : item.threeYearReturns
+                  ? item.threeYearReturns.toFixed(2) + "%"
+                  : item.oneYearReturns
+                  ? item.oneYearReturns.toFixed(2) + "%"
+                  : "N/A"}
+              </Text>
+            </View>
+            <View style={styles.benchmarkContainer}>
+              <Text style={styles.benchmarkReturn}>
+                Benchmark Returns (
+                {item.fiveYearBenchMarkReturns
+                  ? "5yr"
+                  : item.threeYearBenchMarkReturns
+                  ? "3yr"
+                  : item.oneYearBenchMarkReturns
+                  ? "1yr"
+                  : "N/A"}
+                )
+              </Text>
+              <Text style={styles.benchmarkPercentage}>
+                {item.fiveYearBenchMarkReturns
+                  ? item.fiveYearBenchMarkReturns.toFixed(2)
+                  : item.threeYearBenchMarkReturns
+                  ? item.threeYearBenchMarkReturns.toFixed(2)
+                  : item.oneYearBenchMarkReturns
+                  ? item.oneYearBenchMarkReturns.toFixed(2)
+                  : "N/A"}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={[
+              styles.flexRow,
+              { alignSelf: "center", alignItems: "center" },
+            ]}
+          >
+            <SimpleLineIcons name="speedometer" style={styles.speedIcon} />
+            <Text style={styles.riskText}>Very High Risk</Text>
+          </View>
+          <View style={styles.flexRow}>
+            <TouchableOpacity style={styles.Button}>
+              <Text style={styles.AddToCart}>Add To Cart</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.Button,
+                { backgroundColor: "rgba(33, 158, 188, 1)" },
+              ]}
+            >
+              <Text style={styles.invest}>Invest</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  const NforenderItem = ({ item }) => {
+    return (
+      <View style={styles.flexRow}>
+        <View style={styles.card}>
+          <View style={[styles.flexRow]}>
+            <View style={styles.trendImage}>
+              <Avatar.Image
+                size={width * 0.15}
+                source={{
+                  uri: item.fundHouse.logoUrl,
+                }}
+              />
+            </View>
+            <View>
+              <Text style={styles.percentage}>
+                {item.fiveYearReturns
+                  ? item.fiveYearReturns.toFixed(2) + "%"
+                  : item.threeYearReturns
+                  ? item.threeYearReturns.toFixed(2) + "%"
+                  : item.oneYearReturns
+                  ? item.oneYearReturns.toFixed(2) + "%"
+                  : "N/A"}
+              </Text>
+              <Text style={styles.desc}>
+                {item.fiveYearReturns
+                  ? "5yr Return"
+                  : item.threeYearReturns
+                  ? "3yr Return"
+                  : item.oneYearReturns
+                  ? "1yr Return"
+                  : "N/A"}
+              </Text>
+            </View>
+          </View>
+          <Text style={styles.fundName}>{item.name}</Text>
+          <View
+            style={[
+              styles.flexRow,
+              { marginTop: height * 0.01, marginBottom: height * 0.01 },
+            ]}
+          >
+            <View style={styles.flexContent}>
+              <Text style={styles.type}>
+                {item.schemeType} {item.type ? "-" + item.type : ""}
+              </Text>
+            </View>
+            <Text style={styles.starNumber}>{item.rating}</Text>
+            <Foundation name="star" size={width * 0.04} style={styles.star} />
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <TextInput
-          mode="outlined"
-          style={styles.searchInput}
-          placeholder="Search"
-          outlineStyle={{ borderRadius: width * 0.06, borderColor: "white" }}
-          right={<TextInput.Icon icon="microphone" />}
-          contentStyle={styles.contentStyle}
-          onFocus={(e) => navigation.push("Searchbox")}
-        />
-      </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.NfoContainer}>
           <View style={styles.flexRow}>
@@ -39,67 +209,39 @@ const Dashboardexplore = ({ navigation }) => {
             <Text style={styles.rightContent}>View all</Text>
           </View>
         </View>
-
-        <View style={styles.flexRow}>
-          <Card style={styles.card}>
-            <View style={[styles.flexRow]}>
-              <View style={styles.trendImage}>
-                <Avatar.Image
-                  size={width * 0.15}
-                  source={require("../../../assets/icon.png")}
-                />
-              </View>
-              <View>
-                <Text style={styles.percentage}> 12.23% </Text>
-                <Text style={styles.desc}>5Y Return</Text>
-              </View>
-            </View>
-            <Text style={styles.fundName}>
-              Aditya Birla Sun Life - Index Fund
-            </Text>
-            <View
-              style={[
-                styles.flexRow,
-                { marginTop: height * 0.01, marginBottom: height * 0.01 },
-              ]}
-            >
-              <View style={styles.flexContent}>
-                <Text style={styles.type}>Debt - Long duration</Text>
-              </View>
-              <Text style={styles.starNumber}>4</Text>
-              <Foundation name="star" size={width * 0.04} style={styles.star} />
-            </View>
-          </Card>
-
-          <Card style={styles.card}>
-            <View style={[styles.flexRow]}>
-              <View style={styles.trendImage}>
-                <Avatar.Image
-                  size={width * 0.15}
-                  source={require("../../../assets/icon.png")}
-                />
-              </View>
-              <View>
-                <Text style={styles.percentage}> 12.23% </Text>
-                <Text style={styles.desc}> 5Y Return</Text>
-              </View>
-            </View>
-            <Text style={styles.fundName}>
-              Aditya Birla Sun Life - Index Fund
-            </Text>
-            <View
-              style={[
-                styles.flexRow,
-                { marginTop: height * 0.01, marginBottom: height * 0.01 },
-              ]}
-            >
-              <View style={styles.flexContent}>
-                <Text style={styles.type}>Debt - Long duration</Text>
-              </View>
-              <Text style={styles.starNumber}>4</Text>
-              <Foundation name="star" size={width * 0.04} style={styles.star} />
-            </View>
-          </Card>
+        <View>
+          <FlatList
+            horizontal
+            pagingEnabled
+            data={trendingNfo}
+            renderItem={NforenderItem}
+            keyExtractor={(item) => item.id}
+            onMomentumScrollEnd={(event) => {
+              const newPage = Math.ceil(
+                event.nativeEvent.contentOffset.x /
+                  event.nativeEvent.layoutMeasurement.width
+              );
+              handlePageChange(newPage);
+            }}
+          />
+        </View>
+        <View style={styles.paginationContainer}>
+          {trendingNfo &&
+            trendingNfo.map((_, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.paginationDot,
+                  {
+                    backgroundColor:
+                      currentPage === index
+                        ? "rgba(251, 133, 0, 1)"
+                        : "rgb(255, 206, 153)",
+                  },
+                ]}
+                onPress={() => handlePageChange(index)}
+              />
+            ))}
         </View>
         <View style={styles.TrendingSchemes}>
           <View style={styles.flexRow}>
@@ -107,120 +249,12 @@ const Dashboardexplore = ({ navigation }) => {
             <Text style={styles.rightContent}>View all</Text>
           </View>
         </View>
-        <View style={styles.trendingSchemesContainer}>
-          <ImageBackground
-            source={require("../../../assets/dashboard/topImage.png")}
-            style={styles.topImage}
-            resizeMode="stretch"
-          >
-            <View style={styles.flexRow}>
-              <View style={styles.flexItem}>
-                <Avatar.Image
-                  size={width * 0.07}
-                  source={require("../../../assets/icon.png")}
-                />
-              </View>
-              <View style={styles.flexItem}>
-                <Text style={styles.trendingFundName}>
-                  Axis Small Cap Fund - Direct
-                </Text>
-              </View>
-            </View>
-          </ImageBackground>
-          <View style={styles.trendCardContainer}>
-            <View style={[styles.flexRow]}>
-              <View style={styles.cagrContainer}>
-                <Text style={styles.cagr}> CAGR (5yr) </Text>
-                <Text style={styles.Cagrpercentage}> 26.54%</Text>
-              </View>
-              <View style={styles.benchmarkContainer}>
-                <Text style={styles.benchmarkReturn}>
-                  Benchmark Returns (5yr)
-                </Text>
-                <Text style={styles.benchmarkPercentage}> 20.2% </Text>
-              </View>
-            </View>
-            <View
-              style={[
-                styles.flexRow,
-                { alignSelf: "center", alignItems: "center" },
-              ]}
-            >
-              <SimpleLineIcons name="speedometer" style={styles.speedIcon} />
-              <Text style={styles.riskText}>Very High Risk</Text>
-            </View>
-            <View style={styles.flexRow}>
-              <TouchableOpacity style={styles.Button}>
-                <Text style={styles.AddToCart}>Add To Cart</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.Button,
-                  { backgroundColor: "rgba(33, 158, 188, 1)" },
-                ]}
-              >
-                <Text style={styles.invest}>Invest</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.trendingSchemesContainer}>
-          <ImageBackground
-            source={require("../../../assets/dashboard/topImage.png")}
-            style={styles.topImage}
-            resizeMode="stretch"
-          >
-            <View style={styles.flexRow}>
-              <View style={styles.flexItem}>
-                <Avatar.Image
-                  size={width * 0.07}
-                  source={require("../../../assets/icon.png")}
-                />
-              </View>
-              <View style={styles.flexItem}>
-                <Text style={styles.trendingFundName}>
-                  Axis Small Cap Fund - Direct
-                </Text>
-              </View>
-            </View>
-          </ImageBackground>
-          <View style={styles.trendCardContainer}>
-            <View style={[styles.flexRow]}>
-              <View style={styles.cagrContainer}>
-                <Text style={styles.cagr}> CAGR (5yr) </Text>
-                <Text style={styles.Cagrpercentage}> 26.54%</Text>
-              </View>
-              <View style={styles.benchmarkContainer}>
-                <Text style={styles.benchmarkReturn}>
-                  Benchmark Returns (5yr)
-                </Text>
-                <Text style={styles.benchmarkPercentage}> 20.2% </Text>
-              </View>
-            </View>
-            <View
-              style={[
-                styles.flexRow,
-                { alignSelf: "center", alignItems: "center" },
-              ]}
-            >
-              <SimpleLineIcons name="speedometer" style={styles.speedIcon} />
-              <Text style={styles.riskText}>Very High Risk</Text>
-            </View>
-            <View style={styles.flexRow}>
-              <TouchableOpacity style={styles.Button}>
-                <Text style={styles.AddToCart}>Add To Cart</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.Button,
-                  { backgroundColor: "rgba(33, 158, 188, 1)" },
-                ]}
-              >
-                <Text style={styles.invest}>Invest</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+        <View>
+          <FlatList
+            data={trendingschemes}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
         </View>
       </ScrollView>
     </View>
@@ -230,9 +264,9 @@ const Dashboardexplore = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     padding: width * 0.05,
-    zIndex: 1,
+    backgroundColor: "white",
+    marginTop: height * 0.03,
   },
-  contentContainer: {},
   searchInput: {
     height: height * 0.05,
     marginTop: -height * 0.025,
@@ -292,6 +326,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: width * 0.04,
     marginRight: width * 0.04,
+    borderWidth: width * 0.002,
+    borderColor: "rgb(204, 204, 204)",
+    borderRadius: width * 0.05,
+    backgroundColor: "white",
+    padding: width * 0.03,
   },
   fundName: {
     color: "rgba(2, 48, 71, 1)",
@@ -339,7 +378,7 @@ const styles = StyleSheet.create({
     marginBottom: width * 0.05,
   },
   flexItem: {
-    margin: width * 0.04,
+    marginLeft: width * 0.04,
   },
   trendingFundName: {
     color: "rgba(255, 255, 255, 1)",
@@ -436,6 +475,17 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: width * 0.037,
     fontWeight: "700",
+  },
+  paginationContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: height * 0.02,
+  },
+  paginationDot: {
+    width: width * 0.02,
+    height: width * 0.02,
+    borderRadius: width * 0.01,
+    marginHorizontal: width * 0.01,
   },
 });
 

@@ -1,14 +1,23 @@
 import React from "react";
-import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { height, width } from "../../Dimension";
+import { useNavigation } from "@react-navigation/native";
+import { TextInput } from "react-native-paper";
 
 const Drawer = createDrawerNavigator();
 
 const Exploredrawermenu = (props) => {
   const { initialRouteName, component, component1, component1name } =
     props.data;
+  const navigation = useNavigation();
   return (
     <Drawer.Navigator
       initialRouteName={initialRouteName}
@@ -43,6 +52,20 @@ const Exploredrawermenu = (props) => {
                 />
               </TouchableOpacity>
             </View>
+            <View style={styles.contentContainer}>
+              <TextInput
+                mode="outlined"
+                style={styles.searchInput}
+                placeholder="Search"
+                outlineStyle={{
+                  borderRadius: width * 0.06,
+                  borderColor: "white",
+                }}
+                right={<TextInput.Icon icon="microphone" />}
+                contentStyle={styles.contentStyle}
+                onFocus={(e) => navigation.push("Searchbox")}
+              />
+            </View>
           </ImageBackground>
         ),
         headerStyle: {
@@ -61,5 +84,18 @@ const Exploredrawermenu = (props) => {
     </Drawer.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  searchInput: {
+    height: height * 0.05,
+    marginTop: height * 0.02,
+  },
+  contentStyle: {
+    marginLeft: width * 0.02,
+  },
+  contentContainer: {
+    padding: width * 0.04,
+  },
+});
 
 export default Exploredrawermenu;
