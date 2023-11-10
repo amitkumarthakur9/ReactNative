@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { Foundation } from "@expo/vector-icons";
+import Formatfundname from "../Components/Formatfundname";
 
 export default Assetheader = (props) => {
   const Data = props.mfData;
@@ -41,7 +42,7 @@ export default Assetheader = (props) => {
             color="white"
             onPress={() => navigation.goBack()}
           />
-          <Text style={styles.header}>{Data.name}</Text>
+          <Text style={styles.header}>{Formatfundname(Data.name)}</Text>
           <View style={styles.flexContainer}>
             <Text style={styles.mfTypeButtons}>{Data.schemeType}</Text>
             <Text style={styles.mfTypeButtons}>{Data.type}</Text>

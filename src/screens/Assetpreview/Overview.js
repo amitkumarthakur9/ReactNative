@@ -24,7 +24,7 @@ export default Overview = () => {
   return (
     <View style={styles.overviewContainer}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.headerContainer}>
+        {/* <View style={styles.headerContainer}>
           <Image
             source={{ uri: data.fundHouse.logoUrl }}
             style={[
@@ -52,7 +52,7 @@ export default Overview = () => {
               {data.name}
             </Text>
           </View>
-        </View>
+        </View> */}
         {/* <Text style={styles.desc}>
           {data.fundHouse.description} description ka key batao
         </Text> */}
@@ -75,8 +75,9 @@ export default Overview = () => {
 
         <View style={styles.detailsContainer}>
           <View style={styles.detailsView}>
-            <Text style={styles.detailsName}>
-              Nav (
+            <Text style={styles.detailsName}>Nav</Text>
+            <Text style={styles.detailsPercentage}>
+              {data.nav.toFixed(2)} (
               {data.navChange >= 0 ? (
                 <Text style={{ color: "green" }}>
                   {data.navChange.toFixed(2)}
@@ -88,7 +89,6 @@ export default Overview = () => {
               )}
               )
             </Text>
-            <Text style={styles.detailsPercentage}>{data.nav.toFixed(2)}</Text>
           </View>
           <View style={styles.detailsView}>
             <Text style={styles.detailsName}>Scheme Asset Size</Text>
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   },
   typeContainer: {
     flexDirection: "row",
-    // marginTop: height * 0.01,
+    marginTop: height * 0.01,
     borderBottomWidth: width * 0.004,
     borderBottomColor: "rgb(230, 230, 230)",
     paddingBottom: height * 0.01,
