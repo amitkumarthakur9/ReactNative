@@ -17,7 +17,7 @@ export default Signup = ({ navigation }) => {
 
   GoogleSignin.configure({
     webClientId:
-      "707482261977-29se785gg5o3l51r7vnr6cp0pslvgh1f.apps.googleusercontent.com",
+      "310437389372-h134bk1ns6js774ikhhajuj19ifh4bif.apps.googleusercontent.com",
   });
 
   // Handle user state changes

@@ -32,7 +32,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.amitthakur.growthvine",
+      "package": "com.growthvinecapitalapp.app",
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ]
@@ -42,7 +42,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "256b6b10-abed-4297-b271-0b1ce9ecea26"
+        "projectId": "09336923-80a8-4402-8060-ba85ab61c166"
       }
     }
   }
