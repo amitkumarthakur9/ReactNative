@@ -11,15 +11,12 @@ import {
 import Bgiheader from "../Components/Bgiheader";
 import { width, height } from "../../Dimension";
 import Content from "./Content";
+import Model from "../Components/Model";
 
 const Portfolio = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Bgiheader
-        title="Internal Portfolio"
-        showPlusSign={false}
-        Headerheight={0.29}
-      />
+      <Bgiheader title="Portfolio" showPlusSign={false} Headerheight={0.29} />
       <View style={styles.cart}>
         <View style={styles.individualCarts}>
           <ImageBackground
@@ -40,11 +37,13 @@ const Portfolio = () => {
               </View>
               <View style={styles.boxBottomContainer}>
                 <View style={styles.flexRow}>
-                  <Text style={styles.descHeader}>Initial Investment</Text>
-                  <Text style={styles.descHeader}>Returns</Text>
+                  <Text style={styles.descHeader}>Investment</Text>
+                  <Text style={styles.descHeader}>Current Gain</Text>
+                  <Text style={styles.descHeader}>XIRR</Text>
                 </View>
                 <View style={styles.flexRow}>
-                  <Text style={styles.descValue}> ₹ 2,00,000.00 </Text>
+                  <Text style={styles.descValue}> ₹ 2,00,000 </Text>
+                  <Text style={styles.descValue}> ₹ 2,00,000 </Text>
                   <Text
                     style={[
                       styles.descValue,
@@ -56,64 +55,16 @@ const Portfolio = () => {
                     32.8%
                   </Text>
                 </View>
-
                 <View style={styles.valueContainer}>
                   <View style={styles.flexRow}>
-                    <Text style={styles.descHeader}>One Day Gain</Text>
-                    <Text style={styles.descHeader}>One Day Return</Text>
+                    <Text style={styles.descHeader}>Return</Text>
+                    <Text style={styles.descHeader}>One Day Change</Text>
+                    <Text style={styles.descHeader}>Rating</Text>
                   </View>
                   <View style={styles.flexRow}>
-                    <Text style={styles.descValue}> ₹ 2,00.00 </Text>
-                    <Text
-                      style={[
-                        styles.descValue,
-                        {
-                          color: "rgba(61, 193, 84, 1)",
-                        },
-                      ]}
-                    >
-                      0.28%
-                    </Text>
-                  </View>
-                </View>
-
-                <View style={styles.valueContainer}>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descHeader}>Current Gain</Text>
-                    <Text style={styles.descHeader}>XIRR</Text>
-                  </View>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descValue}> ₹ 59,00.00 </Text>
-                    <Text
-                      style={[
-                        styles.descValue,
-                        {
-                          color: "rgba(61, 193, 84, 1)",
-                        },
-                      ]}
-                    >
-                      12.8%
-                    </Text>
-                  </View>
-                </View>
-
-                <View style={styles.valueContainer}>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descHeader}>SIP - Total</Text>
-                    <Text style={styles.descHeader}>SIP Amount</Text>
-                  </View>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descValue}> 1 </Text>
-                    <Text
-                      style={[
-                        styles.descValue,
-                        {
-                          color: "black",
-                        },
-                      ]}
-                    >
-                      ₹ 5,000
-                    </Text>
+                    <Text style={styles.descValue}> 100 </Text>
+                    <Text style={styles.descValue}> 1000 </Text>
+                    <Text style={styles.descValue}>4.5</Text>
                   </View>
                 </View>
               </View>
@@ -132,13 +83,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cart: {
-    marginTop: -height * 0.12,
+    marginTop: -height * 0.13,
     margin: width * 0.02,
     zIndex: 1,
   },
   individualCarts: {},
   rec1: {
-    height: height * 0.51,
+    height: height * 0.3,
   },
   headerBox: {
     top: height * 0.02,
@@ -157,13 +108,13 @@ const styles = StyleSheet.create({
     marginTop: height * 0.01,
   },
   boxBottomContainer: {
-    marginTop: height * 0.05,
+    marginTop: height * 0.045,
   },
   investmentContainer: {
     position: "absolute",
     width: width,
     marginLeft: width * 0.1,
-    marginTop: height * 0.015,
+    marginTop: height * 0.01,
   },
   flexRow: {
     flexDirection: "row",
@@ -173,7 +124,7 @@ const styles = StyleSheet.create({
     height: height * 0.18,
     resizeMode: "contain",
     right: -width * 0.11,
-    top: -height * 0.02,
+    top: -height * 0.023,
     zIndex: -1,
   },
   descHeader: {

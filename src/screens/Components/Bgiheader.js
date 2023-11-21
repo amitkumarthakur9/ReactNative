@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.06,
   },
   item: {
-    marginTop: height * 0.06,
+    marginTop: height * 0.05,
     margin: width * 0.03,
     flex: 1,
   },
