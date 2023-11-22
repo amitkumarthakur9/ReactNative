@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -16,58 +16,94 @@ import {
   Avatar,
 } from "react-native-paper";
 import { width, height } from "../../Dimension";
-import { SvgUri } from "react-native-svg";
+import usePortfolioData from "./Useportfoliodata";
+import Loader from "../Components/Loader";
+import Formatfundname from "../Components/Formatfundname";
+import formatNumberWithCommas from "../Components/Inrconverter";
 
 const Dashboardexplore = () => {
+  const { holdingData } = usePortfolioData();
+  const [imageName, setImageName] = useState("../../../assets/amc/1.png");
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-      <View style={styles.card}>
-        <View style={styles.flexRow}>
-          <View style={styles.trendImage}>
-            <Avatar.Image
-              size={width * 0.15}
-              source={require("../../../assets/icon.png")}
-            />
-          </View>
-          <View>
-            <Text style={styles.fundName}>Axis Multicap Growth Fund</Text>
-            <Text style={styles.folio}>Folio No: 212229/12</Text>
-          </View>
-        </View>
-        <View style={styles.boxBottomContainer}>
-          <View style={styles.flexRow}>
-            <Text style={styles.descHeader}>Initial Investment</Text>
-            <Text style={styles.descHeader}>Current Value</Text>
-          </View>
-          <View style={styles.flexRow}>
-            <Text style={styles.descValue}> ₹ 2,00,000.00 </Text>
-            <Text style={styles.descValue}>₹ 21,000.00 </Text>
-          </View>
+      {holdingData != "holdingData" ? (
+        <>
+          {Object.entries(holdingData).map(
+            ([key, obj]) =>
+              obj.units > 0 && (
+                <>
+                  <View style={styles.card}>
+                    <View style={styles.flexRow}>
+                      <View style={styles.trendImage}>
+                        <Image
+                          style={{ width: width * 0.14, height: height * 0.05 }}
+                          source={{
+                            uri: obj.mutualFund.fundHouse.logoUrl,
+                          }}
+                          resizeMode="stretch"
+                        />
+                      </View>
+                      <View style={{ flex: 4 }}>
+                        <Text style={styles.fundName}>
+                          {Formatfundname(obj.mutualFund.name)}
+                        </Text>
+                        <Text style={styles.folio}>
+                          Folio No: {obj.folioNumberString}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.boxBottomContainer}>
+                      <View style={styles.flexRow}>
+                        <Text style={styles.descHeader}>
+                          Initial Investment
+                        </Text>
+                        <Text style={styles.descHeader}>Current Value</Text>
+                      </View>
+                      <View style={styles.flexRow}>
+                        <Text style={styles.descValue}>
+                          ₹{" "}
+                          {formatNumberWithCommas(
+                            Math.round(obj.orignalAmount)
+                          )}
+                        </Text>
+                        <Text style={styles.descValue}>
+                          ₹ {formatNumberWithCommas(Math.round(obj.currValue))}
+                        </Text>
+                      </View>
 
-          <View style={styles.valueContainer}>
-            <View style={styles.flexRow}>
-              <Text style={styles.descHeader}>Current Gain</Text>
-              <Text style={styles.descHeader}>XIRR</Text>
-            </View>
-            <View style={styles.flexRow}>
-              <Text style={styles.descValue}> ₹ 1,00.00 </Text>
-              <Text
-                style={[
-                  styles.descValue,
-                  {
-                    color: "rgba(61, 193, 84, 1)",
-                  },
-                ]}
-              >
-                2.8%
-              </Text>
-            </View>
-          </View>
-        </View>
-        <TouchableOpacity style={styles.ViewTransactionContainer}>
-          <Text style={styles.viewTransactionText}>View Transactions</Text>
-        </TouchableOpacity>
-      </View>
+                      <View style={styles.valueContainer}>
+                        <View style={styles.flexRow}>
+                          <Text style={styles.descHeader}>Current Gain</Text>
+                          <Text style={styles.descHeader}>XIRR</Text>
+                        </View>
+                        <View style={styles.flexRow}>
+                          <Text style={styles.descValue}>
+                            ₹{" "}
+                            {formatNumberWithCommas(
+                              Math.round(obj.currValue) -
+                                Math.round(obj.orignalAmount)
+                            )}
+                          </Text>
+                          <Text style={styles.descValue}>
+                            {obj.xirr.toFixed(2)}
+                            {"%"}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <TouchableOpacity style={styles.ViewTransactionContainer}>
+                      <Text style={styles.viewTransactionText}>
+                        View Transactions
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              )
+          )}
+        </>
+      ) : (
+        <Loader />
+      )}
     </ScrollView>
   );
 };
@@ -138,10 +174,10 @@ const styles = StyleSheet.create({
   fundName: {
     color: "rgba(2, 48, 71, 1)",
     fontWeight: "600",
-    fontSize: width * 0.045,
-    lineHeight: height * 0.03,
+    fontSize: width * 0.035,
+    lineHeight: height * 0.02,
     marginTop: height * 0.005,
-    textAlign: "center",
+    // textAlign: "center",
   },
   flexContent: {
     width: "50%",
@@ -167,11 +203,11 @@ const styles = StyleSheet.create({
   },
   folio: {
     color: "rgba(2, 48, 71, 1)",
-    fontSize: width * 0.034,
-    lineHeight: height * 0.02,
+    fontSize: width * 0.03,
+    lineHeight: height * 0.015,
     fontWeight: "600",
     opacity: 0.6,
-    textAlign: "center",
+    // textAlign: "center",
     marginTop: height * 0.008,
   },
   topImage: {
