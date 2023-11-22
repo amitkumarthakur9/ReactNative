@@ -16,64 +16,24 @@ import {
   Avatar,
 } from "react-native-paper";
 import { width, height } from "../../Dimension";
+import { SvgUri } from "react-native-svg";
 
 const Dashboardexplore = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <View style={styles.card}>
-        <View style={styles.trendImage}>
-          <Avatar.Image
-            size={width * 0.15}
-            source={require("../../../assets/icon.png")}
-            style={{ alignSelf: "center" }}
-          />
-        </View>
-        <Text style={styles.fundName}>Axis Multicap Growth Fund</Text>
-        <Text style={styles.folio}>Folio No: 212229/12</Text>
-        <View style={styles.boxBottomContainer}>
-          <View style={styles.flexRow}>
-            <Text style={styles.descHeader}>Initial Investment</Text>
-            <Text style={styles.descHeader}>Current Value</Text>
+        <View style={styles.flexRow}>
+          <View style={styles.trendImage}>
+            <Avatar.Image
+              size={width * 0.15}
+              source={require("../../../assets/icon.png")}
+            />
           </View>
-          <View style={styles.flexRow}>
-            <Text style={styles.descValue}> ₹ 2,00,000.00 </Text>
-            <Text style={styles.descValue}>₹ 21,000.00 </Text>
-          </View>
-
-          <View style={styles.valueContainer}>
-            <View style={styles.flexRow}>
-              <Text style={styles.descHeader}>Current Gain</Text>
-              <Text style={styles.descHeader}>XIRR</Text>
-            </View>
-            <View style={styles.flexRow}>
-              <Text style={styles.descValue}> ₹ 1,00.00 </Text>
-              <Text
-                style={[
-                  styles.descValue,
-                  {
-                    color: "rgba(61, 193, 84, 1)",
-                  },
-                ]}
-              >
-                2.8%
-              </Text>
-            </View>
+          <View>
+            <Text style={styles.fundName}>Axis Multicap Growth Fund</Text>
+            <Text style={styles.folio}>Folio No: 212229/12</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.ViewTransactionContainer}>
-          <Text style={styles.viewTransactionText}>View Transactions</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.card}>
-        <View style={styles.trendImage}>
-          <Avatar.Image
-            size={width * 0.15}
-            source={require("../../../assets/icon.png")}
-            style={{ alignSelf: "center" }}
-          />
-        </View>
-        <Text style={styles.fundName}>Axis Multicap Growth Fund</Text>
-        <Text style={styles.folio}>Folio No: 212229/12</Text>
         <View style={styles.boxBottomContainer}>
           <View style={styles.flexRow}>
             <Text style={styles.descHeader}>Initial Investment</Text>
@@ -180,7 +140,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: width * 0.045,
     lineHeight: height * 0.03,
-    marginTop: height * 0.015,
+    marginTop: height * 0.005,
     textAlign: "center",
   },
   flexContent: {
@@ -331,7 +291,7 @@ const styles = StyleSheet.create({
   },
 
   boxBottomContainer: {
-    marginTop: height * 0.05,
+    marginTop: height * 0.02,
   },
   descHeader: {
     color: "rgba(0, 0, 0, 1)",
@@ -351,7 +311,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   valueContainer: {
-    marginTop: height * 0.025,
+    marginTop: height * 0.02,
   },
   ViewTransactionContainer: {
     alignItems: "center",
@@ -359,7 +319,7 @@ const styles = StyleSheet.create({
     borderWidth: width * 0.002,
     borderRadius: width * 0.03,
     borderColor: "rgba(207, 208, 205, 1)",
-    marginTop: height * 0.04,
+    marginTop: height * 0.03,
   },
   viewTransactionText: {
     color: "rgba(33, 158, 188, 1)",
