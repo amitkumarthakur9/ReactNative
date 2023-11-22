@@ -88,10 +88,10 @@ const Portfolio = () => {
                           </Text>
                           <Text style={styles.descValue}>
                             {" "}
-                            {allPortfolioData.oneDayChange}
+                            {Math.round(allPortfolioData.oneDayChange)}
                           </Text>
                           <Text style={styles.descValue}>
-                            {allPortfolioData.rating}
+                            {allPortfolioData.rating.toFixed(1)}
                           </Text>
                         </View>
                       </View>
@@ -158,10 +158,10 @@ const Portfolio = () => {
                           </Text>
                           <Text style={styles.descValue}>
                             {" "}
-                            {allPortfolioData.oneDayChange}
+                            {Math.round(allPortfolioData.oneDayChange)}
                           </Text>
                           <Text style={styles.descValue}>
-                            {allPortfolioData.rating}
+                            {allPortfolioData.rating.toFixed(1)}
                           </Text>
                         </View>
                       </View>

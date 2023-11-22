@@ -9,6 +9,7 @@ import {
 import auth from "@react-native-firebase/auth";
 import GlSuccessful from "./GlSuccessful";
 import { width, height } from "../../Dimension";
+import { Googlelogin } from "../../api/services/endpoints/userEndpoints";
 
 export default Signup = ({ navigation }) => {
   // Set an initializing state whilst Firebase connects
@@ -23,6 +24,7 @@ export default Signup = ({ navigation }) => {
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
+    console.log(user);
     if (initializing) setInitializing(false);
   }
 
@@ -39,6 +41,12 @@ export default Signup = ({ navigation }) => {
 
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    console.log(idToken);
+
+    Googlelogin(idToken).then((response) => {
+      console.log("shivangi data:", response.data);
+    });
 
     // Sign-in the user with the credential
     return auth().signInWithCredential(googleCredential);

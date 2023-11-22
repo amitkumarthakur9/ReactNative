@@ -6,3 +6,9 @@ export const Userlogin = (userData) => {
     userData
   );
 };
+
+export const Googlelogin = (googleToken) => {
+  return apiClient.post(
+    `/app/user?action=googleLogin&token=${googleToken}&fromApp=1@&addedBy=186100`
+  );
+};
