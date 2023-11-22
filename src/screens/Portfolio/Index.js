@@ -18,59 +18,167 @@ const Portfolio = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <Bgiheader title="Portfolio" showPlusSign={false} Headerheight={0.29} />
       <View style={styles.cart}>
-        <View style={styles.individualCarts}>
-          <ImageBackground
-            source={require("../../../assets/portfolio/rec1.png")}
-            style={styles.rec1}
-            resizeMode="stretch"
-          >
-            <Image
-              source={require("../../../assets/Goal/rectengal2.png")}
-              style={styles.rectengal2}
-            />
-            <View style={styles.investmentContainer}>
-              <View style={styles.headerBox}>
-                <Text style={styles.header}>
-                  Current Internal Portfolio Value
-                </Text>
-                <Text style={styles.desc}>₹ 2,59,000.00</Text>
-              </View>
-              <View style={styles.boxBottomContainer}>
-                <View style={styles.flexRow}>
-                  <Text style={styles.descHeader}>Investment</Text>
-                  <Text style={styles.descHeader}>Current Gain</Text>
-                  <Text style={styles.descHeader}>XIRR</Text>
-                </View>
-                <View style={styles.flexRow}>
-                  <Text style={styles.descValue}> ₹ 2,00,000 </Text>
-                  <Text style={styles.descValue}> ₹ 2,00,000 </Text>
-                  <Text
-                    style={[
-                      styles.descValue,
-                      {
-                        color: "rgba(61, 193, 84, 1)",
-                      },
-                    ]}
-                  >
-                    32.8%
+        <ScrollView horizontal>
+          <View style={styles.individualCarts}>
+            <ImageBackground
+              source={require("../../../assets/portfolio/rec1.png")}
+              style={styles.rec1}
+              resizeMode="stretch"
+            >
+              <Image
+                source={require("../../../assets/Goal/rectengal2.png")}
+                style={styles.rectengal2}
+              />
+              <View style={styles.investmentContainer}>
+                <View style={styles.headerBox}>
+                  <Text style={styles.header}>
+                    Current Internal Portfolio Value
                   </Text>
+                  <Text style={styles.desc}>₹ 2,59,000.00</Text>
                 </View>
-                <View style={styles.valueContainer}>
+                <View style={styles.boxBottomContainer}>
                   <View style={styles.flexRow}>
-                    <Text style={styles.descHeader}>Return</Text>
-                    <Text style={styles.descHeader}>One Day Change</Text>
-                    <Text style={styles.descHeader}>Rating</Text>
+                    <Text style={styles.descHeader}>Investment</Text>
+                    <Text style={styles.descHeader}>Current Gain</Text>
+                    <Text style={styles.descHeader}>XIRR</Text>
                   </View>
                   <View style={styles.flexRow}>
-                    <Text style={styles.descValue}> 100 </Text>
-                    <Text style={styles.descValue}> 1000 </Text>
-                    <Text style={styles.descValue}>4.5</Text>
+                    <Text style={styles.descValue}> ₹ 2,00,000 </Text>
+                    <Text style={styles.descValue}> ₹ 2,00,000 </Text>
+                    <Text
+                      style={[
+                        styles.descValue,
+                        {
+                          color: "rgba(61, 193, 84, 1)",
+                        },
+                      ]}
+                    >
+                      32.8%
+                    </Text>
+                  </View>
+                  <View style={styles.valueContainer}>
+                    <View style={styles.flexRow}>
+                      <Text style={styles.descHeader}>Return</Text>
+                      <Text style={styles.descHeader}>One Day Change</Text>
+                      <Text style={styles.descHeader}>Rating</Text>
+                    </View>
+                    <View style={styles.flexRow}>
+                      <Text style={styles.descValue}> 100 </Text>
+                      <Text style={styles.descValue}> 1000 </Text>
+                      <Text style={styles.descValue}>4.5</Text>
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
-          </ImageBackground>
-        </View>
+            </ImageBackground>
+          </View>
+          <View style={styles.individualCarts}>
+            <ImageBackground
+              source={require("../../../assets/portfolio/rec1.png")}
+              style={styles.rec1}
+              resizeMode="stretch"
+            >
+              <Image
+                source={require("../../../assets/Goal/rectengal2.png")}
+                style={styles.rectengal2}
+              />
+              <View style={styles.investmentContainer}>
+                <View style={styles.headerBox}>
+                  <Text style={styles.header}>
+                    Current Internal Portfolio Value
+                  </Text>
+                  <Text style={styles.desc}>₹ 2,59,000.00</Text>
+                </View>
+                <View style={styles.boxBottomContainer}>
+                  <View style={styles.flexRow}>
+                    <Text style={styles.descHeader}>Investment</Text>
+                    <Text style={styles.descHeader}>Current Gain</Text>
+                    <Text style={styles.descHeader}>XIRR</Text>
+                  </View>
+                  <View style={styles.flexRow}>
+                    <Text style={styles.descValue}> ₹ 2,00,000 </Text>
+                    <Text style={styles.descValue}> ₹ 2,00,000 </Text>
+                    <Text
+                      style={[
+                        styles.descValue,
+                        {
+                          color: "rgba(61, 193, 84, 1)",
+                        },
+                      ]}
+                    >
+                      32.8%
+                    </Text>
+                  </View>
+                  <View style={styles.valueContainer}>
+                    <View style={styles.flexRow}>
+                      <Text style={styles.descHeader}>Return</Text>
+                      <Text style={styles.descHeader}>One Day Change</Text>
+                      <Text style={styles.descHeader}>Rating</Text>
+                    </View>
+                    <View style={styles.flexRow}>
+                      <Text style={styles.descValue}> 100 </Text>
+                      <Text style={styles.descValue}> 1000 </Text>
+                      <Text style={styles.descValue}>4.5</Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </ImageBackground>
+          </View>
+          <View style={styles.individualCarts}>
+            <ImageBackground
+              source={require("../../../assets/portfolio/rec1.png")}
+              style={styles.rec1}
+              resizeMode="stretch"
+            >
+              <Image
+                source={require("../../../assets/Goal/rectengal2.png")}
+                style={styles.rectengal2}
+              />
+              <View style={styles.investmentContainer}>
+                <View style={styles.headerBox}>
+                  <Text style={styles.header}>
+                    Current Internal Portfolio Value
+                  </Text>
+                  <Text style={styles.desc}>₹ 2,59,000.00</Text>
+                </View>
+                <View style={styles.boxBottomContainer}>
+                  <View style={styles.flexRow}>
+                    <Text style={styles.descHeader}>Investment</Text>
+                    <Text style={styles.descHeader}>Current Gain</Text>
+                    <Text style={styles.descHeader}>XIRR</Text>
+                  </View>
+                  <View style={styles.flexRow}>
+                    <Text style={styles.descValue}> ₹ 2,00,000 </Text>
+                    <Text style={styles.descValue}> ₹ 2,00,000 </Text>
+                    <Text
+                      style={[
+                        styles.descValue,
+                        {
+                          color: "rgba(61, 193, 84, 1)",
+                        },
+                      ]}
+                    >
+                      32.8%
+                    </Text>
+                  </View>
+                  <View style={styles.valueContainer}>
+                    <View style={styles.flexRow}>
+                      <Text style={styles.descHeader}>Return</Text>
+                      <Text style={styles.descHeader}>One Day Change</Text>
+                      <Text style={styles.descHeader}>Rating</Text>
+                    </View>
+                    <View style={styles.flexRow}>
+                      <Text style={styles.descValue}> 100 </Text>
+                      <Text style={styles.descValue}> 1000 </Text>
+                      <Text style={styles.descValue}>4.5</Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </ImageBackground>
+          </View>
+        </ScrollView>
       </View>
       <Content />
     </ScrollView>
@@ -89,6 +197,7 @@ const styles = StyleSheet.create({
   },
   individualCarts: {},
   rec1: {
+    width: width * 0.95,
     height: height * 0.3,
   },
   headerBox: {
@@ -111,7 +220,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.045,
   },
   investmentContainer: {
-    position: "absolute",
+    // position: "absolute",
     width: width,
     marginLeft: width * 0.1,
     marginTop: height * 0.01,
