@@ -9,12 +9,22 @@ import {
 import auth from "@react-native-firebase/auth";
 import GlSuccessful from "./GlSuccessful";
 import { width, height } from "../../Dimension";
-import { Googlelogin } from "../../api/services/endpoints/userEndpoints";
+import {
+  Googlelogin,
+  Phonelogin,
+} from "../../api/services/endpoints/userEndpoints";
 
 export default Signup = ({ navigation }) => {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+
+  const loginWithPhone = () => {
+    // console.log("amit");
+    Phonelogin().then((response) => {
+      console.log(response.data);
+    });
+  };
 
   GoogleSignin.configure({
     webClientId:
@@ -90,7 +100,7 @@ export default Signup = ({ navigation }) => {
             )}
             mode="outlined"
             textColor="rgba(2, 48, 71, 1)"
-            onPress={() => navigation.push("swphone")}
+            onPress={loginWithPhone}
             style={styles.phoneSignUp}
             labelStyle={styles.buttonLabel}
           >
