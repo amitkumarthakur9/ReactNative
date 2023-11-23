@@ -12,6 +12,9 @@ import { Button, TextInput, Checkbox } from "react-native-paper";
 import auth from "@react-native-firebase/auth"; // Import Firebase auth
 import { width, height } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
+import Header from "../Components/Header";
+import Loader from "../Components/Loader";
+import { Phonelogin } from "../../api/services/endpoints/userEndpoints";
 
 export default Singupwithphone = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
@@ -19,32 +22,21 @@ export default Singupwithphone = ({ navigation }) => {
   const [phonevalidation, setPhonevalidation] = useState(false);
   const [confirm, setConfirm] = useState(null);
   const countryCode = "+91";
+  const [showLoader, setShowLoader] = useState(false);
 
-  function onAuthStateChanged(user) {
-    if (user) {
-      // Some Android devices can automatically process the verification code (OTP) message, and the user would NOT need to enter the code.
-      // Actually, if he/she tries to enter it, he/she will get an error message because the code was already used in the background.
-      // In this function, make sure you hide the component(s) for entering the code and/or navigate away from this screen.
-      // It is also recommended to display a message to the user informing him/her that he/she has successfully logged in.
-    }
-  }
+  const loginWithPhone = () => {
+    Phonelogin(phone).then((response) => {
+      if (response.data.success) {
+        setShowLoader(true);
+      }
+    });
+  };
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
-
-  async function signInWithPhoneNumber(phoneNumber) {
-    try {
-      const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-      setConfirm(confirmation);
-      //   console.log(confirmation);
-      return confirmation;
-    } catch (error) {
-      //   console.error("Error sending verification code:", error);
-      return null;
+    if (showLoader) {
+      navigation.navigate("Otp", { mobileNumber: phone });
     }
-  }
+  }, [showLoader]);
 
   const handlePhone = (number) => {
     const phonePattern = /^[0-9]{10}$/;
@@ -52,34 +44,19 @@ export default Singupwithphone = ({ navigation }) => {
     const numberValidation = phonePattern.test(number);
     setPhonevalidation(numberValidation);
   };
-
-  const handleSignup = async () => {
-    const mobileNumber = countryCode + phone;
-    try {
-      const confirmation = await signInWithPhoneNumber(mobileNumber);
-      if (confirmation) {
-        // console.log(confirmation);
-        navigation.navigate("Otp", { confirmation }); // Navigate to the "Otp" screen
-      } else {
-        // console.error("No confirmation object received.");
-      }
-    } catch (error) {
-      //   console.error("Error sending verification code:", error);
-    }
-  };
-
   return (
     <View style={styles.container}>
+      <Header title="Sign Up" />
       <ScrollView>
         <View style={styles.signupContainer}>
-          <Ionicons
+          {/* <Ionicons
             name="arrow-back"
             size={width * 0.08}
             color="rgba(56, 102, 100, 1)"
             onPress={() => navigation.goBack()}
             style={{ marginBottom: height * 0.03 }}
-          />
-          <Text style={styles.signupText}>Sign Up </Text>
+          /> */}
+          {/* <Text style={styles.signupText}>Sign Up </Text> */}
           <View>
             <View>
               <Text style={styles.signupDescHeader}>
@@ -132,21 +109,28 @@ export default Singupwithphone = ({ navigation }) => {
                 I agree to the Terms & Conditions set by growthvine
               </Text>
             </View>
-            <TouchableOpacity onPress={handleSignup}>
-              <Button
-                mode="contained"
-                labelStyle={styles.buttonLabel}
-                disabled={!phonevalidation || !checked}
-                style={
-                  phonevalidation && checked
-                    ? styles.enabledButton
-                    : styles.disabledButton
-                }
-              >
-                Sign Up
-              </Button>
-            </TouchableOpacity>
-            <Text style={styles.alreayRegistered}>
+            {showLoader ? (
+              <Loader />
+            ) : (
+              <>
+                <TouchableOpacity onPress={loginWithPhone}>
+                  <Button
+                    mode="contained"
+                    labelStyle={styles.buttonLabel}
+                    disabled={!phonevalidation || !checked}
+                    style={
+                      phonevalidation && checked
+                        ? styles.enabledButton
+                        : styles.disabledButton
+                    }
+                  >
+                    Sign Up
+                  </Button>
+                </TouchableOpacity>
+              </>
+            )}
+
+            {/* <Text style={styles.alreayRegistered}>
               Already registered ?{" "}
               <Text
                 style={{
@@ -157,7 +141,7 @@ export default Singupwithphone = ({ navigation }) => {
               >
                 Sign In
               </Text>
-            </Text>
+            </Text> */}
           </View>
         </View>
       </ScrollView>
@@ -176,7 +160,7 @@ const styles = StyleSheet.create({
     // left: "50%",
     // width: width * 0.9,
     // marginLeft: -width * 0.45,
-    marginTop: height * 0.05,
+    marginTop: height * 0.02,
     padding: width * 0.05,
   },
   signupText: {

@@ -9,29 +9,36 @@ import {
 } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { width, height } from "../../Dimension";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import Header from "../Components/Header";
+import { Otpverify } from "../../api/services/endpoints/userEndpoints";
 
-export default Otp = ({ navigation }) => {
+export default Otp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
 
   const inputRefs = useRef([]);
 
   const route = useRoute();
-  const { confirmation } = route.params; // Access the confirmation object
-
-  //   console.log(confirmation);
+  const navigation = useNavigation();
+  const mobileNumber = route.params.mobileNumber;
 
   async function confirmCode() {
     try {
       const stringOtp = otp.join("");
-      const con = await confirmation.confirm(stringOtp);
-      Alert.alert("Success", "You Have been Logged In Successfully");
-      navigation.push("Dashboard");
-      //   console.log("success");
+      const data = { mobileNumber: mobileNumber, otp: stringOtp };
+      Otpverify(data).then((response) => {
+        if (response.data.success === false) {
+          console.log("false", response.data.success);
+          Alert.alert("Failed", response.data.error);
+        }
+        if (response.data.success === true) {
+          console.log(response.data.success);
+          navigation.push("Dashboard");
+        }
+      });
     } catch (error) {
-      //   console.log("Invalid code.", error);
       Alert.alert("Failed", error.message);
     }
   }
@@ -56,16 +63,17 @@ export default Otp = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Header title="Phone Verification" />
       <ScrollView>
         <View style={styles.otpContainer}>
-          <Ionicons
+          {/* <Ionicons
             name="arrow-back"
             size={width * 0.08}
             color="rgba(56, 102, 100, 1)"
             onPress={() => navigation.goBack()}
             style={{ marginBottom: height * 0.03 }}
           />
-          <Text style={styles.header}>Phone Verification</Text>
+          <Text style={styles.header}>Phone Verification</Text> */}
           <Text style={styles.desc}>
             Please enter the 6-digit verification code sent to your phone.
           </Text>
@@ -125,8 +133,8 @@ const styles = StyleSheet.create({
     // width: width * 0.9,
     // marginLeft: -width * 0.45,
     // marginTop: height * 0.1,
-    marginTop: height * 0.05,
-    padding: width * 0.05,
+    marginTop: height * 0.02,
+    padding: width * 0.06,
   },
   header: {
     color: "rgba(2, 48, 71, 1)",
@@ -139,7 +147,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: width * 0.04,
     lineHeight: width * 0.06,
-    marginBottom: height * 0.1,
+    marginBottom: height * 0.08,
     color: "rgba(2, 48, 71, 1)",
   },
   inputContainer: {

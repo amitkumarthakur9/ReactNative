@@ -13,8 +13,15 @@ export const Googlelogin = (googleToken) => {
   );
 };
 
-export const Phonelogin = () => {
+export const Phonelogin = (mobileNumber) => {
   return apiClient.post(
-    "/app/user?action=sendOTP&mobile=9024163621&addedBy=186100&firstUserLogin=true"
+    `/app/user?action=sendOTP&mobile=${mobileNumber}&addedBy=186100&firstUserLogin=true`
+  );
+};
+
+export const Otpverify = (data) => {
+  const { mobileNumber, otp } = data;
+  return apiClient.post(
+    `/app/user?action=confirmOtpForLogin&mobile=${mobileNumber}&addedBy=186100&firstUserLogin=true&otp=${otp}`
   );
 };

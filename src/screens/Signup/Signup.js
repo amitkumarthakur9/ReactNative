@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { Button } from "react-native-paper";
 import Footer from "../../Footer";
 import {
@@ -19,13 +26,6 @@ export default Signup = ({ navigation }) => {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
-
-  const loginWithPhone = () => {
-    // console.log("amit");
-    Phonelogin().then((response) => {
-      console.log(response.data);
-    });
-  };
 
   GoogleSignin.configure({
     webClientId:
@@ -80,7 +80,7 @@ export default Signup = ({ navigation }) => {
   if (!user) {
     return (
       <View style={styles.container}>
-        <Header />
+        <Header title="Sign Up" />
         <View style={styles.imagecontainer}>
           <Image
             source={require("../../../assets/signup/signup.png")}
@@ -91,56 +91,45 @@ export default Signup = ({ navigation }) => {
           Welcome to <Text style={{ fontWeight: "600" }}>Growthvine</Text>
         </Text>
         <View style={styles.signupContainer}>
-          <Button
-            icon={() => (
-              <View>
-                <Image
-                  source={require("../../../assets/signup/Call.png")}
-                  style={styles.icon}
-                />
-              </View>
-            )}
-            mode="outlined"
-            textColor="rgba(2, 48, 71, 1)"
-            onPress={loginWithPhone}
-            style={styles.phoneSignUp}
-            labelStyle={styles.buttonLabel}
-          >
-            Sign up with Phone
-          </Button>
-          <Button
-            icon={() => (
-              <View style={styles.iconContainer}>
-                <Image
-                  source={require("../../../assets/signup/Group.png")} // Replace with your image source
-                  style={styles.icon}
-                />
-              </View>
-            )}
-            mode="outlined"
-            textColor="rgba(2, 48, 71, 1)"
-            onPress={onGoogleButtonPress}
-            style={styles.googleSignUp}
-            labelStyle={styles.buttonLabel}
-          >
-            Sign up with Google
-          </Button>
+          <TouchableOpacity onPress={() => navigation.push("swphone")}>
+            <Button
+              icon={() => (
+                <View>
+                  <Image
+                    source={require("../../../assets/signup/Call.png")}
+                    style={styles.icon}
+                  />
+                </View>
+              )}
+              mode="outlined"
+              textColor="rgba(2, 48, 71, 1)"
+              style={styles.phoneSignUp}
+              labelStyle={styles.buttonLabel}
+            >
+              Sign up with Phone
+            </Button>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onGoogleButtonPress}>
+            <Button
+              icon={() => (
+                <View style={styles.iconContainer}>
+                  <Image
+                    source={require("../../../assets/signup/Group.png")} // Replace with your image source
+                    style={styles.icon}
+                  />
+                </View>
+              )}
+              mode="outlined"
+              textColor="rgba(2, 48, 71, 1)"
+              style={styles.googleSignUp}
+              labelStyle={styles.buttonLabel}
+            >
+              Sign up with Google
+            </Button>
+          </TouchableOpacity>
 
           <Text></Text>
         </View>
-        {/* <Text style={styles.alreayRegistered}>
-          Already registered ?{" "}
-          <Text
-            style={{
-              fontSize: width * 0.045,
-              color: "rgba(251, 133, 0, 1)",
-              lineHeight: width * 0.06,
-            }}
-          >
-            Sign In
-          </Text>
-        </Text> */}
-        {/* <Footer /> */}
       </View>
     );
   }
@@ -171,7 +160,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.06,
   },
   signupContainer: {
-    marginTop: height * 0.04,
+    marginTop: height * 0.02,
     width: width,
     height: height * 0.17,
     justifyContent: "center",
