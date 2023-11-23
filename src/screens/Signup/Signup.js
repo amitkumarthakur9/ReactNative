@@ -6,6 +6,7 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Button } from "react-native-paper";
 import Footer from "../../Footer";
@@ -35,7 +36,6 @@ export default Signup = ({ navigation }) => {
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
-    console.log(user);
     if (initializing) setInitializing(false);
   }
 
@@ -53,10 +53,15 @@ export default Signup = ({ navigation }) => {
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-    console.log(idToken);
-
     Googlelogin(idToken).then((response) => {
-      console.log("shivangi data:", response.data);
+      if (response.data.success === false) {
+        Alert.alert("Failed", response.data.error);
+        signOut();
+      }
+      if (response.data.success === true) {
+        navigation.push("Dashboard");
+      }
+      //   console.log("shivangi data:", response.data);
     });
 
     // Sign-in the user with the credential
@@ -70,70 +75,69 @@ export default Signup = ({ navigation }) => {
     } catch (error) {
       console.error(error);
     }
-    auth()
-      .signOut()
-      .then(() => console.log("User signed out!"));
+    // auth().signOut();
+    //   .then(() => console.log("User signed out!"));
   };
 
   if (initializing) return null;
 
-  if (!user) {
-    return (
-      <View style={styles.container}>
-        <Header title="Sign Up" />
-        <View style={styles.imagecontainer}>
-          <Image
-            source={require("../../../assets/signup/signup.png")}
-            style={styles.image}
-          />
-        </View>
-        <Text style={styles.header}>
-          Welcome to <Text style={{ fontWeight: "600" }}>Growthvine</Text>
-        </Text>
-        <View style={styles.signupContainer}>
-          <TouchableOpacity onPress={() => navigation.push("swphone")}>
-            <Button
-              icon={() => (
-                <View>
-                  <Image
-                    source={require("../../../assets/signup/Call.png")}
-                    style={styles.icon}
-                  />
-                </View>
-              )}
-              mode="outlined"
-              textColor="rgba(2, 48, 71, 1)"
-              style={styles.phoneSignUp}
-              labelStyle={styles.buttonLabel}
-            >
-              Sign up with Phone
-            </Button>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onGoogleButtonPress}>
-            <Button
-              icon={() => (
-                <View style={styles.iconContainer}>
-                  <Image
-                    source={require("../../../assets/signup/Group.png")} // Replace with your image source
-                    style={styles.icon}
-                  />
-                </View>
-              )}
-              mode="outlined"
-              textColor="rgba(2, 48, 71, 1)"
-              style={styles.googleSignUp}
-              labelStyle={styles.buttonLabel}
-            >
-              Sign up with Google
-            </Button>
-          </TouchableOpacity>
-
-          <Text></Text>
-        </View>
+  //   if (!user) {
+  return (
+    <View style={styles.container}>
+      <Header title="Sign Up" />
+      <View style={styles.imagecontainer}>
+        <Image
+          source={require("../../../assets/signup/signup.png")}
+          style={styles.image}
+        />
       </View>
-    );
-  }
-  return <GlSuccessful user={user} />;
+      <Text style={styles.header}>
+        Welcome to <Text style={{ fontWeight: "600" }}>Growthvine</Text>
+      </Text>
+      <View style={styles.signupContainer}>
+        <TouchableOpacity onPress={() => navigation.push("swphone")}>
+          <Button
+            icon={() => (
+              <View>
+                <Image
+                  source={require("../../../assets/signup/Call.png")}
+                  style={styles.icon}
+                />
+              </View>
+            )}
+            mode="outlined"
+            textColor="rgba(2, 48, 71, 1)"
+            style={styles.phoneSignUp}
+            labelStyle={styles.buttonLabel}
+          >
+            Sign up with Phone
+          </Button>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onGoogleButtonPress}>
+          <Button
+            icon={() => (
+              <View style={styles.iconContainer}>
+                <Image
+                  source={require("../../../assets/signup/Group.png")} // Replace with your image source
+                  style={styles.icon}
+                />
+              </View>
+            )}
+            mode="outlined"
+            textColor="rgba(2, 48, 71, 1)"
+            style={styles.googleSignUp}
+            labelStyle={styles.buttonLabel}
+          >
+            Sign up with Google
+          </Button>
+        </TouchableOpacity>
+
+        <Text></Text>
+      </View>
+    </View>
+  );
+  //   }
+  //   return <GlSuccessful user={user} />;
 };
 
 const styles = StyleSheet.create({

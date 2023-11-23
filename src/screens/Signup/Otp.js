@@ -30,11 +30,9 @@ export default Otp = () => {
       const data = { mobileNumber: mobileNumber, otp: stringOtp };
       Otpverify(data).then((response) => {
         if (response.data.success === false) {
-          console.log("false", response.data.success);
           Alert.alert("Failed", response.data.error);
         }
         if (response.data.success === true) {
-          console.log(response.data.success);
           navigation.push("Dashboard");
         }
       });
