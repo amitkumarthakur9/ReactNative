@@ -1,122 +1,68 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { height, width } from "../../Dimension";
+import { Button } from "react-native-paper";
 
 const Navigatescreen = ({ navigation }) => {
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.contentContainer}>
+    <View style={styles.container}>
+      <View style={styles.bodyContainer}>
+        <View style={styles.contentContainer1}>
           <Text style={styles.topHeading}>Getting Started</Text>
           <Text style={styles.toppara}>
             Choose one of the options below to begin your journey with
             Growthvine
           </Text>
-
+        </View>
+        <View style={styles.contentContainer}>
           <TouchableOpacity onPress={() => navigation.push("Riskcalculator")}>
             <View style={styles.buttonContainer}>
               <Image
-                source={require("../../../assets/navigateScreens/image4.png")}
-                style={styles.imageA}
+                source={require("../../../assets/navigateScreens/1.png")}
+                style={styles.image}
               />
-              <Text style={styles.textA}>Calculate your Risk Profile</Text>
             </View>
+            <Text style={styles.text}>Calculate your{"\n"} Risk Profile</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.push("Upload")}>
             <View style={styles.buttonContainer}>
               <Image
-                source={require("../../../assets/navigateScreens/image5.png")}
-                style={styles.imageB}
+                source={require("../../../assets/navigateScreens/2.png")}
+                style={styles.image}
               />
-              <Text style={styles.textB}>
-                Upload existing Mutual Fund {"\n"}Investment
-              </Text>
             </View>
+            <Text style={styles.text}>
+              Upload existing{"\n"} Mutual Fund{"\n"} investment
+            </Text>
           </TouchableOpacity>
+        </View>
 
+        <View style={styles.contentContainer}>
           <TouchableOpacity onPress={() => navigation.push("Corpus")}>
             <View style={styles.buttonContainer}>
               <Image
-                source={require("../../../assets/navigateScreens/image6.png")}
-                style={styles.imageC}
+                source={require("../../../assets/navigateScreens/3.png")}
+                style={styles.image}
               />
-              <Text style={styles.textC}>
-                How to Create an Emergency {"\n"}Corpus of 1Cr
-              </Text>
             </View>
+            <Text style={styles.text}>
+              How to create an{"\n"} Emergency{"\n"} Corpus of 1Cr
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.push("Signup")}>
             <View style={styles.buttonContainer}>
               <Image
-                source={require("../../../assets/navigateScreens/image7.png")}
-                style={styles.imageD}
+                source={require("../../../assets/navigateScreens/4.png")}
+                style={[styles.image]}
               />
-              <Text style={styles.textD}>
-                Create Account / Login to existing{"\n"}Account
-              </Text>
             </View>
-          </TouchableOpacity>
-
-          {/* <TouchableOpacity onPress={() => navigation.push("Assetpreview")}>
-            <View style={styles.buttonContainer}>
-              <Image
-              source={require("../../../assets/navigateScreens/image7.png")}
-              style={styles.imageD}
-            />
-              <Text style={styles.textD}>Navigate Asset Preview</Text>
-            </View>
-          </TouchableOpacity> */}
-
-          <TouchableOpacity onPress={() => navigation.push("Dashboard")}>
-            <View style={styles.buttonContainer}>
-              {/* <Image
-              source={require("../../../assets/navigateScreens/image7.png")}
-              style={styles.imageD}
-            /> */}
-              <Text style={styles.textD}>Navigate Dashboard</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.push("Account")}>
-            <View style={styles.buttonContainer}>
-              {/* <Image
-              source={require("../../../assets/navigateScreens/image7.png")}
-              style={styles.imageD}
-            /> */}
-              <Text style={styles.textD}>Navigate Account Screens</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.push("Goal")}>
-            <View style={styles.buttonContainer}>
-              {/* <Image
-              source={require("../../../assets/navigateScreens/image7.png")}
-              style={styles.imageD}
-            /> */}
-              <Text style={styles.textD}>Navigate Goal Dashboard</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.push("Portfolio")}>
-            <View style={styles.buttonContainer}>
-              {/* <Image
-              source={require("../../../assets/navigateScreens/image7.png")}
-              style={styles.imageD}
-            /> */}
-              <Text style={styles.textD}>Navigate Portfolio</Text>
-            </View>
+            <Text style={styles.text}>Create Account /{"\n"}Login</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -125,9 +71,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
+
   contentContainer: {
-    marginTop: height * 0.1,
+    flexDirection: "row",
+    gap: width * 0.07,
+    justifyContent: "center",
+  },
+  bodyContainer: {
     padding: width * 0.06,
+    marginTop: height * 0.1,
   },
   topHeading: {
     fontSize: width * 0.073,
@@ -142,6 +94,7 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.028,
   },
   buttonContainer: {
+    width: width * 0.292,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -152,63 +105,57 @@ const styles = StyleSheet.create({
     padding: height * 0.02,
     marginTop: height * 0.032,
   },
-  imageA: {
-    width: width * 0.1,
-    height: height * 0.05,
-    marginLeft: width * -0.23,
+  image: {
+    width: width * 0.2,
+    height: height * 0.09,
   },
-  textA: {
+  text: {
     color: "#023047", // Your text color
     fontSize: width * 0.037,
     marginLeft: width * 0.018,
     lineHeight: height * 0.028,
+    textAlign: "center",
   },
-
-  imageB: {
-    width: width * 0.1,
-    height: height * 0.05,
-    marginLeft: width * -0.19,
+  signupContainer: {
+    marginTop: height * 0.04,
+    width: width,
+    height: height * 0.17,
+    justifyContent: "center",
+    alignContent: "center",
+    textAlign: "center",
+    marginTop: height * 0.05,
   },
-  textB: {
-    color: "#023047", // Your text color
-    fontSize: width * 0.037,
-    marginLeft: width * 0.018,
-    lineHeight: height * 0.028,
+  phoneSignUp: {
+    left: "50%",
+    marginLeft: -width * 0.43, // Adjust the margin based on screen width
+    width: width * 0.86, // Adjust the width based on screen width
+    height: width * 0.14, // Adjust the height based on screen width
+    borderRadius: width * 0.03, // Adjust the border radius based on screen width
+    alignItems: "center", // Center the content horizontally
+    justifyContent: "center", // Center the content vertically
+    backgroundColor: "white",
+    borderColor: "rgb(204, 204, 204)",
   },
-
-  imageC: {
-    width: width * 0.1,
-    height: height * 0.05,
-    marginLeft: width * -0.17,
+  googleSignUp: {
+    top: width * 0.03,
+    left: "50%",
+    marginLeft: -width * 0.43, // Adjust the margin based on screen width
+    width: width * 0.86, // Adjust the width based on screen width
+    height: width * 0.14, // Adjust the height based on screen width
+    borderRadius: width * 0.03, // Adjust the border radius based on screen width
+    alignItems: "center", // Center the content horizontally
+    justifyContent: "center", // Center the content vertically
+    backgroundColor: "white",
+    borderColor: "rgb(204, 204, 204)",
   },
-  textC: {
-    color: "#023047", // Your text color
-    fontSize: width * 0.037,
-    marginLeft: width * 0.018,
-    lineHeight: height * 0.028,
+  buttonLabel: {
+    fontSize: width * 0.045, // Adjust the font size based on screen width
+    fontWeight: "600",
   },
-
-  imageD: {
-    width: width * 0.1,
-    height: height * 0.05,
-    marginLeft: width * -0.08,
-  },
-  textD: {
-    color: "#023047", // Your text color
-    fontSize: width * 0.037,
-    marginLeft: width * 0.018,
-    lineHeight: height * 0.028,
-  },
-  imageE: {
-    width: width * 0.1,
-    height: height * 0.05,
-    marginLeft: width * 0.049,
-  },
-  textE: {
-    color: "#023047", // Your text color
-    fontSize: width * 0.037,
-    marginLeft: width * 0.018,
-    lineHeight: height * 0.028,
+  icon: {
+    width: width * 0.06,
+    height: width * 0.06,
+    left: -width * 0.04,
   },
 });
 

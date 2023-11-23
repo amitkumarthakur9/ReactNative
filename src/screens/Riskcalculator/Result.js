@@ -4,6 +4,7 @@ import { Button } from "react-native-paper";
 import { width, height } from "../../Dimension";
 import CircularProgress from "react-native-circular-progress-indicator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Header from "../Components/Header";
 
 const Riskcalculator = ({ navigation }) => {
   const [finalscore, setFinalscore] = useState(0);
@@ -33,8 +34,9 @@ const Riskcalculator = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Header title="Your Risk Score" />
       <View style={styles.contentContainer}>
-        <Text style={styles.header}>Your Risk Score</Text>
+        {/* <Text style={styles.header}>Your Risk Score</Text> */}
         <Text style={styles.desc}>
           * Calculated based on your responses to the questions
         </Text>
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   contentContainer: {
-    marginTop: height * 0.1,
+    marginTop: height * 0.05,
   },
   header: {
     marginTop: height * 0.01,

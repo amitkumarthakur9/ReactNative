@@ -2,17 +2,19 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { Button } from "react-native-paper";
 import { width, height } from "../../Dimension";
+import Header from "../Components/Header";
 
 const Riskcalculator = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <Header title="Risk Profile Calculator" />
       <View style={styles.contentContainer}>
-        <Text
+        {/* <Text
           style={styles.skip}
           onPress={() => navigation.push("Navigatescreens")}
         >
           Skip
-        </Text>
+        </Text> */}
         <Image
           source={require("../../../assets/riskCalculator/1.png")}
           style={styles.image}
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   contentContainer: {
-    marginTop: height * 0.1,
+    // marginTop: height * 0.1,
   },
   skip: {
     fontWeight: "600",

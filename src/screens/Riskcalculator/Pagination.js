@@ -12,7 +12,7 @@ export default pagination = ({ data, updateActiveIndex }) => {
 
   return (
     <View style={styles.contentContainer}>
-      <Text style={styles.header}>Risk Profile Calculator</Text>
+      {/* <Text style={styles.header}>Risk Profile Calculator</Text> */}
       <View style={styles.paginationContainer}>
         {Array.from({ length: totalDots }, (_, index) => (
           <TouchableOpacity

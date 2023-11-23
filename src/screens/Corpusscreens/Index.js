@@ -6,129 +6,77 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  TextInput,
 } from "react-native";
 import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
 import { Slider } from "@miblanchard/react-native-slider";
-// import { Button } from "react-native-paper";
-import Footercorpus from "./Footercorpus";
 import Header from "../Components/Header";
-
 export default Uploadscreens = () => {
-  const [MonthlyInvestment, setMonthlyInvestment] = useState(1000);
-  const [timePeriod, setTimePeriod] = useState(1);
-  const [percentage, setPercentage] = useState(0);
+  const [isMonthly, setIsMonthly] = useState(true);
+  const [investmentAmount, setInvestmentAmount] = useState(1000);
+  const [annualReturn, setAnnualReturn] = useState(5);
+  const [timePeriod, setTimePeriod] = useState(5);
 
-  const ptData = [
-    { value: 160, date: "1 Apr 2022" },
-    { value: 180, date: "2 Apr 2022" },
-    { value: 190, date: "3 Apr 2022" },
-    { value: 180, date: "4 Apr 2022" },
-    { value: 140, date: "5 Apr 2022" },
-    { value: 145, date: "6 Apr 2022" },
-    { value: 160, date: "7 Apr 2022" },
-    { value: 200, date: "8 Apr 2022" },
+  const calculateTotalWealth = () => {
+    const principal = isMonthly
+      ? investmentAmount * (timePeriod * 12)
+      : investmentAmount;
+    const rate = annualReturn / 100;
+    let sum = 0;
+    let totalWealth;
+    if (isMonthly) {
+      let monthlygrowth = rate / 12;
 
-    { value: 220, date: "9 Apr 2022" },
-    {
-      value: 240,
-      date: "10 Apr 2022",
-      label: "10 Apr",
-      labelTextStyle: {
-        color: "rgba(131, 132, 139, 1)",
-        width: 60,
-      },
-    },
-    { value: 280, date: "11 Apr 2022" },
-    { value: 260, date: "12 Apr 2022" },
-    { value: 340, date: "13 Apr 2022" },
-    { value: 385, date: "14 Apr 2022" },
-    { value: 280, date: "15 Apr 2022" },
-    { value: 390, date: "16 Apr 2022" },
+      for (i = 0; i < timePeriod * 12; i++) {
+        sum += Math.pow(1 + monthlygrowth, i + 1);
+      }
 
-    { value: 370, date: "17 Apr 2022" },
-    { value: 285, date: "18 Apr 2022" },
-    { value: 295, date: "19 Apr 2022" },
-    {
-      value: 300,
-      date: "20 Apr 2022",
-      label: "20 Apr",
-      labelTextStyle: { color: "lightgray", width: 60 },
-    },
-    { value: 280, date: "21 Apr 2022" },
-    { value: 295, date: "22 Apr 2022" },
-    { value: 260, date: "23 Apr 2022" },
-    { value: 255, date: "24 Apr 2022" },
+      totalWealth = investmentAmount * sum;
+      compoundInterest = totalWealth - principal;
+    } else {
+      for (i = 0; i < timePeriod; i++) {
+        sum += Math.pow(1 + compoundInterest, i + 1);
+      }
+      compoundInterest = principal * (Math.pow(1 + rate, timePeriod) - 1);
+      totalWealth = principal + compoundInterest;
+    }
 
-    { value: 190, date: "25 Apr 2022" },
-    { value: 220, date: "26 Apr 2022" },
-    { value: 205, date: "27 Apr 2022" },
-    { value: 230, date: "28 Apr 2022" },
-    { value: 210, date: "29 Apr 2022" },
-    {
-      value: 200,
-      date: "30 Apr 2022",
-      label: "30 Apr",
-      labelTextStyle: { color: "lightgray", width: 60 },
-    },
-    { value: 240, date: "1 May 2022" },
-    { value: 250, date: "2 May 2022" },
-    { value: 280, date: "3 May 2022" },
-    { value: 250, date: "4 May 2022" },
-    { value: 210, date: "5 May 2022" },
-  ];
+    return {
+      investment: principal.toFixed(),
+      wealthGain: compoundInterest.toFixed(),
+      totalWealth: totalWealth.toFixed(),
+    };
+  };
+
+  const { investment, wealthGain, totalWealth } = calculateTotalWealth();
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.arrowContainer}>
-        <TouchableOpacity style={styles.arrow}>
-          <Ionicons
-            style={styles.iconArrow}
-            name="arrow-back"
-            size={30}
-            color="white"
-            onPress={() => navigation.goBack()}
-          />
-          <Text style={styles.headerText}>
-            How to create an Emergency Corpus..
-          </Text>
-        </TouchableOpacity>
-      </View> */}
-
-      <Header title="Corpus" showPlusSign={false} />
-
+      <Header title="Corpus" />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.chartContainer}>
           <View style={{ alignItems: "center" }}>
             <View style={styles.flexContainer}>
               <TouchableOpacity
-                style={[styles.frequencyButtons, { backgroundColor: "white" }]}
+                style={[
+                  styles.frequencyButtons,
+                  isMonthly && styles.activeButton,
+                ]}
+                onPress={() => setIsMonthly(true)}
               >
                 <Text style={styles.frequencyButtonsText}>Monthly</Text>
               </TouchableOpacity>
+
               <TouchableOpacity
                 style={[
-                  styles.frequencyButtons1,
-                  { backgroundColor: "rgba(249, 174, 44, 1)" },
+                  styles.frequencyButtons,
+                  !isMonthly && styles.activeButton,
                 ]}
               >
-                <Image
-                  source={require("../../../assets/corpusIcon/Shape.png")}
-                  style={{
-                    width: width * 0.053,
-                    height: height * 0.0182,
-                    marginLeft: width * -0.261,
-                    marginTop: height * 0.016,
-                  }}
-                />
                 <Text
-                  style={[
-                    styles.frequencyButtonsText1,
-                    {
-                      marginTop: height * -0.024,
-                      marginBottom: height * 0.004,
-                    },
-                  ]}
+                  style={[styles.frequencyButtonsText]}
+                  onPress={() => setIsMonthly(false)}
                 >
                   One - Time
                 </Text>
@@ -138,23 +86,37 @@ export default Uploadscreens = () => {
           <View>
             <View style={[styles.flexContainer, { marginTop: height * 0.04 }]}>
               <Text style={[styles.rangeText, { textAlign: "left" }]}>
-                One-Time Investment
+                {isMonthly ? "Monthly Investment" : "One-Time Investment"}
               </Text>
-              <Text style={styles.rangeTextPercentage}>
-                ₹ {MonthlyInvestment}
+              <Text
+                style={[
+                  styles.rangeTextPercentage,
+                  { marginRight: width * -0.196, marginTop: height * 0.002 },
+                ]}
+              >
+                {" "}
+                ₹
               </Text>
+              <TextInput
+                style={styles.rangeTextPercentage}
+                value={investmentAmount.toString()}
+                keyboardType="numeric"
+                onChangeText={(text) =>
+                  setInvestmentAmount(parseInt(text) || 0)
+                }
+              />
             </View>
             <Slider
               animateTransitions
               maximumTrackTintColor={"rgba(26, 28, 23, 0.12)"}
               minimumTrackTintColor={"#023047"}
-              maximumValue={100000}
-              minimumValue={1000}
-              onValueChange={(value) => setMonthlyInvestment(Math.floor(value))}
-              value={MonthlyInvestment}
+              maximumValue={isMonthly ? 100000 : 100000}
+              minimumValue={isMonthly ? 100 : 1000}
+              onValueChange={(value) => setInvestmentAmount(Math.floor(value))}
+              value={investmentAmount}
               thumbTintColor={"rgba(33, 158, 188, 1)"}
               trackStyle={{
-                height: height * 0.008,
+                height: 8,
                 borderRadius: width * 0.03,
               }}
             />
@@ -165,7 +127,7 @@ export default Uploadscreens = () => {
               <Text style={[styles.rangeText, { textAlign: "left" }]}>
                 Annual Return
               </Text>
-              <Text style={styles.rangeTextPercentage}>{percentage} %</Text>
+              <Text style={styles.rangeTextPercentage}>{annualReturn} %</Text>
             </View>
             <Slider
               animateTransitions
@@ -173,10 +135,8 @@ export default Uploadscreens = () => {
               minimumTrackTintColor={"#023047"}
               maximumValue={100}
               minimumValue={0}
-              onValueChange={(yearValue) =>
-                setPercentage(Math.floor(yearValue))
-              }
-              value={percentage}
+              onValueChange={(value) => setAnnualReturn(Math.floor(value))}
+              value={annualReturn}
               thumbTintColor={"rgba(33, 158, 188, 1)"}
               trackStyle={{
                 height: height * 0.008,
@@ -196,11 +156,9 @@ export default Uploadscreens = () => {
               animateTransitions
               maximumTrackTintColor={"rgba(26, 28, 23, 0.12)"}
               minimumTrackTintColor={"#023047"}
-              maximumValue={15}
+              maximumValue={50}
               minimumValue={1}
-              onValueChange={(yearValue) =>
-                setTimePeriod(Math.floor(yearValue))
-              }
+              onValueChange={(value) => setTimePeriod(Math.floor(value))}
               value={timePeriod}
               thumbTintColor={"rgba(33, 158, 188, 1)"}
               trackStyle={{
@@ -212,8 +170,34 @@ export default Uploadscreens = () => {
         </View>
       </ScrollView>
 
-      <View>
-        <Footercorpus />
+      <View style={styles.footer}>
+        <Image
+          style={[styles.footerImage, { width: "auto", height: height * 0.32 }]}
+          source={require("../../../assets/corpusIcon/Corpus.png")}
+        />
+        <View style={styles.totalWealthContainer}>
+          <Text style={styles.totalWealthText}>
+            Investment {"\n"}
+            {"\n"}
+          </Text>
+        </View>
+        <View style={styles.totalWealthContainer}>
+          <Text style={styles.totalWealthTextA}>₹ {investment}</Text>
+        </View>
+
+        <View style={styles.totalWealthContainer}>
+          <Text style={styles.totalWealthText1}>Wealth Gain</Text>
+        </View>
+        <View style={styles.totalWealthContainer}>
+          <Text style={styles.totalWealthTextB}>₹ {wealthGain}</Text>
+        </View>
+
+        <View style={styles.totalWealthContainer}>
+          <Text style={styles.totalWealthText2}>Total Wealth Generated</Text>
+        </View>
+        <View style={styles.totalWealthContainer}>
+          <Text style={styles.totalWealthText3}>₹ {totalWealth}</Text>
+        </View>
       </View>
     </View>
   );
@@ -242,7 +226,6 @@ const styles = StyleSheet.create({
   headerText: {
     color: "#023047",
     fontWeight: "600",
-    fontFamily: "Metropolis",
     fontSize: width * 0.037,
     lineHeight: height * 0.028,
     marginLeft: width * 0.047,
@@ -250,11 +233,7 @@ const styles = StyleSheet.create({
 
   chartContainer: {
     padding: width * 0.08,
-    // marginTop: height * 0.12,
-    // backgroundColor: "white",
-    // borderWidth: width * 0.002,
-    // borderRadius: width * 0.045,
-    // borderColor: "rgb(230, 230, 230)",
+    // marginTop: -height * 0.02,
     marginBottom: height * 0.01,
   },
 
@@ -285,7 +264,7 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     flexDirection: "row",
-    marginTop: height * 0.03,
+    marginTop: height * 0.02,
   },
   absolute: {
     color: "rgba(2, 48, 71, 0.5)",
@@ -317,19 +296,19 @@ const styles = StyleSheet.create({
     padding: width * 0.02,
   },
   frequencyButtonsText: {
-    color: "#023047",
+    // color: "#023047",
     fontSize: width * 0.032,
     lineHeight: height * 0.04,
     fontWeight: "500",
-    fontFamily: "Metropolis",
   },
 
   frequencyButtonsText1: {
-    color: "#023047",
+    // color: "#023047",
     fontSize: width * 0.032,
     lineHeight: height * 0.024,
     fontWeight: "500",
-    fontFamily: "Metropolis",
+    marginTop: height * -0.024,
+    marginBottom: height * 0.004,
   },
   rangeText: {
     flex: 1,
@@ -347,5 +326,78 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.03,
     fontSize: width * 0.04,
     fontWeight: "600",
+  },
+  footer: {
+    // position: "absolute",
+    bottom: 0,
+    width: width * 1.04,
+    borderTopLeftRadius: width * 0.14,
+    borderTopRightRadius: width * 0.1,
+    overflow: "hidden",
+    marginLeft: width * -0.03,
+  },
+  totalWealthContainer: {
+    alignItems: "center",
+  },
+  totalWealthText: {
+    marginTop: height * -0.27,
+    marginLeft: width * -0.4,
+    fontSize: width * 0.042,
+
+    fontWeight: "400",
+    overflow: "hidden",
+    color: "#C3C3C3",
+  },
+  totalWealthTextA: {
+    marginTop: height * -0.23,
+    marginLeft: width * -0.4,
+    fontSize: width * 0.053,
+
+    fontWeight: "400",
+    overflow: "hidden",
+    color: "#FFFFFF",
+    lineHeight: height * 0.028,
+  },
+
+  totalWealthText1: {
+    marginTop: height * -0.27,
+    marginRight: width * -0.41,
+    fontSize: width * 0.042,
+
+    fontWeight: "400",
+    overflow: "hidden",
+    color: "#C3C3C3",
+  },
+
+  totalWealthTextB: {
+    marginTop: height * -0.23,
+    marginRight: width * -0.4,
+    fontSize: width * 0.053,
+
+    fontWeight: "400",
+    overflow: "hidden",
+    color: "#FFFFFF",
+    lineHeight: height * 0.028,
+  },
+
+  totalWealthText2: {
+    marginTop: height * -0.16,
+    fontSize: width * 0.042,
+
+    fontWeight: "400",
+    overflow: "hidden",
+    color: "#C3C3C3",
+    lineHeight: height * 0.028,
+  },
+  totalWealthText3: {
+    fontSize: width * 0.066,
+
+    fontWeight: "600",
+    overflow: "hidden",
+    marginTop: height * -0.12,
+    color: "#FFFFFF",
+  },
+  activeButton: {
+    backgroundColor: "#F9AE2C",
   },
 });

@@ -13,6 +13,7 @@ import {
   Googlelogin,
   Phonelogin,
 } from "../../api/services/endpoints/userEndpoints";
+import Header from "../Components/Header";
 
 export default Signup = ({ navigation }) => {
   // Set an initializing state whilst Firebase connects
@@ -79,6 +80,7 @@ export default Signup = ({ navigation }) => {
   if (!user) {
     return (
       <View style={styles.container}>
+        <Header />
         <View style={styles.imagecontainer}>
           <Image
             source={require("../../../assets/signup/signup.png")}
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
   },
   imagecontainer: {
     width: width,
-    marginTop: height * 0.1,
+    marginTop: height * 0.05,
   },
   image: {
     width: width,
