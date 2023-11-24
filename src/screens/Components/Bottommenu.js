@@ -1,28 +1,16 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  Text,
-  Image,
-  View,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native";
+import { Text, Image, View } from "react-native";
 import { height, width } from "../../Dimension";
-import Goal from "../Goal/Index";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NavigationContainer } from "@react-navigation/native";
-import { Ionicons, EvilIcons } from "@expo/vector-icons";
 import Home from "../Dashboard/Home";
 import Explore from "../Dashboard/Explore";
+import Account from "../Account/Index";
 
 const Tab = createBottomTabNavigator();
 
-const Drawer = createDrawerNavigator();
-
-const Home1 = () => <Text style={{ marginTop: 100 }}>amit</Text>;
 const Notifications = () => <Text>amit</Text>;
-const Profile = () => <Text>amit</Text>;
-const Profiles = () => <Text>amit</Text>;
-const Profiless = () => <Text>amit</Text>;
+const Profiles = () => <Text>amit kumar thakur</Text>;
+const Profiless = () => <Text>amit kumar thakur profiless</Text>;
 
 const Menu = () => {
   return (
@@ -160,7 +148,7 @@ const Menu = () => {
       />
       <Tab.Screen
         name="account"
-        component={Profiless}
+        component={Account}
         options={{
           tabBarLabel: "Account",
           tabBarIcon: ({ color, size }) => (

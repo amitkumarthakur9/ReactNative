@@ -6,7 +6,6 @@ import {
   ImageBackground,
   TouchableOpacity,
   FlatList,
-  Image,
 } from "react-native";
 import Bgiheader from "../Components/Bgiheader";
 import { height, width } from "../../Dimension";
@@ -20,7 +19,6 @@ import {
 import { searchFund } from "../../api/services/endpoints/exploreEndpoints";
 import { Foundation, SimpleLineIcons } from "@expo/vector-icons";
 import Formatfundname from "../Components/Formatfundname";
-import RenderStars from "../Components/Star";
 
 export default Searchbox = ({ navigation }) => {
   const [search, setSearch] = useState();
@@ -40,6 +38,24 @@ export default Searchbox = ({ navigation }) => {
     setSearch("");
   };
 
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <Foundation
+          key={i}
+          name="star"
+          size={width * 0.04}
+          style={[
+            styles.star,
+            { color: i <= rating ? "rgba(255, 195, 0, 1)" : "gray" },
+          ]}
+        />
+      );
+    }
+    return stars;
+  };
+
   const handleInvest = (mfId) => {
     navigation.navigate("Assetpreview", { mfId });
   };
@@ -54,18 +70,14 @@ export default Searchbox = ({ navigation }) => {
         >
           <View style={styles.flexRow}>
             <View style={styles.flexItem}>
-              <Image
-                style={{
-                  width: width * 0.14,
-                  height: width * 0.1,
-                }}
+              <Avatar.Image
+                size={width * 0.07}
                 source={{
                   uri: item.fundHouse.logoUrl,
                 }}
-                resizeMode="contain"
               />
             </View>
-            <View style={[styles.flexItem, { justifyContent: "center" }]}>
+            <View style={styles.flexItem}>
               <Text style={styles.trendingFundName}>
                 {Formatfundname(item.name)}
               </Text>
@@ -98,9 +110,17 @@ export default Searchbox = ({ navigation }) => {
                   : "N/A"}
               </Text>
             </View>
+            {/* <View style={styles.benchmarkContainer}>
+              <Text style={styles.benchmarkReturn}>
+                Benchmark Returns (5yr)
+              </Text>
+              <Text style={styles.benchmarkPercentage}> 20.2% </Text>
+            </View> */}
           </View>
           <View style={[styles.flexRow, { alignSelf: "center" }]}>
-            {RenderStars(item.rating)}
+            {/* <SimpleLineIcons name="speedometer" style={styles.speedIcon} /> */}
+            {/* <Text style={styles.riskText}>Very High Risk</Text> */}
+            {renderStars(item.rating)}
           </View>
           <View style={styles.flexRow}>
             <TouchableOpacity style={styles.Button}>

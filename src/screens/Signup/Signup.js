@@ -59,6 +59,7 @@ export default Signup = ({ navigation }) => {
         signOut();
       }
       if (response.data.success === true) {
+        signOut();
         navigation.push("Dashboard");
       }
       //   console.log("shivangi data:", response.data);

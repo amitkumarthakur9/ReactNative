@@ -26,6 +26,7 @@ const Portfolio = () => {
             title="Portfolio"
             showPlusSign={false}
             Headerheight={0.29}
+            showBackArrow={false}
           />
           <View style={styles.cart}>
             <ScrollView horizontal>
