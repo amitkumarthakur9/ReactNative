@@ -10,7 +10,6 @@ const Tab = createBottomTabNavigator();
 
 const Notifications = () => <Text>amit</Text>;
 const Profiles = () => <Text>amit kumar thakur</Text>;
-const Profiless = () => <Text>amit kumar thakur profiless</Text>;
 
 const Menu = () => {
   return (

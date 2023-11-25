@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, Image } from "react-native";
 import { Button } from "react-native-paper";
 import { width, height } from "../../Dimension";
 import CircularProgress from "react-native-circular-progress-indicator";
@@ -8,6 +8,10 @@ import Header from "../Components/Header";
 
 const Riskcalculator = ({ navigation }) => {
   const [finalscore, setFinalscore] = useState(0);
+  const [imageUrl, setImageUrl] = useState(
+    require("../../../assets/riskCalculator/1.png")
+  );
+  const [riskName, setRiskName] = useState("Conservative");
   useEffect(() => {
     async function fetchData() {
       try {
@@ -19,6 +23,23 @@ const Riskcalculator = ({ navigation }) => {
           total += number;
         });
         setFinalscore(total);
+        total <= 8
+          ? (setImageUrl(require("../../../assets/riskCalculator/1.png")),
+            setRiskName("Conservative"))
+          : total > 8 && total <= 16
+          ? (setImageUrl(require("../../../assets/riskCalculator/2.png")),
+            setRiskName("Moderately Conservative"))
+          : total > 16 && total <= 24
+          ? (setImageUrl(require("../../../assets/riskCalculator/3.png")),
+            setRiskName("Moderate"))
+          : total > 24 && total <= 32
+          ? (setImageUrl(require("../../../assets/riskCalculator/4.png")),
+            setRiskName("Aggressive"))
+          : total > 32 && total <= 40
+          ? (setImageUrl(require("../../../assets/riskCalculator/5.png")),
+            setRiskName(" Extremely Aggressive"))
+          : (setImageUrl(require("../../../assets/riskCalculator/1.png")),
+            setRiskName("Conservative"));
       } catch (e) {
         console.error("Error fetching keys:", e);
       }
@@ -41,7 +62,7 @@ const Riskcalculator = ({ navigation }) => {
           * Calculated based on your responses to the questions
         </Text>
         <View style={styles.circularProgressContainer}>
-          <CircularProgress
+          {/* <CircularProgress
             value={finalscore}
             radius={80}
             duration={2000}
@@ -56,20 +77,19 @@ const Riskcalculator = ({ navigation }) => {
             inActiveStrokeColor={"rgba(42, 42, 42, 0.1)"}
             inActiveStrokeWidth={12}
             activeStrokeWidth={12}
-            // onAnimationComplete={() => {
-            //   alert("Your score is :" + finalscore);
-            // }}
-          />
+          /> */}
+
+          <Image source={imageUrl} style={styles.image} />
         </View>
         <Text style={styles.text}>
           Risk profile :{" "}
-          <Text style={{ color: "rgba(251, 133, 0, 1)" }}>Moderate</Text>
+          <Text style={{ color: "rgba(251, 133, 0, 1)" }}>{riskName}</Text>
         </Text>
         <View style={styles.continueContainer}>
           <Button
-            mode="text"
+            mode="contained"
             icon="recycle-variant"
-            style={{ marginRight: width * 0.2 }}
+            style={[styles.calculateButton, { marginRight: width * 0.1 }]}
             onPress={() => {
               navigation.push("Riskcalculator");
             }}
@@ -83,7 +103,7 @@ const Riskcalculator = ({ navigation }) => {
             contentStyle={{
               flexDirection: "row-reverse",
             }}
-            labelStyle={styles.buttonLabel} // Increase text size and change text color
+            labelStyle={styles.buttonLabel}
             onPress={() => {
               navigation.push("Signup");
             }}
@@ -148,6 +168,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end", // Align buttons to the right
     alignItems: "center", // Center items vertically
     left: -width * 0.04,
+  },
+  image: {
+    width: width,
+    height: height * 0.2,
+    resizeMode: "contain",
   },
 });
 

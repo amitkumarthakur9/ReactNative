@@ -14,9 +14,13 @@ import { Ionicons, EvilIcons } from "@expo/vector-icons";
 import { Avatar } from "react-native-paper";
 import { NforenderItem, SchemesrenderItem } from "./Explore";
 import DashboardData from "./Data";
+import usePortfolioData from "../Portfolio/Useportfoliodata";
+import Loader from "../Components/Loader";
+import formatNumberWithCommas from "../Components/Inrconverter";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
+  const { allPortfolioData } = usePortfolioData();
   return (
     <View style={styles.container}>
       <Backgroundimage Headerheight={0.29} />
@@ -43,50 +47,94 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.cart}>
-          <View style={styles.individualCarts}>
-            <ImageBackground
-              source={require("../../../assets/dashboard/rectengal.png")}
-              style={styles.rec1}
+        {allPortfolioData != "allPortfolioData" ? (
+          <>
+            <TouchableOpacity
+              style={styles.cart}
+              activeOpacity={0.5}
+              onPress={() => navigation.push("Portfolio")}
             >
-              <Image
-                source={require("../../../assets/Goal/rectengal2.png")}
-                style={styles.rectengal2}
-              />
-              <View style={styles.investmentContainer}>
-                <View style={styles.headerBox}>
-                  <Text style={styles.header}>
-                    Current Internal Portfolio Value
-                  </Text>
-                  <Text style={styles.desc}>₹ 2,59,000.00</Text>
-                </View>
-                <View style={styles.boxBottomContainer}>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descHeader}>Initial Investment</Text>
-                    <Text style={styles.descHeader}>Returns</Text>
+              <View style={styles.individualCarts}>
+                <ImageBackground
+                  source={require("../../../assets/dashboard/rectengal.png")}
+                  style={styles.rec1}
+                >
+                  <Image
+                    source={require("../../../assets/Goal/rectengal2.png")}
+                    style={styles.rectengal2}
+                  />
+                  <View style={styles.investmentContainer}>
+                    <View style={styles.headerBox}>
+                      <Text style={styles.header}>
+                        Complete Portfolio Value
+                      </Text>
+                      <Text style={styles.desc}>
+                        ₹{" "}
+                        {formatNumberWithCommas(
+                          Math.round(allPortfolioData.currValue)
+                        )}
+                      </Text>
+                    </View>
+                    <View style={styles.boxBottomContainer}>
+                      <View style={styles.flexRow}>
+                        <Text style={styles.descHeader}>
+                          Initial Investment
+                        </Text>
+                        <Text style={styles.descHeader}>Returns</Text>
+                      </View>
+                      <View style={styles.flexRow}>
+                        <Text style={styles.descValue}>
+                          ₹{" "}
+                          {formatNumberWithCommas(
+                            Math.round(allPortfolioData.cost)
+                          )}{" "}
+                        </Text>
+                        <Text
+                          style={[
+                            styles.descValue,
+                            {
+                              color: "rgba(61, 193, 84, 1)",
+                              textAlign: "right",
+                            },
+                          ]}
+                        >
+                          {" "}
+                          {allPortfolioData.absRet.toFixed(2)}
+                          {"%"}
+                        </Text>
+                        <TouchableOpacity style={styles.investNow}>
+                          <Text style={styles.investNowText}>Invest Now</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
                   </View>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descValue}> ₹ 2,00,000.00 </Text>
-                    <Text
-                      style={[
-                        styles.descValue,
-                        {
-                          color: "rgba(61, 193, 84, 1)",
-                          textAlign: "right",
-                        },
-                      ]}
-                    >
-                      32.8%
-                    </Text>
-                    <TouchableOpacity style={styles.investNow}>
-                      <Text style={styles.investNowText}>Invest Now</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
+                </ImageBackground>
               </View>
-            </ImageBackground>
-          </View>
-        </View>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            <TouchableOpacity
+              style={styles.cart}
+              activeOpacity={0.5}
+              onPress={() => navigation.push("Portfolio")}
+            >
+              <View style={styles.individualCarts}>
+                <ImageBackground
+                  source={require("../../../assets/dashboard/rectengal.png")}
+                  style={styles.rec1}
+                >
+                  <Image
+                    source={require("../../../assets/Goal/rectengal2.png")}
+                    style={styles.rectengal2}
+                  />
+                  <Loader />
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
+          </>
+        )}
+
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.fundContainer}>
             <View style={[styles.flexRow, { marginBottom: height * 0.02 }]}>
@@ -99,15 +147,6 @@ const Home = ({ navigation }) => {
                 style={styles.adSliderImage}
               />
             </View>
-            {/* <View
-              style={[
-                styles.flexRow,
-                { marginTop: height * 0.04, marginBottom: height * 0.02 },
-              ]}
-            >
-              <Text style={styles.leftContent}>Investment Baskets</Text>
-              <Text style={styles.rightContent}>View all</Text>
-            </View> */}
             <View
               style={[
                 styles.flexRow,

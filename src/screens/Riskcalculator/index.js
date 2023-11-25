@@ -9,14 +9,8 @@ const Riskcalculator = ({ navigation }) => {
     <View style={styles.container}>
       <Header title="Risk Profile Calculator" />
       <View style={styles.contentContainer}>
-        {/* <Text
-          style={styles.skip}
-          onPress={() => navigation.push("Navigatescreens")}
-        >
-          Skip
-        </Text> */}
         <Image
-          source={require("../../../assets/riskCalculator/1.png")}
+          source={require("../../../assets/riskCalculator/calculateRisk.png")}
           style={styles.image}
         />
         <Text style={styles.header}>Calculate Risk Profile</Text>

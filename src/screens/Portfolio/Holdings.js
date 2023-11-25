@@ -21,7 +21,7 @@ import Loader from "../Components/Loader";
 import Formatfundname from "../Components/Formatfundname";
 import formatNumberWithCommas from "../Components/Inrconverter";
 
-const Dashboardexplore = () => {
+const Holdings = () => {
   const { holdingData } = usePortfolioData();
   const [imageName, setImageName] = useState("../../../assets/amc/1.png");
   return (
@@ -32,7 +32,7 @@ const Dashboardexplore = () => {
             ([key, obj]) =>
               obj.units > 0 && (
                 <>
-                  <View style={styles.card}>
+                  <View style={styles.card} key={key}>
                     <View style={styles.flexRow}>
                       <View style={styles.trendImage}>
                         <Image
@@ -364,4 +364,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Dashboardexplore;
+export default Holdings;

@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  FlatList,
 } from "react-native";
 import Bgiheader from "../Components/Bgiheader";
 import { width, height } from "../../Dimension";
@@ -14,169 +15,128 @@ import Content from "./Content";
 import usePortfolioData from "./Useportfoliodata";
 import Loader from "../Components/Loader";
 import formatNumberWithCommas from "../Components/Inrconverter";
+import renderPaginationDots from "../Components/Pagination";
+import Holdings from "../Portfolio/Holdings";
 
 const Portfolio = () => {
-  const { allPortfolioData, internalPortfolioData, externalPortfolioData } =
-    usePortfolioData();
+  const [currentPage, setCurrentPage] = useState(0);
+  const { completePortfolioData, allPortfolioData } =
+    usePortfolioData(currentPage);
+  const totalDots = Object.entries(completePortfolioData).length;
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {allPortfolioData != "allPortfolioData" ? (
-        <>
-          <Bgiheader
-            title="Portfolio"
-            showPlusSign={false}
-            Headerheight={0.29}
-            showBackArrow={false}
-          />
-          <View style={styles.cart}>
-            <ScrollView horizontal>
-              <View style={styles.individualCarts}>
-                <ImageBackground
-                  source={require("../../../assets/portfolio/rec1.png")}
-                  style={styles.rec1}
-                  resizeMode="stretch"
-                >
-                  <Image
-                    source={require("../../../assets/Goal/rectengal2.png")}
-                    style={styles.rectengal2}
-                  />
-                  <View style={styles.investmentContainer}>
-                    <View style={styles.headerBox}>
-                      <Text style={styles.header}>Complete Portfolio</Text>
-                      <Text style={styles.desc}>
-                        ₹{" "}
-                        {formatNumberWithCommas(
-                          Math.round(allPortfolioData.currValue)
-                        )}
-                      </Text>
-                    </View>
-                    <View style={styles.boxBottomContainer}>
-                      <View style={styles.flexRow}>
-                        <Text style={styles.descHeader}>Investment</Text>
-                        <Text style={styles.descHeader}>Current Gain</Text>
-                        <Text style={styles.descHeader}>XIRR</Text>
-                      </View>
-                      <View style={styles.flexRow}>
-                        <Text style={styles.descValue}>
+      <Bgiheader
+        title="Portfolio"
+        showPlusSign={false}
+        Headerheight={0.29}
+        showBackArrow={false}
+      />
+      <View style={styles.cart}>
+        <ScrollView
+          horizontal
+          onMomentumScrollEnd={(event) => {
+            const newPage = Math.floor(
+              event.nativeEvent.contentOffset.x / (width * 0.9)
+            );
+            setCurrentPage(newPage);
+          }}
+        >
+          {allPortfolioData != "allPortfolioData" ? (
+            <>
+              {Object.entries(completePortfolioData).map(([key, obj]) => (
+                <View style={styles.individualCarts} key={key}>
+                  <ImageBackground
+                    source={require("../../../assets/portfolio/rec1.png")}
+                    style={styles.rec1}
+                    resizeMode="stretch"
+                  >
+                    <Image
+                      source={require("../../../assets/Goal/rectengal2.png")}
+                      style={styles.rectengal2}
+                    />
+                    <View style={styles.investmentContainer}>
+                      <View style={styles.headerBox}>
+                        <Text style={styles.header}>{key} Portfolio Value</Text>
+                        <Text style={styles.desc}>
                           ₹{" "}
                           {formatNumberWithCommas(
-                            Math.round(allPortfolioData.cost)
+                            Math.round(obj.all.all.all.currValue)
                           )}
-                        </Text>
-                        <Text style={styles.descValue}>
-                          ₹{" "}
-                          {formatNumberWithCommas(
-                            Math.round(allPortfolioData.currValue) -
-                              Math.round(allPortfolioData.cost)
-                          )}
-                        </Text>
-                        <Text style={styles.descValue}>
-                          {allPortfolioData.xirr.toFixed(2)}
-                          {"%"}
                         </Text>
                       </View>
-                      <View style={styles.valueContainer}>
+                      <View style={styles.boxBottomContainer}>
                         <View style={styles.flexRow}>
-                          <Text style={styles.descHeader}>Return</Text>
-                          <Text style={styles.descHeader}>One Day Change</Text>
-                          <Text style={styles.descHeader}>Rating</Text>
+                          <Text style={styles.descHeader}>Investment</Text>
+                          <Text style={styles.descHeader}>Current Gain</Text>
+                          <Text style={styles.descHeader}>XIRR</Text>
                         </View>
                         <View style={styles.flexRow}>
                           <Text style={styles.descValue}>
-                            {" "}
-                            {allPortfolioData.absRet.toFixed(2)}
+                            ₹{" "}
+                            {formatNumberWithCommas(
+                              Math.round(obj.all.all.all.cost)
+                            )}
+                          </Text>
+                          <Text style={styles.descValue}>
+                            ₹{" "}
+                            {formatNumberWithCommas(
+                              Math.round(obj.all.all.all.currValue) -
+                                Math.round(obj.all.all.all.cost)
+                            )}
+                          </Text>
+                          <Text style={styles.descValue}>
+                            {obj.all.all.all.xirr.toFixed(2)}
                             {"%"}
                           </Text>
-                          <Text style={styles.descValue}>
-                            {" "}
-                            {Math.round(allPortfolioData.oneDayChange)}
-                          </Text>
-                          <Text style={styles.descValue}>
-                            {allPortfolioData.rating.toFixed(1)}
-                          </Text>
+                        </View>
+                        <View style={styles.valueContainer}>
+                          <View style={styles.flexRow}>
+                            <Text style={styles.descHeader}>Return</Text>
+                            <Text style={styles.descHeader}>
+                              One Day Change
+                            </Text>
+                            <Text style={styles.descHeader}>Rating</Text>
+                          </View>
+                          <View style={styles.flexRow}>
+                            <Text style={styles.descValue}>
+                              {" "}
+                              {obj.all.all.all.absRet.toFixed(2)}
+                              {"%"}
+                            </Text>
+                            <Text style={styles.descValue}>
+                              {" "}
+                              {Math.round(obj.all.all.all.oneDayChange)}
+                            </Text>
+                            <Text style={styles.descValue}>
+                              {obj.all.all.all.rating.toFixed(1)}
+                            </Text>
+                          </View>
                         </View>
                       </View>
                     </View>
-                  </View>
-                </ImageBackground>
-              </View>
-              <View style={styles.individualCarts}>
-                <ImageBackground
-                  source={require("../../../assets/portfolio/rec1.png")}
-                  style={styles.rec1}
-                  resizeMode="stretch"
-                >
-                  <Image
-                    source={require("../../../assets/Goal/rectengal2.png")}
-                    style={styles.rectengal2}
-                  />
-                  <View style={styles.investmentContainer}>
-                    <View style={styles.headerBox}>
-                      <Text style={styles.header}>Complete Portfolio</Text>
-                      <Text style={styles.desc}>
-                        ₹{" "}
-                        {formatNumberWithCommas(
-                          Math.round(allPortfolioData.currValue)
-                        )}
-                      </Text>
-                    </View>
-                    <View style={styles.boxBottomContainer}>
-                      <View style={styles.flexRow}>
-                        <Text style={styles.descHeader}>Investment</Text>
-                        <Text style={styles.descHeader}>Current Gain</Text>
-                        <Text style={styles.descHeader}>XIRR</Text>
-                      </View>
-                      <View style={styles.flexRow}>
-                        <Text style={styles.descValue}>
-                          ₹{" "}
-                          {formatNumberWithCommas(
-                            Math.round(allPortfolioData.cost)
-                          )}
-                        </Text>
-                        <Text style={styles.descValue}>
-                          ₹{" "}
-                          {formatNumberWithCommas(
-                            Math.round(allPortfolioData.currValue) -
-                              Math.round(allPortfolioData.cost)
-                          )}
-                        </Text>
-                        <Text style={styles.descValue}>
-                          {allPortfolioData.xirr.toFixed(2)}
-                          {"%"}
-                        </Text>
-                      </View>
-                      <View style={styles.valueContainer}>
-                        <View style={styles.flexRow}>
-                          <Text style={styles.descHeader}>Return</Text>
-                          <Text style={styles.descHeader}>One Day Change</Text>
-                          <Text style={styles.descHeader}>Rating</Text>
-                        </View>
-                        <View style={styles.flexRow}>
-                          <Text style={styles.descValue}>
-                            {" "}
-                            {allPortfolioData.absRet.toFixed(2)}
-                            {"%"}
-                          </Text>
-                          <Text style={styles.descValue}>
-                            {" "}
-                            {Math.round(allPortfolioData.oneDayChange)}
-                          </Text>
-                          <Text style={styles.descValue}>
-                            {allPortfolioData.rating.toFixed(1)}
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                </ImageBackground>
-              </View>
-            </ScrollView>
-          </View>
-          <Content />
-        </>
-      ) : (
-        <Loader />
-      )}
+                  </ImageBackground>
+                </View>
+              ))}
+            </>
+          ) : (
+            <View style={styles.individualCarts}>
+              <ImageBackground
+                source={require("../../../assets/portfolio/rec1.png")}
+                style={styles.rec1}
+                resizeMode="stretch"
+              >
+                <Image
+                  source={require("../../../assets/Goal/rectengal2.png")}
+                  style={styles.rectengal2}
+                />
+                <Loader />
+              </ImageBackground>
+            </View>
+          )}
+        </ScrollView>
+        {renderPaginationDots(currentPage, totalDots)}
+      </View>
+      <Content />
     </ScrollView>
   );
 };
@@ -204,6 +164,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.035,
     fontWeight: "600",
     opacity: 0.3,
+    textTransform: "capitalize",
   },
   desc: {
     color: "rgba(33, 0, 93, 1)",
@@ -264,6 +225,17 @@ const styles = StyleSheet.create({
   },
   valueContainer: {
     marginTop: height * 0.025,
+  },
+  paginationContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: height * 0.01,
+  },
+  paginationDot: {
+    width: width * 0.022,
+    height: width * 0.022,
+    borderRadius: width * 0.012,
+    marginHorizontal: width * 0.012,
   },
 });
 

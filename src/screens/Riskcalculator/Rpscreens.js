@@ -18,13 +18,6 @@ export default Rpscreens = ({ navigation }) => {
     <View style={styles.container}>
       <Header title="Risk Profile Calculator" />
       <View style={styles.contentContainer}>
-        {/* <Ionicons
-          name="arrow-back"
-          size={width * 0.08}
-          color="rgba(56, 102, 100, 1)"
-          onPress={() => navigation.goBack()}
-          style={{ marginBottom: height * 0.03 }}
-        /> */}
         <Pagination
           data={{ activeIndex: activeIndex, totalDots: totalDots }}
           updateActiveIndex={updateActiveIndex}

@@ -64,8 +64,6 @@ export default Questions = ({ data, updateActiveIndex }) => {
   );
 };
 
-// ...styles definition remains the same...
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
