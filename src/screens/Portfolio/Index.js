@@ -16,12 +16,10 @@ import usePortfolioData from "./Useportfoliodata";
 import Loader from "../Components/Loader";
 import formatNumberWithCommas from "../Components/Inrconverter";
 import renderPaginationDots from "../Components/Pagination";
-import Holdings from "../Portfolio/Holdings";
 
 const Portfolio = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const { completePortfolioData, allPortfolioData } =
-    usePortfolioData(currentPage);
+  const { completePortfolioData, allPortfolioData } = usePortfolioData();
   const totalDots = Object.entries(completePortfolioData).length;
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -136,7 +134,7 @@ const Portfolio = () => {
         </ScrollView>
         {renderPaginationDots(currentPage, totalDots)}
       </View>
-      <Content />
+      <Content currentPage={currentPage} />
     </ScrollView>
   );
 };

@@ -3,6 +3,22 @@ import {
   TrendingNfo,
   Trendingschemes,
 } from "../../api/services/endpoints/exploreEndpoints";
+import { Basket } from "../../api/services/endpoints/userEndpoints";
+
+export const Thematicbasket = () => {
+  const [basketData, setBasketData] = useState("basket");
+  useEffect(() => {
+    Basket()
+      .then((response) => {
+        setBasketData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  return { basketData };
+};
 
 const DashboardData = () => {
   const [trendingschemes, setTrendingschemes] = useState();

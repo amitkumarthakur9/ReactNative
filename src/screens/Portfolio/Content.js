@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,10 +8,13 @@ import Holdings from "./Holdings";
 import Analysis from "./Analysis";
 import Reports from "./Reports";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useNavigation } from "@react-navigation/native";
 
 const Tab = createMaterialTopTabNavigator();
 
-export default Content = () => {
+export default Content = (props) => {
+  const { currentPage } = props;
+
   return (
     <View style={styles.tabContainer}>
       <Tab.Navigator
@@ -24,7 +27,11 @@ export default Content = () => {
         }}
       >
         <Tab.Screen name="Analysis" component={Analysis} />
-        <Tab.Screen name="Holdings" component={Holdings} />
+        <Tab.Screen
+          name="Holdings"
+          initialParams={{ currentPage: currentPage }}
+          children={() => <Holdings currentPage={currentPage} />}
+        />
         <Tab.Screen name="Reports" component={Reports} />
       </Tab.Navigator>
     </View>

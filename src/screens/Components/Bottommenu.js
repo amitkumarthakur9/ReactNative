@@ -5,10 +5,10 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "../Dashboard/Home";
 import Explore from "../Dashboard/Explore";
 import Account from "../Account/Index";
+import Goal from "../Goal/Index";
 
 const Tab = createBottomTabNavigator();
 
-const Notifications = () => <Text>amit</Text>;
 const Profiles = () => <Text>amit kumar thakur</Text>;
 
 const Menu = () => {
@@ -22,7 +22,8 @@ const Menu = () => {
         tabBarStyle: {
           height: height * 0.1,
           backgroundColor: "rgba(255, 255, 255, 1)",
-          borderRadius: width * 0.05,
+          borderTopLeftRadius: width * 0.05,
+          borderTopRightRadius: width * 0.05,
           borderColor: "rgba(0, 0, 0, 0.1)",
           padding: width * 0.02,
           elevation: width * 0.02,
@@ -65,10 +66,10 @@ const Menu = () => {
         }}
       />
       <Tab.Screen
-        name="Notifications"
-        component={Notifications}
+        name="Goal"
+        component={Goal}
         options={{
-          tabBarLabel: "Invest",
+          tabBarLabel: "Goal",
           tabBarIcon: ({ color, size }) => (
             <View
               style={{

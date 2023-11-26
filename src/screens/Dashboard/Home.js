@@ -11,9 +11,9 @@ import {
 import Backgroundimage from "../Components/Backgroundimage";
 import { height, width } from "../../Dimension";
 import { Ionicons, EvilIcons } from "@expo/vector-icons";
-import { Avatar } from "react-native-paper";
+import { Avatar, Card, IconButton } from "react-native-paper";
 import { NforenderItem, SchemesrenderItem } from "./Explore";
-import DashboardData from "./Data";
+import DashboardData, { Thematicbasket } from "./Data";
 import usePortfolioData from "../Portfolio/Useportfoliodata";
 import Loader from "../Components/Loader";
 import formatNumberWithCommas from "../Components/Inrconverter";
@@ -21,6 +21,7 @@ import formatNumberWithCommas from "../Components/Inrconverter";
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
   const { allPortfolioData } = usePortfolioData();
+  const { basketData } = Thematicbasket();
   return (
     <View style={styles.container}>
       <Backgroundimage Headerheight={0.29} />
@@ -137,7 +138,7 @@ const Home = ({ navigation }) => {
 
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.fundContainer}>
-            <View style={[styles.flexRow, { marginBottom: height * 0.02 }]}>
+            {/* <View style={[styles.flexRow, { marginBottom: height * 0.02 }]}>
               <Text style={styles.leftContent}>Suggested for you</Text>
               <Text style={styles.rightContent}>View all</Text>
             </View>
@@ -146,11 +147,11 @@ const Home = ({ navigation }) => {
                 source={require("../../../assets/dashboard/ad1.png")}
                 style={styles.adSliderImage}
               />
-            </View>
+            </View> */}
             <View
               style={[
                 styles.flexRow,
-                { marginTop: height * 0.04, marginBottom: height * 0.02 },
+                { marginTop: height * 0.03, marginBottom: height * 0.03 },
               ]}
             >
               <Text style={styles.leftContent}>Trending NFO’s </Text>
@@ -162,7 +163,7 @@ const Home = ({ navigation }) => {
             <View
               style={[
                 styles.flexRow,
-                { marginTop: height * 0.04, marginBottom: height * 0.02 },
+                { marginTop: height * 0.03, marginBottom: height * 0.03 },
               ]}
             >
               <Text style={styles.leftContent}>Trending Schemes </Text>
@@ -175,6 +176,37 @@ const Home = ({ navigation }) => {
                 <Loader />
               )}
             </ScrollView>
+            <View
+              style={[
+                styles.flexRow,
+                { marginTop: height * 0.04, marginBottom: height * 0.03 },
+              ]}
+            >
+              <Text style={styles.leftContent}>Investment Basket </Text>
+              <Text style={styles.rightContent}></Text>
+            </View>
+            <View style={styles.flexRow}>
+              {basketData != "basket" ? (
+                basketData.map((item) => (
+                  <Card style={styles.flexitem}>
+                    <Card.Content>
+                      <Image
+                        source={require("../../../assets/icon.png")}
+                        style={{
+                          width: width * 0.2,
+                          height: width * 0.2,
+                        }}
+                      />
+                      <Text variant="titleLarge" style={styles.basketName}>
+                        {item.basketName}
+                      </Text>
+                    </Card.Content>
+                  </Card>
+                ))
+              ) : (
+                <Loader />
+              )}
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -309,6 +341,24 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     width: width * 0.9,
     height: height * 0.2,
+  },
+  flexitem: {
+    flex: 1,
+    marginRight: width * 0.04,
+    margin: width * 0.01,
+    backgroundColor: "white",
+    alignItems: "center",
+  },
+  basketName: {
+    fontSize: width * 0.035,
+    lineHeight: height * 0.028,
+    fontWeight: "500",
+  },
+  basketRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    marginTop: height * 0.02,
   },
 });
 

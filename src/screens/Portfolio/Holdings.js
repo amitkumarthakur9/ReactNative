@@ -21,83 +21,89 @@ import Loader from "../Components/Loader";
 import Formatfundname from "../Components/Formatfundname";
 import formatNumberWithCommas from "../Components/Inrconverter";
 
-const Holdings = () => {
+const Holdings = (props) => {
   const { holdingData } = usePortfolioData();
-  const [imageName, setImageName] = useState("../../../assets/amc/1.png");
+  const currentPage = props.currentPage;
+
+  const filteredHoldingData =
+    currentPage === 1
+      ? Object.entries(holdingData).filter(
+          ([key, obj]) => obj.units > 0 && obj.external === false
+        )
+      : currentPage === 2
+      ? Object.entries(holdingData).filter(
+          ([key, obj]) => obj.units > 0 && obj.external === true
+        )
+      : Object.entries(holdingData).filter(([key, obj]) => obj.units > 0);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {holdingData != "holdingData" ? (
         <>
-          {Object.entries(holdingData).map(
+          {filteredHoldingData.map(
             ([key, obj]) =>
               obj.units > 0 && (
-                <>
-                  <View style={styles.card} key={key}>
-                    <View style={styles.flexRow}>
-                      <View style={styles.trendImage}>
-                        <Image
-                          style={{ width: width * 0.14, height: height * 0.05 }}
-                          source={{
-                            uri: obj.mutualFund.fundHouse.logoUrl,
-                          }}
-                          resizeMode="stretch"
-                        />
-                      </View>
-                      <View style={{ flex: 4 }}>
-                        <Text style={styles.fundName}>
-                          {Formatfundname(obj.mutualFund.name)}
-                        </Text>
-                        <Text style={styles.folio}>
-                          Folio No: {obj.folioNumberString}
-                        </Text>
-                      </View>
+                <View style={styles.card} key={key}>
+                  <View style={styles.flexRow}>
+                    <View style={styles.trendImage}>
+                      <Image
+                        style={{ width: width * 0.14, height: height * 0.05 }}
+                        source={{
+                          uri: obj.mutualFund.fundHouse.logoUrl,
+                        }}
+                        resizeMode="stretch"
+                      />
                     </View>
-                    <View style={styles.boxBottomContainer}>
+                    <View style={{ flex: 4 }}>
+                      <Text style={styles.fundName}>
+                        {Formatfundname(obj.mutualFund.name)}
+                      </Text>
+                      <Text style={styles.folio}>
+                        Folio No: {obj.folioNumberString}
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={styles.boxBottomContainer}>
+                    <View style={styles.flexRow}>
+                      <Text style={styles.descHeader}>Initial Investment</Text>
+                      <Text style={styles.descHeader}>Current Value</Text>
+                    </View>
+                    <View style={styles.flexRow}>
+                      <Text style={styles.descValue}>
+                        ₹{" "}
+                        {formatNumberWithCommas(Math.round(obj.orignalAmount))}
+                      </Text>
+                      <Text style={styles.descValue}>
+                        ₹ {formatNumberWithCommas(Math.round(obj.currValue))}
+                      </Text>
+                    </View>
+
+                    <View style={styles.valueContainer}>
                       <View style={styles.flexRow}>
-                        <Text style={styles.descHeader}>
-                          Initial Investment
-                        </Text>
-                        <Text style={styles.descHeader}>Current Value</Text>
+                        <Text style={styles.descHeader}>Current Gain</Text>
+                        <Text style={styles.descHeader}>XIRR</Text>
                       </View>
                       <View style={styles.flexRow}>
                         <Text style={styles.descValue}>
                           ₹{" "}
                           {formatNumberWithCommas(
-                            Math.round(obj.orignalAmount)
+                            Math.round(obj.currValue) -
+                              Math.round(obj.orignalAmount)
                           )}
                         </Text>
                         <Text style={styles.descValue}>
-                          ₹ {formatNumberWithCommas(Math.round(obj.currValue))}
+                          {obj.xirr.toFixed(2)}
+                          {"%"}
                         </Text>
                       </View>
-
-                      <View style={styles.valueContainer}>
-                        <View style={styles.flexRow}>
-                          <Text style={styles.descHeader}>Current Gain</Text>
-                          <Text style={styles.descHeader}>XIRR</Text>
-                        </View>
-                        <View style={styles.flexRow}>
-                          <Text style={styles.descValue}>
-                            ₹{" "}
-                            {formatNumberWithCommas(
-                              Math.round(obj.currValue) -
-                                Math.round(obj.orignalAmount)
-                            )}
-                          </Text>
-                          <Text style={styles.descValue}>
-                            {obj.xirr.toFixed(2)}
-                            {"%"}
-                          </Text>
-                        </View>
-                      </View>
                     </View>
-                    <TouchableOpacity style={styles.ViewTransactionContainer}>
-                      <Text style={styles.viewTransactionText}>
-                        View Transactions
-                      </Text>
-                    </TouchableOpacity>
                   </View>
-                </>
+                  <TouchableOpacity style={styles.ViewTransactionContainer}>
+                    <Text style={styles.viewTransactionText}>
+                      View Transactions
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               )
           )}
         </>

@@ -34,8 +34,8 @@ export const SchemesrenderItem = (props) => {
   const navigation = useNavigation();
   return (
     <>
-      {props.schemes.map((item) => (
-        <View style={styles.trendingSchemesContainer}>
+      {props.schemes.map((item, key) => (
+        <View style={styles.trendingSchemesContainer} key={key}>
           <ImageBackground
             source={require("../../../assets/dashboard/topImage.png")}
             style={styles.topImage}
@@ -115,8 +115,8 @@ export const SchemesrenderItem = (props) => {
 export const NforenderItem = (props) => {
   return (
     <>
-      {props.nfo.map((item) => (
-        <View style={styles.flexRow}>
+      {props.nfo.map((item, key) => (
+        <View style={styles.flexRow} key={key}>
           <View style={styles.card}>
             <View style={[styles.flexRow]}>
               <View style={styles.trendImage}>

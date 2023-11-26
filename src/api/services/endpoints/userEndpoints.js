@@ -25,3 +25,7 @@ export const Otpverify = (data) => {
     `/app/user?action=confirmOtpForLogin&mobile=${mobileNumber}&addedBy=186100&firstUserLogin=true&otp=${otp}`
   );
 };
+
+export const Basket = () => {
+  return apiClient.get(`/app/user?action=getThematicBaskets`);
+};
