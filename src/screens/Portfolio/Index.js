@@ -21,6 +21,7 @@ const Portfolio = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const { completePortfolioData, allPortfolioData } = usePortfolioData();
   const totalDots = Object.entries(completePortfolioData).length;
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Bgiheader

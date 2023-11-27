@@ -20,11 +20,11 @@ import usePortfolioData from "./Useportfoliodata";
 import Loader from "../Components/Loader";
 import Formatfundname from "../Components/Formatfundname";
 import formatNumberWithCommas from "../Components/Inrconverter";
+import { Entypo } from "@expo/vector-icons";
 
 const Holdings = (props) => {
   const { holdingData } = usePortfolioData();
   const currentPage = props.currentPage;
-
   const filteredHoldingData =
     currentPage === 1
       ? Object.entries(holdingData).filter(
@@ -62,6 +62,13 @@ const Holdings = (props) => {
                         Folio No: {obj.folioNumberString}
                       </Text>
                     </View>
+                    <TouchableOpacity>
+                      <Entypo
+                        name="dots-three-vertical"
+                        size={width * 0.06}
+                        color="black"
+                      />
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.boxBottomContainer}>
                     <View style={styles.flexRow}>
@@ -152,6 +159,7 @@ const styles = StyleSheet.create({
   },
   trendImage: {
     flex: 1,
+    marginRight: width * 0.04,
   },
   percentage: {
     color: "rgba(251, 133, 0, 1)",
@@ -182,7 +190,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: width * 0.035,
     lineHeight: height * 0.02,
-    marginTop: height * 0.005,
+    // marginTop: height * 0.005,
     // textAlign: "center",
   },
   flexContent: {
