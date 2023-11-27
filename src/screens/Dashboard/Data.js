@@ -3,7 +3,11 @@ import {
   TrendingNfo,
   Trendingschemes,
 } from "../../api/services/endpoints/exploreEndpoints";
-import { Basket } from "../../api/services/endpoints/userEndpoints";
+import {
+  Basket,
+  Checksession,
+  Logout,
+} from "../../api/services/endpoints/userEndpoints";
 
 export const Thematicbasket = () => {
   const [basketData, setBasketData] = useState("basket");
@@ -18,6 +22,25 @@ export const Thematicbasket = () => {
   }, []);
 
   return { basketData };
+};
+
+export const Session = () => {
+  const [session, setSession] = useState(false);
+  useEffect(() => {
+    Checksession()
+      .then((response) => {
+        setSession(response.data.success);
+      })
+      .catch((error) => {
+        console.warn("session:", error);
+      });
+  }, []);
+
+  return { session };
+};
+
+export const SessionEnd = () => {
+  Logout();
 };
 
 const DashboardData = () => {

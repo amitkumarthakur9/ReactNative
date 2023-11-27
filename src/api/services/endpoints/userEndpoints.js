@@ -29,3 +29,11 @@ export const Otpverify = (data) => {
 export const Basket = () => {
   return apiClient.get(`/app/user?action=getThematicBaskets`);
 };
+
+export const Checksession = () => {
+  return apiClient.get(`/app/user?action=checkSession`);
+};
+
+export const Logout = () => {
+  return apiClient.get(`/app/user?action=logout`);
+};

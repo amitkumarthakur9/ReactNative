@@ -25,6 +25,7 @@ import Loader from "../Components/Loader";
 import RenderStars from "../Components/Star";
 import DashboardData from "./Data";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const handleInvest = (mfId, navigation) => {
   navigation.navigate("Assetpreview", { mfId });
@@ -185,12 +186,19 @@ const Explore = () => {
           />
           <Text style={styles.name}>Explore Funds </Text>
           <View style={[styles.flexRow, { flex: 1, alignSelf: "center" }]}>
-            <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
-              <Feather name="shopping-cart" size={width * 0.07} color="white" />
+            <TouchableOpacity style={styles.headerIcon}>
+              <Feather name="shopping-cart" size={width * 0.06} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
+            <TouchableOpacity style={styles.headerIcon}>
               <Ionicons
                 name="notifications-outline"
+                size={width * 0.06}
+                color="white"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.headerIcon}>
+              <MaterialCommunityIcons
+                name="logout"
                 size={width * 0.06}
                 color="white"
               />
@@ -485,9 +493,12 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.03,
     fontSize: width * 0.06,
     fontWeight: "700",
-    flex: 3,
+    flex: 2,
     marginLeft: width * 0.05,
     alignSelf: "center",
+  },
+  headerIcon: {
+    flex: 1,
   },
 });
 

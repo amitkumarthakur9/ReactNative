@@ -13,15 +13,21 @@ import { height, width } from "../../Dimension";
 import { Ionicons, EvilIcons } from "@expo/vector-icons";
 import { Avatar, Card, IconButton } from "react-native-paper";
 import { NforenderItem, SchemesrenderItem } from "./Explore";
-import DashboardData, { Thematicbasket } from "./Data";
+import DashboardData, { Thematicbasket, Session, SessionEnd } from "./Data";
 import usePortfolioData from "../Portfolio/Useportfoliodata";
 import Loader from "../Components/Loader";
 import formatNumberWithCommas from "../Components/Inrconverter";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
   const { allPortfolioData } = usePortfolioData();
   const { basketData } = Thematicbasket();
+  const { session } = Session();
+
+  const handleLogout = () => {
+    session && SessionEnd();
+  };
   return (
     <View style={styles.container}>
       <Backgroundimage Headerheight={0.29} />
@@ -32,16 +38,31 @@ const Home = ({ navigation }) => {
             source={require("../../../assets/upload/Avatar.png")}
           />
           <Text style={styles.name}>Hello Sumesh !</Text>
-          <View style={[styles.flexRow, { flex: 1, alignSelf: "center" }]}>
+          <View
+            style={[
+              styles.flexRow,
+              {
+                flex: 1,
+                alignSelf: "center",
+              },
+            ]}
+          >
             <TouchableOpacity
-              style={{ marginLeft: width * 0.03 }}
               onPress={() => navigation.push("Searchbox")}
+              style={styles.headerIcon}
             >
               <EvilIcons name="search" size={width * 0.07} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
+            <TouchableOpacity style={styles.headerIcon}>
               <Ionicons
                 name="notifications-outline"
+                size={width * 0.06}
+                color="white"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.headerIcon} onPress={handleLogout}>
+              <MaterialCommunityIcons
+                name="logout"
                 size={width * 0.06}
                 color="white"
               />
@@ -187,8 +208,8 @@ const Home = ({ navigation }) => {
             </View>
             <View style={styles.flexRow}>
               {basketData != "basket" ? (
-                basketData.map((item) => (
-                  <Card style={styles.flexitem}>
+                basketData.map((item, key) => (
+                  <Card style={styles.flexitem} key={key}>
                     <Card.Content>
                       <Image
                         source={require("../../../assets/icon.png")}
@@ -233,7 +254,7 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.03,
     fontSize: width * 0.06,
     fontWeight: "700",
-    flex: 3,
+    flex: 2,
     marginLeft: width * 0.05,
     alignSelf: "center",
   },
@@ -359,6 +380,9 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     marginTop: height * 0.02,
+  },
+  headerIcon: {
+    flex: 1,
   },
 });
 
