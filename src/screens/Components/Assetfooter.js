@@ -1,33 +1,38 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "react-native-paper";
-
+import { useRoute, useNavigation } from "@react-navigation/native";
 export default Assetfooter = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.footerContainer}>
-      <Button
-        mode="contained"
-        style={styles.footerButton}
-        labelStyle={styles.labelStyle}
-      >
-        One Time
-      </Button>
-      <Button
-        mode="contained"
-        style={[
-          styles.footerButton,
-          {
-            backgroundColor: "rgba(33, 158, 188, 1)",
-            borderColor: "rgba(33, 158, 188, 1)",
-          },
-        ]}
-        labelStyle={[styles.labelStyle, { color: "white" }]}
-      >
-        Start SIP
-      </Button>
+      <TouchableOpacity onPress={() => navigation.push("Onetimesip")}>
+        <Button
+          mode="contained"
+          style={styles.footerButton}
+          labelStyle={styles.labelStyle}
+        >
+          One Time
+        </Button>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.push("Sip")}>
+        <Button
+          mode="contained"
+          style={[
+            styles.footerButton,
+            {
+              backgroundColor: "rgba(33, 158, 188, 1)",
+              borderColor: "rgba(33, 158, 188, 1)",
+            },
+          ]}
+          labelStyle={[styles.labelStyle, { color: "white" }]}
+        >
+          Start SIP
+        </Button>
+      </TouchableOpacity>
     </View>
   );
 };

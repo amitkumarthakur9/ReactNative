@@ -11,11 +11,11 @@ import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
 import { TextInput } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
-import Footerbutton from "../../screen/Startsip/Footerbutton";
+import Footerbutton from "./Footerbutton";
 import { Slider } from "@miblanchard/react-native-slider";
 // import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default Uploadscreens = ({ navigation }) => {
+export default Sip = ({ navigation }) => {
   const [accountNumber, setAccountNumber] = useState();
   const [text, setText] = React.useState("");
   const [accountType, setAccountType] = useState();
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "flex-start",
-    // alignItems: "center",
+    backgroundColor: "white",
   },
   container1: {
     backgroundColor: "rgba(2, 48, 71, 1)",

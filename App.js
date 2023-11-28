@@ -23,14 +23,16 @@ import Dashboard from "./src/screens/Dashboard/Index";
 import Portfolio from "./src/screens/Portfolio/Index";
 import Searchbox from "./src/screens/Dashboard/Searchbox";
 import Test from "./src/Test";
-
+import Sip from "./src/screens/Startsip/Sip";
+import Onetimesip from "./src/screens/Startsip/Onetimesip";
+import Payment from "./src/screens/Payment/Paymentoptions";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Dashboard"
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
         }}
@@ -56,6 +58,9 @@ export default function App() {
         <Stack.Screen name="Portfolio" component={Portfolio} />
         <Stack.Screen name="Searchbox" component={Searchbox} />
         <Stack.Screen name="Test" component={Test} />
+        <Stack.Screen name="Sip" component={Sip} />
+        <Stack.Screen name="Onetimesip" component={Onetimesip} />
+        <Stack.Screen name="Payment" component={Payment} />
       </Stack.Navigator>
       <StatusBar />
     </NavigationContainer>

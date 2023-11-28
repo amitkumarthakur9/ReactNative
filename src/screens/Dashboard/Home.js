@@ -24,9 +24,12 @@ const Home = ({ navigation }) => {
   const { allPortfolioData } = usePortfolioData();
   const { basketData } = Thematicbasket();
   const { session } = Session();
+  const { logout } = SessionEnd();
 
   const handleLogout = () => {
-    session && SessionEnd();
+    if (session === false && logout) {
+      navigation.push("Signup");
+    }
   };
   return (
     <View style={styles.container}>

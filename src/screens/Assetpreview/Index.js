@@ -7,7 +7,7 @@ import Assetfooter from "../Components/Assetfooter";
 import { useRoute } from "@react-navigation/native";
 import { AssetPreview } from "../../api/services/endpoints/assetEndpoints";
 import Loader from "../Components/Loader";
-const Assetpreview = () => {
+const Assetpreview = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [mfData, setMfData] = useState("amit");
   const route = useRoute();

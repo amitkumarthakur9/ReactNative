@@ -40,7 +40,18 @@ export const Session = () => {
 };
 
 export const SessionEnd = () => {
-  Logout();
+  const [logout, setLogout] = useState(false);
+  useEffect(() => {
+    Logout()
+      .then((response) => {
+        setLogout(response.data.success);
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
+  }, []);
+
+  return { logout };
 };
 
 const DashboardData = () => {

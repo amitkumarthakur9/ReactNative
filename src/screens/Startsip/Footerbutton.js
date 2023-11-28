@@ -1,33 +1,38 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "react-native-paper";
-
+import { useRoute, useNavigation } from "@react-navigation/native";
 export default footerButton = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.footerContainer}>
-      <Button
-        mode="contained"
-        style={styles.footerButton}
-        labelStyle={styles.labelStyle}
-      >
-        Add to Cart
-      </Button>
-      <Button
-        mode="contained"
-        style={[
-          styles.footerButton,
-          {
-            backgroundColor: "rgba(33, 158, 188, 1)",
-            borderColor: "rgba(33, 158, 188, 1)",
-          },
-        ]}
-        labelStyle={[styles.labelStyle, { color: "white" }]}
-      >
-        Invest Now
-      </Button>
+      <TouchableOpacity>
+        <Button
+          mode="contained"
+          style={styles.footerButton}
+          labelStyle={styles.labelStyle}
+        >
+          Add to Cart
+        </Button>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.push("Payment")}>
+        <Button
+          mode="contained"
+          style={[
+            styles.footerButton,
+            {
+              backgroundColor: "rgba(33, 158, 188, 1)",
+              borderColor: "rgba(33, 158, 188, 1)",
+            },
+          ]}
+          labelStyle={[styles.labelStyle, { color: "white" }]}
+        >
+          Invest Now
+        </Button>
+      </TouchableOpacity>
     </View>
   );
 };

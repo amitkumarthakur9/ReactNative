@@ -10,35 +10,44 @@ import { Button, TextInput } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { height, width } from "../../Dimension";
 
-const Form2 = () => {
+const Bankdetails = () => {
+  const [ifsc, setIfsc] = useState();
   const [accountNumber, setAccountNumber] = useState();
   const [accountType, setAccountType] = useState();
   const [Bank, setBankName] = useState();
-  const [ifsc, setIfsc] = useState();
   const [proof, setProof] = useState();
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.desc}>
-        You can make changes to these details later under Account - Payment
+        You can make changes to these details later under Account - Bank
       </Text>
 
-      <Text style={styles.header}>Account Details</Text>
+      <Text style={styles.header}>Bank Details</Text>
+      <TextInput
+        mode="outlined"
+        placeholder="Bank IFSC Code"
+        placeholderTextColor="rgb(191, 191, 191)"
+        value={ifsc}
+        onChangeText={(e) => setIfsc(e)}
+        style={styles.input}
+        outlineStyle={styles.outline}
+        theme={styles.themeStyle}
+        contentStyle={styles.contentStyle}
+      />
       <TextInput
         mode="outlined"
         placeholder="Account Number"
         placeholderTextColor="rgb(191, 191, 191)"
         value={accountNumber}
         onChangeText={(e) => setAccountNumber(e)}
-        style={[styles.input]}
+        style={styles.input}
         outlineStyle={styles.outline}
         theme={styles.themeStyle}
         contentStyle={styles.contentStyle}
         keyboardType="phone-pad"
       />
 
-      <TouchableOpacity
-        style={[styles.dropdown, { marginBottom: height * 0.03 }]}
-      >
+      <TouchableOpacity style={[styles.dropdown]}>
         <Picker
           selectedValue={accountType}
           onValueChange={(itemValue, itemIndex) => setAccountType(itemValue)}
@@ -53,12 +62,7 @@ const Form2 = () => {
           <Picker.Item label="Current Account" value="Current Account" />
         </Picker>
       </TouchableOpacity>
-
-      <Text style={styles.header}>Bank Details</Text>
-
-      <TouchableOpacity
-        style={[styles.dropdown, { marginBottom: height * 0.003 }]}
-      >
+      <TouchableOpacity style={[styles.dropdown]}>
         <Picker
           selectedValue={Bank}
           onValueChange={(itemValue, itemIndex) => setBankName(itemValue)}
@@ -71,20 +75,6 @@ const Form2 = () => {
         </Picker>
       </TouchableOpacity>
 
-      <TextInput
-        mode="outlined"
-        placeholder="Bank IFSC Code"
-        placeholderTextColor="rgb(191, 191, 191)"
-        value={ifsc}
-        onChangeText={(e) => setIfsc(e)}
-        style={[styles.input, { marginBottom: height * 0.03 }]}
-        outlineStyle={styles.outline}
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-      />
-
-      <Text style={styles.header}>Proof</Text>
-
       <TouchableOpacity style={styles.dropdown}>
         <Picker
           selectedValue={proof}
@@ -96,20 +86,6 @@ const Form2 = () => {
           <Picker.Item label="Adhaar Card" value="Adhaar Card" />
           <Picker.Item label="Pan Card" value="Pan Card" />
         </Picker>
-      </TouchableOpacity>
-      <TouchableOpacity activeOpacity={0.7}>
-        <Button
-          mode="contained"
-          style={styles.button}
-          labelStyle={{
-            fontSize: width * 0.05,
-            color: "rgba(255, 255, 255, 1)",
-            textAlign: "center",
-            fontWeight: "600",
-          }}
-        >
-          Done
-        </Button>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -133,8 +109,8 @@ const styles = StyleSheet.create({
   },
   input: {
     borderRadius: width * 0.05,
-    marginBottom: height * 0.01,
     fontSize: width * 0.043,
+    marginBottom: height * 0.02,
   },
   outline: {
     borderRadius: width * 0.02,
@@ -153,8 +129,8 @@ const styles = StyleSheet.create({
   dropdown: {
     borderWidth: height * 0.0015,
     borderRadius: width * 0.02,
-    marginBottom: height * 0.01,
     borderColor: "rgb(191, 191, 191)",
+    marginBottom: height * 0.02,
   },
   Picker: {
     color: "rgb(191, 191, 191)",
@@ -170,4 +146,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Form2;
+export default Bankdetails;

@@ -35,5 +35,5 @@ export const Checksession = () => {
 };
 
 export const Logout = () => {
-  return apiClient.get(`/app/user?action=logout`);
+  return apiClient.get(`/app/user?action=logout&ajax=1`);
 };
