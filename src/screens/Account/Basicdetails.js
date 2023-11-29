@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ScrollView,
   Text,
@@ -10,6 +10,9 @@ import { TextInput, Button, Avatar } from "react-native-paper";
 import { height, width } from "../../Dimension";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
+import { Accountdata } from "./Data";
+import { Userlogin } from "../../api/services/endpoints/userEndpoints";
+import { Picker } from "@react-native-picker/picker";
 
 const Form = () => {
   const [fullName, setFullName] = useState();
@@ -20,6 +23,8 @@ const Form = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [panNumber, setPanNumber] = useState();
   const [image, setImage] = useState(null);
+  // const accountData = Accountdata();
+  const [accountData, setAccountData] = useState([]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -44,8 +49,32 @@ const Form = () => {
     setDate(currentDate);
   };
 
+  const handleChange = (e, key) => {
+    // setAccountData((preData) => {
+    //   //   const newData = preData.map(([k, v]) => (k === key ? [k, e] : [k, v]));
+    //   const newData = preData.hasOwnProperty(key) && (preData[key] = e);
+    //   return newData;
+    // });
+    setAccountData((preData) => {
+      const newData = { ...preData };
+      newData[key] = e;
+      return newData;
+    });
+  };
+
+  useEffect(() => {
+    Userlogin()
+      .then((response) => {
+        setAccountData(response.data.user || []);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {console.log("change", accountData)}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Profile
       </Text>
@@ -67,8 +96,8 @@ const Form = () => {
           mode="outlined"
           placeholder="Full Name"
           placeholderTextColor="rgb(191, 191, 191)"
-          value={fullName}
-          onChangeText={(e) => setFullName(e)}
+          value={accountData.name}
+          onChangeText={(e) => handleChange(e, "name")}
           style={styles.input}
           outlineStyle={styles.outline}
           theme={styles.themeStyle}
@@ -102,8 +131,8 @@ const Form = () => {
           mode="outlined"
           placeholder="Email"
           placeholderTextColor="rgb(191, 191, 191)"
-          value={email}
-          onChangeText={(e) => setEmail(e)}
+          value={accountData.email}
+          onChangeText={(e) => handleChange(e, "email")}
           style={styles.input}
           outlineStyle={styles.outline}
           theme={styles.themeStyle}
@@ -113,30 +142,52 @@ const Form = () => {
           mode="outlined"
           placeholder="Mobile Number"
           placeholderTextColor="rgb(191, 191, 191)"
-          value={mobile}
-          onChangeText={(e) => setMobile(e)}
+          value={accountData.mobileNumber}
+          onChangeText={(e) => handleChange(e, "mobileNumber")}
           style={styles.input}
           outlineStyle={styles.outline}
           keyboardType="phone-pad"
           theme={styles.themeStyle}
           contentStyle={styles.contentStyle}
         />
-        <TextInput
-          mode="outlined"
-          placeholder="Occupation"
-          placeholderTextColor="rgb(191, 191, 191)"
-          value={occupation}
-          onChangeText={(e) => setOccupation(e)}
-          style={styles.input}
-          outlineStyle={styles.outline}
-          theme={styles.themeStyle}
-          contentStyle={styles.contentStyle}
-        />
+        <TouchableOpacity style={[styles.dropdown]}>
+          <Picker
+            selectedValue={occupation}
+            onValueChange={(itemValue, itemIndex) => setOccupation(itemValue)}
+            mode="dropdown"
+            style={styles.Picker}
+          >
+            <Picker.Item label="OCCUPATION" />
+            <Picker.Item value="4" label="Agriculturist" />
+            <Picker.Item value="1" label="Business" />
+            <Picker.Item value="1A" label="Business Manufacturing" />
+            <Picker.Item value="1B" label="Business Trading" />
+            <Picker.Item value="43" label="Forex Dealer" />
+            <Picker.Item value="2A" label="Government Service" />
+            <Picker.Item value="6" label="Housewife" />
+            <Picker.Item value="2B" label="Non-Government Service" />
+            <Picker.Item value="9" label="Not Specified" />
+            <Picker.Item value="8" label="Others" />
+            <Picker.Item value="41" label="Private Sector Service" />
+            <Picker.Item value="3C" label="Profession - Engineering" />
+            <Picker.Item value="3B" label="Profession - Finance" />
+            <Picker.Item value="3D" label="Profession - Legal" />
+            <Picker.Item value="3A" label="Profession - Medicine" />
+            <Picker.Item value="3" label="Professional" />
+            <Picker.Item
+              value="42"
+              label="Public Sector / Government Service"
+            />
+            <Picker.Item value="5" label="Retired" />
+            <Picker.Item value="2" label="Service" />
+            <Picker.Item value="7" label="Student" />
+          </Picker>
+        </TouchableOpacity>
 
         <TextInput
           mode="outlined"
-          value={panNumber}
-          onChangeText={(e) => setPanNumber(e)}
+          value={accountData.panNumber}
+          onChangeText={(e) => handleChange(e, "panNumber")}
           style={styles.input}
           outlineStyle={styles.outline}
           placeholder="Enter Pan Number"

@@ -13,15 +13,15 @@ import { width, height } from "../../Dimension";
 import { Userlogin } from "../../api/services/endpoints/userEndpoints";
 
 const Dashboardhome = () => {
-  useEffect(() => {
-    Userlogin()
-      .then((response) => {
-        // console.log(response.data);
-      })
-      .catch((error) => {
-        console.warn("login failed:", error);
-      });
-  }, []);
+  //   useEffect(() => {
+  //     Userlogin()
+  //       .then((response) => {
+  //         // console.log(response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.warn("login failed:", error);
+  //       });
+  //   }, []);
 
   return (
     <View style={styles.container}>

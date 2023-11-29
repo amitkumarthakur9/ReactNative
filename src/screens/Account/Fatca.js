@@ -44,8 +44,15 @@ const Fatca = () => {
           mode="dropdown"
           style={styles.Picker}
         >
-          <Picker.Item label="Wealth Source" value="Wealth Source" />
-          <Picker.Item label="hehehehe" value="hheeheehhe" />
+          <Picker.Item label="Wealth Source" />
+          <Picker.Item value="01" label="Salary" />
+          <Picker.Item value="02" label="Business Income" />
+          <Picker.Item value="03" label="Gift" />
+          <Picker.Item value="04" label="Ancestral Property" />
+          <Picker.Item value="05" label="Rental Income" />
+          <Picker.Item value="06" label="Prize Money" />
+          <Picker.Item value="07" label="Royalty" />
+          <Picker.Item value="08" label="Others" />
         </Picker>
       </TouchableOpacity>
 
@@ -56,16 +63,24 @@ const Fatca = () => {
           mode="dropdown"
           style={styles.Picker}
         >
+          <Picker.Item label="Politically Exposed Person" />
           <Picker.Item
-            label="Politically Exposed Person"
-            value="Politically Exposed Person"
+            value="NA"
+            label="the investor is not politically exposed person"
           />
-          <Picker.Item label="Yes" value="Yes" />
-          <Picker.Item label="No" value="No" />
+          <Picker.Item
+            value="PEP"
+            label="the investor is politically exposed person"
+          />
+          <Picker.Item
+            value="RPEP"
+            label="if the investor is a relative of the politically exposed
+            person"
+          />
         </Picker>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.dropdown}>
+      {/* <TouchableOpacity style={styles.dropdown}>
         <Picker
           selectedValue={occupationCode}
           onValueChange={(itemValue, itemIndex) => setOccupationCode(itemValue)}
@@ -112,7 +127,7 @@ const Fatca = () => {
           <Picker.Item label="Citizenship" value="Citizenship" />
           <Picker.Item label="India" value="India" />
         </Picker>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <TextInput
         mode="outlined"
@@ -120,7 +135,7 @@ const Fatca = () => {
         onChangeText={(e) => setPlaceOfBirth(e)}
         style={styles.input}
         outlineStyle={styles.outline}
-        placeholder="place Of Birth"
+        placeholder="Place Of Birth"
         theme={styles.themeStyle}
         contentStyle={styles.contentStyle}
         placeholderTextColor="rgb(191, 191, 191)"

@@ -54,14 +54,30 @@ const Bankdetails = () => {
           mode="dropdown"
           style={styles.Picker}
         >
-          <Picker.Item
-            label="Select Account Type"
-            value="Select Account Type"
-          />
-          <Picker.Item label="Saving Account" value="Saving Account" />
-          <Picker.Item label="Current Account" value="Current Account" />
+          <Picker.Item label="Bank Account Type" />
+          <Picker.Item value="SB" label="Savings Account" />
+          <Picker.Item value="CC" label="Cash/Credit" />
+          <Picker.Item value="CA" label="Current Account" />
+          <Picker.Item value="FCNR" label="Foreign Currency Non Resident" />
+          <Picker.Item value="NRE" label="Non Resident External Account" />
+          <Picker.Item value="NRO" label="Non Resident Ordinary" />
+          <Picker.Item value="OD" label="Overdraft Account" />
+          <Picker.Item value="PSB" label="Post Office Saving Bank Account" />
         </Picker>
       </TouchableOpacity>
+
+      <TextInput
+        mode="outlined"
+        placeholder="Bank Name"
+        placeholderTextColor="rgb(191, 191, 191)"
+        value={Bank}
+        onChangeText={(e) => setBankName(e)}
+        style={styles.input}
+        outlineStyle={styles.outline}
+        theme={styles.themeStyle}
+        contentStyle={styles.contentStyle}
+      />
+
       <TouchableOpacity style={[styles.dropdown]}>
         <Picker
           selectedValue={Bank}
@@ -69,22 +85,11 @@ const Bankdetails = () => {
           mode="dropdown"
           style={styles.Picker}
         >
-          <Picker.Item label="Select Bank Name" value="Select Bank Name" />
-          <Picker.Item label="Axis Bank" value="Axis Bank" />
-          <Picker.Item label="Kotak Bank" value="Kotak Bank" />
-        </Picker>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.dropdown}>
-        <Picker
-          selectedValue={proof}
-          onValueChange={(itemValue, itemIndex) => setProof(itemValue)}
-          mode="dropdown"
-          style={styles.Picker}
-        >
-          <Picker.Item label="Select Proof" value="Select Proof" />
-          <Picker.Item label="Adhaar Card" value="Adhaar Card" />
-          <Picker.Item label="Pan Card" value="Pan Card" />
+          <Picker.Item label="Proof Of Account" />
+          <Picker.Item value="14" label="Latest Bank Passbook" />
+          <Picker.Item value="15" label="Latest Bank Account Statement" />
+          <Picker.Item value="77" label="Cheque Copy" />
+          <Picker.Item value="78" label="Bank Letter" />
         </Picker>
       </TouchableOpacity>
     </ScrollView>

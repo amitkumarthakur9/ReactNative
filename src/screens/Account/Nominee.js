@@ -63,7 +63,7 @@ const Nominee = () => {
         onChangeText={(e) => setNomineeDOB(e)}
         style={styles.input}
         outlineStyle={styles.outline}
-        placeholder="Relation With Nominee"
+        placeholder="Nominee DOB"
         theme={styles.themeStyle}
         contentStyle={styles.contentStyle}
         placeholderTextColor="rgb(191, 191, 191)"
@@ -75,7 +75,7 @@ const Nominee = () => {
         onChangeText={(e) => setNomineeShare(e)}
         style={styles.input}
         outlineStyle={styles.outline}
-        placeholder="Relation With Nominee"
+        placeholder="Nominee Share"
         theme={styles.themeStyle}
         contentStyle={styles.contentStyle}
         placeholderTextColor="rgb(191, 191, 191)"
@@ -112,7 +112,7 @@ const Nominee = () => {
         onChangeText={(e) => setSecondnomineeDOB(e)}
         style={styles.input}
         outlineStyle={styles.outline}
-        placeholder="Relation With Nominee"
+        placeholder="Nominee DOB"
         theme={styles.themeStyle}
         contentStyle={styles.contentStyle}
         placeholderTextColor="rgb(191, 191, 191)"
@@ -124,7 +124,7 @@ const Nominee = () => {
         onChangeText={(e) => setSecondnomineeShare(e)}
         style={styles.input}
         outlineStyle={styles.outline}
-        placeholder="Relation With Nominee"
+        placeholder="Nominee Share"
         theme={styles.themeStyle}
         contentStyle={styles.contentStyle}
         placeholderTextColor="rgb(191, 191, 191)"
@@ -161,7 +161,7 @@ const Nominee = () => {
         onChangeText={(e) => setThirdnomineeDOB(e)}
         style={styles.input}
         outlineStyle={styles.outline}
-        placeholder="Relation With Nominee"
+        placeholder="Nominee DOB"
         theme={styles.themeStyle}
         contentStyle={styles.contentStyle}
         placeholderTextColor="rgb(191, 191, 191)"
@@ -173,7 +173,7 @@ const Nominee = () => {
         onChangeText={(e) => setThirdnomineeShare(e)}
         style={styles.input}
         outlineStyle={styles.outline}
-        placeholder="Relation With Nominee"
+        placeholder="Nominee Share"
         theme={styles.themeStyle}
         contentStyle={styles.contentStyle}
         placeholderTextColor="rgb(191, 191, 191)"
