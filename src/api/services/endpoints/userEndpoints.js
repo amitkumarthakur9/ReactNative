@@ -1,9 +1,19 @@
 import apiClient from "../apiClient";
 
+export const Mfuuserdata = (data) => {
+  const urlEncodedData = Object.keys(data)
+    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+    .join("&");
+  return apiClient.post("/app/mfuUser?" + urlEncodedData);
+};
 export const Userlogin = () => {
   return apiClient.post(
     "/app/user?action=login&email=1282701&password=test@1234&addedBy=237106"
   );
+};
+
+export const Fetchuserdetails = () => {
+  return apiClient.get("/app/user?action=fetchUserDetails");
 };
 
 export const Googlelogin = (googleToken) => {

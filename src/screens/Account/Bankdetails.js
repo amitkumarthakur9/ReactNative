@@ -9,15 +9,71 @@ import {
 import { Button, TextInput } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { height, width } from "../../Dimension";
+import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
 
-const Bankdetails = () => {
+const Bankdetails = ({ data }) => {
   const [ifsc, setIfsc] = useState();
   const [accountNumber, setAccountNumber] = useState();
   const [accountType, setAccountType] = useState();
   const [Bank, setBankName] = useState();
   const [proof, setProof] = useState();
+  const { accountData, setAccountData, currentForm, setCurrentForm } =
+    data || [];
+
+  {
+    if (accountData.hasOwnProperty("basket")) {
+      console.log("yes");
+    } else {
+      accountData.basket = [
+        {
+          ifscCode: "",
+          bankAccountType: "",
+          micr: "",
+          proofOfAccount: "",
+          bankName: "STATE BANK OF INDIA",
+          accountNo: "",
+          accountType: "",
+          bankCode: "002",
+        },
+      ];
+    }
+  }
+
+  const handleChange = (e, key) => {
+    setAccountData((preData) => {
+      const newData = { ...preData };
+      {
+        key == "ifscCode"
+          ? (newData.basket[0]["ifscCode"] = e)
+          : key == "accountNo"
+          ? (newData.basket[0]["accountNo"] = e)
+          : key == "accountType"
+          ? (newData.basket[0]["accountType"] = e)
+          : key == "proofOfAccount"
+          ? (newData.basket[0]["proofOfAccount"] = e)
+          : (newData[key] = e);
+      }
+      return newData;
+    });
+  };
+
+  const handlemfu = () => {
+    accountData.userId = accountData.id;
+    accountData.dob = "29-11-2000";
+    accountData.action = "bankDetails";
+    Mfuuserdata(accountData)
+      .then((response) => {
+        console.log("mfu bank data", response.data);
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
+    setCurrentForm(currentForm + 1);
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {console.log("data", accountData)}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Bank
       </Text>
@@ -27,8 +83,8 @@ const Bankdetails = () => {
         mode="outlined"
         placeholder="Bank IFSC Code"
         placeholderTextColor="rgb(191, 191, 191)"
-        value={ifsc}
-        onChangeText={(e) => setIfsc(e)}
+        value={accountData.basket[0]["ifscCode"]}
+        onChangeText={(e) => handleChange(e, "ifscCode")}
         style={styles.input}
         outlineStyle={styles.outline}
         theme={styles.themeStyle}
@@ -38,8 +94,8 @@ const Bankdetails = () => {
         mode="outlined"
         placeholder="Account Number"
         placeholderTextColor="rgb(191, 191, 191)"
-        value={accountNumber}
-        onChangeText={(e) => setAccountNumber(e)}
+        value={accountData.basket[0]["accountNo"]}
+        onChangeText={(e) => handleChange(e, "accountNo")}
         style={styles.input}
         outlineStyle={styles.outline}
         theme={styles.themeStyle}
@@ -49,12 +105,13 @@ const Bankdetails = () => {
 
       <TouchableOpacity style={[styles.dropdown]}>
         <Picker
-          selectedValue={accountType}
-          onValueChange={(itemValue, itemIndex) => setAccountType(itemValue)}
+          selectedValue={accountData.basket[0]["accountType"]}
+          onValueChange={(itemValue, itemIndex) =>
+            handleChange(itemValue, "accountType")
+          }
           mode="dropdown"
           style={styles.Picker}
         >
-          <Picker.Item label="Bank Account Type" />
           <Picker.Item value="SB" label="Savings Account" />
           <Picker.Item value="CC" label="Cash/Credit" />
           <Picker.Item value="CA" label="Current Account" />
@@ -70,18 +127,21 @@ const Bankdetails = () => {
         mode="outlined"
         placeholder="Bank Name"
         placeholderTextColor="rgb(191, 191, 191)"
-        value={Bank}
-        onChangeText={(e) => setBankName(e)}
+        value={"STATE BANK OF INDIA"}
+        // onChangeText={(e) => setBankName(e)}
         style={styles.input}
         outlineStyle={styles.outline}
         theme={styles.themeStyle}
         contentStyle={styles.contentStyle}
+        disabled
       />
 
       <TouchableOpacity style={[styles.dropdown]}>
         <Picker
           selectedValue={Bank}
-          onValueChange={(itemValue, itemIndex) => setBankName(itemValue)}
+          onValueChange={(itemValue, itemIndex) =>
+            handleChange(itemValue, "proofOfAccount")
+          }
           mode="dropdown"
           style={styles.Picker}
         >
@@ -91,6 +151,24 @@ const Bankdetails = () => {
           <Picker.Item value="77" label="Cheque Copy" />
           <Picker.Item value="78" label="Bank Letter" />
         </Picker>
+      </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        //   onPress={() => setCurrentForm(currentForm + 1)}
+        onPress={handlemfu}
+      >
+        <Button
+          mode="contained"
+          style={styles.button}
+          labelStyle={{
+            fontSize: width * 0.05,
+            color: "rgba(255, 255, 255, 1)",
+            textAlign: "center",
+            fontWeight: "600",
+          }}
+        >
+          Next
+        </Button>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -138,7 +216,16 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.02,
   },
   Picker: {
-    color: "rgb(191, 191, 191)",
+    color: "rgba(2, 48, 71, 1)",
+  },
+  button: {
+    marginBottom: height * 0.04,
+    marginTop: height * 0.03,
+    height: height * 0.07,
+    borderRadius: width * 0.03,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0, 53, 102, 1)",
   },
   button: {
     marginBottom: height * 0.04,

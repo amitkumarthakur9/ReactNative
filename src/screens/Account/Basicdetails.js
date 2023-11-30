@@ -10,21 +10,15 @@ import { TextInput, Button, Avatar } from "react-native-paper";
 import { height, width } from "../../Dimension";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
-import { Accountdata } from "./Data";
-import { Userlogin } from "../../api/services/endpoints/userEndpoints";
 import { Picker } from "@react-native-picker/picker";
+import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
 
-const Form = () => {
-  const [fullName, setFullName] = useState();
+const Basicdetails = ({ data }) => {
   const [date, setDate] = useState(new Date());
-  const [email, setEmail] = useState();
-  const [mobile, setMobile] = useState();
-  const [occupation, setOccupation] = useState();
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [panNumber, setPanNumber] = useState();
   const [image, setImage] = useState(null);
-  // const accountData = Accountdata();
-  const [accountData, setAccountData] = useState([]);
+  const { accountData, setAccountData, currentForm, setCurrentForm } =
+    data || [];
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -50,11 +44,6 @@ const Form = () => {
   };
 
   const handleChange = (e, key) => {
-    // setAccountData((preData) => {
-    //   //   const newData = preData.map(([k, v]) => (k === key ? [k, e] : [k, v]));
-    //   const newData = preData.hasOwnProperty(key) && (preData[key] = e);
-    //   return newData;
-    // });
     setAccountData((preData) => {
       const newData = { ...preData };
       newData[key] = e;
@@ -62,19 +51,23 @@ const Form = () => {
     });
   };
 
-  useEffect(() => {
-    Userlogin()
+  const handlemfu = () => {
+    accountData.userId = accountData.id;
+    accountData.dob = "29-11-2000";
+    accountData.action = "basicDetails";
+    Mfuuserdata(accountData)
       .then((response) => {
-        setAccountData(response.data.user || []);
+        // console.log("mfu data", response.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.warn(error);
       });
-  }, []);
+    setCurrentForm(currentForm + 1);
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {console.log("change", accountData)}
+      {/* {console.log(accountData)} */}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Profile
       </Text>
@@ -94,14 +87,14 @@ const Form = () => {
         <Text style={styles.header}>Basic Details</Text>
         <TextInput
           mode="outlined"
-          placeholder="Full Name"
-          placeholderTextColor="rgb(191, 191, 191)"
-          value={accountData.name}
-          onChangeText={(e) => handleChange(e, "name")}
+          value={accountData.panNumber}
+          onChangeText={(e) => handleChange(e, "panNumber")}
           style={styles.input}
           outlineStyle={styles.outline}
+          placeholder="Enter Pan Number"
           theme={styles.themeStyle}
           contentStyle={styles.contentStyle}
+          placeholderTextColor="rgb(191, 191, 191)"
         />
         <TouchableOpacity onPress={handleDatePress}>
           <TextInput
@@ -152,12 +145,14 @@ const Form = () => {
         />
         <TouchableOpacity style={[styles.dropdown]}>
           <Picker
-            selectedValue={occupation}
-            onValueChange={(itemValue, itemIndex) => setOccupation(itemValue)}
+            selectedValue={accountData.occupation}
+            onValueChange={(itemValue, itemIndex) =>
+              handleChange(itemValue, "occupation")
+            }
             mode="dropdown"
             style={styles.Picker}
           >
-            <Picker.Item label="OCCUPATION" />
+            <Picker.Item value="41" label="Private Sector Service" />
             <Picker.Item value="4" label="Agriculturist" />
             <Picker.Item value="1" label="Business" />
             <Picker.Item value="1A" label="Business Manufacturing" />
@@ -168,7 +163,6 @@ const Form = () => {
             <Picker.Item value="2B" label="Non-Government Service" />
             <Picker.Item value="9" label="Not Specified" />
             <Picker.Item value="8" label="Others" />
-            <Picker.Item value="41" label="Private Sector Service" />
             <Picker.Item value="3C" label="Profession - Engineering" />
             <Picker.Item value="3B" label="Profession - Finance" />
             <Picker.Item value="3D" label="Profession - Legal" />
@@ -183,18 +177,24 @@ const Form = () => {
             <Picker.Item value="7" label="Student" />
           </Picker>
         </TouchableOpacity>
-
-        <TextInput
-          mode="outlined"
-          value={accountData.panNumber}
-          onChangeText={(e) => handleChange(e, "panNumber")}
-          style={styles.input}
-          outlineStyle={styles.outline}
-          placeholder="Enter Pan Number"
-          theme={styles.themeStyle}
-          contentStyle={styles.contentStyle}
-          placeholderTextColor="rgb(191, 191, 191)"
-        />
+        <TouchableOpacity
+          activeOpacity={0.7}
+          //   onPress={() => setCurrentForm(currentForm + 1)}
+          onPress={handlemfu}
+        >
+          <Button
+            mode="contained"
+            style={styles.button}
+            labelStyle={{
+              fontSize: width * 0.05,
+              color: "rgba(255, 255, 255, 1)",
+              textAlign: "center",
+              fontWeight: "600",
+            }}
+          >
+            Next
+          </Button>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -245,7 +245,16 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   Picker: {
-    color: "rgb(191, 191, 191)",
+    color: "rgba(2, 48, 71, 1)",
+  },
+  button: {
+    marginBottom: height * 0.04,
+    marginTop: height * 0.03,
+    height: height * 0.07,
+    borderRadius: width * 0.03,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0, 53, 102, 1)",
   },
 });
-export default Form;
+export default Basicdetails;
