@@ -5,35 +5,32 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { height, width } from "../../Dimension";
 import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
+import Loader from "../Components/Loader";
 
 const Bankdetails = ({ data }) => {
-  const [ifsc, setIfsc] = useState();
-  const [accountNumber, setAccountNumber] = useState();
-  const [accountType, setAccountType] = useState();
-  const [Bank, setBankName] = useState();
-  const [proof, setProof] = useState();
   const { accountData, setAccountData, currentForm, setCurrentForm } =
     data || [];
+  const [loader, setLoader] = useState();
 
   {
     if (accountData.hasOwnProperty("basket")) {
-      console.log("yes");
+      //   console.log("yes");
     } else {
       accountData.basket = [
         {
-          ifscCode: "",
-          bankAccountType: "",
-          micr: "",
-          proofOfAccount: "",
+          ifscCode: accountData.bankDetails[0]["ifscCode"],
+          micr: accountData.bankDetails[0]["micrNo"],
+          proofOfAccount: accountData.bankDetails[0]["proofOfAccount"],
           bankName: "STATE BANK OF INDIA",
-          accountNo: "",
-          accountType: "",
-          bankCode: "002",
+          accountNo: accountData.bankDetails[0]["accountNo"],
+          accountType: accountData.bankDetails[0]["accountType"],
+          bankCode: accountData.bankDetails[0]["bankCode"],
         },
       ];
     }
@@ -58,22 +55,24 @@ const Bankdetails = ({ data }) => {
   };
 
   const handlemfu = () => {
+    setLoader(true);
     accountData.userId = accountData.id;
     accountData.dob = "29-11-2000";
     accountData.action = "bankDetails";
     Mfuuserdata(accountData)
       .then((response) => {
-        console.log("mfu bank data", response.data);
+        // console.log("bank reponse", response.data);
+        response.data.success
+          ? (setLoader(false), setCurrentForm(currentForm + 1))
+          : (Alert.alert("Failed", response.data.error), setLoader(false));
       })
       .catch((error) => {
         console.warn(error);
       });
-    setCurrentForm(currentForm + 1);
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {console.log("data", accountData)}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Bank
       </Text>
@@ -128,7 +127,6 @@ const Bankdetails = ({ data }) => {
         placeholder="Bank Name"
         placeholderTextColor="rgb(191, 191, 191)"
         value={"STATE BANK OF INDIA"}
-        // onChangeText={(e) => setBankName(e)}
         style={styles.input}
         outlineStyle={styles.outline}
         theme={styles.themeStyle}
@@ -138,7 +136,7 @@ const Bankdetails = ({ data }) => {
 
       <TouchableOpacity style={[styles.dropdown]}>
         <Picker
-          selectedValue={Bank}
+          selectedValue={accountData.basket[0]["proofOfAccount"]}
           onValueChange={(itemValue, itemIndex) =>
             handleChange(itemValue, "proofOfAccount")
           }
@@ -152,24 +150,26 @@ const Bankdetails = ({ data }) => {
           <Picker.Item value="78" label="Bank Letter" />
         </Picker>
       </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        //   onPress={() => setCurrentForm(currentForm + 1)}
-        onPress={handlemfu}
-      >
-        <Button
-          mode="contained"
-          style={styles.button}
-          labelStyle={{
-            fontSize: width * 0.05,
-            color: "rgba(255, 255, 255, 1)",
-            textAlign: "center",
-            fontWeight: "600",
-          }}
-        >
-          Next
-        </Button>
-      </TouchableOpacity>
+      {loader ? (
+        <Loader />
+      ) : (
+        <>
+          <TouchableOpacity activeOpacity={0.7} onPress={handlemfu}>
+            <Button
+              mode="contained"
+              style={styles.button}
+              labelStyle={{
+                fontSize: width * 0.05,
+                color: "rgba(255, 255, 255, 1)",
+                textAlign: "center",
+                fontWeight: "600",
+              }}
+            >
+              Next
+            </Button>
+          </TouchableOpacity>
+        </>
+      )}
     </ScrollView>
   );
 };

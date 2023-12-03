@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { TextInput, Button, Avatar } from "react-native-paper";
 import { height, width } from "../../Dimension";
@@ -12,6 +13,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
+import Loader from "../Components/Loader";
 
 const Basicdetails = ({ data }) => {
   const [date, setDate] = useState(new Date());
@@ -19,6 +21,12 @@ const Basicdetails = ({ data }) => {
   const [image, setImage] = useState(null);
   const { accountData, setAccountData, currentForm, setCurrentForm } =
     data || [];
+  const options = {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  };
+  const [loader, setLoader] = useState();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -37,37 +45,36 @@ const Basicdetails = ({ data }) => {
     setShowDatePicker(true);
   };
 
-  const handleDateChange = (event, selectedDate) => {
-    currentDate = selectedDate || date;
-    setShowDatePicker(false);
-    setDate(currentDate);
-  };
-
   const handleChange = (e, key) => {
     setAccountData((preData) => {
       const newData = { ...preData };
-      newData[key] = e;
+      key == "dob"
+        ? ((newData[key] = e
+            .toLocaleDateString("en-US", options)
+            .replace(/\//g, "-")),
+          setShowDatePicker(false))
+        : (newData[key] = e);
       return newData;
     });
   };
 
   const handlemfu = () => {
+    setLoader(true);
     accountData.userId = accountData.id;
-    accountData.dob = "29-11-2000";
     accountData.action = "basicDetails";
     Mfuuserdata(accountData)
       .then((response) => {
-        // console.log("mfu data", response.data);
+        response.data.success
+          ? (setLoader(false), setCurrentForm(currentForm + 1))
+          : (Alert.alert("Failed", response.data.error), setLoader(false));
       })
       .catch((error) => {
         console.warn(error);
       });
-    setCurrentForm(currentForm + 1);
   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {/* {console.log(accountData)} */}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Profile
       </Text>
@@ -102,7 +109,7 @@ const Basicdetails = ({ data }) => {
             mode="outlined"
             placeholder="Date Of Birth"
             placeholderTextColor="rgb(191, 191, 191)"
-            value={date.toDateString()}
+            value={accountData.dob}
             editable={false}
             style={styles.input}
             outlineStyle={styles.outline}
@@ -115,9 +122,7 @@ const Basicdetails = ({ data }) => {
             value={date}
             mode="date"
             display="default"
-            onChange={(event, selectedDate) =>
-              handleDateChange(event, selectedDate)
-            }
+            onChange={(e, value) => handleChange(value, "dob")}
           />
         )}
         <TextInput
@@ -177,24 +182,27 @@ const Basicdetails = ({ data }) => {
             <Picker.Item value="7" label="Student" />
           </Picker>
         </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          //   onPress={() => setCurrentForm(currentForm + 1)}
-          onPress={handlemfu}
-        >
-          <Button
-            mode="contained"
-            style={styles.button}
-            labelStyle={{
-              fontSize: width * 0.05,
-              color: "rgba(255, 255, 255, 1)",
-              textAlign: "center",
-              fontWeight: "600",
-            }}
-          >
-            Next
-          </Button>
-        </TouchableOpacity>
+
+        {loader ? (
+          <Loader />
+        ) : (
+          <>
+            <TouchableOpacity activeOpacity={0.7} onPress={handlemfu}>
+              <Button
+                mode="contained"
+                style={styles.button}
+                labelStyle={{
+                  fontSize: width * 0.05,
+                  color: "rgba(255, 255, 255, 1)",
+                  textAlign: "center",
+                  fontWeight: "600",
+                }}
+              >
+                Next
+              </Button>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     </ScrollView>
   );

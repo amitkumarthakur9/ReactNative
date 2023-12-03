@@ -13,12 +13,16 @@ import {
 const Form = ({ data }) => {
   const [accountData, setAccountData] = useState([]);
   const { currentForm, setCurrentForm } = data;
+  const [nominee, setNominee] = useState([]);
+  const [fatca, setFatca] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       await Userlogin();
       const result = await Fetchuserdetails();
       setAccountData(result.data.user || []);
+      setNominee(result.data.user.nominee || []);
+      setFatca(result.data.user.fatcaDetails[0] || []);
     };
 
     fetchData();
@@ -26,7 +30,6 @@ const Form = ({ data }) => {
       setAccountData([]);
     };
   }, []);
-
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -51,9 +54,21 @@ const Form = ({ data }) => {
           }}
         />
       ) : currentForm === 2 ? (
-        <Fatca />
+        <Fatca
+          data={{
+            accountData: fatca,
+            setAccountData: setFatca,
+            currentForm: currentForm,
+            setCurrentForm: setCurrentForm,
+          }}
+        />
       ) : (
-        <Nominee />
+        <Nominee
+          data={{
+            accountData: nominee,
+            setAccountData: setNominee,
+          }}
+        />
       )}
     </ScrollView>
   );

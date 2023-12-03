@@ -6,28 +6,38 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import { Button, TextInput, Checkbox } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { height, width } from "../../Dimension";
+import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
 
-const Nominee = () => {
-  const [firstNominee, setFirstNominee] = useState();
-  const [relationWithNominee, setRelationWithNominee] = useState();
-  const [nomineeDOB, setNomineeDOB] = useState();
-  const [nomineeShare, setNomineeShare] = useState();
+const Nominee = ({ data }) => {
+  const [checked, setChecked] = useState(false);
+  const [thirdNomineeCheck, setThirdNomineeCheck] = useState(false);
+  const { accountData, setAccountData } = data || [];
 
-  const [secondNominee, setSecondNominee] = useState();
-  const [secondrelationWithNominee, setSecondrelationWithNominee] = useState();
-  const [secondnomineeDOB, setSecondnomineeDOB] = useState();
-  const [secondnomineeShare, setSecondnomineeShare] = useState();
+  const handleChange = (e, key) => {
+    setAccountData((preData) => {
+      const newData = { ...preData };
+      newData[key] = e;
+      return newData;
+    });
+  };
 
-  const [thirdNominee, setThirdNominee] = useState();
-  const [thirdrelationWithNominee, setThirdrelationWithNominee] = useState();
-  const [thirdnomineeDOB, setThirdnomineeDOB] = useState();
-  const [thirdnomineeShare, setThirdnomineeShare] = useState();
+  const handlemfu = () => {
+    accountData.action = "NomineeDetails";
+    Mfuuserdata(accountData)
+      .then((response) => {
+        console.log("mfu nominee response data", response.data);
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {console.log(JSON.stringify(accountData, null, 1))}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Nominee
       </Text>
@@ -35,8 +45,8 @@ const Nominee = () => {
       <Text style={styles.header}>Nominee Details</Text>
       <TextInput
         mode="outlined"
-        value={firstNominee}
-        onChangeText={(e) => setFirstNominee(e)}
+        value={accountData.name}
+        onChangeText={(e) => handleChange(e, "name")}
         style={styles.input}
         outlineStyle={styles.outline}
         placeholder="Nominee Name"
@@ -47,8 +57,8 @@ const Nominee = () => {
 
       <TextInput
         mode="outlined"
-        value={relationWithNominee}
-        onChangeText={(e) => setRelationWithNominee(e)}
+        value={accountData.relation}
+        onChangeText={(e) => handleChange(e, "relation")}
         style={styles.input}
         outlineStyle={styles.outline}
         placeholder="Relation With Nominee"
@@ -59,8 +69,8 @@ const Nominee = () => {
 
       <TextInput
         mode="outlined"
-        value={nomineeDOB}
-        onChangeText={(e) => setNomineeDOB(e)}
+        value={accountData.dob}
+        onChangeText={(e) => handleChange(e, "dob")}
         style={styles.input}
         outlineStyle={styles.outline}
         placeholder="Nominee DOB"
@@ -71,8 +81,8 @@ const Nominee = () => {
 
       <TextInput
         mode="outlined"
-        value={nomineeShare}
-        onChangeText={(e) => setNomineeShare(e)}
+        value={`${accountData.percentage}`}
+        onChangeText={(e) => handleChange(e, "percentage")}
         style={styles.input}
         outlineStyle={styles.outline}
         placeholder="Nominee Share"
@@ -81,103 +91,163 @@ const Nominee = () => {
         placeholderTextColor="rgb(191, 191, 191)"
       />
 
-      <Text style={styles.header}>Second Nominee Details</Text>
-      <TextInput
-        mode="outlined"
-        value={secondNominee}
-        onChangeText={(e) => setSecondNominee(e)}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Nominee Name"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
+      <View style={{ flexDirection: "row" }}>
+        <Checkbox
+          status={checked ? "checked" : "unchecked"}
+          onPress={() => {
+            setChecked(!checked);
+          }}
+        />
+        <Text
+          style={[
+            styles.header,
+            { marginTop: height * 0.01, marginBottom: height * 0.02 },
+          ]}
+        >
+          Add Second Nominee Details
+        </Text>
+      </View>
 
-      <TextInput
-        mode="outlined"
-        value={secondrelationWithNominee}
-        onChangeText={(e) => setSecondrelationWithNominee(e)}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Relation With Nominee"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
+      {checked && (
+        <>
+          <Text style={styles.header}>Second Nominee Details</Text>
+          <TextInput
+            mode="outlined"
+            value={accountData.name2}
+            onChangeText={(e) => handleChange(e, "name2")}
+            style={styles.input}
+            outlineStyle={styles.outline}
+            placeholder="Nominee Name"
+            theme={styles.themeStyle}
+            contentStyle={styles.contentStyle}
+            placeholderTextColor="rgb(191, 191, 191)"
+          />
 
-      <TextInput
-        mode="outlined"
-        value={secondnomineeDOB}
-        onChangeText={(e) => setSecondnomineeDOB(e)}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Nominee DOB"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
+          <TextInput
+            mode="outlined"
+            value={accountData.relation2}
+            onChangeText={(e) => handleChange(e, "relation2")}
+            style={styles.input}
+            outlineStyle={styles.outline}
+            placeholder="Relation With Nominee"
+            theme={styles.themeStyle}
+            contentStyle={styles.contentStyle}
+            placeholderTextColor="rgb(191, 191, 191)"
+          />
 
-      <TextInput
-        mode="outlined"
-        value={secondnomineeShare}
-        onChangeText={(e) => setSecondnomineeShare(e)}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Nominee Share"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
+          <TextInput
+            mode="outlined"
+            value={accountData.dob2}
+            onChangeText={(e) => handleChange(e, "dob2")}
+            style={styles.input}
+            outlineStyle={styles.outline}
+            placeholder="Nominee DOB"
+            theme={styles.themeStyle}
+            contentStyle={styles.contentStyle}
+            placeholderTextColor="rgb(191, 191, 191)"
+          />
 
-      <Text style={styles.header}>Third Nominee Details</Text>
-      <TextInput
-        mode="outlined"
-        value={thirdNominee}
-        onChangeText={(e) => setThirdNominee(e)}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Nominee Name"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
+          <TextInput
+            mode="outlined"
+            value={`${accountData.percentage2}`}
+            onChangeText={(e) => handleChange(e, "percentage2")}
+            style={styles.input}
+            outlineStyle={styles.outline}
+            placeholder="Nominee Share"
+            theme={styles.themeStyle}
+            contentStyle={styles.contentStyle}
+            placeholderTextColor="rgb(191, 191, 191)"
+          />
 
-      <TextInput
-        mode="outlined"
-        value={thirdrelationWithNominee}
-        onChangeText={(e) => setThirdrelationWithNominee(e)}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Relation With Nominee"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
+          <View style={{ flexDirection: "row" }}>
+            <Checkbox
+              status={thirdNomineeCheck ? "checked" : "unchecked"}
+              onPress={() => {
+                setThirdNomineeCheck(!thirdNomineeCheck);
+              }}
+            />
+            <Text
+              style={[
+                styles.header,
+                { marginTop: height * 0.01, marginBottom: height * 0.02 },
+              ]}
+            >
+              Add Third Nominee Details
+            </Text>
+          </View>
+        </>
+      )}
 
-      <TextInput
-        mode="outlined"
-        value={thirdnomineeDOB}
-        onChangeText={(e) => setThirdnomineeDOB(e)}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Nominee DOB"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
+      {thirdNomineeCheck && (
+        <>
+          <Text style={styles.header}>Third Nominee Details</Text>
+          <TextInput
+            mode="outlined"
+            value={accountData.name3}
+            onChangeText={(e) => handleChange(e, "name3")}
+            style={styles.input}
+            outlineStyle={styles.outline}
+            placeholder="Nominee Name"
+            theme={styles.themeStyle}
+            contentStyle={styles.contentStyle}
+            placeholderTextColor="rgb(191, 191, 191)"
+          />
 
-      <TextInput
-        mode="outlined"
-        value={thirdnomineeShare}
-        onChangeText={(e) => setThirdnomineeShare(e)}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Nominee Share"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
+          <TextInput
+            mode="outlined"
+            value={accountData.relation3}
+            onChangeText={(e) => handleChange(e, "relation3")}
+            style={styles.input}
+            outlineStyle={styles.outline}
+            placeholder="Relation With Nominee"
+            theme={styles.themeStyle}
+            contentStyle={styles.contentStyle}
+            placeholderTextColor="rgb(191, 191, 191)"
+          />
+
+          <TextInput
+            mode="outlined"
+            value={accountData.dob3}
+            onChangeText={(e) => handleChange(e, "dob3")}
+            style={styles.input}
+            outlineStyle={styles.outline}
+            placeholder="Nominee DOB"
+            theme={styles.themeStyle}
+            contentStyle={styles.contentStyle}
+            placeholderTextColor="rgb(191, 191, 191)"
+          />
+
+          <TextInput
+            mode="outlined"
+            value={`${accountData.percentage3}`}
+            onChangeText={(e) => handleChange(e, "percentage3")}
+            style={styles.input}
+            outlineStyle={styles.outline}
+            placeholder="Nominee Share"
+            theme={styles.themeStyle}
+            contentStyle={styles.contentStyle}
+            placeholderTextColor="rgb(191, 191, 191)"
+          />
+        </>
+      )}
+      <TouchableOpacity
+        activeOpacity={0.7}
+        //   onPress={() => setCurrentForm(currentForm + 1)}
+        onPress={handlemfu}
+      >
+        <Button
+          mode="contained"
+          style={styles.button}
+          labelStyle={{
+            fontSize: width * 0.05,
+            color: "rgba(255, 255, 255, 1)",
+            textAlign: "center",
+            fontWeight: "600",
+          }}
+        >
+          Done
+        </Button>
+      </TouchableOpacity>
     </ScrollView>
   );
 };

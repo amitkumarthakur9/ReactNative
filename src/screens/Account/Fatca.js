@@ -5,46 +5,110 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { height, width } from "../../Dimension";
+import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
+import Loader from "../Components/Loader";
 
-const Fatca = () => {
-  const [incomeSlab, setIncomeSlab] = useState();
-  const [wealthSource, setWealthSource] = useState();
-  const [politically, setPolitically] = useState();
-  const [occupationCode, setOccupationCode] = useState();
-  const [countryOfBirth, setCountryOfBirth] = useState(false);
-  const [nationality, setNationality] = useState();
-  const [citizenship, setCitizenship] = useState();
-  const [placeOfBirth, setPlaceOfBirth] = useState();
+const Fatca = ({ data }) => {
+  const { accountData, setAccountData, currentForm, setCurrentForm } =
+    data || [];
+  const [loader, setLoader] = useState();
+  const options = {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+  };
+
+  if (!accountData.hasOwnProperty("incomeSlab")) {
+    accountData.incomeSlab = "01";
+    accountData.wealthSource = accountData.sourceOfwealth;
+    accountData.politicallyExposed = "N/A";
+    accountData.city = accountData.birthCity;
+    accountData.occupationCode = accountData.occupation;
+    accountData.netWorthDate = new Date(accountData.netWorthDate)
+      .toLocaleDateString("en-US", options)
+      .replace(/\//g, "-");
+    accountData.updatedOn = new Date(accountData.updatedOn)
+      .toLocaleDateString("en-US", options)
+      .replace(/\//g, "-");
+    accountData.createdOn = new Date(accountData.createdOn)
+      .toLocaleDateString("en-US", options)
+      .replace(/\//g, "-");
+  }
+
+  const handleChange = (e, key) => {
+    setAccountData((preData) => {
+      const newData = { ...preData };
+      {
+        key == "incomeSlab"
+          ? (newData.incomeSlab = e)
+          : key == "wealthSource"
+          ? (newData.wealthSource = e)
+          : key == "politicallyExposed"
+          ? (newData.politicallyExposed = e)
+          : key == "city"
+          ? (newData.city = e)
+          : (newData[key] = e);
+      }
+      return newData;
+    });
+  };
+
+  const handlemfu = () => {
+    setLoader(true);
+    accountData.jointAccountNumber = 1;
+    accountData.action = "fatcaReg";
+    Mfuuserdata(accountData)
+      .then((response) => {
+        response.data.success
+          ? (setLoader(false), setCurrentForm(currentForm + 1))
+          : (Alert.alert("Failed", response.data.error), setLoader(false));
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {console.log("fatca", JSON.stringify(accountData, null, 1))}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Fatca
       </Text>
 
       <Text style={styles.header}>Fatca Details</Text>
-      <TextInput
-        mode="outlined"
-        value={incomeSlab}
-        onChangeText={(e) => setIncomeSlab(e)}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Income Slab"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
       <TouchableOpacity style={styles.dropdown}>
         <Picker
-          selectedValue={wealthSource}
-          onValueChange={(itemValue, itemIndex) => setWealthSource(itemValue)}
+          selectedValue={accountData.incomeSlab}
+          onValueChange={(itemValue, itemIndex) =>
+            handleChange(itemValue, "incomeSlab")
+          }
           mode="dropdown"
           style={styles.Picker}
         >
-          <Picker.Item label="Wealth Source" />
+          {/* <Picker.Item value="" label="Income Slab" /> */}
+          <Picker.Item value="01" label="Below 1 Lakh" />
+          <Picker.Item value="02" label="> 1 <=5 Lac" />
+          <Picker.Item value="03" label="> 5 <=10 Lacs" />
+          <Picker.Item value="04" label="> 10 <= 25 Lacs" />
+          <Picker.Item value="05" label="> 25 Lacs <= 1 Crore" />
+          <Picker.Item value="06" label="Above 1 Crore" />
+        </Picker>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.dropdown}>
+        <Picker
+          selectedValue={accountData.wealthSource}
+          onValueChange={(itemValue, itemIndex) =>
+            handleChange(itemValue, "wealthSource")
+          }
+          mode="dropdown"
+          style={styles.Picker}
+        >
+          {/* <Picker.Item value="" label="Wealth Source" /> */}
           <Picker.Item value="01" label="Salary" />
           <Picker.Item value="02" label="Business Income" />
           <Picker.Item value="03" label="Gift" />
@@ -58,12 +122,14 @@ const Fatca = () => {
 
       <TouchableOpacity style={styles.dropdown}>
         <Picker
-          selectedValue={politically}
-          onValueChange={(itemValue, itemIndex) => setPolitically(itemValue)}
+          selectedValue={accountData.politicallyExposed}
+          onValueChange={(itemValue, itemIndex) =>
+            handleChange(itemValue, "politicallyExposed")
+          }
           mode="dropdown"
           style={styles.Picker}
         >
-          <Picker.Item label="Politically Exposed Person" />
+          {/* <Picker.Item label="Politically Exposed Person" /> */}
           <Picker.Item
             value="NA"
             label="the investor is not politically exposed person"
@@ -80,59 +146,10 @@ const Fatca = () => {
         </Picker>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity style={styles.dropdown}>
-        <Picker
-          selectedValue={occupationCode}
-          onValueChange={(itemValue, itemIndex) => setOccupationCode(itemValue)}
-          mode="dropdown"
-          style={styles.Picker}
-        >
-          <Picker.Item label="Occupation Code" value="Occupation Code" />
-          <Picker.Item label="91" value="91" />
-          <Picker.Item label="911" value="911" />
-        </Picker>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.dropdown}>
-        <Picker
-          selectedValue={countryOfBirth}
-          onValueChange={(itemValue, itemIndex) => setCountryOfBirth(itemValue)}
-          mode="dropdown"
-          style={styles.Picker}
-        >
-          <Picker.Item label="Country of Birth" value="Country of Birth" />
-          <Picker.Item label="india" value="india" />
-        </Picker>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.dropdown}>
-        <Picker
-          selectedValue={nationality}
-          onValueChange={(itemValue, itemIndex) => setNationality(itemValue)}
-          mode="dropdown"
-          style={styles.Picker}
-        >
-          <Picker.Item label="Nationality" value="Nationality" />
-          <Picker.Item label="india" value="india" />
-        </Picker>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.dropdown}>
-        <Picker
-          selectedValue={citizenship}
-          onValueChange={(itemValue, itemIndex) => setCitizenship(itemValue)}
-          mode="dropdown"
-          style={styles.Picker}
-        >
-          <Picker.Item label="Citizenship" value="Citizenship" />
-          <Picker.Item label="India" value="India" />
-        </Picker>
-      </TouchableOpacity> */}
-
       <TextInput
         mode="outlined"
-        value={placeOfBirth}
-        onChangeText={(e) => setPlaceOfBirth(e)}
+        value={accountData.city}
+        onChangeText={(e) => handleChange(e, "city")}
         style={styles.input}
         outlineStyle={styles.outline}
         placeholder="Place Of Birth"
@@ -140,6 +157,26 @@ const Fatca = () => {
         contentStyle={styles.contentStyle}
         placeholderTextColor="rgb(191, 191, 191)"
       />
+      {loader ? (
+        <Loader />
+      ) : (
+        <>
+          <TouchableOpacity activeOpacity={0.7} onPress={handlemfu}>
+            <Button
+              mode="contained"
+              style={styles.button}
+              labelStyle={{
+                fontSize: width * 0.05,
+                color: "rgba(255, 255, 255, 1)",
+                textAlign: "center",
+                fontWeight: "600",
+              }}
+            >
+              Next
+            </Button>
+          </TouchableOpacity>
+        </>
+      )}
     </ScrollView>
   );
 };
@@ -186,7 +223,7 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.02,
   },
   Picker: {
-    color: "rgb(191, 191, 191)",
+    color: "rgba(2, 48, 71, 1)",
   },
   button: {
     marginBottom: height * 0.04,
