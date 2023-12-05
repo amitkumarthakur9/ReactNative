@@ -18,7 +18,8 @@ const Form = ({ data }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await Userlogin();
+      const login = await Userlogin();
+      console.log("login details", login.data);
       const result = await Fetchuserdetails();
       setAccountData(result.data.user || []);
       setNominee(result.data.user.nominee || []);
@@ -56,8 +57,8 @@ const Form = ({ data }) => {
       ) : currentForm === 2 ? (
         <Fatca
           data={{
-            accountData: fatca,
-            setAccountData: setFatca,
+            accountData: accountData,
+            setAccountData: setAccountData,
             currentForm: currentForm,
             setCurrentForm: setCurrentForm,
           }}
@@ -65,8 +66,8 @@ const Form = ({ data }) => {
       ) : (
         <Nominee
           data={{
-            accountData: nominee,
-            setAccountData: setNominee,
+            accountData: accountData,
+            setAccountData: setAccountData,
           }}
         />
       )}

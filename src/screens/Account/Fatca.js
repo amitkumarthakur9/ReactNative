@@ -12,33 +12,57 @@ import { Picker } from "@react-native-picker/picker";
 import { height, width } from "../../Dimension";
 import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
 import Loader from "../Components/Loader";
+import Formatdate from "../Components/Formatdate";
 
 const Fatca = ({ data }) => {
   const { accountData, setAccountData, currentForm, setCurrentForm } =
     data || [];
   const [loader, setLoader] = useState();
-  const options = {
-    day: "numeric",
-    month: "numeric",
-    year: "numeric",
-  };
 
   if (!accountData.hasOwnProperty("incomeSlab")) {
+    const prevYear = new Date().getFullYear() - 1;
+    const currentYear = new Date().getFullYear();
+
+    if (new Date().getMonth() <= 3) {
+      accountData.netWorthDate = `31-03-${prevYear}`;
+    } else {
+      accountData.netWorthDate = `31-03-${currentYear}`;
+    }
+    accountData.jointAccountNumber = "1";
+    accountData.taxpayerIDN1 = accountData.panNumber;
+    accountData.taxpayerIDDoc1 = "C";
+    accountData.residenceCntry1 = "101";
+    accountData.taxResFlag = "N";
+    accountData.city = accountData.city;
+    accountData.nationality = "101";
+    accountData.citizenship = "101";
+    accountData.birthCountry = "101";
+    accountData.netWorth = "";
+    accountData.wealthSource = "01";
     accountData.incomeSlab = "01";
-    accountData.wealthSource = accountData.sourceOfwealth;
-    accountData.politicallyExposed = "N/A";
-    accountData.city = accountData.birthCity;
+    accountData.politicallyExposed = "NA";
+    accountData.addressType = "2";
     accountData.occupationCode = accountData.occupation;
-    accountData.netWorthDate = new Date(accountData.netWorthDate)
-      .toLocaleDateString("en-US", options)
-      .replace(/\//g, "-");
-    accountData.updatedOn = new Date(accountData.updatedOn)
-      .toLocaleDateString("en-US", options)
-      .replace(/\//g, "-");
-    accountData.createdOn = new Date(accountData.createdOn)
-      .toLocaleDateString("en-US", options)
-      .replace(/\//g, "-");
+    accountData.holdingMode = "SI";
+    accountData.userId = accountData.id;
+    accountData.action = "fatcaReg";
   }
+  //   if (!accountData.hasOwnProperty("incomeSlab")) {
+  //     accountData.incomeSlab = "01";
+  //     accountData.wealthSource = accountData.sourceOfwealth;
+  //     accountData.politicallyExposed = "N/A";
+  //     accountData.city = accountData.birthCity;
+  //     accountData.occupationCode = accountData.occupation;
+  //     accountData.netWorthDate = new Date(accountData.netWorthDate)
+  //       .toLocaleDateString("en-US", options)
+  //       .replace(/\//g, "-");
+  //     accountData.updatedOn = new Date(accountData.updatedOn)
+  //       .toLocaleDateString("en-US", options)
+  //       .replace(/\//g, "-");
+  //     accountData.createdOn = new Date(accountData.createdOn)
+  //       .toLocaleDateString("en-US", options)
+  //       .replace(/\//g, "-");
+  //   }
 
   const handleChange = (e, key) => {
     setAccountData((preData) => {
@@ -60,8 +84,6 @@ const Fatca = ({ data }) => {
 
   const handlemfu = () => {
     setLoader(true);
-    accountData.jointAccountNumber = 1;
-    accountData.action = "fatcaReg";
     Mfuuserdata(accountData)
       .then((response) => {
         response.data.success
@@ -75,7 +97,7 @@ const Fatca = ({ data }) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {console.log("fatca", JSON.stringify(accountData, null, 1))}
+      {console.log("fatca", accountData)}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Fatca
       </Text>

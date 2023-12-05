@@ -6,17 +6,25 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  FlatList,
 } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { height, width } from "../../Dimension";
 import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
 import Loader from "../Components/Loader";
+import { Getbank } from "./Data";
 
 const Bankdetails = ({ data }) => {
   const { accountData, setAccountData, currentForm, setCurrentForm } =
     data || [];
   const [loader, setLoader] = useState();
+
+  const banks = Getbank();
+  const [searchBank, setSearchBank] = useState();
+  const [searchBankCode, setSearchBankCode] = useState();
+  const [filteredBank, setFilteredBank] = useState();
+  const [optionsVisible, setOptionsVisible] = useState(false);
 
   {
     if (accountData.hasOwnProperty("basket")) {
@@ -24,17 +32,26 @@ const Bankdetails = ({ data }) => {
     } else {
       accountData.basket = [
         {
-          ifscCode: accountData.bankDetails[0]["ifscCode"],
-          micr: accountData.bankDetails[0]["micrNo"],
-          proofOfAccount: accountData.bankDetails[0]["proofOfAccount"],
-          bankName: "STATE BANK OF INDIA",
-          accountNo: accountData.bankDetails[0]["accountNo"],
-          accountType: accountData.bankDetails[0]["accountType"],
-          bankCode: accountData.bankDetails[0]["bankCode"],
+          ifscCode: "",
+          micr: "",
+          proofOfAccount: "",
+          bankName: "",
+          accountNo: "",
+          accountType: "",
+          bankCode: "",
         },
       ];
     }
   }
+
+  const handleSearch = (text) => {
+    const filtered = banks.filter((item) =>
+      item.bankName.toLowerCase().includes(text.toLowerCase())
+    );
+    setOptionsVisible(true);
+    setFilteredBank(filtered);
+    setSearchBank(text);
+  };
 
   const handleChange = (e, key) => {
     setAccountData((preData) => {
@@ -56,12 +73,12 @@ const Bankdetails = ({ data }) => {
 
   const handlemfu = () => {
     setLoader(true);
-    accountData.userId = accountData.id;
-    accountData.dob = "29-11-2000";
+    accountData.basket[0]["bankName"] = searchBank;
+    accountData.basket[0]["bankCode"] = searchBankCode;
     accountData.action = "bankDetails";
     Mfuuserdata(accountData)
       .then((response) => {
-        // console.log("bank reponse", response.data);
+        console.log("bank reponse", response.data);
         response.data.success
           ? (setLoader(false), setCurrentForm(currentForm + 1))
           : (Alert.alert("Failed", response.data.error), setLoader(false));
@@ -71,8 +88,15 @@ const Bankdetails = ({ data }) => {
       });
   };
 
+  const handleItemPress = (selectedItem) => {
+    setSearchBank(selectedItem.bankName);
+    setSearchBankCode(selectedItem.bankCode);
+    setOptionsVisible(false);
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {console.log("bank data", accountData)}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Bank
       </Text>
@@ -126,13 +150,31 @@ const Bankdetails = ({ data }) => {
         mode="outlined"
         placeholder="Bank Name"
         placeholderTextColor="rgb(191, 191, 191)"
-        value={"STATE BANK OF INDIA"}
+        onChangeText={(e) => handleSearch(e)}
+        value={searchBank}
         style={styles.input}
         outlineStyle={styles.outline}
         theme={styles.themeStyle}
         contentStyle={styles.contentStyle}
-        disabled
       />
+
+      {filteredBank && optionsVisible && (
+        <>
+          <ScrollView contentContainerStyle={styles.optionContainer}>
+            {filteredBank.map((item) => (
+              <TouchableOpacity
+                key={item.bankCode}
+                onPress={() => handleItemPress(item)}
+                style={{ margin: width * 0.02 }}
+              >
+                <Text style={{ fontSize: width * 0.038, fontWeight: "400" }}>
+                  {item.bankName}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </>
+      )}
 
       <TouchableOpacity style={[styles.dropdown]}>
         <Picker
@@ -235,6 +277,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "rgba(0, 53, 102, 1)",
+  },
+  optionContainer: {
+    backgroundColor: "aqua",
+    borderWidth: width * 0.005,
+    borderColor: "rgb(204, 204, 204)",
+    paddingLeft: width * 0.05,
+    borderRadius: width * 0.02,
+    zIndex: 100,
   },
 });
 

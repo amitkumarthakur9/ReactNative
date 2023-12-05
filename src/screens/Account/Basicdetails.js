@@ -14,6 +14,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
 import Loader from "../Components/Loader";
+import Formatdate from "../Components/Formatdate";
 
 const Basicdetails = ({ data }) => {
   const [date, setDate] = useState(new Date());
@@ -49,10 +50,7 @@ const Basicdetails = ({ data }) => {
     setAccountData((preData) => {
       const newData = { ...preData };
       key == "dob"
-        ? ((newData[key] = e
-            .toLocaleDateString("en-US", options)
-            .replace(/\//g, "-")),
-          setShowDatePicker(false))
+        ? ((newData[key] = Formatdate(e)), setShowDatePicker(false))
         : (newData[key] = e);
       return newData;
     });
@@ -61,6 +59,8 @@ const Basicdetails = ({ data }) => {
   const handlemfu = () => {
     setLoader(true);
     accountData.userId = accountData.id;
+    accountData.minorAccount = 0;
+    accountData.holdingMode = "SI";
     accountData.action = "basicDetails";
     Mfuuserdata(accountData)
       .then((response) => {
@@ -75,6 +75,7 @@ const Basicdetails = ({ data }) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
+      {/* {console.log("basic details data", JSON.stringify(accountData, null, 1))} */}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Profile
       </Text>

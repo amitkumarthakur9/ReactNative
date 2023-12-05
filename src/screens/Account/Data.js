@@ -3,6 +3,7 @@ import {
   Userlogin,
   Fetchuserdetails,
 } from "../../api/services/endpoints/userEndpoints";
+import { Banksdata } from "../../api/services/endpoints/userEndpoints";
 export const Accountdata = () => {
   const [accountData, setAccountData] = useState([]);
   useEffect(() => {
@@ -31,4 +32,15 @@ export const UserDetails = () => {
   }, []);
 
   return userData;
+};
+
+export const Getbank = () => {
+  const [banks, setBanks] = useState([]);
+  useEffect(() => {
+    Banksdata().then((response) => {
+      setBanks(response.data.bankArray);
+    });
+  }, []);
+
+  return banks;
 };

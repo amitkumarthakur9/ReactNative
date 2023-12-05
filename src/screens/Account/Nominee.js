@@ -10,34 +10,71 @@ import { Button, TextInput, Checkbox } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { height, width } from "../../Dimension";
 import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const Nominee = ({ data }) => {
   const [checked, setChecked] = useState(false);
   const [thirdNomineeCheck, setThirdNomineeCheck] = useState(false);
   const { accountData, setAccountData } = data || [];
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [nominee, setNominee] = useState({
+    name: "",
+    relation: "",
+    dob: "",
+    percentage: "",
+    nomineeOptedFlag: "Y",
+    minor: false,
+    secondNominee: false,
+    thirdNominee: false,
+    holdingMode: "SI",
+    action: "NomineeDetails",
+  });
 
   const handleChange = (e, key) => {
-    setAccountData((preData) => {
+    setNominee((preData) => {
       const newData = { ...preData };
-      newData[key] = e;
+      key == "dob"
+        ? ((newData[key] = Formatdate(e)), setShowDatePicker(false))
+        : (newData[key] = e);
       return newData;
     });
   };
 
-  const handlemfu = () => {
-    accountData.action = "NomineeDetails";
-    Mfuuserdata(accountData)
-      .then((response) => {
-        console.log("mfu nominee response data", response.data);
-      })
-      .catch((error) => {
-        console.warn(error);
-      });
+  const handleDatePress = () => {
+    setShowDatePicker(true);
   };
+
+  const handlemfu = () => {
+    (nominee.userId = accountData.id),
+      Mfuuserdata(nominee)
+        .then((response) => {
+          console.log("mfu nominee response data", response.data);
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+  };
+
+  //   if (!accountData.hasOwnProperty("nomineeOptedFlag")) {
+  //     nominee.name = "";
+  //     nominee.relation = "";
+  //     nominee.dob = accountData.dob;
+  //     nominee.percentage = "";
+  //     nominee.nomineeOptedFlag = "Y";
+  //     nominee.minor = false;
+  //     nominee.secondNominee = false;
+  //     nominee.thirdNominee = false;
+  //     nominee.holdingMode = "SI";
+  //     nominee.userId = accountData.id;
+  //     nominee.action = "NomineeDetails";
+
+  //     console.log("nominee", nominee);
+  //   }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {console.log(JSON.stringify(accountData, null, 1))}
+      {console.log(JSON.stringify(nominee, null, 1))}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Nominee
       </Text>
@@ -45,7 +82,7 @@ const Nominee = ({ data }) => {
       <Text style={styles.header}>Nominee Details</Text>
       <TextInput
         mode="outlined"
-        value={accountData.name}
+        value={nominee.name}
         onChangeText={(e) => handleChange(e, "name")}
         style={styles.input}
         outlineStyle={styles.outline}
@@ -57,7 +94,7 @@ const Nominee = ({ data }) => {
 
       <TextInput
         mode="outlined"
-        value={accountData.relation}
+        value={nominee.relation}
         onChangeText={(e) => handleChange(e, "relation")}
         style={styles.input}
         outlineStyle={styles.outline}
@@ -66,22 +103,32 @@ const Nominee = ({ data }) => {
         contentStyle={styles.contentStyle}
         placeholderTextColor="rgb(191, 191, 191)"
       />
+      <TouchableOpacity onPress={handleDatePress}>
+        <TextInput
+          label="Date Of Birth"
+          mode="outlined"
+          placeholder="Date Of Birth"
+          placeholderTextColor="rgb(191, 191, 191)"
+          value={nominee.dob}
+          editable={false}
+          style={styles.input}
+          outlineStyle={styles.outline}
+          theme={styles.themeStyle}
+          contentStyle={styles.contentStyle}
+        />
+      </TouchableOpacity>
+      {showDatePicker && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="default"
+          onChange={(e, value) => handleChange(value, "dob")}
+        />
+      )}
 
       <TextInput
         mode="outlined"
-        value={accountData.dob}
-        onChangeText={(e) => handleChange(e, "dob")}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Nominee DOB"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
-
-      <TextInput
-        mode="outlined"
-        value={`${accountData.percentage}`}
+        value={`${nominee.percentage}`}
         onChangeText={(e) => handleChange(e, "percentage")}
         style={styles.input}
         outlineStyle={styles.outline}
@@ -230,11 +277,7 @@ const Nominee = ({ data }) => {
           />
         </>
       )}
-      <TouchableOpacity
-        activeOpacity={0.7}
-        //   onPress={() => setCurrentForm(currentForm + 1)}
-        onPress={handlemfu}
-      >
+      <TouchableOpacity activeOpacity={0.7} onPress={handlemfu}>
         <Button
           mode="contained"
           style={styles.button}
