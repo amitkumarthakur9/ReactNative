@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,10 +13,12 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../Components/Header";
 import { Otpverify } from "../../api/services/endpoints/userEndpoints";
+import Loader from "../Components/Loader";
 
 export default Otp = () => {
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", ""]);
   const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
+  const [showLoader, setShowLoader] = useState(false);
 
   const inputRefs = useRef([]);
 
@@ -24,20 +26,33 @@ export default Otp = () => {
   const navigation = useNavigation();
   const mobileNumber = route.params.mobileNumber;
 
+  // useEffect with a cleanup function
+  useEffect(() => {
+    return () => {
+      // Reset your state when leaving the page
+      setOtp(["", "", "", ""]);
+      setIsSignUpDisabled(true);
+      setShowLoader(false);
+    };
+  }, []);
+
   async function confirmCode() {
+    setShowLoader(true);
+
     try {
       const stringOtp = otp.join("");
       const data = { mobileNumber: mobileNumber, otp: stringOtp };
-      Otpverify(data).then((response) => {
-        if (response.data.success === false) {
-          Alert.alert("Failed", response.data.error);
-        }
-        if (response.data.success === true) {
-          navigation.push("Dashboard");
-        }
-      });
+      const response = await Otpverify(data);
+
+      if (response.data.success === false) {
+        Alert.alert("Failed", response.data.error);
+      } else if (response.data.success === true) {
+        navigation.push("Dashboard");
+      }
     } catch (error) {
       Alert.alert("Failed", error.message);
+    } finally {
+      setShowLoader(false);
     }
   }
 
@@ -103,18 +118,26 @@ export default Otp = () => {
               Resend Code
             </Text>
           </Text>
-          <TouchableOpacity onPress={confirmCode}>
-            <Button
-              mode="contained"
-              labelStyle={styles.buttonLabel}
-              disabled={isSignUpDisabled}
-              style={
-                isSignUpDisabled ? styles.disabledButton : styles.enabledButton
-              }
-            >
-              Sign Up
-            </Button>
-          </TouchableOpacity>
+          {showLoader ? (
+            <Loader />
+          ) : (
+            <>
+              <TouchableOpacity onPress={confirmCode}>
+                <Button
+                  mode="contained"
+                  labelStyle={styles.buttonLabel}
+                  disabled={isSignUpDisabled}
+                  style={
+                    isSignUpDisabled
+                      ? styles.disabledButton
+                      : styles.enabledButton
+                  }
+                >
+                  Sign Up
+                </Button>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </ScrollView>
     </View>

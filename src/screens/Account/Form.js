@@ -18,8 +18,8 @@ const Form = ({ data }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const login = await Userlogin();
-      console.log("login details", login.data);
+      //   const login = await Userlogin();
+      //   console.log("login details", login.data);
       const result = await Fetchuserdetails();
       setAccountData(result.data.user || []);
       setNominee(result.data.user.nominee || []);

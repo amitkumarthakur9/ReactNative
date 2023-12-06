@@ -23,12 +23,14 @@ export default Singupwithphone = ({ navigation }) => {
   const [confirm, setConfirm] = useState(null);
   const countryCode = "+91";
   const [showLoader, setShowLoader] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
 
   const loginWithPhone = () => {
+    setShowLoader(true);
     Phonelogin(phone).then((response) => {
       console.log(response.data);
       if (response.data.success) {
-        setShowLoader(true);
+        setOtpSent(true);
       }
     });
   };
@@ -37,6 +39,9 @@ export default Singupwithphone = ({ navigation }) => {
     if (showLoader) {
       navigation.navigate("Otp", { mobileNumber: phone });
     }
+    return () => {
+      setShowLoader(false);
+    };
   }, [showLoader]);
 
   const handlePhone = (number) => {

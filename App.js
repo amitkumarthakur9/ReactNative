@@ -32,7 +32,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Account"
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
         }}

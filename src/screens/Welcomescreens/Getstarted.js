@@ -44,7 +44,7 @@ const Carousels = ({ navigation }) => {
   };
 
   useEffect(() => {
-    const timer = setInterval(scrollToNextItem, 5000); // Change slide every 3 seconds
+    const timer = setInterval(scrollToNextItem, 3000); // Change slide every 3 seconds
     return () => clearInterval(timer);
   }, [activeIndex]);
 

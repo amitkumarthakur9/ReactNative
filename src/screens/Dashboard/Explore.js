@@ -129,7 +129,7 @@ export const NforenderItem = (props) => {
                   resizeMode="contain"
                 />
               </View>
-              <View>
+              {/* <View>
                 <Text style={styles.percentage}>
                   {item.fiveYearReturns
                     ? item.fiveYearReturns.toFixed(2) + "%"
@@ -148,22 +148,17 @@ export const NforenderItem = (props) => {
                     ? "1yr Return"
                     : "N/A"}
                 </Text>
-              </View>
+              </View> */}
             </View>
-            <Text style={styles.fundName}> {Formatfundname(item.name)}</Text>
-            <View
-              style={[
-                styles.flexRow,
-                { marginTop: height * 0.01, marginBottom: height * 0.01 },
-              ]}
-            >
+            <Text style={styles.fundName}>{Formatfundname(item.name)}</Text>
+            <View style={[styles.flexRow, { marginTop: height * 0.02 }]}>
               <View style={styles.flexContent}>
                 <Text style={styles.type}>
                   {item.schemeType} {item.type ? "-" + item.type : ""}
                 </Text>
               </View>
-              <Text style={styles.starNumber}>{item.rating}</Text>
-              <Foundation name="star" size={width * 0.04} style={styles.star} />
+              {/* <Text style={styles.starNumber}>{item.rating}</Text>
+              <Foundation name="star" size={width * 0.04} style={styles.star} /> */}
             </View>
           </View>
         </View>
@@ -322,20 +317,20 @@ const styles = StyleSheet.create({
   card: {
     width: width * 0.64,
     backgroundColor: "white",
-    padding: width * 0.04,
     marginRight: width * 0.04,
     borderWidth: width * 0.002,
     borderColor: "rgb(204, 204, 204)",
     borderRadius: width * 0.05,
     backgroundColor: "white",
     padding: width * 0.03,
+    paddingBottom: 0,
   },
   fundName: {
     color: "rgba(2, 48, 71, 1)",
     fontWeight: "600",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
-    marginTop: height * 0.015,
+    // marginTop: height * 0.015,
   },
   flexContent: {
     width: "50%",

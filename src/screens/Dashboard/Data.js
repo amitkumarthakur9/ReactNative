@@ -10,7 +10,7 @@ import {
 } from "../../api/services/endpoints/userEndpoints";
 
 export const Thematicbasket = () => {
-  const [basketData, setBasketData] = useState("basket");
+  const [basketData, setBasketData] = useState([]);
   useEffect(() => {
     Basket()
       .then((response) => {
@@ -25,7 +25,7 @@ export const Thematicbasket = () => {
 };
 
 export const Session = () => {
-  const [session, setSession] = useState(false);
+  const [session, setSession] = useState(true);
   useEffect(() => {
     Checksession()
       .then((response) => {
@@ -34,6 +34,9 @@ export const Session = () => {
       .catch((error) => {
         console.warn("session:", error);
       });
+    return () => {
+      setSession(false);
+    };
   }, []);
 
   return { session };
@@ -49,6 +52,9 @@ export const SessionEnd = () => {
       .catch((error) => {
         console.warn(error);
       });
+    return () => {
+      setLogout(false);
+    };
   }, []);
 
   return { logout };

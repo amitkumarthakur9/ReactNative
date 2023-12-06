@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { allPortfolio } from "../../api/services/endpoints/portfolioEndpoints";
 
 const usePortfolioData = () => {
-  const [allPortfolioData, setAllPortfolioData] = useState("allPortfolioData");
+  const [allPortfolioData, setAllPortfolioData] = useState("showLoader");
   const [internalPortfolioData, setInternalPortfolioData] = useState(
     "internalPortfolioData"
   );
@@ -14,8 +14,13 @@ const usePortfolioData = () => {
   useEffect(() => {
     allPortfolio()
       .then((response) => {
+        Object.keys(response.data.portfolioObj).length == 0
+          ? setAllPortfolioData("showZeroValue")
+          : Object.keys(response.data.portfolioObj).length > 0
+          ? setAllPortfolioData(response.data.portfolioObj.all.all.all.all)
+          : setAllPortfolioData("showLoader");
+
         setCompletePortfolioData(response.data.portfolioObj);
-        setAllPortfolioData(response.data.portfolioObj.all.all.all.all);
         setInternalPortfolioData(
           response.data.portfolioObj.internal.all.all.all
         );
@@ -29,6 +34,13 @@ const usePortfolioData = () => {
       .catch((error) => {
         console.log("failed:", error);
       });
+    return () => {
+      setAllPortfolioData("showLoader");
+      setInternalPortfolioData("internalPortfolioData");
+      setExternalPortfolioData("externalPortfolioData");
+      setholdingData("holdingData");
+      setCompletePortfolioData(0);
+    };
   }, []);
   return {
     completePortfolioData,

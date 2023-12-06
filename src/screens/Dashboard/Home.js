@@ -72,7 +72,74 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-        {allPortfolioData != "allPortfolioData" ? (
+        {allPortfolioData == "showLoader" ? (
+          <>
+            <TouchableOpacity style={styles.cart} activeOpacity={0.5}>
+              <View style={styles.individualCarts}>
+                <ImageBackground
+                  source={require("../../../assets/dashboard/rectengal.png")}
+                  style={styles.rec1}
+                >
+                  <Image
+                    source={require("../../../assets/Goal/rectengal2.png")}
+                    style={styles.rectengal2}
+                  />
+                  <Loader />
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
+          </>
+        ) : allPortfolioData == "showZeroValue" ? (
+          <>
+            <TouchableOpacity style={styles.cart} activeOpacity={0.5}>
+              <View style={styles.individualCarts}>
+                <ImageBackground
+                  source={require("../../../assets/dashboard/rectengal.png")}
+                  style={styles.rec1}
+                >
+                  <Image
+                    source={require("../../../assets/Goal/rectengal2.png")}
+                    style={styles.rectengal2}
+                  />
+                  <View style={styles.investmentContainer}>
+                    <View style={styles.headerBox}>
+                      <Text style={styles.header}>
+                        Complete Portfolio Value
+                      </Text>
+                      <Text style={styles.desc}>₹ 0</Text>
+                    </View>
+                    <View style={styles.boxBottomContainer}>
+                      <View style={styles.flexRow}>
+                        <Text style={styles.descHeader}>
+                          Initial Investment
+                        </Text>
+                        <Text style={styles.descHeader}>Returns</Text>
+                      </View>
+                      <View style={styles.flexRow}>
+                        <Text style={styles.descValue}>₹ 0</Text>
+                        <Text
+                          style={[
+                            styles.descValue,
+                            {
+                              color: "rgba(61, 193, 84, 1)",
+                              textAlign: "right",
+                            },
+                          ]}
+                        >
+                          {" "}
+                          0{"%"}
+                        </Text>
+                        <TouchableOpacity style={styles.investNow}>
+                          <Text style={styles.investNowText}>Invest Now</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
+          </>
+        ) : (
           <>
             <TouchableOpacity
               style={styles.cart}
@@ -137,27 +204,6 @@ const Home = ({ navigation }) => {
               </View>
             </TouchableOpacity>
           </>
-        ) : (
-          <>
-            <TouchableOpacity
-              style={styles.cart}
-              activeOpacity={0.5}
-              onPress={() => navigation.push("Portfolio")}
-            >
-              <View style={styles.individualCarts}>
-                <ImageBackground
-                  source={require("../../../assets/dashboard/rectengal.png")}
-                  style={styles.rec1}
-                >
-                  <Image
-                    source={require("../../../assets/Goal/rectengal2.png")}
-                    style={styles.rectengal2}
-                  />
-                  <Loader />
-                </ImageBackground>
-              </View>
-            </TouchableOpacity>
-          </>
         )}
 
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -210,7 +256,7 @@ const Home = ({ navigation }) => {
               <Text style={styles.rightContent}></Text>
             </View>
             <View style={styles.flexRow}>
-              {basketData != "basket" ? (
+              {basketData.length > 0 ? (
                 basketData.map((item, key) => (
                   <Card style={styles.flexitem} key={key}>
                     <Card.Content>
