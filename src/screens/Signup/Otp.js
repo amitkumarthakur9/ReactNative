@@ -53,6 +53,7 @@ export default Otp = () => {
       Alert.alert("Failed", error.message);
     } finally {
       setShowLoader(false);
+      setOtp(["", "", "", ""]);
     }
   }
 
