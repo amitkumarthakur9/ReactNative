@@ -11,6 +11,7 @@ import {
 import { height, width } from "../../Dimension";
 import { Card, Button, Avatar } from "react-native-paper";
 import { useRoute, useNavigation } from "@react-navigation/native";
+import Loader from "../Components/Loader";
 
 export default Overview = () => {
   const route = useRoute();
@@ -23,8 +24,10 @@ export default Overview = () => {
 
   return (
     <View style={styles.overviewContainer}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* <View style={styles.headerContainer}>
+      {Object.keys(data).length > 0 ? (
+        <>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {/* <View style={styles.headerContainer}>
           <Image
             source={{ uri: data.fundHouse.logoUrl }}
             style={[
@@ -53,90 +56,94 @@ export default Overview = () => {
             </Text>
           </View>
         </View> */}
-        {/* <Text style={styles.desc}>
+            {/* <Text style={styles.desc}>
           {data.fundHouse.description} description ka key batao
         </Text> */}
-        <View style={styles.typeContainer}>
-          <View style={styles.view}>
-            <Text style={styles.duration}>Fund Type</Text>
-            <Text style={styles.percentage}>Open- End</Text>
-          </View>
-          <View style={styles.view}>
-            <Text style={styles.duration}>Plan</Text>
-            <Text style={styles.percentage}>Growth</Text>
-          </View>
-          <View style={[styles.view, { borderColor: "white" }]}>
-            <Text style={styles.duration}>As On Date</Text>
-            <Text style={styles.percentage}>
-              {data.navUpdatedOn.split(" ")[0]}
-            </Text>
-          </View>
-        </View>
+            <View style={styles.typeContainer}>
+              <View style={styles.view}>
+                <Text style={styles.duration}>Fund Type</Text>
+                <Text style={styles.percentage}>Open- End</Text>
+              </View>
+              <View style={styles.view}>
+                <Text style={styles.duration}>Plan</Text>
+                <Text style={styles.percentage}>Growth</Text>
+              </View>
+              <View style={[styles.view, { borderColor: "white" }]}>
+                <Text style={styles.duration}>As On Date</Text>
+                <Text style={styles.percentage}>
+                  {data.navUpdatedOn.split(" ")[0]}
+                </Text>
+              </View>
+            </View>
 
-        <View style={styles.detailsContainer}>
-          <View style={styles.detailsView}>
-            <Text style={styles.detailsName}>Nav</Text>
-            <Text style={styles.detailsPercentage}>
-              {data.nav.toFixed(2)} (
-              {data.navChange >= 0 ? (
-                <Text style={{ color: "green" }}>
-                  {data.navChange.toFixed(2)}
+            <View style={styles.detailsContainer}>
+              <View style={styles.detailsView}>
+                <Text style={styles.detailsName}>Nav</Text>
+                <Text style={styles.detailsPercentage}>
+                  {data.nav.toFixed(2)} (
+                  {data.navChange >= 0 ? (
+                    <Text style={{ color: "green" }}>
+                      {data.navChange.toFixed(2)}
+                    </Text>
+                  ) : (
+                    <Text style={{ color: "red" }}>
+                      {data.navChange.toFixed(2)}
+                    </Text>
+                  )}
+                  )
                 </Text>
-              ) : (
-                <Text style={{ color: "red" }}>
-                  {data.navChange.toFixed(2)}
+              </View>
+              <View style={styles.detailsView}>
+                <Text style={styles.detailsName}>Scheme Asset Size</Text>
+                <Text style={styles.detailsPercentage}>
+                  ₹{data.schemeSize.toFixed(2)}
                 </Text>
-              )}
-              )
-            </Text>
-          </View>
-          <View style={styles.detailsView}>
-            <Text style={styles.detailsName}>Scheme Asset Size</Text>
-            <Text style={styles.detailsPercentage}>
-              ₹{data.schemeSize.toFixed(2)}
-            </Text>
-          </View>
-          <View style={styles.detailsView}>
-            <Text style={styles.detailsName}>Expense Ratio</Text>
-            <Text style={styles.detailsPercentage}>{data.expenseRatio}%</Text>
-          </View>
-          <View style={styles.detailsView}>
-            <Text style={styles.detailsName}>Minimum Purchase Amount</Text>
-            <Text style={styles.detailsPercentage}>{data.minPurchase}</Text>
-          </View>
-          <View style={styles.detailsView}>
-            <Text style={styles.detailsName}>Minimum SIP Amount</Text>
-            <Text style={styles.detailsPercentage}>{data.minSIPAmount}</Text>
-          </View>
-          <View style={styles.detailsView}>
-            <Text style={styles.detailsName}>Morning Star Data</Text>
-            <TouchableOpacity onPress={() => handleLinkPress(data.msurl)}>
-              <Text style={styles.detailsPercentage}>Click here</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.detailsView}>
-            <Text style={styles.detailsName}>Fundhouse</Text>
-            <TouchableOpacity
-              onPress={() => handleLinkPress(data.fundHouse.website)}
-            >
-              <Text style={styles.detailsPercentage}>
-                {data.fundHouse.name}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {/* <View style={styles.detailsView}>
+              </View>
+              <View style={styles.detailsView}>
+                <Text style={styles.detailsName}>Expense Ratio</Text>
+                <Text style={styles.detailsPercentage}>
+                  {data.expenseRatio}%
+                </Text>
+              </View>
+              <View style={styles.detailsView}>
+                <Text style={styles.detailsName}>Minimum Purchase Amount</Text>
+                <Text style={styles.detailsPercentage}>{data.minPurchase}</Text>
+              </View>
+              <View style={styles.detailsView}>
+                <Text style={styles.detailsName}>Minimum SIP Amount</Text>
+                <Text style={styles.detailsPercentage}>
+                  {data.minSIPAmount}
+                </Text>
+              </View>
+              <View style={styles.detailsView}>
+                <Text style={styles.detailsName}>Morning Star Data</Text>
+                <TouchableOpacity onPress={() => handleLinkPress(data.msurl)}>
+                  <Text style={styles.detailsPercentage}>Click here</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.detailsView}>
+                <Text style={styles.detailsName}>Fundhouse</Text>
+                <TouchableOpacity
+                  onPress={() => handleLinkPress(data.fundHouse.website)}
+                >
+                  <Text style={styles.detailsPercentage}>
+                    {data.fundHouse.name}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              {/* <View style={styles.detailsView}>
             <Text style={styles.detailsName}>Exit Load </Text>
             <Text style={styles.detailsPercentage}>
               Exit Load of 1 year if redeemed within 1 year
             </Text>
           </View> */}
-          <View style={styles.detailsView}>
-            <Text style={styles.detailsName}>Scheme Benchmark </Text>
-            <Text style={styles.detailsPercentage}>{data.benchMark}</Text>
-          </View>
-        </View>
-        {/* <Text style={styles.fundManagerHeader}>Fund Managers</Text> */}
-        {/* <View style={styles.cart}>
+              <View style={styles.detailsView}>
+                <Text style={styles.detailsName}>Scheme Benchmark </Text>
+                <Text style={styles.detailsPercentage}>{data.benchMark}</Text>
+              </View>
+            </View>
+            {/* <Text style={styles.fundManagerHeader}>Fund Managers</Text> */}
+            {/* <View style={styles.cart}>
           <Card style={styles.individualCarts}>
             <Avatar.Image
               size={width * 0.3}
@@ -175,7 +182,13 @@ export default Overview = () => {
             </Card.Content>
           </Card>
         </View> */}
-      </ScrollView>
+          </ScrollView>
+        </>
+      ) : (
+        <>
+          <Loader />
+        </>
+      )}
     </View>
   );
 };

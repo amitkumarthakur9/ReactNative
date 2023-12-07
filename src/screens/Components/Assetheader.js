@@ -7,6 +7,7 @@ import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { Foundation } from "@expo/vector-icons";
 import Formatfundname from "../Components/Formatfundname";
+import Loader from "../Components/Loader";
 
 export default Assetheader = (props) => {
   const Data = props.mfData;
@@ -34,55 +35,65 @@ export default Assetheader = (props) => {
       source={require("../../../assets/icons/header.png")}
       resizeMode="stretch"
     >
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <Ionicons
-            name="arrow-back"
-            size={width * 0.08}
-            color="white"
-            onPress={() => navigation.goBack()}
-          />
-          <Text style={styles.header}>{Formatfundname(Data.name)}</Text>
-          <View style={styles.flexContainer}>
-            <Text style={styles.mfTypeButtons}>{Data.schemeType}</Text>
-            <Text style={styles.mfTypeButtons}>{Data.type}</Text>
+      {Object.keys(Data).length > 0 ? (
+        <>
+          <View style={styles.container}>
+            <View style={styles.headerContainer}>
+              <Ionicons
+                name="arrow-back"
+                size={width * 0.08}
+                color="white"
+                onPress={() => navigation.goBack()}
+              />
+              <Text style={styles.header}>{Formatfundname(Data.name)}</Text>
+              <View style={styles.flexContainer}>
+                <Text style={styles.mfTypeButtons}>{Data.schemeType}</Text>
+                <Text style={styles.mfTypeButtons}>{Data.type}</Text>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                {renderStars(Data.rating)}
+              </View>
+              <View
+                style={[styles.flexContainer, { marginBottom: height * 0.02 }]}
+              >
+                <View style={styles.view}>
+                  <Text style={styles.duration}>1 yr</Text>
+                  <Text style={styles.percentage}>
+                    {Data.oneYearReturn
+                      ? Data.oneYearReturn.toFixed(2) + "%"
+                      : "N/A"}
+                  </Text>
+                </View>
+                <View style={styles.view}>
+                  <Text style={styles.duration}>3 yr</Text>
+                  <Text style={styles.percentage}>
+                    {Data.threeYearReturns
+                      ? Data.threeYearReturns.toFixed(2) + "%"
+                      : "N/A"}
+                  </Text>
+                </View>
+                <View style={styles.view}>
+                  <Text style={styles.duration}>5 yr</Text>
+                  <Text style={styles.percentage}>
+                    {Data.fiveYearReturns
+                      ? Data.fiveYearReturns.toFixed(2) + "%"
+                      : "N/A"}
+                  </Text>
+                </View>
+                <View style={[styles.view, { borderRightWidth: 0 }]}>
+                  <Text style={styles.duration}>Risk </Text>
+                  <Text style={styles.percentage}>{Data.schemeRisk}</Text>
+                </View>
+              </View>
+              <StatusBar hidden={false} />
+            </View>
           </View>
-          <View style={{ flexDirection: "row" }}>
-            {renderStars(Data.rating)}
-          </View>
-          <View style={[styles.flexContainer, { marginBottom: height * 0.02 }]}>
-            <View style={styles.view}>
-              <Text style={styles.duration}>1 yr</Text>
-              <Text style={styles.percentage}>
-                {Data.oneYearReturn
-                  ? Data.oneYearReturn.toFixed(2) + "%"
-                  : "N/A"}
-              </Text>
-            </View>
-            <View style={styles.view}>
-              <Text style={styles.duration}>3 yr</Text>
-              <Text style={styles.percentage}>
-                {Data.threeYearReturns
-                  ? Data.threeYearReturns.toFixed(2) + "%"
-                  : "N/A"}
-              </Text>
-            </View>
-            <View style={styles.view}>
-              <Text style={styles.duration}>5 yr</Text>
-              <Text style={styles.percentage}>
-                {Data.fiveYearReturns
-                  ? Data.fiveYearReturns.toFixed(2) + "%"
-                  : "N/A"}
-              </Text>
-            </View>
-            <View style={[styles.view, { borderRightWidth: 0 }]}>
-              <Text style={styles.duration}>Risk </Text>
-              <Text style={styles.percentage}>{Data.schemeRisk}</Text>
-            </View>
-          </View>
-          <StatusBar hidden={false} />
-        </View>
-      </View>
+        </>
+      ) : (
+        <>
+          <Loader />
+        </>
+      )}
     </ImageBackground>
   );
 };

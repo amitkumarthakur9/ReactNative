@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 const Tab = createMaterialTopTabNavigator();
 
 export default Content = (props) => {
-  const { currentPage } = props;
+  const { currentPage, objKey } = props;
 
   return (
     <View style={styles.tabContainer}>
@@ -30,7 +30,9 @@ export default Content = (props) => {
         <Tab.Screen
           name="Holdings"
           initialParams={{ currentPage: currentPage }}
-          children={() => <Holdings currentPage={currentPage} />}
+          children={() => (
+            <Holdings currentPage={currentPage} objKey={objKey} />
+          )}
         />
         <Tab.Screen name="Reports" component={Reports} />
       </Tab.Navigator>

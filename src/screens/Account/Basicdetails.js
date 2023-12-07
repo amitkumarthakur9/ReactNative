@@ -29,18 +29,26 @@ const Basicdetails = ({ data }) => {
   };
   const [loader, setLoader] = useState();
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  //   const pickImage = async () => {
+  //     let result = await ImagePicker.launchImageLibraryAsync({
+  //       mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //       allowsEditing: true,
+  //       aspect: [4, 3],
+  //       quality: 1,
+  //     });
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+  //     if (!result.canceled) {
+  //       setImage(result.assets[0].uri);
+  //     }
+  //   };
+
+  useEffect(() => {
+    if (accountData.hasOwnProperty("profilepic")) {
+      setImage(
+        "https://data.fundexpert.in/profilepic/" + accountData.profilepic
+      );
     }
-  };
+  }, [accountData]);
 
   const handleDatePress = () => {
     setShowDatePicker(true);
@@ -75,22 +83,33 @@ const Basicdetails = ({ data }) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {/* {console.log("basic details data", JSON.stringify(accountData, null, 1))} */}
+      {console.log("basic details data", JSON.stringify(accountData, null, 1))}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Profile
       </Text>
 
       <View style={styles.contentContainer}>
-        <TouchableOpacity style={styles.imageContainer} onPress={pickImage}>
-          <Avatar.Image
-            size={width * 0.36}
-            source={
-              image
-                ? { uri: image }
-                : require("../../../assets/upload/Avatar.png")
-            }
-            style={{ backgroundColor: "white" }}
-          />
+        <TouchableOpacity
+          style={styles.imageContainer}
+          //   onPress={pickImage}
+        >
+          {image ? (
+            <>
+              <Avatar.Image
+                size={width * 0.36}
+                source={
+                  image
+                    ? { uri: image }
+                    : require("../../../assets/upload/Avatar.png")
+                }
+                style={{ backgroundColor: "white" }}
+              />
+            </>
+          ) : (
+            <>
+              <Loader />
+            </>
+          )}
         </TouchableOpacity>
         <Text style={styles.header}>Basic Details</Text>
         <TextInput

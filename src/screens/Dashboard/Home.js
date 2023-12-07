@@ -18,6 +18,7 @@ import usePortfolioData from "../Portfolio/Useportfoliodata";
 import Loader from "../Components/Loader";
 import formatNumberWithCommas from "../Components/Inrconverter";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Userlogin } from "../../api/services/endpoints/userEndpoints";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
@@ -224,7 +225,7 @@ const Home = ({ navigation }) => {
                 { marginTop: height * 0.03, marginBottom: height * 0.03 },
               ]}
             >
-              <Text style={styles.leftContent}>Trending NFO’s </Text>
+              <Text style={styles.leftContent}>Trending NFOs </Text>
               <Text style={styles.rightContent}>View all</Text>
             </View>
             <ScrollView horizontal>

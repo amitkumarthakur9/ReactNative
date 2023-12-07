@@ -114,10 +114,15 @@ export const SchemesrenderItem = (props) => {
 };
 
 export const NforenderItem = (props) => {
+  const navigation = useNavigation();
   return (
     <>
       {props.nfo.map((item, key) => (
-        <View style={styles.flexRow} key={key}>
+        <TouchableOpacity
+          style={styles.flexRow}
+          key={key}
+          onPress={() => handleInvest(item.id, navigation)}
+        >
           <View style={styles.card}>
             <View style={[styles.flexRow]}>
               <View style={styles.trendImage}>
@@ -161,7 +166,7 @@ export const NforenderItem = (props) => {
               <Foundation name="star" size={width * 0.04} style={styles.star} /> */}
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       ))}
     </>
   );
@@ -219,7 +224,7 @@ const Explore = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.NfoContainer}>
             <View style={styles.flexRow}>
-              <Text style={styles.leftContent}>Trending NFO’s</Text>
+              <Text style={styles.leftContent}>Trending NFOs</Text>
               <Text style={styles.rightContent}>View all</Text>
             </View>
           </View>

@@ -9,7 +9,7 @@ import { AssetPreview } from "../../api/services/endpoints/assetEndpoints";
 import Loader from "../Components/Loader";
 const Assetpreview = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
-  const [mfData, setMfData] = useState("amit");
+  const [mfData, setMfData] = useState({});
   const route = useRoute();
   const { mfId } = route.params;
 
@@ -22,6 +22,9 @@ const Assetpreview = ({ navigation }) => {
       .catch((error) => {
         console.error("failed:", error);
       });
+    return () => {
+      setMfData({});
+    };
   }, [mfId]);
   return (
     <View style={styles.mainContainer}>

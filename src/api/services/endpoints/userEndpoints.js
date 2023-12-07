@@ -15,7 +15,7 @@ export const Banksdata = () => {
 
 export const Userlogin = () => {
   return apiClient.post(
-    "/app/user?action=login&email=1295972&password=test@1234&addedBy=237106"
+    "/app/user?action=login&email=513356&password=Amit123@&addedBy=186100"
   );
 };
 

@@ -21,6 +21,23 @@ const Portfolio = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const { completePortfolioData, allPortfolioData } = usePortfolioData();
   const totalDots = Object.entries(completePortfolioData).length;
+  const [objKey, setObjKey] = useState("");
+
+  const handleScroll = (event) => {
+    const newPage = Math.floor(
+      event.nativeEvent.contentOffset.x / (width * 0.9)
+    );
+    setCurrentPage(newPage);
+
+    // Get the keys from completePortfolioData
+    const keys = Object.keys(completePortfolioData);
+
+    // Ensure that the newPage is within the bounds of the keys array
+    if (keys.length > 0 && newPage >= 0 && newPage < keys.length) {
+      // Update objKey with the key corresponding to the current page
+      setObjKey(keys[newPage]);
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -31,16 +48,35 @@ const Portfolio = () => {
         showBackArrow={false}
       />
       <View style={styles.cart}>
+        {/* {console.log("keys", Object.keys(completePortfolioData))} */}
         <ScrollView
           horizontal
-          onMomentumScrollEnd={(event) => {
-            const newPage = Math.floor(
-              event.nativeEvent.contentOffset.x / (width * 0.9)
-            );
-            setCurrentPage(newPage);
-          }}
+          //   onMomentumScrollEnd={(event) => {
+          //     const newPage = Math.floor(
+          //       event.nativeEvent.contentOffset.x / (width * 0.9)
+          //     );
+          //     setCurrentPage(newPage);
+          //   }}
+          onMomentumScrollEnd={handleScroll}
         >
-          {allPortfolioData != "allPortfolioData" ? (
+          {allPortfolioData == "showLoader" ||
+          allPortfolioData == "showZeroValue" ? (
+            <>
+              <View style={styles.individualCarts}>
+                <ImageBackground
+                  source={require("../../../assets/portfolio/rec1.png")}
+                  style={styles.rec1}
+                  resizeMode="stretch"
+                >
+                  <Image
+                    source={require("../../../assets/Goal/rectengal2.png")}
+                    style={styles.rectengal2}
+                  />
+                  <Loader />
+                </ImageBackground>
+              </View>
+            </>
+          ) : (
             <>
               {Object.entries(completePortfolioData).map(([key, obj]) => (
                 <View style={styles.individualCarts} key={key}>
@@ -117,6 +153,9 @@ const Portfolio = () => {
                 </View>
               ))}
             </>
+          )}
+          {/* {allPortfolioData != "allPortfolioData" ? (
+           
           ) : (
             <View style={styles.individualCarts}>
               <ImageBackground
@@ -131,11 +170,11 @@ const Portfolio = () => {
                 <Loader />
               </ImageBackground>
             </View>
-          )}
+          )} */}
         </ScrollView>
         {renderPaginationDots(currentPage, totalDots)}
       </View>
-      <Content currentPage={currentPage} />
+      <Content currentPage={currentPage} objKey={objKey} />
     </ScrollView>
   );
 };

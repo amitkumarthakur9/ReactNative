@@ -24,13 +24,13 @@ import { Entypo } from "@expo/vector-icons";
 
 const Holdings = (props) => {
   const { holdingData } = usePortfolioData();
-  const currentPage = props.currentPage;
+  const { currentPage, objKey } = props;
   const filteredHoldingData =
-    currentPage === 1
+    objKey == "internal"
       ? Object.entries(holdingData).filter(
           ([key, obj]) => obj.units > 0 && obj.external === false
         )
-      : currentPage === 2
+      : objKey == "external"
       ? Object.entries(holdingData).filter(
           ([key, obj]) => obj.units > 0 && obj.external === true
         )

@@ -20,10 +20,17 @@ const Form = ({ data }) => {
     const fetchData = async () => {
       //   const login = await Userlogin();
       //   console.log("login details", login.data);
-      const result = await Fetchuserdetails();
-      setAccountData(result.data.user || []);
-      setNominee(result.data.user.nominee || []);
-      setFatca(result.data.user.fatcaDetails[0] || []);
+      Fetchuserdetails()
+        .then((response) => {
+          console.log("fetch user details data", response.data);
+          setAccountData(response.data.user || []);
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+      //   setAccountData(result.data.user || []);
+      //   setNominee(result.data.user.nominee || []);
+      //   setFatca(result.data.user.fatcaDetails[0] || []);
     };
 
     fetchData();
