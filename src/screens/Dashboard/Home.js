@@ -32,6 +32,7 @@ const Home = ({ navigation }) => {
       navigation.push("Signup");
     }
   };
+  Userlogin();
   return (
     <View style={styles.container}>
       <Backgroundimage Headerheight={0.29} />
