@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -19,30 +19,58 @@ import Loader from "../Components/Loader";
 import formatNumberWithCommas from "../Components/Inrconverter";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Userlogin } from "../../api/services/endpoints/userEndpoints";
+import { UserDetails } from "../Components/Data";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
   const { allPortfolioData } = usePortfolioData();
   const { basketData } = Thematicbasket();
   const { session } = Session();
-  const { logout } = SessionEnd();
+  const userData = UserDetails();
+  const [image, setImage] = useState(null);
+
+  console.log("user details amit", userData);
 
   const handleLogout = () => {
     if (session === false && logout) {
       navigation.push("Signup");
     }
   };
-  Userlogin();
+
+  useEffect(() => {
+    if (
+      userData !== null &&
+      typeof userData === "object" &&
+      userData.hasOwnProperty("profilepic")
+    ) {
+      setImage("https://data.fundexpert.in/profilepic/" + userData.profilepic);
+    }
+  }, [userData]);
+
+  //   Userlogin();
   return (
     <View style={styles.container}>
       <Backgroundimage Headerheight={0.29} />
       <View style={styles.contentContainer}>
         <View style={styles.flexRow}>
+          {/* <Avatar.Image
+					  size={width * 0.1}
+					  {image?uri:():source={require("../../../assets/upload/Avatar.png")}}
+            
+          />
+				   */}
           <Avatar.Image
             size={width * 0.1}
-            source={require("../../../assets/upload/Avatar.png")}
+            source={
+              image
+                ? { uri: image }
+                : require("../../../assets/upload/Avatar.png")
+            }
+            style={{ backgroundColor: "white" }}
           />
-          <Text style={styles.name}>Hello Sumesh !</Text>
+          <Text style={styles.name}>
+            Hello {userData ? userData.firstName : "Guest"} !
+          </Text>
           <View
             style={[
               styles.flexRow,
