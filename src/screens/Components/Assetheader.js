@@ -60,7 +60,7 @@ export default Assetheader = (props) => {
                   <Text style={styles.duration}>1 yr</Text>
                   <Text style={styles.percentage}>
                     {Data.oneYearReturn
-                      ? Data.oneYearReturn.toFixed(2) + "%"
+                      ? parseFloat(Data.oneYearReturn).toFixed(2) + "%"
                       : "N/A"}
                   </Text>
                 </View>
@@ -68,7 +68,7 @@ export default Assetheader = (props) => {
                   <Text style={styles.duration}>3 yr</Text>
                   <Text style={styles.percentage}>
                     {Data.threeYearReturns
-                      ? Data.threeYearReturns.toFixed(2) + "%"
+                      ? parseFloat(Data.threeYearReturns).toFixed(2) + "%"
                       : "N/A"}
                   </Text>
                 </View>
@@ -76,7 +76,7 @@ export default Assetheader = (props) => {
                   <Text style={styles.duration}>5 yr</Text>
                   <Text style={styles.percentage}>
                     {Data.fiveYearReturns
-                      ? Data.fiveYearReturns.toFixed(2) + "%"
+                      ? parseFloat(Data.fiveYearReturns).toFixed(2) + "%"
                       : "N/A"}
                   </Text>
                 </View>

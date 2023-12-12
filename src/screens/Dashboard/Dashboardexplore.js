@@ -95,11 +95,11 @@ const Dashboardexplore = ({ navigation }) => {
               </Text>
               <Text style={styles.Cagrpercentage}>
                 {item.fiveYearReturns
-                  ? item.fiveYearReturns.toFixed(2) + "%"
+                  ? parseFloat(item.fiveYearReturns).toFixed(2) + "%"
                   : item.threeYearReturns
-                  ? item.threeYearReturns.toFixed(2) + "%"
+                  ? parseFloat(item.threeYearReturns).toFixed(2) + "%"
                   : item.oneYearReturns
-                  ? item.oneYearReturns.toFixed(2) + "%"
+                  ? parseFloat(item.oneYearReturns).toFixed(2) + "%"
                   : "N/A"}
               </Text>
             </View>
@@ -117,11 +117,11 @@ const Dashboardexplore = ({ navigation }) => {
               </Text>
               <Text style={styles.benchmarkPercentage}>
                 {item.fiveYearBenchMarkReturns
-                  ? item.fiveYearBenchMarkReturns.toFixed(2)
+                  ? parseFloat(item.fiveYearBenchMarkReturns).toFixed(2)
                   : item.threeYearBenchMarkReturns
-                  ? item.threeYearBenchMarkReturns.toFixed(2)
+                  ? parseFloat(item.threeYearBenchMarkReturns).toFixed(2)
                   : item.oneYearBenchMarkReturns
-                  ? item.oneYearBenchMarkReturns.toFixed(2)
+                  ? parseFloat(item.oneYearBenchMarkReturns).toFixed(2)
                   : "N/A"}
               </Text>
             </View>
@@ -170,11 +170,11 @@ const Dashboardexplore = ({ navigation }) => {
             <View>
               <Text style={styles.percentage}>
                 {item.fiveYearReturns
-                  ? item.fiveYearReturns.toFixed(2) + "%"
+                  ? parseFloat(item.fiveYearReturns).toFixed(2) + "%"
                   : item.threeYearReturns
-                  ? item.threeYearReturns.toFixed(2) + "%"
+                  ? parseFloat(item.threeYearReturns).toFixed(2) + "%"
                   : item.oneYearReturns
-                  ? item.oneYearReturns.toFixed(2) + "%"
+                  ? parseFloat(item.oneYearReturns).toFixed(2) + "%"
                   : "N/A"}
               </Text>
               <Text style={styles.desc}>

@@ -193,7 +193,11 @@ const Home = ({ navigation }) => {
                           ]}
                         >
                           {" "}
-                          {allPortfolioData.absRet.toFixed(2)}
+                          {allPortfolioData.absRet
+                            ? `${parseFloat(allPortfolioData.absRet).toFixed(
+                                2
+                              )}`
+                            : "N/A"}
                           {"%"}
                         </Text>
                         <TouchableOpacity style={styles.investNow}>

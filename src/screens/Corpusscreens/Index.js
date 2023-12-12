@@ -43,9 +43,9 @@ export default Uploadscreens = () => {
     }
 
     return {
-      investment: principal.toFixed(),
-      wealthGain: compoundInterest.toFixed(),
-      totalWealth: totalWealth.toFixed(),
+      investment: parseFloat(principal).toFixed(),
+      wealthGain: parseFloat(compoundInterest).toFixed(),
+      totalWealth: parseFloat(totalWealth).toFixed(),
     };
   };
 

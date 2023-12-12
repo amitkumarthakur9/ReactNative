@@ -80,14 +80,14 @@ export default Overview = () => {
               <View style={styles.detailsView}>
                 <Text style={styles.detailsName}>Nav</Text>
                 <Text style={styles.detailsPercentage}>
-                  {data.nav.toFixed(2)} (
+                  {parseFloat(data.nav).toFixed(2)} (
                   {data.navChange >= 0 ? (
                     <Text style={{ color: "green" }}>
-                      {data.navChange.toFixed(2)}
+                      {parseFloat(data.navChange).toFixed(2)}
                     </Text>
                   ) : (
                     <Text style={{ color: "red" }}>
-                      {data.navChange.toFixed(2)}
+                      {parseFloat(data.navChange).toFixed(2)}
                     </Text>
                   )}
                   )
@@ -96,7 +96,7 @@ export default Overview = () => {
               <View style={styles.detailsView}>
                 <Text style={styles.detailsName}>Scheme Asset Size</Text>
                 <Text style={styles.detailsPercentage}>
-                  ₹{data.schemeSize.toFixed(2)}
+                  ₹{parseFloat(data.schemeSize).toFixed(2)}
                 </Text>
               </View>
               <View style={styles.detailsView}>

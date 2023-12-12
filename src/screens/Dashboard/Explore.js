@@ -68,7 +68,7 @@ export const SchemesrenderItem = (props) => {
                 <Text style={styles.cagr}>1Y Return</Text>
                 <Text style={styles.Cagrpercentage}>
                   {item.oneYearReturns
-                    ? item.oneYearReturns.toFixed(2) + "%"
+                    ? parseFloat(item.oneYearReturns).toFixed(2) + "%"
                     : "N/A"}
                 </Text>
               </View>
@@ -76,7 +76,7 @@ export const SchemesrenderItem = (props) => {
                 <Text style={styles.cagr}>3Y Return</Text>
                 <Text style={styles.Cagrpercentage}>
                   {item.threeYearReturns
-                    ? item.threeYearReturns.toFixed(2) + "%"
+                    ? parseFloat(item.threeYearReturns).toFixed(2) + "%"
                     : "N/A"}
                 </Text>
               </View>
@@ -84,7 +84,7 @@ export const SchemesrenderItem = (props) => {
                 <Text style={styles.cagr}>3Y Return</Text>
                 <Text style={styles.Cagrpercentage}>
                   {item.fiveYearReturns
-                    ? item.fiveYearReturns.toFixed(2) + "%"
+                    ? parseFloat(item.fiveYearReturns).toFixed(2) + "%"
                     : "N/A"}
                 </Text>
               </View>

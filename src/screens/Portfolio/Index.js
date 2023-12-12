@@ -120,7 +120,7 @@ const Portfolio = () => {
                             )}
                           </Text>
                           <Text style={styles.descValue}>
-                            {obj.all.all.all.xirr.toFixed(2)}
+                            {parseFloat(obj.all.all.all.xirr).toFixed(2)}
                             {"%"}
                           </Text>
                         </View>
@@ -135,7 +135,7 @@ const Portfolio = () => {
                           <View style={styles.flexRow}>
                             <Text style={styles.descValue}>
                               {" "}
-                              {obj.all.all.all.absRet.toFixed(2)}
+                              {parseFloat(obj.all.all.all.absRet).toFixed(2)}
                               {"%"}
                             </Text>
                             <Text style={styles.descValue}>
@@ -143,7 +143,7 @@ const Portfolio = () => {
                               {Math.round(obj.all.all.all.oneDayChange)}
                             </Text>
                             <Text style={styles.descValue}>
-                              {obj.all.all.all.rating.toFixed(1)}
+                              {parseFloat(obj.all.all.all.rating).toFixed(1)}
                             </Text>
                           </View>
                         </View>

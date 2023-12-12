@@ -47,9 +47,11 @@ const Table = (props) => {
                 : "N/A"}
             </Text>
             <Text style={styles.tableCell}>{currentValue.amount}</Text>
-            <Text style={styles.tableCell}>{currentValue.nav.toFixed(2)}</Text>
             <Text style={styles.tableCell}>
-              {currentValue.units.toFixed(2)}
+              {parseFloat(currentValue.nav).toFixed(2)}
+            </Text>
+            <Text style={styles.tableCell}>
+              {parseFloat(currentValue.units).toFixed(2)}
             </Text>
             <Text style={styles.tableCell}>{currentValue.executionDate}</Text>
           </View>
@@ -221,7 +223,7 @@ const Holdings = (props) => {
                           )}
                         </Text>
                         <Text style={styles.descValue}>
-                          {obj.xirr.toFixed(2)}
+                          {parseFloat(obj.xirr).toFixed(2)}
                           {"%"}
                         </Text>
                       </View>
