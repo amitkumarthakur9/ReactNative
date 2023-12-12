@@ -7,37 +7,42 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  Alert,
 } from "react-native";
 import Backgroundimage from "../Components/Backgroundimage";
 import { height, width } from "../../Dimension";
 import { Ionicons, EvilIcons } from "@expo/vector-icons";
 import { Avatar, Card, IconButton } from "react-native-paper";
 import { NforenderItem, SchemesrenderItem } from "./Explore";
-import DashboardData, { Thematicbasket, Session, SessionEnd } from "./Data";
+import DashboardData, { Thematicbasket } from "./Data";
 import usePortfolioData from "../Portfolio/Useportfoliodata";
 import Loader from "../Components/Loader";
 import formatNumberWithCommas from "../Components/Inrconverter";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Userlogin } from "../../api/services/endpoints/userEndpoints";
-import { UserDetails } from "../Components/Data";
+import { UserDetails, Session, SessionEnd } from "../Components/Data";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
   const { allPortfolioData } = usePortfolioData();
   const { basketData } = Thematicbasket();
-  const { session } = Session();
   const userData = UserDetails();
+  const session = Session();
   const [image, setImage] = useState(null);
 
   console.log("user details amit", userData);
+  console.log("session", session);
 
-  const handleLogout = () => {
-    if (session === false && logout) {
-      navigation.push("Signup");
-    }
+  const handleLogout = async () => {
+    SessionEnd();
+    navigation.push("Signup");
   };
 
   useEffect(() => {
+    if (session === true) {
+      Alert.alert("Session has been expired . please login again");
+      navigation.push("Signup");
+    }
     if (
       userData !== null &&
       typeof userData === "object" &&
@@ -53,12 +58,6 @@ const Home = ({ navigation }) => {
       <Backgroundimage Headerheight={0.29} />
       <View style={styles.contentContainer}>
         <View style={styles.flexRow}>
-          {/* <Avatar.Image
-					  size={width * 0.1}
-					  {image?uri:():source={require("../../../assets/upload/Avatar.png")}}
-            
-          />
-				   */}
           <Avatar.Image
             size={width * 0.1}
             source={

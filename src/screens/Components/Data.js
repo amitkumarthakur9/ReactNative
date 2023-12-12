@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Fetchuserdetails,
   Checksession,
+  Logout,
 } from "../../api/services/endpoints/userEndpoints";
 
 export const UserDetails = () => {
@@ -20,7 +21,7 @@ export const UserDetails = () => {
 };
 
 export const Session = () => {
-  const [session, setSession] = useState(true);
+  const [session, setSession] = useState(null);
   useEffect(() => {
     Checksession()
       .then((response) => {
@@ -34,5 +35,9 @@ export const Session = () => {
     };
   }, []);
 
-  return { session };
+  return session;
+};
+
+export const SessionEnd = () => {
+  Logout();
 };
