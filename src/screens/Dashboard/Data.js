@@ -8,6 +8,7 @@ import {
   Checksession,
   Logout,
 } from "../../api/services/endpoints/userEndpoints";
+import { Cart } from "../../api/services/endpoints/buyEndpoints";
 
 export const Thematicbasket = () => {
   const [basketData, setBasketData] = useState([]);
@@ -22,42 +23,6 @@ export const Thematicbasket = () => {
   }, []);
 
   return { basketData };
-};
-
-export const Session = () => {
-  const [session, setSession] = useState(true);
-  useEffect(() => {
-    Checksession()
-      .then((response) => {
-        setSession(response.data.success);
-      })
-      .catch((error) => {
-        console.warn("session:", error);
-      });
-    return () => {
-      setSession(false);
-    };
-  }, []);
-
-  return { session };
-};
-
-export const SessionEnd = () => {
-  const [logout, setLogout] = useState(false);
-  useEffect(() => {
-    Logout()
-      .then((response) => {
-        setLogout(response.data.success);
-      })
-      .catch((error) => {
-        console.warn(error);
-      });
-    return () => {
-      setLogout(false);
-    };
-  }, []);
-
-  return { logout };
 };
 
 const DashboardData = () => {
@@ -83,6 +48,17 @@ const DashboardData = () => {
   }, []);
 
   return { trendingschemes, trendingNfo };
+};
+
+export const addToCart = async (data) => {
+  try {
+    const response = await Cart(data);
+    console.log("add to cart", response.data);
+    return response.data.success;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
 export default DashboardData;

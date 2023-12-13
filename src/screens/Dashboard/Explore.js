@@ -23,9 +23,10 @@ import Backgroundimage from "../Components/Backgroundimage";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import Loader from "../Components/Loader";
 import RenderStars from "../Components/Star";
-import DashboardData from "./Data";
+import DashboardData, { addToCart } from "./Data";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import queryString from "query-string";
 
 const handleInvest = (mfId, navigation) => {
   navigation.navigate("Assetpreview", { mfId });
@@ -33,6 +34,23 @@ const handleInvest = (mfId, navigation) => {
 
 export const SchemesrenderItem = (props) => {
   const navigation = useNavigation();
+
+  const addToCarts = (mutualfundId) => {
+    const data = {
+      monthly: 0,
+      action: "addToCartMfuMultiple",
+      "basket[0][mutualFundId]": mutualfundId,
+      "basket[0][amount]": 1000,
+      "basket[0][frequency]": "",
+      "basket[0][startDate]": "Invalid date",
+      "basket[0][noOfMonths]": 0,
+      "basket[0][folioNumberString]": "",
+      folioNumberString: "",
+    };
+
+    addToCart(data);
+  };
+
   return (
     <>
       {props.schemes.map((item, key) => (
@@ -93,7 +111,10 @@ export const SchemesrenderItem = (props) => {
               {RenderStars(item.rating)}
             </View>
             <View style={styles.flexRow}>
-              <TouchableOpacity style={styles.Button}>
+              <TouchableOpacity
+                style={styles.Button}
+                onPress={() => addToCarts(item.id)}
+              >
                 <Text style={styles.AddToCart}>Add To Cart</Text>
               </TouchableOpacity>
               <TouchableOpacity

@@ -51,8 +51,6 @@ const Home = ({ navigation }) => {
       setImage("https://data.fundexpert.in/profilepic/" + userData.profilepic);
     }
   }, [userData]);
-
-  //   Userlogin();
   return (
     <View style={styles.container}>
       <Backgroundimage Headerheight={0.29} />
