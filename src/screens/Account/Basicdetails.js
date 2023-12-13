@@ -93,23 +93,15 @@ const Basicdetails = ({ data }) => {
           style={styles.imageContainer}
           //   onPress={pickImage}
         >
-          {image ? (
-            <>
-              <Avatar.Image
-                size={width * 0.36}
-                source={
-                  image
-                    ? { uri: image }
-                    : require("../../../assets/upload/Avatar.png")
-                }
-                style={{ backgroundColor: "white" }}
-              />
-            </>
-          ) : (
-            <>
-              <Loader />
-            </>
-          )}
+          <Avatar.Image
+            size={width * 0.36}
+            source={
+              image
+                ? { uri: image }
+                : require("../../../assets/upload/Avatar.png")
+            }
+            style={{ backgroundColor: "white" }}
+          />
         </TouchableOpacity>
         <Text style={styles.header}>Basic Details</Text>
         <TextInput
