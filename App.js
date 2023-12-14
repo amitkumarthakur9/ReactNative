@@ -26,43 +26,47 @@ import Test from "./src/Test";
 import Sip from "./src/screens/Startsip/Sip";
 import Onetimesip from "./src/screens/Startsip/Onetimesip";
 import Payment from "./src/screens/Payment/Paymentoptions";
+import { Provider } from "react-redux";
+import { store } from "./src/redux/Store";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Dashboard"
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Getstarted" component={Getstarted} />
-        <Stack.Screen name="Signup" component={Signup} />
-        <Stack.Screen name="swphone" component={Signupwithphone} />
-        <Stack.Screen name="Otp" component={Otp} />
-        <Stack.Screen name="Splash" component={Splash} />
-        <Stack.Screen name="Optionscreen" component={Optionscreen} />
-        <Stack.Screen name="Riskcalculator" component={Riskcalculator} />
-        <Stack.Screen name="Rpscreens" component={Rpscreens} />
-        <Stack.Screen name="Result" component={Result} />
-        <Stack.Screen name="Account" component={Account} />
-        <Stack.Screen name="Assetpreview" component={Assetpreview} />
-        <Stack.Screen name="Navigatescreens" component={Navigatescreens} />
-        <Stack.Screen name="Education" component={Education} />
-        <Stack.Screen name="Upload" component={Upload} />
-        <Stack.Screen name="Corpus" component={Corpus} />
-        <Stack.Screen name="Goalform" component={Goalform} />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
-        <Stack.Screen name="Goal" component={Goal} />
-        <Stack.Screen name="Portfolio" component={Portfolio} />
-        <Stack.Screen name="Searchbox" component={Searchbox} />
-        <Stack.Screen name="Test" component={Test} />
-        <Stack.Screen name="Sip" component={Sip} />
-        <Stack.Screen name="Onetimesip" component={Onetimesip} />
-        <Stack.Screen name="Payment" component={Payment} />
-      </Stack.Navigator>
-      <StatusBar />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Dashboard"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Getstarted" component={Getstarted} />
+          <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen name="swphone" component={Signupwithphone} />
+          <Stack.Screen name="Otp" component={Otp} />
+          <Stack.Screen name="Splash" component={Splash} />
+          <Stack.Screen name="Optionscreen" component={Optionscreen} />
+          <Stack.Screen name="Riskcalculator" component={Riskcalculator} />
+          <Stack.Screen name="Rpscreens" component={Rpscreens} />
+          <Stack.Screen name="Result" component={Result} />
+          <Stack.Screen name="Account" component={Account} />
+          <Stack.Screen name="Assetpreview" component={Assetpreview} />
+          <Stack.Screen name="Navigatescreens" component={Navigatescreens} />
+          <Stack.Screen name="Education" component={Education} />
+          <Stack.Screen name="Upload" component={Upload} />
+          <Stack.Screen name="Corpus" component={Corpus} />
+          <Stack.Screen name="Goalform" component={Goalform} />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Goal" component={Goal} />
+          <Stack.Screen name="Portfolio" component={Portfolio} />
+          <Stack.Screen name="Searchbox" component={Searchbox} />
+          <Stack.Screen name="Test" component={Test} />
+          <Stack.Screen name="Sip" component={Sip} />
+          <Stack.Screen name="Onetimesip" component={Onetimesip} />
+          <Stack.Screen name="Payment" component={Payment} />
+        </Stack.Navigator>
+        <StatusBar />
+      </NavigationContainer>
+    </Provider>
   );
 }

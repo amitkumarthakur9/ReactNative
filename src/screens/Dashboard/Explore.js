@@ -15,6 +15,7 @@ import {
   Card,
   Button,
   Avatar,
+  Badge,
 } from "react-native-paper";
 import { width, height } from "../../Dimension";
 import { Foundation, SimpleLineIcons } from "@expo/vector-icons";
@@ -26,7 +27,8 @@ import RenderStars from "../Components/Star";
 import DashboardData, { addToCart } from "./Data";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import queryString from "query-string";
+import { useSelector, useDispatch } from "react-redux";
+import { incrementToCart } from "../../redux/slices/cart/Index";
 
 const handleInvest = (mfId, navigation) => {
   navigation.navigate("Assetpreview", { mfId });
@@ -34,6 +36,8 @@ const handleInvest = (mfId, navigation) => {
 
 export const SchemesrenderItem = (props) => {
   const navigation = useNavigation();
+
+  const dispatch = useDispatch();
 
   const addToCarts = (mutualfundId) => {
     const data = {
@@ -48,7 +52,11 @@ export const SchemesrenderItem = (props) => {
       folioNumberString: "",
     };
 
-    addToCart(data);
+    addToCart(data).then((response) => {
+      if (response === true) {
+        dispatch(incrementToCart());
+      }
+    });
   };
 
   return (
@@ -195,6 +203,7 @@ export const NforenderItem = (props) => {
 
 const Explore = () => {
   const { trendingschemes, trendingNfo } = DashboardData();
+  const Cartcount = useSelector((state) => state.cart.count);
   const navigation = useNavigation();
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
@@ -209,6 +218,16 @@ const Explore = () => {
           <View style={[styles.flexRow, { flex: 1, alignSelf: "center" }]}>
             <TouchableOpacity style={styles.headerIcon}>
               <Feather name="shopping-cart" size={width * 0.06} color="white" />
+              <Badge
+                style={{
+                  position: "absolute",
+                  top: -height * 0.015,
+                  backgroundColor: "rgba(33, 158, 188, 1)",
+                  fontWeight: "600",
+                }}
+              >
+                {Cartcount}
+              </Badge>
             </TouchableOpacity>
             <TouchableOpacity style={styles.headerIcon}>
               <Ionicons

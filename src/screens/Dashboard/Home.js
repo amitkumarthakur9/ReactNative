@@ -30,6 +30,7 @@ const Home = ({ navigation }) => {
   const session = Session();
   const [image, setImage] = useState(null);
 
+  Userlogin();
   console.log("user details amit", userData);
   console.log("session", session);
 
@@ -50,7 +51,7 @@ const Home = ({ navigation }) => {
     ) {
       setImage("https://data.fundexpert.in/profilepic/" + userData.profilepic);
     }
-  }, [userData]);
+  }, [userData, session]);
   return (
     <View style={styles.container}>
       <Backgroundimage Headerheight={0.29} />
