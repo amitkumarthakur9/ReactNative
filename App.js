@@ -28,6 +28,7 @@ import Onetimesip from "./src/screens/Startsip/Onetimesip";
 import Payment from "./src/screens/Payment/Paymentoptions";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/Store";
+import AddToCart from "./src/screens/Cart/Addtocart";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -64,6 +65,7 @@ export default function App() {
           <Stack.Screen name="Sip" component={Sip} />
           <Stack.Screen name="Onetimesip" component={Onetimesip} />
           <Stack.Screen name="Payment" component={Payment} />
+          <Stack.Screen name="AddToCart" component={AddToCart} />
         </Stack.Navigator>
         <StatusBar />
       </NavigationContainer>

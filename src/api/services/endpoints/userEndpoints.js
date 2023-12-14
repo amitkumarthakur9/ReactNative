@@ -1,11 +1,11 @@
 import apiClient from "../apiClient";
+import queryString from "./queryString";
 
 export const Mfuuserdata = (data) => {
-  const urlEncodedData = Object.keys(data)
-    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&");
-
-  console.log("url data", urlEncodedData);
+  //   const urlEncodedData = Object.keys(data)
+  //     .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+  //     .join("&");
+  const urlEncodedData = queryString(data);
   return apiClient.post("/app/mfuUser?" + urlEncodedData);
 };
 
