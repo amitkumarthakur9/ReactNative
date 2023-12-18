@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
 
   footerButtons: {
     flex: 1,
-    marginTop: height* 0.002,
+    marginTop: height * 0.002,
     alignItems: "center",
     borderRadius: width * 0.03,
     borderWidth: 1,

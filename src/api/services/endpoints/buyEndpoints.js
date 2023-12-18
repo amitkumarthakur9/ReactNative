@@ -21,3 +21,12 @@ export const Removecartdata = (data) => {
   console.log(urlEncodedData);
   return apiClient.post("/app/mutualfund?" + urlEncodedData);
 };
+
+export const Mfubanksdata = () => {
+  return apiClient.get("/app/mfuUser?action=getMfuAdditionalBanks");
+};
+
+export const Orderdata = (data) => {
+  const urlEncodedData = queryString(data);
+  return apiClient.post("/app/mfu/order?" + urlEncodedData);
+};

@@ -39,12 +39,12 @@ export const SchemesrenderItem = (props) => {
 
   const dispatch = useDispatch();
 
-  const addToCarts = (mutualfundId) => {
+  const addToCarts = (mutualfundId, minPurchase) => {
     const data = {
       monthly: 0,
       action: "addToCartMfuMultiple",
       "basket[0][mutualFundId]": mutualfundId,
-      "basket[0][amount]": 1000,
+      "basket[0][amount]": minPurchase,
       "basket[0][frequency]": "",
       "basket[0][startDate]": "Invalid date",
       "basket[0][noOfMonths]": 0,
@@ -121,7 +121,7 @@ export const SchemesrenderItem = (props) => {
             <View style={styles.flexRow}>
               <TouchableOpacity
                 style={styles.Button}
-                onPress={() => addToCarts(item.id)}
+                onPress={() => addToCarts(item.id, item.minPurchase)}
               >
                 <Text style={styles.AddToCart}>Add To Cart</Text>
               </TouchableOpacity>

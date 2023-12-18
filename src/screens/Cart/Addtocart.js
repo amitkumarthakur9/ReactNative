@@ -14,11 +14,21 @@ import { Fetchcart, Removecart } from "./Data";
 import Loader from "../Components/Loader";
 import Formatfundname from "../Components/Formatfundname";
 import { Entypo } from "@expo/vector-icons";
+import Paymentoptions from "../Payment/Paymentoptions";
 
 export const AddToCart = () => {
-  //   const fetchCart = Fetchcart();
   const [fetchCart, setFetchCart] = useState(null);
   const [removed, setRemoved] = useState(null);
+
+  // Initialize orderData with a default value
+  const [orderData, setOrderData] = useState({
+    action: "cartOrder",
+    monthly: 0,
+    paymentMode: "OT",
+    selectBankAccount: null,
+    mandateId: null,
+    paymentFlag: 1,
+  });
 
   useEffect(() => {
     Fetchcart()
@@ -32,8 +42,26 @@ export const AddToCart = () => {
       });
   }, [removed]);
 
+  useEffect(() => {
+    if (fetchCart) {
+      const updatedOrderData = {
+        ...orderData,
+        ...fetchCart.reduce((accumulator, item, index) => {
+          accumulator[`basket[${index}][mutualFundId]`] = item.mutualFund.id;
+          accumulator[`basket[${index}][amount]`] = item.amount;
+          accumulator[`basket[${index}][folioNumberString]`] = "";
+          accumulator[`basket[${index}][monthly]`] = 0;
+          return accumulator;
+        }, {}),
+      };
+      setOrderData(updatedOrderData);
+    }
+  }, [fetchCart, removed]);
+
+  console.log("duufdu", orderData);
+
   const handleRemovefromcart = (cartId, mutualFundId) => {
-    data = {
+    const data = {
       action: "deleteFromCartBulk",
       mutualFundId: mutualFundId,
       cartId: cartId,
@@ -106,6 +134,7 @@ export const AddToCart = () => {
                   </View>
                 </TouchableOpacity>
               ))}
+              <Paymentoptions />
             </View>
           </ScrollView>
         </>
