@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { height, width } from "../../Dimension";
-import { Checkbox } from "react-native-paper";
+import { Checkbox, Button } from "react-native-paper";
 import ButtonBox from "../Components/Buttonbox";
-import Mfubanks from "../Payment/Data";
+import Mfubanks, { Orders, Clearcart } from "../Payment/Data";
 import { Fetchcart } from "../Cart/Data";
+import { useNavigation } from "@react-navigation/native";
+import Loader from "../Components/Loader";
 
-const Paymentoptions = () => {
+const Paymentoptions = (props) => {
   const [upicheck, setUpicheck] = useState(false);
   const [netbankingcheck, setNetbankingcheck] = useState(false);
   const [neftcheck, setNeftcheck] = useState(false);
@@ -14,11 +24,15 @@ const Paymentoptions = () => {
   const [mandatecheck, setMandatecheck] = useState(false);
   const [bankcheck, setBankcheck] = useState(false);
   const [selectedBank, setSelectedBank] = useState(null);
-  const [orderData, setOrderData] = useState(null);
-
+  const [orderData, setOrderData] = useState(props.orderData || {});
+  const [showLoader, setShowLoader] = useState(false);
   const mfubanks = Mfubanks();
 
-  const handleCheckboxChange = (checkboxType) => {
+  const navigation = useNavigation();
+
+  console.log("order data in paymentoptions", orderData);
+
+  const handleCheckboxChange = (checkboxType, paymentMode) => {
     const checkboxMap = {
       UPI: setUpicheck,
       NetBanking: setNetbankingcheck,
@@ -31,11 +45,53 @@ const Paymentoptions = () => {
     Object.keys(checkboxMap).forEach((type) => {
       checkboxMap[type](type === checkboxType);
     });
+
+    const updatedOrderData = {
+      ...orderData,
+      paymentMode: paymentMode,
+    };
+
+    setOrderData(updatedOrderData);
   };
 
   const handleBankCheckboxChange = (bank) => {
     setBankcheck(true);
     setSelectedBank(bank);
+
+    // Assuming orderData is immutable, create a new object with the updated value
+    const updatedOrderData = {
+      ...orderData,
+      selectBankAccount: bank,
+    };
+
+    // Set the updated orderData to state
+    setOrderData(updatedOrderData);
+  };
+
+  const handleOrderCall = () => {
+    setShowLoader(true);
+    Orders(orderData)
+      .then((response) => {
+        console.log("order success result", response);
+        if (response.success === true) {
+          setShowLoader(false);
+          Clearcart().then((response) => {
+            if (response.success === true) {
+              Alert.alert("Order has been Placed Successfully");
+              navigation.push("Dashboard");
+            }
+          });
+        }
+        if (response.success === false) {
+          Alert.alert("Failed", response.error);
+          navigation.push("Dashboard");
+        }
+      })
+      .catch((error) => {
+        console.warn("order success error", error);
+        Alert.alert("Failed", error);
+        setShowLoader(false);
+      });
   };
 
   return (
@@ -49,10 +105,8 @@ const Paymentoptions = () => {
                 key={item.id}
                 label={item.bankName}
                 desc={item.accountNo}
-                isChecked={selectedBank === item.accountNo}
-                handleCheckboxChange={() =>
-                  handleBankCheckboxChange(item.accountNo)
-                }
+                isChecked={selectedBank === item.id}
+                handleCheckboxChange={() => handleBankCheckboxChange(item.id)}
                 imageUrl={require("../../../assets/paymentIcon/Building-Bank.png")}
               />
             ))}
@@ -66,28 +120,30 @@ const Paymentoptions = () => {
             type="UPI"
             label="UPI"
             isChecked={upicheck}
-            handleCheckboxChange={() => handleCheckboxChange("UPI")}
+            handleCheckboxChange={() => handleCheckboxChange("UPI", "UP")}
             imageUrl={require("../../../assets/paymentIcon/Frame.png")}
           />
           <CheckboxItem
             type="NetBanking"
             label="NET BANKING"
             isChecked={netbankingcheck}
-            handleCheckboxChange={() => handleCheckboxChange("NetBanking")}
+            handleCheckboxChange={() =>
+              handleCheckboxChange("NetBanking", "OT")
+            }
             imageUrl={require("../../../assets/paymentIcon/Building-Bank.png")}
           />
           <CheckboxItem
             type="NEFT"
             label="NEFT"
             isChecked={neftcheck}
-            handleCheckboxChange={() => handleCheckboxChange("NEFT")}
+            handleCheckboxChange={() => handleCheckboxChange("NEFT", "NE")}
             imageUrl={require("../../../assets/paymentIcon/Building-Bank.png")}
           />
           <CheckboxItem
             type="RTGS"
             label="RTGS"
             isChecked={rtgscheck}
-            handleCheckboxChange={() => handleCheckboxChange("RTGS")}
+            handleCheckboxChange={() => handleCheckboxChange("RTGS", "RT")}
             imageUrl={require("../../../assets/paymentIcon/Building-Bank.png")}
           />
           <CheckboxItem
@@ -99,7 +155,19 @@ const Paymentoptions = () => {
           />
         </View>
 
-        <ButtonBox />
+        {!showLoader ? (
+          <>
+            <TouchableOpacity onPress={handleOrderCall}>
+              <Button mode="contained" style={styles.Button}>
+                Complete Payments
+              </Button>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            <Loader />
+          </>
+        )}
       </ScrollView>
     </View>
   );
@@ -224,6 +292,14 @@ const styles = StyleSheet.create({
     fontSize: width * 0.04,
     fontWeight: "600",
     marginLeft: width * 0.07,
+  },
+  Button: {
+    alignItems: "center",
+    borderRadius: width * 0.03,
+    borderWidth: 1,
+    borderColor: "#023047",
+    padding: width * 0.01,
+    backgroundColor: "#023047",
   },
 });
 

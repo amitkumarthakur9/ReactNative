@@ -28,5 +28,12 @@ export const Mfubanksdata = () => {
 
 export const Orderdata = (data) => {
   const urlEncodedData = queryString(data);
+  console.log("passed url", urlEncodedData);
   return apiClient.post("/app/mfu/order?" + urlEncodedData);
+};
+
+export const Cleardata = () => {
+  //   const urlEncodedData = queryString(data);
+  //   console.log("passed url", urlEncodedData);
+  return apiClient.post("/app/mutualfund?action=clearCart");
 };

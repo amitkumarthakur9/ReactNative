@@ -24,7 +24,7 @@ export const AddToCart = () => {
   const [orderData, setOrderData] = useState({
     action: "cartOrder",
     monthly: 0,
-    paymentMode: "OT",
+    paymentMode: null,
     selectBankAccount: null,
     mandateId: null,
     paymentFlag: 1,
@@ -58,7 +58,7 @@ export const AddToCart = () => {
     }
   }, [fetchCart, removed]);
 
-  console.log("duufdu", orderData);
+  console.log("amit", orderData);
 
   const handleRemovefromcart = (cartId, mutualFundId) => {
     const data = {
@@ -134,7 +134,15 @@ export const AddToCart = () => {
                   </View>
                 </TouchableOpacity>
               ))}
-              <Paymentoptions />
+              {orderData.hasOwnProperty("basket[0][amount]") ? (
+                <>
+                  <Paymentoptions orderData={orderData} />
+                </>
+              ) : (
+                <>
+                  <Loader />
+                </>
+              )}
             </View>
           </ScrollView>
         </>
