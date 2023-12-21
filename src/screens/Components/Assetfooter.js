@@ -5,11 +5,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "react-native-paper";
 import { useRoute, useNavigation } from "@react-navigation/native";
-export default Assetfooter = () => {
+export default Assetfooter = (props) => {
   const navigation = useNavigation();
+  const mfData = props.mfData;
   return (
     <View style={styles.footerContainer}>
-      <TouchableOpacity onPress={() => navigation.push("Onetimesip")}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Onetimesip", { mfData })}
+      >
         <Button
           mode="contained"
           style={styles.footerButton}
@@ -18,7 +21,7 @@ export default Assetfooter = () => {
           One Time
         </Button>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push("Sip")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Sip", { mfData })}>
         <Button
           mode="contained"
           style={[

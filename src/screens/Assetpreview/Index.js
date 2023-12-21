@@ -34,7 +34,7 @@ const Assetpreview = ({ navigation }) => {
         <>
           <Assetheader mfData={mfData} />
           <Content mfData={mfData} />
-          <Assetfooter />
+          <Assetfooter mfData={mfData} />
         </>
       )}
     </View>

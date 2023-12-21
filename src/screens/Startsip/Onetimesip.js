@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,30 +9,25 @@ import {
 } from "react-native";
 import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
-import { TextInput } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import Footerbutton from "./Footerbutton";
-import { Slider } from "@miblanchard/react-native-slider";
-// import DateTimePicker from "@react-native-community/datetimepicker";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import Loader from "../Components/Loader";
+import Formatfundname from "../Components/Formatfundname";
+import { Foliodata } from "../Assetpreview/Data";
+import { addToCarts } from "../Dashboard/Explore";
 
 export default Onetimesip = ({ navigation }) => {
-  const [accountNumber, setAccountNumber] = useState();
-  const [text, setText] = React.useState("");
-  const [accountType, setAccountType] = useState();
-  const [Bank, setBankName] = useState();
-  const [MonthlyInvestment, setMonthlyInvestment] = useState(1000);
-  const [timePeriod, setTimePeriod] = useState(1);
-  const [date, setDate] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [folioNumber, setFolioNumber] = useState();
+  const route = useRoute();
+  const { mfData } = route.params;
+  const folio = Foliodata(mfData.fundHouse.id);
+  const [amount, setAmount] = useState(mfData.minPurchase.toString());
 
-  const handleDatePress = () => {
-    setShowDatePicker(true);
-  };
-
-  const handleDateChange = (event, selectedDate) => {
-    currentDate = selectedDate || date;
-    setShowDatePicker(false);
-    setDate(currentDate);
+  const handleInvestNow = (mfId, minPurchase, folioNumber) => {
+    addToCarts(mfId, minPurchase, folioNumber, null);
+    navigation.push("AddToCart");
   };
 
   return (
@@ -51,117 +46,135 @@ export default Onetimesip = ({ navigation }) => {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.axisBox}>
-          <View
-            style={{ marginTop: height * -0.12, marginBottom: height * -0.02 }}
-          >
-            <View style={styles.headerContainer}>
-              <Image
-                source={require("../../../assets/startsipIcon/AXISBANK.png")}
+        {Object.keys(mfData).length > 0 ? (
+          <>
+            <View style={styles.axisBox}>
+              <View
                 style={{
-                  width: width * 0.13,
-                  height: height * 0.055,
-                  resizeMode: "contain",
+                  marginTop: height * -0.12,
+                  marginBottom: height * -0.02,
                 }}
-              />
-              <View style={styles.titleBox}>
-                <Text
-                  style={{
-                    color: "rgba(2, 48, 71, 1)",
-                    fontSize: width * 0.045,
-                    fontWeight: "600",
-                    lineHeight: height * 0.035,
-                    textAlign: "left",
-                  }}
-                >
-                  Axis Multicap Growth Fund
-                </Text>
+              >
+                <View style={styles.headerContainer}>
+                  <Image
+                    source={{ uri: mfData.fundHouse.logoUrl }}
+                    style={{
+                      width: width * 0.13,
+                      height: height * 0.055,
+                      resizeMode: "contain",
+                    }}
+                  />
+                  <View style={styles.titleBox}>
+                    <Text
+                      style={{
+                        color: "rgba(2, 48, 71, 1)",
+                        fontSize: width * 0.045,
+                        fontWeight: "600",
+                        lineHeight: height * 0.035,
+                        textAlign: "left",
+                      }}
+                    >
+                      {Formatfundname(mfData.name)}
+                    </Text>
+                  </View>
+                </View>
+                {/* <Text style={styles.desc}>
+                  Lorem impsome delmonto elsondn oklsdoliston amdelo toydj
+                  jojsdojf osjko.
+                </Text> */}
+                <View style={styles.typeContainer}>
+                  <View>
+                    <Text style={styles.percentage}>
+                      {mfData.schemeType} | {mfData.type} | Min Amount :
+                      {mfData.minPurchase}
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
-            <Text style={styles.desc}>
-              Lorem impsome delmonto elsondn oklsdoliston amdelo toydj jojsdojf
-              osjko.
-            </Text>
-            <View style={styles.typeContainer}>
-              <View>
-                <Text style={styles.percentage}>EQUITY | LARGE CAP</Text>
-              </View>
-            </View>
-          </View>
-        </View>
 
-        <View
-          style={{
-            padding: width * 0.04,
-            marginTop: height * 0.026,
-          }}
-        >
-          <Text style={styles.header}>Select Folio</Text>
-
-          <TouchableOpacity style={styles.dropdown}>
-            <Picker
-              selectedValue={accountType}
-              onValueChange={(itemValue, itemIndex) =>
-                setAccountType(itemValue)
-              }
-              mode="dropdown"
-              style={styles.Picker}
-            >
-              <Picker.Item
-                label="Create New"
-                value="Create New"
-                style={{ color: "#219EBC" }}
-              />
-              <Picker.Item label="Folio 123445" value="Folio 123445" />
-              <Picker.Item label="Folio 123445" value="Folio 123445" />
-              <Picker.Item label="Folio 123445" value="Folio 123445" />
-            </Picker>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            padding: width * 0.04,
-          }}
-        >
-          <View style={[styles.flexContainer]}>
-            <Text
-              style={[
-                styles.rangeText,
-                { textAlign: "left", marginTop: width * 0.053 },
-              ]}
-            >
-              Investment Amount
-            </Text>
-            <Text
+            <View
               style={{
-                textAlign: "right",
-                marginTop: width * 0.04,
-                fontWeight: "600",
-                fontSize: width * 0.05,
-                marginRight: width * 0.053,
+                padding: width * 0.04,
+                marginTop: height * 0.026,
               }}
             >
-              ₹
-            </Text>
-
-            <TextInput
-              mode="outlined"
-              placeholder="Enter Amount"
-              placeholderTextColor="rgb(191, 191, 191)"
-              value={accountNumber}
-              onChangeText={(e) => setAccountNumber(e)}
-              style={[styles.input]}
-              outlineStyle={styles.outline}
-              theme={styles.themeStyle}
-              contentStyle={styles.contentStyle}
-              keyboardType="phone-pad"
-            />
-          </View>
-        </View>
-
-        <View style={{ marginTop: height * 0.137 }}>
-          <Footerbutton />
-        </View>
+              {folio.length > 0 && (
+                <>
+                  <Text style={styles.header}>Select Folio</Text>
+                  <TouchableOpacity style={styles.dropdown}>
+                    <Picker
+                      selectedValue={folioNumber}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setFolioNumber(itemValue)
+                      }
+                      mode="dropdown"
+                      style={styles.Picker}
+                    >
+                      <Picker.Item label="New Folio" value="" />
+                      {folio.map((item, index) => (
+                        <Picker.Item label={item} value={item} key={index} />
+                      ))}
+                    </Picker>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
+            <View
+              style={{
+                padding: width * 0.04,
+              }}
+            >
+              <View style={[styles.flexContainer]}>
+                <Text
+                  style={[
+                    styles.rangeText,
+                    { textAlign: "left", marginTop: width * 0.053 },
+                  ]}
+                >
+                  Investment Amount
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "right",
+                    marginTop: width * 0.04,
+                    fontWeight: "600",
+                    fontSize: width * 0.05,
+                    marginRight: width * 0.053,
+                  }}
+                >
+                  ₹
+                </Text>
+                {console.log(typeof mfData.minPurchase)}
+                <TextInput
+                  mode="outlined"
+                  placeholder="Enter Amount"
+                  placeholderTextColor="rgb(191, 191, 191)"
+                  value={amount}
+                  onChangeText={(e) => setAmount(e)}
+                  style={[styles.input]}
+                  outlineStyle={styles.outline}
+                  theme={styles.themeStyle}
+                  contentStyle={styles.contentStyle}
+                  keyboardType="phone-pad"
+                />
+              </View>
+              <View style={{ marginTop: height * 0.1 }}>
+                <TouchableOpacity
+                  onPress={() => handleInvestNow(mfData.id, amount)}
+                >
+                  <Button mode="contained" style={styles.Button}>
+                    Invest Now
+                  </Button>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        ) : (
+          <>
+            <Loader />
+          </>
+        )}
       </ScrollView>
     </View>
   );
@@ -324,5 +337,13 @@ const styles = StyleSheet.create({
     borderColor: "#48484A",
     borderRadius: width * 0.021,
     padding: width * 0.04,
+  },
+  Button: {
+    alignItems: "center",
+    borderRadius: width * 0.03,
+    borderWidth: 1,
+    borderColor: "#023047",
+    padding: width * 0.01,
+    backgroundColor: "#023047",
   },
 });

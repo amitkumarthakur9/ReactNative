@@ -9,21 +9,28 @@ import {
 } from "react-native";
 import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
-import { TextInput } from "react-native-paper";
+import { TextInput, Button } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import Footerbutton from "./Footerbutton";
 import { Slider } from "@miblanchard/react-native-slider";
-// import DateTimePicker from "@react-native-community/datetimepicker";
+import { Foliodata } from "../Assetpreview/Data";
+import Loader from "../Components/Loader";
+import Formatfundname from "../Components/Formatfundname";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Yearmonthday } from "../Components/Formatdate";
+import { addToCarts } from "../Dashboard/Explore";
 
 export default Sip = ({ navigation }) => {
-  const [accountNumber, setAccountNumber] = useState();
-  const [text, setText] = React.useState("");
-  const [accountType, setAccountType] = useState();
-  const [Bank, setBankName] = useState();
-  const [MonthlyInvestment, setMonthlyInvestment] = useState(1000);
+  const [folioNumber, setFolioNumber] = useState();
   const [timePeriod, setTimePeriod] = useState(1);
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const route = useRoute();
+  const { mfData } = route.params;
+  const folio = Foliodata(mfData.fundHouse.id);
+  const [amount, setAmount] = useState(mfData.minPurchase.toString());
 
   const handleDatePress = () => {
     setShowDatePicker(true);
@@ -34,6 +41,17 @@ export default Sip = ({ navigation }) => {
     setShowDatePicker(false);
     setDate(currentDate);
   };
+
+  const handleInvestNow = (mfId, minPurchase, folioNumber, Sdate, Months) => {
+    const sipDate = Yearmonthday(Sdate);
+    const noOfMonths = 12 * Months;
+
+    //console.log(mfId, minPurchase, folioNumber, sipDate, noOfMonths);
+    addToCarts(mfId, minPurchase, folioNumber, sipDate, noOfMonths, null);
+    navigation.push("AddToCart");
+  };
+
+  //   console.log("by scheme", JSON.stringify(mfData, 1, 2));
 
   return (
     <View style={styles.container}>
@@ -51,143 +69,86 @@ export default Sip = ({ navigation }) => {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.axisBox}>
-          <View
-            style={{ marginTop: height * -0.12, marginBottom: height * -0.02 }}
-          >
-            <View style={styles.headerContainer}>
-              <Image
-                source={require("../../../assets/startsipIcon/AXISBANK.png")}
+        {Object.keys(mfData).length > 0 ? (
+          <>
+            <View style={styles.axisBox}>
+              <View
                 style={{
-                  width: width * 0.13,
-                  height: height * 0.055,
-                  resizeMode: "contain",
+                  marginTop: height * -0.12,
+                  marginBottom: height * -0.02,
                 }}
-              />
-              <View style={styles.titleBox}>
-                <Text
-                  style={{
-                    color: "rgba(2, 48, 71, 1)",
-                    fontSize: width * 0.045,
-                    fontWeight: "600",
-                    lineHeight: height * 0.035,
-                    textAlign: "left",
-                  }}
-                >
-                  Axis Multicap Growth Fund
-                </Text>
-              </View>
-            </View>
-            <Text style={styles.desc}>
-              Lorem impsome delmonto elsondn oklsdoliston amdelo toydj jojsdojf
-              osjko.
-            </Text>
-            <View style={styles.typeContainer}>
-              <View>
-                <Text style={styles.percentage}>EQUITY | LARGE CAP</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
-        <View
-          style={{
-            padding: width * 0.04,
-            marginTop: height * 0.04,
-          }}
-        >
-          <Text style={styles.header}>Select Folio</Text>
-
-          <TouchableOpacity
-            style={[styles.dropdown, { marginBottom: height * 0.03 }]}
-          >
-            <Picker
-              selectedValue={accountType}
-              onValueChange={(itemValue, itemIndex) =>
-                setAccountType(itemValue)
-              }
-              mode="dropdown"
-              style={styles.Picker}
-            >
-              <Picker.Item label="Choose Folio" value="Choose Folio" />
-              {/* <Picker.Item label="Saving Account" value="Saving Account" />
-              <Picker.Item label="Current Account" value="Current Account" /> */}
-            </Picker>
-          </TouchableOpacity>
-
-          <Text style={styles.header}>Select Mandate</Text>
-
-          <TouchableOpacity
-            style={[styles.dropdown, { marginBottom: height * 0.003 }]}
-          >
-            <Picker
-              selectedValue={Bank}
-              onValueChange={(itemValue, itemIndex) => setBankName(itemValue)}
-              mode="dropdown"
-              style={styles.Picker}
-            >
-              <Picker.Item label="Choose Mandate" value="Choose Mandate" />
-              {/* <Picker.Item label="Axis Bank" value="Axis Bank" />
-              <Picker.Item label="Kotak Bank" value="Kotak Bank" /> */}
-            </Picker>
-          </TouchableOpacity>
-
-          <View>
-            {/* <Text style={styles.header}>Select Folio</Text> */}
-            <View style={[styles.flexContainer, { marginTop: height * 0.026 }]}>
-              <Text style={styles.header}>SIP Start Date</Text>
-              <Text
-                style={[
-                  styles.header,
-                  { marginLeft: width * 0.21, lineHeight: height * 0.028 },
-                ]}
               >
-                Frequency
-              </Text>
-            </View>
-            <View style={styles.flexContainer}>
-              <TouchableOpacity onPress={handleDatePress}>
-                <TextInput
-                  mode="outlined"
-                  label={
+                <View style={styles.headerContainer}>
+                  <Image
+                    source={{ uri: mfData.fundHouse.logoUrl }}
+                    style={{
+                      width: width * 0.13,
+                      height: height * 0.055,
+                      resizeMode: "contain",
+                    }}
+                  />
+                  <View style={styles.titleBox}>
                     <Text
-                      style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}
+                      style={{
+                        color: "rgba(2, 48, 71, 1)",
+                        fontSize: width * 0.045,
+                        fontWeight: "600",
+                        lineHeight: height * 0.035,
+                        textAlign: "left",
+                      }}
                     >
-                      Choose Date
+                      {Formatfundname(mfData.name)}
                     </Text>
-                  }
-                  value={date.toDateString()}
-                  editable={false}
-                  style={[
-                    styles.input,
-                    { marginTop: height * -0.01, width: width * 0.43 },
-                  ]}
-                  outlineStyle={styles.outline}
-                  theme={styles.themeStyle}
-                  contentStyle={styles.contentStyle}
-                />
-              </TouchableOpacity>
-              {showDatePicker && (
-                <DateTimePicker
-                  value={date}
-                  mode="date" // or "time" for time picker
-                  display="default" // Set display to "spinner" for Android
-                  onChange={(event, selectedDate) =>
-                    handleDateChange(event, selectedDate)
-                  }
-                />
+                  </View>
+                </View>
+                {/* <Text style={styles.desc}>
+                  Lorem impsome delmonto elsondn oklsdoliston amdelo toydj
+                  jojsdojf osjko.
+                </Text> */}
+                <View style={styles.typeContainer}>
+                  <View>
+                    <Text style={styles.percentage}>
+                      {mfData.schemeType} | {mfData.type} | Min Amount :
+                      {mfData.minPurchase}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+
+            <View
+              style={{
+                padding: width * 0.04,
+                marginTop: height * 0.04,
+              }}
+            >
+              {folio.length > 0 && (
+                <>
+                  <Text style={styles.header}>Select Folio</Text>
+
+                  <TouchableOpacity
+                    style={[styles.dropdown, { marginBottom: height * 0.03 }]}
+                  >
+                    <Picker
+                      selectedValue={folioNumber}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setFolioNumber(itemValue)
+                      }
+                      mode="dropdown"
+                    >
+                      <Picker.Item label="New Folio" value="" />
+                      {folio.map((item, index) => (
+                        <Picker.Item label={item} value={item} key={index} />
+                      ))}
+                    </Picker>
+                  </TouchableOpacity>
+                </>
               )}
 
+              {/* <Text style={styles.header}>Select Mandate</Text>
+
               <TouchableOpacity
-                style={[
-                  styles.dropdown,
-                  {
-                    marginTop: height * -0.004,
-                    width: width * 0.43,
-                    height: height * 0.069,
-                    marginLeft: width * 0.053,
-                  },
-                ]}
+                style={[styles.dropdown, { marginBottom: height * 0.003 }]}
               >
                 <Picker
                   selectedValue={Bank}
@@ -199,87 +160,187 @@ export default Sip = ({ navigation }) => {
                 >
                   <Picker.Item label="Choose Mandate" value="Choose Mandate" />
                 </Picker>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+
+              <View>
+                <View style={{ marginTop: height * 0.026 }}>
+                  <Text style={styles.header}>SIP Start Date</Text>
+                  {/* <Text
+                    style={[
+                      styles.header,
+                      { marginLeft: width * 0.21, lineHeight: height * 0.028 },
+                    ]}
+                  >
+                    Frequency
+                  </Text> */}
+                </View>
+                <View style={styles.flexContainer}>
+                  <TouchableOpacity onPress={handleDatePress}>
+                    <TextInput
+                      mode="outlined"
+                      label={
+                        <Text
+                          style={{
+                            color: "rgb(191, 191, 191)",
+                            fontWeight: "400",
+                          }}
+                        >
+                          Choose Date
+                        </Text>
+                      }
+                      value={date.toDateString()}
+                      editable={false}
+                      style={[
+                        styles.input,
+                        { marginTop: height * -0.01, width: width * 0.43 },
+                      ]}
+                      outlineStyle={styles.outline}
+                      theme={styles.themeStyle}
+                      contentStyle={styles.contentStyle}
+                    />
+                  </TouchableOpacity>
+                  {showDatePicker && (
+                    <DateTimePicker
+                      value={date}
+                      mode="date" // or "time" for time picker
+                      display="default" // Set display to "spinner" for Android
+                      onChange={(event, selectedDate) =>
+                        handleDateChange(event, selectedDate)
+                      }
+                    />
+                  )}
+
+                  {/* <TouchableOpacity
+                    style={[
+                      styles.dropdown,
+                      {
+                        marginTop: height * -0.004,
+                        width: width * 0.43,
+                        height: height * 0.069,
+                        marginLeft: width * 0.053,
+                      },
+                    ]}
+                  >
+                    <Picker
+                      selectedValue={Bank}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setBankName(itemValue)
+                      }
+                      mode="dropdown"
+                      style={styles.Picker}
+                    >
+                      <Picker.Item
+                        label="Choose Mandate"
+                        value="Choose Mandate"
+                      />
+                    </Picker>
+                  </TouchableOpacity> */}
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-        <View
-          style={{
-            padding: width * 0.04,
-          }}
-        >
-          <View>
-            <View style={styles.flexContainer}>
-              <Text
-                style={[
-                  styles.rangeText,
-                  { textAlign: "left", marginTop: width * 0.053 },
-                ]}
-              >
-                Investment Amount
-              </Text>
-              <Text
+            <View
+              style={{
+                padding: width * 0.04,
+              }}
+            >
+              <View>
+                <View style={styles.flexContainer}>
+                  <Text
+                    style={[
+                      styles.rangeText,
+                      { textAlign: "left", marginTop: width * 0.053 },
+                    ]}
+                  >
+                    Investment Amount
+                  </Text>
+                  <Text
+                    style={{
+                      textAlign: "right",
+                      marginTop: width * 0.04,
+                      fontWeight: "600",
+                      fontSize: width * 0.05,
+                      marginRight: width * 0.053,
+                    }}
+                  >
+                    ₹
+                  </Text>
+
+                  <TextInput
+                    mode="outlined"
+                    placeholder="Enter Amount"
+                    placeholderTextColor="rgb(191, 191, 191)"
+                    value={amount}
+                    onChangeText={(e) => setAmount(e)}
+                    style={[styles.input]}
+                    outlineStyle={styles.outline}
+                    theme={styles.themeStyle}
+                    contentStyle={styles.contentStyle}
+                    keyboardType="phone-pad"
+                  />
+                </View>
+              </View>
+
+              <View>
+                <View style={styles.flexContainer}>
+                  <Text
+                    style={[
+                      styles.rangeText,
+                      { textAlign: "left", marginTop: width * 0.053 },
+                    ]}
+                  >
+                    Time Period
+                  </Text>
+                  <Text style={styles.rangeTextPercentage}>
+                    {timePeriod} Years
+                  </Text>
+                </View>
+                <Slider
+                  marginTop={height * 0.013}
+                  animateTransitions
+                  maximumTrackTintColor={"rgba(26, 28, 23, 0.12)"}
+                  minimumTrackTintColor={"#023047"}
+                  maximumValue={30}
+                  minimumValue={1}
+                  onValueChange={(yearValue) =>
+                    setTimePeriod(Math.floor(yearValue))
+                  }
+                  value={timePeriod}
+                  thumbTintColor={"rgba(33, 158, 188, 1)"}
+                  trackStyle={{
+                    height: height * 0.008,
+                    borderRadius: width * 0.03,
+                  }}
+                />
+              </View>
+              <View
                 style={{
-                  textAlign: "right",
-                  marginTop: width * 0.04,
-                  fontWeight: "600",
-                  fontSize: width * 0.05,
-                  marginRight: width * 0.053,
+                  marginTop: height * 0.05,
+                  marginBottom: height * 0.02,
                 }}
               >
-                ₹
-              </Text>
-
-              <TextInput
-                mode="outlined"
-                placeholder="Enter Amount"
-                placeholderTextColor="rgb(191, 191, 191)"
-                value={accountNumber}
-                onChangeText={(e) => setAccountNumber(e)}
-                style={[styles.input]}
-                outlineStyle={styles.outline}
-                theme={styles.themeStyle}
-                contentStyle={styles.contentStyle}
-                keyboardType="phone-pad"
-              />
+                <TouchableOpacity
+                  onPress={() =>
+                    handleInvestNow(
+                      mfData.id,
+                      amount,
+                      folioNumber,
+                      date,
+                      timePeriod
+                    )
+                  }
+                >
+                  <Button mode="contained" style={styles.Button}>
+                    Invest Now
+                  </Button>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-
-          <View>
-            <View style={styles.flexContainer}>
-              <Text
-                style={[
-                  styles.rangeText,
-                  { textAlign: "left", marginTop: width * 0.053 },
-                ]}
-              >
-                Time Period
-              </Text>
-              <Text style={styles.rangeTextPercentage}>{timePeriod} Years</Text>
-            </View>
-            <Slider
-              marginTop={height * 0.013}
-              animateTransitions
-              maximumTrackTintColor={"rgba(26, 28, 23, 0.12)"}
-              minimumTrackTintColor={"#023047"}
-              maximumValue={30}
-              minimumValue={1}
-              onValueChange={(yearValue) =>
-                setTimePeriod(Math.floor(yearValue))
-              }
-              value={timePeriod}
-              thumbTintColor={"rgba(33, 158, 188, 1)"}
-              trackStyle={{
-                height: height * 0.008,
-                borderRadius: width * 0.03,
-              }}
-            />
-          </View>
-        </View>
-
-        <View>
-          <Footerbutton />
-        </View>
+          </>
+        ) : (
+          <>
+            <Loader />
+          </>
+        )}
       </ScrollView>
     </View>
   );
@@ -435,5 +496,13 @@ const styles = StyleSheet.create({
     borderColor: "#48484A",
     borderRadius: width * 0.021,
     padding: width * 0.04,
+  },
+  Button: {
+    alignItems: "center",
+    borderRadius: width * 0.03,
+    borderWidth: 1,
+    borderColor: "#023047",
+    padding: width * 0.01,
+    backgroundColor: "#023047",
   },
 });

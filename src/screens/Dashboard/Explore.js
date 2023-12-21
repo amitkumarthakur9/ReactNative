@@ -34,30 +34,82 @@ const handleInvest = (mfId, navigation) => {
   navigation.navigate("Assetpreview", { mfId });
 };
 
+export const addToCarts = (
+  mutualfundId,
+  minPurchase,
+  folioNumber,
+  dispatch
+) => {
+  const data = {
+    monthly: 0,
+    action: "addToCartMfuMultiple",
+    "basket[0][mutualFundId]": mutualfundId,
+    "basket[0][amount]": minPurchase,
+    "basket[0][frequency]": "",
+    "basket[0][startDate]": "Invalid date",
+    "basket[0][noOfMonths]": 0,
+    "basket[0][folioNumberString]": folioNumber,
+    folioNumberString: folioNumber,
+  };
+
+  addToCart(data).then((response) => {
+    if (response === true && dispatch != null) {
+      dispatch(incrementToCart());
+    }
+  });
+};
+
+export const addToCartSip = (
+  mutualfundId,
+  minPurchase,
+  folioNumber,
+  Sdate,
+  Months,
+  dispatch
+) => {
+  const data = {
+    monthly: 1,
+    action: "addToCartMfuMultiple",
+    "basket[0][mutualFundId]": mutualfundId,
+    "basket[0][amount]": minPurchase,
+    "basket[0][frequency]": "M",
+    "basket[0][startDate]": Sdate,
+    "basket[0][noOfMonths]": Months,
+    "basket[0][folioNumberString]": folioNumber,
+    folioNumberString: folioNumber,
+  };
+
+  addToCart(data).then((response) => {
+    if (response === true && dispatch != null) {
+      dispatch(incrementToCart());
+    }
+  });
+};
+
 export const SchemesrenderItem = (props) => {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
-  const addToCarts = (mutualfundId, minPurchase) => {
-    const data = {
-      monthly: 0,
-      action: "addToCartMfuMultiple",
-      "basket[0][mutualFundId]": mutualfundId,
-      "basket[0][amount]": minPurchase,
-      "basket[0][frequency]": "",
-      "basket[0][startDate]": "Invalid date",
-      "basket[0][noOfMonths]": 0,
-      "basket[0][folioNumberString]": "",
-      folioNumberString: "",
-    };
+  //   const addToCarts = (mutualfundId, minPurchase) => {
+  //     const data = {
+  //       monthly: 0,
+  //       action: "addToCartMfuMultiple",
+  //       "basket[0][mutualFundId]": mutualfundId,
+  //       "basket[0][amount]": minPurchase,
+  //       "basket[0][frequency]": "",
+  //       "basket[0][startDate]": "Invalid date",
+  //       "basket[0][noOfMonths]": 0,
+  //       "basket[0][folioNumberString]": "",
+  //       folioNumberString: "",
+  //     };
 
-    addToCart(data).then((response) => {
-      if (response === true) {
-        dispatch(incrementToCart());
-      }
-    });
-  };
+  //     addToCart(data).then((response) => {
+  //       if (response === true) {
+  //         dispatch(incrementToCart());
+  //       }
+  //     });
+  //   };
 
   return (
     <>
@@ -121,7 +173,9 @@ export const SchemesrenderItem = (props) => {
             <View style={styles.flexRow}>
               <TouchableOpacity
                 style={styles.Button}
-                onPress={() => addToCarts(item.id, item.minPurchase)}
+                onPress={() =>
+                  addToCarts(item.id, item.minPurchase, null, dispatch)
+                }
               >
                 <Text style={styles.AddToCart}>Add To Cart</Text>
               </TouchableOpacity>
