@@ -40,22 +40,32 @@ export const addToCarts = (
   folioNumber,
   dispatch
 ) => {
-  const data = {
-    monthly: 0,
-    action: "addToCartMfuMultiple",
-    "basket[0][mutualFundId]": mutualfundId,
-    "basket[0][amount]": minPurchase,
-    "basket[0][frequency]": "",
-    "basket[0][startDate]": "Invalid date",
-    "basket[0][noOfMonths]": 0,
-    "basket[0][folioNumberString]": folioNumber,
-    folioNumberString: folioNumber,
-  };
-
-  addToCart(data).then((response) => {
-    if (response === true && dispatch != null) {
-      dispatch(incrementToCart());
-    }
+  return new Promise((resolve, reject) => {
+    const data = {
+      monthly: 0,
+      action: "addToCartMfuMultiple",
+      "basket[0][mutualFundId]": mutualfundId,
+      "basket[0][amount]": minPurchase,
+      "basket[0][frequency]": "",
+      "basket[0][startDate]": "Invalid date",
+      "basket[0][noOfMonths]": 0,
+      "basket[0][folioNumberString]": folioNumber,
+      folioNumberString: folioNumber,
+    };
+    addToCart(data)
+      .then((response) => {
+        if (response === true) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+        if (response === true && dispatch != null) {
+          dispatch(incrementToCart());
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 };
 
@@ -64,25 +74,32 @@ export const addToCartSip = (
   minPurchase,
   folioNumber,
   Sdate,
-  Months,
-  dispatch
+  Months
 ) => {
-  const data = {
-    monthly: 1,
-    action: "addToCartMfuMultiple",
-    "basket[0][mutualFundId]": mutualfundId,
-    "basket[0][amount]": minPurchase,
-    "basket[0][frequency]": "M",
-    "basket[0][startDate]": Sdate,
-    "basket[0][noOfMonths]": Months,
-    "basket[0][folioNumberString]": folioNumber,
-    folioNumberString: folioNumber,
-  };
+  return new Promise((resolve, reject) => {
+    const data = {
+      monthly: 1,
+      action: "addToCartMfuMultiple",
+      "basket[0][mutualFundId]": mutualfundId,
+      "basket[0][amount]": minPurchase,
+      "basket[0][frequency]": "M",
+      "basket[0][startDate]": Sdate,
+      "basket[0][noOfMonths]": Months,
+      "basket[0][folioNumberString]": folioNumber,
+      folioNumberString: folioNumber,
+    };
 
-  addToCart(data).then((response) => {
-    if (response === true && dispatch != null) {
-      dispatch(incrementToCart());
-    }
+    addToCart(data)
+      .then((response) => {
+        if (response === true) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 };
 
@@ -90,26 +107,6 @@ export const SchemesrenderItem = (props) => {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
-
-  //   const addToCarts = (mutualfundId, minPurchase) => {
-  //     const data = {
-  //       monthly: 0,
-  //       action: "addToCartMfuMultiple",
-  //       "basket[0][mutualFundId]": mutualfundId,
-  //       "basket[0][amount]": minPurchase,
-  //       "basket[0][frequency]": "",
-  //       "basket[0][startDate]": "Invalid date",
-  //       "basket[0][noOfMonths]": 0,
-  //       "basket[0][folioNumberString]": "",
-  //       folioNumberString: "",
-  //     };
-
-  //     addToCart(data).then((response) => {
-  //       if (response === true) {
-  //         dispatch(incrementToCart());
-  //       }
-  //     });
-  //   };
 
   return (
     <>

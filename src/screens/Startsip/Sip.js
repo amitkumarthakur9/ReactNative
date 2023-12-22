@@ -19,7 +19,7 @@ import Formatfundname from "../Components/Formatfundname";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Yearmonthday } from "../Components/Formatdate";
-import { addToCarts } from "../Dashboard/Explore";
+import { addToCartSip } from "../Dashboard/Explore";
 
 export default Sip = ({ navigation }) => {
   const [folioNumber, setFolioNumber] = useState();
@@ -46,12 +46,14 @@ export default Sip = ({ navigation }) => {
     const sipDate = Yearmonthday(Sdate);
     const noOfMonths = 12 * Months;
 
-    //console.log(mfId, minPurchase, folioNumber, sipDate, noOfMonths);
-    addToCarts(mfId, minPurchase, folioNumber, sipDate, noOfMonths, null);
-    navigation.push("AddToCart");
+    addToCartSip(mfId, minPurchase, folioNumber, sipDate, noOfMonths).then(
+      (response) => {
+        if (response) {
+          navigation.push("AddToCart");
+        }
+      }
+    );
   };
-
-  //   console.log("by scheme", JSON.stringify(mfData, 1, 2));
 
   return (
     <View style={styles.container}>

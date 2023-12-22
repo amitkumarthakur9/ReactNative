@@ -26,8 +26,11 @@ export default Onetimesip = ({ navigation }) => {
   const [amount, setAmount] = useState(mfData.minPurchase.toString());
 
   const handleInvestNow = (mfId, minPurchase, folioNumber) => {
-    addToCarts(mfId, minPurchase, folioNumber, null);
-    navigation.push("AddToCart");
+    addToCarts(mfId, minPurchase, folioNumber, null).then((response) => {
+      if (response) {
+        navigation.push("AddToCart");
+      }
+    });
   };
 
   return (
