@@ -15,20 +15,13 @@ import Loader from "../Components/Loader";
 import Formatfundname from "../Components/Formatfundname";
 import { Entypo } from "@expo/vector-icons";
 import Paymentoptions from "../Payment/Paymentoptions";
-import Addtocartsip from "./Addtocartsip";
+import Sippaymentoptions from "../Payment/Sippaymentoption";
 
 export const AddToCart = () => {
   const [fetchCart, setFetchCart] = useState(null);
   const [removed, setRemoved] = useState(null);
 
-  const [orderData, setOrderData] = useState({
-    action: "cartOrder",
-    monthly: 0,
-    paymentMode: null,
-    selectBankAccount: null,
-    mandateId: null,
-    paymentFlag: 1,
-  });
+  const [orderData, setOrderData] = useState({});
 
   useEffect(() => {
     Fetchcart()
@@ -44,26 +37,34 @@ export const AddToCart = () => {
 
   useEffect(() => {
     if (fetchCart != null && fetchCart.length > 0) {
-      const updatedOrderData = {
-        action: "cartOrder",
-        monthly: 0,
-        paymentMode: null,
-        selectBankAccount: null,
-        mandateId: null,
-        paymentFlag: 1,
-        ...fetchCart.reduce((accumulator, item, index) => {
-          accumulator[`basket[${index}][mutualFundId]`] = item.mutualFund.id;
-          accumulator[`basket[${index}][amount]`] = item.amount;
-          accumulator[`basket[${index}][folioNumberString]`] = "";
-          accumulator[`basket[${index}][monthly]`] = 0;
-          return accumulator;
-        }, {}),
-      };
-      setOrderData(updatedOrderData);
+      if (fetchCart[0].monthly === true) {
+        const updatedOrderData = {
+          action: "cartOrder",
+          monthly: 1,
+          paymentMode: "DM",
+          mandateId: null,
+          paymentFlag: 0,
+          ...fetchCart.reduce((accumulator, item, index) => {
+            accumulator[`basket[${index}][mutualFundId]`] = item.mutualFund.id;
+            accumulator[`basket[${index}][amount]`] = item.amount;
+            accumulator[`basket[${index}][folioNumberString]`] =
+              item.folioNumberString ?? "";
+            accumulator[`basket[${index}][monthly]`] = 1;
+            accumulator[`basket[${index}][sipTenure]`] =
+              item.noOfInstallments / 12;
+            accumulator[`basket[${index}][frequency]`] = item.frequency;
+            accumulator[`basket[${index}][noOfInstallments]`] =
+              item.noOfInstallments;
+            accumulator[`basket[${index}][startDate]`] = item.sipDate;
+            return accumulator;
+          }, {}),
+        };
+        setOrderData(updatedOrderData);
+      }
     }
   }, [fetchCart, removed]);
 
-  console.log("amit lumpsum", orderData);
+  console.log("amit sip", orderData);
 
   const handleRemovefromcart = (cartId, mutualFundId) => {
     const data = {
@@ -79,7 +80,6 @@ export const AddToCart = () => {
 
   return (
     <>
-      <Header title="Cart" />
       {fetchCart != null && fetchCart.length > 0 ? (
         <>
           <ScrollView
@@ -87,9 +87,10 @@ export const AddToCart = () => {
             showsVerticalScrollIndicator={false}
           >
             <View style={styles.container}>
+              <Text style={styles.headerText}> SIP Payments </Text>
               {fetchCart.map(
                 (item, key) =>
-                  item.monthly === false && (
+                  item.monthly === true && (
                     <TouchableOpacity style={styles.flexRow} key={key}>
                       <View style={styles.card}>
                         <View style={[styles.flexRow]}>
@@ -151,7 +152,6 @@ export const AddToCart = () => {
                 </>
               )}
             </View>
-            <Addtocartsip />
           </ScrollView>
         </>
       ) : fetchCart == null ? (
@@ -239,6 +239,13 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     padding: width * 0.01,
     borderRadius: width * 0.01,
+  },
+  headerText: {
+    color: "#023047",
+    fontWeight: "600",
+    fontSize: width * 0.06,
+    marginTop: height * 0.032,
+    marginBottom: height * 0.032,
   },
 });
 
