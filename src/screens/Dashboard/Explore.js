@@ -41,6 +41,7 @@ export const addToCarts = (
   dispatch
 ) => {
   return new Promise((resolve, reject) => {
+    const folioNumbers = folioNumber || "";
     const data = {
       monthly: 0,
       action: "addToCartMfuMultiple",
@@ -49,8 +50,8 @@ export const addToCarts = (
       "basket[0][frequency]": "",
       "basket[0][startDate]": "Invalid date",
       "basket[0][noOfMonths]": 0,
-      "basket[0][folioNumberString]": folioNumber,
-      folioNumberString: folioNumber,
+      "basket[0][folioNumberString]": folioNumbers,
+      folioNumberString: folioNumbers,
     };
     addToCart(data)
       .then((response) => {
@@ -77,6 +78,7 @@ export const addToCartSip = (
   Months
 ) => {
   return new Promise((resolve, reject) => {
+    const folioNumbers = folioNumber || "";
     const data = {
       monthly: 1,
       action: "addToCartMfuMultiple",
@@ -85,8 +87,8 @@ export const addToCartSip = (
       "basket[0][frequency]": "M",
       "basket[0][startDate]": Sdate,
       "basket[0][noOfMonths]": Months,
-      "basket[0][folioNumberString]": folioNumber,
-      folioNumberString: folioNumber,
+      "basket[0][folioNumberString]": folioNumbers,
+      folioNumberString: folioNumbers,
     };
 
     addToCart(data)

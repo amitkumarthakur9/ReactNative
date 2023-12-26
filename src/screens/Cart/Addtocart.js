@@ -20,6 +20,7 @@ import Addtocartsip from "./Addtocartsip";
 export const AddToCart = () => {
   const [fetchCart, setFetchCart] = useState(null);
   const [removed, setRemoved] = useState(null);
+  const [headerRendered, setHeaderRendered] = useState(false);
 
   const [orderData, setOrderData] = useState({
     action: "cartOrder",
@@ -87,68 +88,76 @@ export const AddToCart = () => {
             showsVerticalScrollIndicator={false}
           >
             <View style={styles.container}>
+              <Text style={styles.headerText}>YOUR ONE TIME ORDER BASKET</Text>
               {fetchCart.map(
                 (item, key) =>
                   item.monthly === false && (
-                    <TouchableOpacity style={styles.flexRow} key={key}>
-                      <View style={styles.card}>
-                        <View style={[styles.flexRow]}>
-                          <View style={styles.trendImage}>
-                            <Image
-                              style={{
-                                width: width * 0.14,
-                                height: width * 0.14,
-                              }}
-                              source={{
-                                uri: item.mutualFund.fundHouse.logoUrl,
-                              }}
-                              resizeMode="contain"
-                            />
-                          </View>
-                          <View>
-                            <TouchableOpacity
-                              onPress={() =>
-                                handleRemovefromcart(
-                                  item.cartId,
-                                  item.mutualFund.id
-                                )
-                              }
-                            >
-                              <Entypo
-                                name="cross"
-                                color="black"
+                    <>
+                      <TouchableOpacity style={styles.flexRow} key={key}>
+                        <View style={styles.card}>
+                          <View style={[styles.flexRow]}>
+                            <View style={styles.trendImage}>
+                              <Image
                                 style={{
-                                  alignSelf: "flex-end",
-                                  fontSize: width * 0.045,
+                                  width: width * 0.14,
+                                  height: width * 0.14,
                                 }}
+                                source={{
+                                  uri: item.mutualFund.fundHouse.logoUrl,
+                                }}
+                                resizeMode="contain"
                               />
-                            </TouchableOpacity>
+                            </View>
+                            <View>
+                              <TouchableOpacity
+                                onPress={() =>
+                                  handleRemovefromcart(
+                                    item.cartId,
+                                    item.mutualFund.id
+                                  )
+                                }
+                              >
+                                <Entypo
+                                  name="cross"
+                                  color="black"
+                                  style={{
+                                    alignSelf: "flex-end",
+                                    fontSize: width * 0.045,
+                                  }}
+                                />
+                              </TouchableOpacity>
+                            </View>
                           </View>
-                        </View>
-                        <Text style={styles.fundName}>
-                          {Formatfundname(item.mutualFund.name)}
-                        </Text>
-                        <View
-                          style={[styles.flexRow, { marginTop: height * 0.02 }]}
-                        >
-                          <View style={styles.flexContent}>
-                            <Text style={styles.type}>
-                              Amount {item.amount}
-                              {removed}
+                          <Text style={styles.fundName}>
+                            {Formatfundname(item.mutualFund.name)}
+                          </Text>
+                          <View
+                            style={[
+                              styles.flexRow,
+                              { marginTop: height * 0.02 },
+                            ]}
+                          >
+                            <View style={styles.flexContent}>
+                              <Text style={styles.type}>
+                                Amount {item.amount}
+                                {removed}
+                              </Text>
+                            </View>
+                            <Text style={styles.rating}>
+                              {item.mutualFund.rating}/5
                             </Text>
                           </View>
-                          <Text style={styles.rating}>
-                            {item.mutualFund.rating}/5
-                          </Text>
                         </View>
-                      </View>
-                    </TouchableOpacity>
+                      </TouchableOpacity>
+                      <>
+                        {orderData.hasOwnProperty("basket[0][amount]") && (
+                          <>
+                            <Paymentoptions orderData={orderData} />
+                          </>
+                        )}
+                      </>
+                    </>
                   )
-              )}
-              {orderData.hasOwnProperty("basket[0][amount]") && (
-                <>
-                  <Paymentoptions orderData={orderData} />
-                </>
               )}
             </View>
             <Addtocartsip />
@@ -239,6 +248,14 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     padding: width * 0.01,
     borderRadius: width * 0.01,
+  },
+  headerText: {
+    color: "#023047",
+    fontWeight: "600",
+    fontSize: width * 0.04,
+    marginTop: height * 0.032,
+    marginBottom: height * 0.032,
+    textAlign: "center",
   },
 });
 

@@ -3,6 +3,7 @@ import {
   Mfubanksdata,
   Orderdata,
   Cleardata,
+  Mandatedata,
 } from "../../api/services/endpoints/buyEndpoints";
 
 const Mfubanks = () => {
@@ -14,6 +15,17 @@ const Mfubanks = () => {
   }, []);
 
   return mfubanks;
+};
+
+export const Mandate = () => {
+  const [mandate, setMandate] = useState([]);
+  useEffect(() => {
+    Mandatedata().then((response) => {
+      setMandate(response.data.mandateDetails);
+    });
+  }, []);
+
+  return mandate;
 };
 
 export const Orders = async (orderData) => {

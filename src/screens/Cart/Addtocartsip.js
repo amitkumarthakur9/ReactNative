@@ -16,6 +16,7 @@ import Formatfundname from "../Components/Formatfundname";
 import { Entypo } from "@expo/vector-icons";
 import Paymentoptions from "../Payment/Paymentoptions";
 import Sippaymentoptions from "../Payment/Sippaymentoption";
+import Formatdate from "../Components/Formatdate";
 
 export const AddToCart = () => {
   const [fetchCart, setFetchCart] = useState(null);
@@ -42,7 +43,6 @@ export const AddToCart = () => {
           action: "cartOrder",
           monthly: 1,
           paymentMode: "DM",
-          mandateId: null,
           paymentFlag: 0,
           ...fetchCart.reduce((accumulator, item, index) => {
             accumulator[`basket[${index}][mutualFundId]`] = item.mutualFund.id;
@@ -55,7 +55,9 @@ export const AddToCart = () => {
             accumulator[`basket[${index}][frequency]`] = item.frequency;
             accumulator[`basket[${index}][noOfInstallments]`] =
               item.noOfInstallments;
-            accumulator[`basket[${index}][startDate]`] = item.sipDate;
+            accumulator[`basket[${index}][startDate]`] = Formatdate(
+              item.sipDate
+            );
             return accumulator;
           }, {}),
         };
@@ -87,7 +89,7 @@ export const AddToCart = () => {
             showsVerticalScrollIndicator={false}
           >
             <View style={styles.container}>
-              <Text style={styles.headerText}> SIP Payments </Text>
+              <Text style={styles.headerText}>YOUR RECURRING ORDER BASKET</Text>
               {fetchCart.map(
                 (item, key) =>
                   item.monthly === true && (
@@ -148,7 +150,7 @@ export const AddToCart = () => {
               )}
               {orderData.hasOwnProperty("basket[0][amount]") && (
                 <>
-                  <Paymentoptions orderData={orderData} />
+                  <Sippaymentoptions orderData={orderData} />
                 </>
               )}
             </View>
@@ -243,9 +245,10 @@ const styles = StyleSheet.create({
   headerText: {
     color: "#023047",
     fontWeight: "600",
-    fontSize: width * 0.06,
+    fontSize: width * 0.04,
     marginTop: height * 0.032,
     marginBottom: height * 0.032,
+    textAlign: "center",
   },
 });
 

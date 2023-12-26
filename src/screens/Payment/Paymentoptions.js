@@ -25,12 +25,13 @@ const Paymentoptions = (props) => {
   const [bankcheck, setBankcheck] = useState(false);
   const [selectedBank, setSelectedBank] = useState(null);
   const [orderData, setOrderData] = useState(props.orderData || {});
+  const [siporderData, setSiporderData] = useState(props.siporderData || {});
   const [showLoader, setShowLoader] = useState(false);
   const mfubanks = Mfubanks();
 
   const navigation = useNavigation();
 
-  console.log("order data in paymentoptions", orderData);
+  //   console.log("order sip data in paymentoptions", siporderData);
 
   const handleCheckboxChange = (checkboxType, paymentMode) => {
     const checkboxMap = {
@@ -132,7 +133,7 @@ const Paymentoptions = (props) => {
             }
             imageUrl={require("../../../assets/paymentIcon/Building-Bank.png")}
           />
-          <CheckboxItem
+          {/* <CheckboxItem
             type="NEFT"
             label="NEFT"
             isChecked={neftcheck}
@@ -152,7 +153,7 @@ const Paymentoptions = (props) => {
             isChecked={mandatecheck}
             handleCheckboxChange={() => handleCheckboxChange("Mandate")}
             imageUrl={require("../../../assets/paymentIcon/Shape2.png")}
-          />
+          /> */}
         </View>
 
         {!showLoader ? (

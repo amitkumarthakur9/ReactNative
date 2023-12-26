@@ -26,6 +26,10 @@ export const Mfubanksdata = () => {
   return apiClient.get("/app/mfuUser?action=getMfuAdditionalBanks");
 };
 
+export const Mandatedata = () => {
+  return apiClient.get("/app/user?action=getAllValidMandates");
+};
+
 export const Orderdata = (data) => {
   const urlEncodedData = queryString(data);
   console.log("passed url", urlEncodedData);
