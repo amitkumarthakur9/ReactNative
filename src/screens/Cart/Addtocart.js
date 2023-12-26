@@ -20,7 +20,7 @@ import Addtocartsip from "./Addtocartsip";
 export const AddToCart = () => {
   const [fetchCart, setFetchCart] = useState(null);
   const [removed, setRemoved] = useState(null);
-  const [headerRendered, setHeaderRendered] = useState(false);
+  const [show, setShow] = useState(false);
 
   const [orderData, setOrderData] = useState({
     action: "cartOrder",
@@ -62,6 +62,10 @@ export const AddToCart = () => {
       };
       setOrderData(updatedOrderData);
     }
+
+    if (fetchCart != null && fetchCart.length > 0) {
+      setShow(fetchCart.some((item) => item.monthly === false));
+    }
   }, [fetchCart, removed]);
 
   console.log("amit lumpsum", orderData);
@@ -88,7 +92,13 @@ export const AddToCart = () => {
             showsVerticalScrollIndicator={false}
           >
             <View style={styles.container}>
-              <Text style={styles.headerText}>YOUR ONE TIME ORDER BASKET</Text>
+              {show && (
+                <>
+                  <Text style={styles.headerText}>
+                    YOUR ONE TIME ORDER BASKET
+                  </Text>
+                </>
+              )}
               {fetchCart.map(
                 (item, key) =>
                   item.monthly === false && (
@@ -149,15 +159,13 @@ export const AddToCart = () => {
                           </View>
                         </View>
                       </TouchableOpacity>
-                      <>
-                        {orderData.hasOwnProperty("basket[0][amount]") && (
-                          <>
-                            <Paymentoptions orderData={orderData} />
-                          </>
-                        )}
-                      </>
                     </>
                   )
+              )}
+              {show && (
+                <>
+                  <Paymentoptions orderData={orderData} />
+                </>
               )}
             </View>
             <Addtocartsip />

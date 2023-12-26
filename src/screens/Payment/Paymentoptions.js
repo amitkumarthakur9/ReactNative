@@ -101,9 +101,9 @@ const Paymentoptions = (props) => {
         <Text style={styles.headerText}>Choose Bank Account </Text>
         {mfubanks.length > 0 && (
           <View style={styles.chartContainer}>
-            {mfubanks.map((item) => (
+            {mfubanks.map((item, key) => (
               <Banklist
-                key={item.id}
+                key={key}
                 label={item.bankName}
                 desc={item.accountNo}
                 isChecked={selectedBank === item.id}

@@ -21,6 +21,7 @@ import Formatdate from "../Components/Formatdate";
 export const AddToCart = () => {
   const [fetchCart, setFetchCart] = useState(null);
   const [removed, setRemoved] = useState(null);
+  const [show, setShow] = useState(false);
 
   const [orderData, setOrderData] = useState({});
 
@@ -64,6 +65,10 @@ export const AddToCart = () => {
         setOrderData(updatedOrderData);
       }
     }
+
+    if (fetchCart != null && fetchCart.length > 0) {
+      setShow(fetchCart.some((item) => item.monthly === true));
+    }
   }, [fetchCart, removed]);
 
   console.log("amit sip", orderData);
@@ -89,7 +94,13 @@ export const AddToCart = () => {
             showsVerticalScrollIndicator={false}
           >
             <View style={styles.container}>
-              <Text style={styles.headerText}>YOUR RECURRING ORDER BASKET</Text>
+              {show && (
+                <>
+                  <Text style={styles.headerText}>
+                    YOUR RECURRING ORDER BASKET
+                  </Text>
+                </>
+              )}
               {fetchCart.map(
                 (item, key) =>
                   item.monthly === true && (
@@ -148,7 +159,7 @@ export const AddToCart = () => {
                     </TouchableOpacity>
                   )
               )}
-              {orderData.hasOwnProperty("basket[0][amount]") && (
+              {show && (
                 <>
                   <Sippaymentoptions orderData={orderData} />
                 </>
