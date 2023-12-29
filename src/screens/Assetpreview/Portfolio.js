@@ -22,6 +22,7 @@ const Portfolio = () => {
   const mfId = route.params.mfId;
   const ptData = Navdata(mfId, trendDuration);
   const [transformedData, settransformedData] = useState([]);
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     if (ptData.length > 0 && ptData != null) {
@@ -33,6 +34,7 @@ const Portfolio = () => {
       });
 
       settransformedData(navData);
+      setShowLoader(false);
     }
   }, [ptData]);
   //   console.log("transformeddata", transformedData);
@@ -105,29 +107,35 @@ const Portfolio = () => {
   //     { value: 250, date: "4 May 2022" },
   //     { value: 210, date: "5 May 2022" },
   //   ];
+
+  const handleduration = (itemValue) => {
+    setTrendDuration(itemValue);
+    setShowLoader(true);
+  };
+
   console.log(transformedData);
   return (
     <View style={styles.portfolioContainer}>
-      {transformedData.length > 0 && transformedData != null ? (
+      {transformedData.length > 0 &&
+      transformedData != null &&
+      showLoader === false ? (
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.Trend}>Trend</Text>
           <View style={styles.chartContainer}>
             <TouchableOpacity style={styles.dropdown}>
               <Picker
                 selectedValue={trendDuration}
-                onValueChange={(itemValue, itemIndex) =>
-                  setTrendDuration(itemValue)
-                }
+                onValueChange={(itemValue) => handleduration(itemValue)}
                 mode="dropdown"
                 style={styles.Picker}
               >
                 <Picker.Item
-                  label="1 Year Nav"
+                  label="Nav"
                   value="12"
                   style={styles.pickerLabelStyle}
                 />
                 <Picker.Item
-                  label="1 Months"
+                  label="1 Month"
                   value="1"
                   style={styles.pickerLabelStyle}
                 />
@@ -141,21 +149,21 @@ const Portfolio = () => {
                   value="6"
                   style={styles.pickerLabelStyle}
                 />
-                {/* <Picker.Item
+                <Picker.Item
                   label="1 Year"
                   value="12"
                   style={styles.pickerLabelStyle}
                 />
                 <Picker.Item
-                  label="2 Year"
+                  label="3 Years"
                   value="24"
                   style={styles.pickerLabelStyle}
                 />
                 <Picker.Item
-                  label="3 Year"
-                  value="36"
+                  label="5 Years"
+                  value="60"
                   style={styles.pickerLabelStyle}
-                /> */}
+                />
               </Picker>
             </TouchableOpacity>
 
