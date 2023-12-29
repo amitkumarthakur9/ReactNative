@@ -29,7 +29,11 @@ export default Content = (props) => {
           component={Overview}
           initialParams={{ mfData: Data }}
         />
-        <Tab.Screen name="Portfolio" component={Portfolio} />
+        <Tab.Screen
+          name="Portfolio"
+          component={Portfolio}
+          initialParams={{ mfId: Data.id }}
+        />
         <Tab.Screen name="Holdings" component={Holdings} />
       </Tab.Navigator>
     </View>
