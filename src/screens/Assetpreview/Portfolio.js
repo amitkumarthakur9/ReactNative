@@ -11,18 +11,40 @@ import { height, width } from "../../Dimension";
 import { Picker } from "@react-native-picker/picker";
 import { Slider } from "@miblanchard/react-native-slider";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { Navdata } from "./Data";
+import { Navdata, Risknavdata } from "./Data";
 import Loader from "../Components/Loader";
+
+const Handleriskcalculator = async (
+  investment,
+  timePeriod,
+  mfId,
+  currentNav
+) => {
+  try {
+    const response = await Risknavdata(mfId, timePeriod);
+    const currentValue = (investment / response[0].nav) * currentNav;
+    const gain = currentValue - investment;
+    const percentage = ((currentValue - investment) / investment) * 100;
+    return { currentValue, gain, percentage };
+  } catch (error) {
+    console.error("Error in Handleriskcalculator:", error);
+  }
+};
 
 const Portfolio = () => {
   const [trendDuration, setTrendDuration] = useState(12);
   const [MonthlyInvestment, setMonthlyInvestment] = useState(1000);
   const [timePeriod, setTimePeriod] = useState(1);
   const route = useRoute();
-  const mfId = route.params.mfId;
+  const { mfId, currentNav } = route.params;
   const ptData = Navdata(mfId, trendDuration);
   const [transformedData, settransformedData] = useState([]);
   const [showLoader, setShowLoader] = useState(false);
+  const [onetime, setOnetime] = useState(true);
+  const [monthly, setMonthly] = useState(false);
+  const [currentvalue, setCurrentvalue] = useState("0");
+  const [rgain, setRgain] = useState(0);
+  const [rpercentage, setRpercentage] = useState(0);
 
   useEffect(() => {
     if (ptData.length > 0 && ptData != null) {
@@ -37,83 +59,54 @@ const Portfolio = () => {
       setShowLoader(false);
     }
   }, [ptData]);
-  //   console.log("transformeddata", transformedData);
-  //   console.log("id", ptData);
-  //   const ptData = [
-  //     { date: "2022-12-29", value: 204.5856 },
-  //     { date: "2022-12-30", value: 1.9518 },
-  //     { date: "2023-01-02", value: 147.4053 },
-  //     { date: "2023-01-03", value: 106.0286 },
-  //     { date: "2023-01-04", value: 16.1127 },
-  //     { date: "2023-01-05", value: 16.3084 },
-  //     { date: "2023-01-06", value: 145.3338 },
-  //     { date: "2023-01-08", value: 15.3338 },
-  //   ];
-  //   const ptData = [
-  //     { value: 160, date: "1 Apr 2022" },
-  //     { value: 180, date: "2 Apr 2022" },
-  //     { value: 190, date: "3 Apr 2022" },
-  //     { value: 180, date: "4 Apr 2022" },
-  //     { value: 140, date: "5 Apr 2022" },
-  //     { value: 145, date: "6 Apr 2022" },
-  //     { value: 160, date: "7 Apr 2022" },
-  //     { value: 200, date: "8 Apr 2022" },
-
-  //     { value: 220, date: "9 Apr 2022" },
-  //     {
-  //       value: 240,
-  //       date: "10 Apr 2022",
-  //       label: "10 Apr",
-  //       labelTextStyle: {
-  //         color: "rgba(131, 132, 139, 1)",
-  //         width: 60,
-  //       },
-  //     },
-  //     { value: 280, date: "11 Apr 2022" },
-  //     { value: 260, date: "12 Apr 2022" },
-  //     { value: 340, date: "13 Apr 2022" },
-  //     { value: 385, date: "14 Apr 2022" },
-  //     { value: 280, date: "15 Apr 2022" },
-  //     { value: 390, date: "16 Apr 2022" },
-
-  //     { value: 370, date: "17 Apr 2022" },
-  //     { value: 285, date: "18 Apr 2022" },
-  //     { value: 295, date: "19 Apr 2022" },
-  //     {
-  //       value: 300,
-  //       date: "20 Apr 2022",
-  //       label: "20 Apr",
-  //       labelTextStyle: { color: "lightgray", width: 60 },
-  //     },
-  //     { value: 280, date: "21 Apr 2022" },
-  //     { value: 295, date: "22 Apr 2022" },
-  //     { value: 260, date: "23 Apr 2022" },
-  //     { value: 255, date: "24 Apr 2022" },
-
-  //     { value: 190, date: "25 Apr 2022" },
-  //     { value: 220, date: "26 Apr 2022" },
-  //     { value: 205, date: "27 Apr 2022" },
-  //     { value: 230, date: "28 Apr 2022" },
-  //     { value: 210, date: "29 Apr 2022" },
-  //     {
-  //       value: 200,
-  //       date: "30 Apr 2022",
-  //       label: "30 Apr",
-  //       labelTextStyle: { color: "lightgray", width: 60 },
-  //     },
-  //     { value: 240, date: "1 May 2022" },
-  //     { value: 250, date: "2 May 2022" },
-  //     { value: 280, date: "3 May 2022" },
-  //     { value: 250, date: "4 May 2022" },
-  //     { value: 210, date: "5 May 2022" },
-  //   ];
 
   const handleduration = (itemValue) => {
     setTrendDuration(itemValue);
     setShowLoader(true);
   };
 
-  console.log(transformedData);
+  const handleFrequency = (freq) => {
+    if (freq == "onetime") {
+      setOnetime(true);
+      setMonthly(false);
+    } else {
+      setOnetime(false);
+      setMonthly(true);
+    }
+  };
+
+  const handleslider = (value, sliderName) => {
+    if (sliderName == "investemnt") {
+      Handleriskcalculator;
+      const investment = value;
+      setMonthlyInvestment(value);
+
+      Handleriskcalculator(investment, timePeriod, mfId, currentNav).then(
+        (response) => {
+          const { currentValue, gain, percentage } = response;
+          console.log("onetime", response);
+          setCurrentvalue(currentValue);
+          setRgain(gain);
+          setRpercentage(percentage);
+        }
+      );
+    }
+    if (sliderName == "timePeriod") {
+      const timeP = value;
+      setTimePeriod(value);
+
+      Handleriskcalculator(MonthlyInvestment, timeP, mfId, currentNav).then(
+        (response) => {
+          const { currentValue, gain, percentage } = response;
+          console.log("time", response);
+          setCurrentvalue(currentValue);
+          setRgain(gain);
+          setRpercentage(percentage);
+        }
+      );
+    }
+  };
+
   return (
     <View style={styles.portfolioContainer}>
       {transformedData.length > 0 &&
@@ -253,24 +246,37 @@ const Portfolio = () => {
               <Text style={styles.riskCalculatorHeader}>
                 Returns on Axis Multicap Growth Fund
               </Text>
-              <Text style={styles.amount}>₹10,600.00</Text>
+              <Text style={styles.amount}>₹ {Math.floor(currentvalue)}</Text>
               <View style={styles.flexContainer}>
                 <Text style={styles.absolute}>Absolute Returns :</Text>
-                <Text style={styles.percentage}> +32.3 (9%)</Text>
+                <Text style={styles.percentage}>
+                  {" "}
+                  {Math.floor(rgain)} ({Math.floor(rpercentage)}%)
+                </Text>
               </View>
               <View style={styles.flexContainer}>
                 <TouchableOpacity
+                  onPress={() => handleFrequency("onetime")}
                   style={[
                     styles.frequencyButtons,
-                    { backgroundColor: "white" },
+                    {
+                      backgroundColor: onetime
+                        ? "rgba(249, 174, 44, 1)"
+                        : "white",
+                    },
                   ]}
                 >
                   <Text style={styles.frequencyButtonsText}>One - Time</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  onPress={() => handleFrequency("monthly")}
                   style={[
                     styles.frequencyButtons,
-                    { backgroundColor: "rgba(249, 174, 44, 1)" },
+                    {
+                      backgroundColor: monthly
+                        ? "rgba(249, 174, 44, 1)"
+                        : "white",
+                    },
                   ]}
                 >
                   <Text style={styles.frequencyButtonsText}>Monthly</Text>
@@ -282,7 +288,7 @@ const Portfolio = () => {
                 style={[styles.flexContainer, { marginTop: height * 0.04 }]}
               >
                 <Text style={[styles.rangeText, { textAlign: "left" }]}>
-                  Monthly Investment
+                  Investment
                 </Text>
                 <Text style={styles.rangeTextPercentage}>
                   ₹ {MonthlyInvestment}
@@ -295,9 +301,11 @@ const Portfolio = () => {
                 maximumValue={100000}
                 minimumValue={1000}
                 onValueChange={(value) =>
-                  setMonthlyInvestment(Math.floor(value))
+                  //setMonthlyInvestment(Math.floor(value))
+                  //   Handleriskcalculator(Math.floor(value))
+                  handleslider(Math.floor(value / 1000) * 1000, "investemnt")
                 }
-                value={MonthlyInvestment}
+                value={Math.floor(MonthlyInvestment / 1000) * 1000}
                 thumbTintColor={"rgba(33, 158, 188, 1)"}
                 trackStyle={{
                   height: height * 0.008,
@@ -318,10 +326,11 @@ const Portfolio = () => {
                 animateTransitions
                 maximumTrackTintColor={"rgba(26, 28, 23, 0.12)"}
                 minimumTrackTintColor={"rgba(2, 48, 71, 1)"}
-                maximumValue={15}
+                maximumValue={5}
                 minimumValue={1}
                 onValueChange={(yearValue) =>
-                  setTimePeriod(Math.floor(yearValue))
+                  // setTimePeriod(Math.floor(yearValue))
+                  handleslider(Math.floor(yearValue), "timePeriod")
                 }
                 value={timePeriod}
                 thumbTintColor={"rgba(33, 158, 188, 1)"}

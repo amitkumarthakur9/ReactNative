@@ -3,6 +3,7 @@ import {
   AssetPreview,
   Folio,
   Nav,
+  Risknav,
 } from "../../api/services/endpoints/assetEndpoints";
 
 const Assetoverviewdata = async (mfId) => {
@@ -54,6 +55,15 @@ export const Navdata = (mfId, trendDuration) => {
   }, [mfId, trendDuration]);
 
   return nav;
+};
+
+export const Risknavdata = async (mfId, trendDuration) => {
+  try {
+    const response = await Risknav(mfId, trendDuration);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
 };
 
 export default Assetoverviewdata;

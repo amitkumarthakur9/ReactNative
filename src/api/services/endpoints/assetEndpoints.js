@@ -28,13 +28,33 @@ export const Nav = (mfId, trendDuration) => {
   const endDate =
     currentDate.getFullYear() +
     "-" +
-    monthPlusOne +
+    monthPlusOne.toString().padStart(2, "0") +
     "-" +
-    currentDate.getDate();
+    currentDate.getDate().toString().padStart(2, "0");
 
   const startDate = formatDate(Calculatedate);
 
   return apiClient.get(
     `/app/nav?action=getNavOfGrowthFundWeb&id=${mfId}&startDate=${startDate}&endDate=${endDate}`
+  );
+};
+
+export const Risknav = (mfId, trendDuration) => {
+  const currentDate = new Date();
+  const oneTimestartdate =
+    currentDate.getFullYear() -
+    trendDuration +
+    "-" +
+    (currentDate.getMonth() + 1).toString().padStart(2, "0") +
+    "-" +
+    currentDate.getDay().toString().padStart(2, "0");
+
+  console.log(
+    "passed url",
+    `/app/nav?action=getNavOfGrowthFundWeb&id=${mfId}&startDate=${oneTimestartdate}&endDate=${oneTimestartdate}`
+  );
+
+  return apiClient.get(
+    `/app/nav?action=getNavOfGrowthFundWeb&id=${mfId}&startDate=${oneTimestartdate}&endDate=${oneTimestartdate}`
   );
 };
