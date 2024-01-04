@@ -13,6 +13,7 @@ import { Slider } from "@miblanchard/react-native-slider";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { Navdata, Risknavdata } from "./Data";
 import Loader from "../Components/Loader";
+import Getfirstdates from "./Monthlycalculation";
 
 const Handleriskcalculator = async (
   investment,
@@ -45,6 +46,11 @@ const Portfolio = () => {
   const [currentvalue, setCurrentvalue] = useState("0");
   const [rgain, setRgain] = useState(0);
   const [rpercentage, setRpercentage] = useState(0);
+  const getMonthlyCalculationData = Getfirstdates(
+    mfId,
+    timePeriod,
+    MonthlyInvestment
+  );
 
   useEffect(() => {
     if (ptData.length > 0 && ptData != null) {
@@ -84,7 +90,7 @@ const Portfolio = () => {
       Handleriskcalculator(investment, timePeriod, mfId, currentNav).then(
         (response) => {
           const { currentValue, gain, percentage } = response;
-          console.log("onetime", response);
+          //   console.log("onetime", response);
           setCurrentvalue(currentValue);
           setRgain(gain);
           setRpercentage(percentage);
@@ -98,7 +104,7 @@ const Portfolio = () => {
       Handleriskcalculator(MonthlyInvestment, timeP, mfId, currentNav).then(
         (response) => {
           const { currentValue, gain, percentage } = response;
-          console.log("time", response);
+          //   console.log("time", response);
           setCurrentvalue(currentValue);
           setRgain(gain);
           setRpercentage(percentage);
