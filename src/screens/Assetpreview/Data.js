@@ -5,6 +5,7 @@ import {
   Nav,
   Risknav,
 } from "../../api/services/endpoints/assetEndpoints";
+import { allPortfolio } from "../../api/services/endpoints/portfolioEndpoints";
 
 const Assetoverviewdata = async (mfId) => {
   //   try {
@@ -63,6 +64,16 @@ export const Risknavdata = async (mfId, trendDuration) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);
+  }
+};
+
+export const Portfolio = async () => {
+  try {
+    const holding = await allPortfolio();
+    const response = holding.data;
+    return response.portfolioBreakup;
+  } catch (error) {
+    console.warn("error in fetching holdings data", error);
   }
 };
 

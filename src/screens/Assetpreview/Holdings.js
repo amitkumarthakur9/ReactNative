@@ -1,35 +1,156 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import { height, width } from "../../Dimension";
+import { Picker } from "@react-native-picker/picker";
 import * as progress from "react-native-progress";
+import { Portfolio } from "./Data";
+import Loader from "../Components/Loader";
+import Inrconvertor from "../Components/Inrconverter";
 
 const Holdings = () => {
-  const pieData = [
-    { value: 10, color: "rgba(59, 130, 246, 1)", text: "54%" },
-    { value: 10, color: "rgba(250, 204, 21, 1)", text: "30%" },
-    { value: 10, color: "rgba(245, 158, 11, 1)", text: "26%" },
-    { value: 10, color: "rgba(236, 72, 153, 1)", text: "30%" },
-    { value: 10, color: "rgba(99, 102, 241, 1)", text: "26%" },
-    { value: 10, color: "rgba(59, 130, 246, 1)", text: "26%" },
+  const [wise, setWise] = useState("categoryWise");
+  const [pieData, setPieData] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [showLoader, setShowLoader] = useState(false);
+  const colors = [
+    "#1a521d",
+    "#ba3de6",
+    "#74bb57",
+    "#f73a0d",
+    "#4eb386",
+    "#501a05",
+    "#872540",
+    "#ccea6b",
+    "#b0efbf",
+    "#4fa616",
+    "#1da891",
+    "#7ddce7",
+    "#53c53a",
+    "#90165e",
+    "#4264d2",
+    "#5ec6a6",
+    "#1f37ab",
+    "#5841b1",
+    "#4488e1",
+    "#186d13",
+    "#826a71",
+    "#e6da60",
+    "#8d2c87",
+    "#77c991",
+    "#52dd0f",
+    "#9c2d95",
+    "#2e43c3",
+    "#f2682f",
+    "#be2690",
+    "#fbd8b4",
+    "#ee0b74",
+    "#eeb45f",
+    "#ae49f6",
+    "#c6c440",
+    "#838357",
+    "#374ed4",
+    "#d6c05f",
+    "#4fece5",
+    "#e3ca4a",
+    "#a192f1",
   ];
+
+  useEffect(() => {
+    Portfolio().then((response) => {
+      const obj = response;
+      const wholeObj = [];
+      const categoryArr = [];
+      const subCategoryArr = [];
+      const pieSub = [];
+      const pieChart = [];
+      for (let key in obj) {
+        if (key != "total") {
+          wholeObj.push(obj[key]);
+          categoryArr.push({ [key]: obj[key]["total"] });
+          pieChart.push({ value: Math.floor(obj[key]["total"]) });
+        }
+      }
+
+      for (let key in wholeObj) {
+        const totalObj = wholeObj[key];
+        for (let totalkey in totalObj) {
+          if (totalkey != "total") {
+            subCategoryArr.push({ [totalkey]: totalObj[totalkey] });
+            pieSub.push({ value: totalObj[totalkey] });
+          }
+        }
+      }
+
+      for (let i = 0; i < pieSub.length; i++) {
+        pieSub[i]["color"] = colors[i];
+        subCategoryArr[i]["color"] = colors[i];
+      }
+
+      for (let i = 0; i < pieChart.length; i++) {
+        pieChart[i]["color"] = colors[i];
+        categoryArr[i]["color"] = colors[i];
+      }
+
+      if (wise == "categoryWise") {
+        setPieData(pieChart);
+        setCategories(categoryArr);
+        setShowLoader(false);
+      } else {
+        setPieData(pieSub);
+        setCategories(subCategoryArr);
+        setShowLoader(false);
+      }
+    });
+  }, [wise]);
+
+  const handleWise = (value) => {
+    setWise(value);
+    setShowLoader(true);
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <View style={styles.donutContainer}>
-          <Text style={styles.sectorHeading}>Sector Holdings</Text>
-          <View style={styles.chartContainer}>
-            <PieChart
-              donut
-              //   focusOnPress
-              //   toggleFocusOnPress
-              //   showText
-              radius={width * 0.32}
-              data={pieData}
-              innerRadius={width * 0.22}
-            />
-          </View>
+          <TouchableOpacity>
+            <Picker
+              selectedValue={wise}
+              onValueChange={(value) => handleWise(value)}
+              mode="dropdown"
+              style={styles.sectorHeading}
+            >
+              <Picker.Item
+                label="Category Wise"
+                value="categoryWise"
+                style={styles.pickerLabelStyle}
+              />
+              <Picker.Item
+                label="Sub-Category Wise"
+                value="subCategoryWise"
+                style={styles.pickerLabelStyle}
+              />
+            </Picker>
+          </TouchableOpacity>
+          {pieData.length > 0 && !showLoader ? (
+            <View style={styles.chartContainer}>
+              <PieChart
+                donut
+                radius={width * 0.32}
+                data={pieData}
+                innerRadius={width * 0.22}
+              />
+            </View>
+          ) : (
+            <Loader />
+          )}
+
           <View
             style={[
               styles.sectorContainer,
@@ -40,208 +161,35 @@ const Holdings = () => {
             ]}
           >
             <Text style={[styles.sectorHeader, { marginLeft: width * 0.09 }]}>
-              Sector
+              Categories
             </Text>
             <Text style={[styles.sectorHeader, { textAlign: "right" }]}>
-              Stake %
+              Amount
             </Text>
           </View>
-          <View style={styles.sectorContainer}>
-            <Text
-              style={[
-                styles.bullet,
-                { backgroundColor: "rgba(59, 130, 246, 1)" },
-              ]}
-            />
-            <Text style={styles.sectorItem}>Financial</Text>
-            <Text style={[styles.sectorPercentage]}>62.5%</Text>
-          </View>
-          <View style={styles.sectorContainer}>
-            <Text
-              style={[
-                styles.bullet,
-                { backgroundColor: "rgba(245, 158, 11, 1)" },
-              ]}
-            />
-            <Text style={styles.sectorItem}>Cash Holdings</Text>
-            <Text style={[styles.sectorPercentage]}>25%</Text>
-          </View>
-          <View style={styles.sectorContainer}>
-            <Text
-              style={[
-                styles.bullet,
-                { backgroundColor: "rgba(250, 204, 21, 1)" },
-              ]}
-            />
-            <Text style={styles.sectorItem}>Metal & Mining</Text>
-            <Text style={[styles.sectorPercentage]}>12.5%</Text>
-          </View>
-          <View style={styles.sectorContainer}>
-            <Text
-              style={[
-                styles.bullet,
-                { backgroundColor: "rgba(236, 72, 153, 1)" },
-              ]}
-            />
-            <Text style={styles.sectorItem}>Metal & Mining</Text>
-            <Text style={[styles.sectorPercentage]}>30%</Text>
-          </View>
-          <View style={styles.sectorContainer}>
-            <Text
-              style={[
-                styles.bullet,
-                { backgroundColor: "rgba(99, 102, 241, 1)" },
-              ]}
-            />
-            <Text style={styles.sectorItem}>Metal & Mining</Text>
-            <Text style={[styles.sectorPercentage]}>30%</Text>
-          </View>
-          <View style={styles.sectorContainer}>
-            <Text
-              style={[
-                styles.bullet,
-                { backgroundColor: "rgba(59, 130, 246, 1)" },
-              ]}
-            />
-            <Text style={styles.sectorItem}>Metal & Mining</Text>
-            <Text style={[styles.sectorPercentage]}>30%</Text>
-          </View>
-        </View>
-        <Text style={styles.companyHolding}>Company Holdings</Text>
-
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBarItem}>
-            <Text style={styles.progressHeader}>Others</Text>
-            <progress.Bar
-              progress={0.9}
-              color={"rgba(251, 133, 0, 1)"}
-              height={width * 0.015}
-              width={width * 0.73}
-              unfilledColor={"rgba(222, 222, 222, 0.8)"}
-              borderColor={"rgba(222, 222, 222, 0.8)"}
-            />
-          </View>
-          <Text style={styles.progressBarPercentage}>90%</Text>
-        </View>
-
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBarItem}>
-            <Text style={styles.progressHeader}>RBI</Text>
-            <progress.Bar
-              progress={0.8}
-              color={"rgba(251, 133, 0, 1)"}
-              height={width * 0.015}
-              width={width * 0.73}
-              unfilledColor={"rgba(222, 222, 222, 0.8)"}
-              borderColor={"rgba(222, 222, 222, 0.8)"}
-            />
-          </View>
-          <Text style={styles.progressBarPercentage}>80%</Text>
-        </View>
-
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBarItem}>
-            <Text style={styles.progressHeader}>Jio Financial Services</Text>
-            <progress.Bar
-              progress={0.7}
-              color={"rgba(251, 133, 0, 1)"}
-              height={width * 0.015}
-              width={width * 0.73}
-              unfilledColor={"rgba(222, 222, 222, 0.8)"}
-              borderColor={"rgba(222, 222, 222, 0.8)"}
-            />
-          </View>
-          <Text style={styles.progressBarPercentage}>70%</Text>
-        </View>
-
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBarItem}>
-            <Text style={styles.progressHeader}>Hdfc Bank Limited</Text>
-            <progress.Bar
-              progress={0.6}
-              color={"rgba(251, 133, 0, 1)"}
-              height={width * 0.015}
-              width={width * 0.73}
-              unfilledColor={"rgba(222, 222, 222, 0.8)"}
-              borderColor={"rgba(222, 222, 222, 0.8)"}
-            />
-          </View>
-          <Text style={styles.progressBarPercentage}>60%</Text>
-        </View>
-
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBarItem}>
-            <Text style={styles.progressHeader}>RBI</Text>
-            <progress.Bar
-              progress={0.5}
-              color={"rgba(251, 133, 0, 1)"}
-              height={width * 0.015}
-              width={width * 0.73}
-              unfilledColor={"rgba(222, 222, 222, 0.8)"}
-              borderColor={"rgba(222, 222, 222, 0.8)"}
-            />
-          </View>
-          <Text style={styles.progressBarPercentage}>50%</Text>
-        </View>
-
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBarItem}>
-            <Text style={styles.progressHeader}>RBI</Text>
-            <progress.Bar
-              progress={0.4}
-              color={"rgba(251, 133, 0, 1)"}
-              height={width * 0.015}
-              width={width * 0.73}
-              unfilledColor={"rgba(222, 222, 222, 0.8)"}
-              borderColor={"rgba(222, 222, 222, 0.8)"}
-            />
-          </View>
-          <Text style={styles.progressBarPercentage}>40%</Text>
-        </View>
-
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBarItem}>
-            <Text style={styles.progressHeader}>RBI</Text>
-            <progress.Bar
-              progress={0.2}
-              color={"rgba(251, 133, 0, 1)"}
-              height={width * 0.015}
-              width={width * 0.73}
-              unfilledColor={"rgba(222, 222, 222, 0.8)"}
-              borderColor={"rgba(222, 222, 222, 0.8)"}
-            />
-          </View>
-          <Text style={styles.progressBarPercentage}>20%</Text>
-        </View>
-
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBarItem}>
-            <Text style={styles.progressHeader}>RBI</Text>
-            <progress.Bar
-              progress={0.1}
-              color={"rgba(251, 133, 0, 1)"}
-              height={width * 0.015}
-              width={width * 0.73}
-              unfilledColor={"rgba(222, 222, 222, 0.8)"}
-              borderColor={"rgba(222, 222, 222, 0.8)"}
-            />
-          </View>
-          <Text style={styles.progressBarPercentage}>10%</Text>
-        </View>
-
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBarItem}>
-            <Text style={styles.progressHeader}>RBI</Text>
-            <progress.Bar
-              progress={0.8}
-              color={"rgba(251, 133, 0, 1)"}
-              height={width * 0.015}
-              width={width * 0.73}
-              unfilledColor={"rgba(222, 222, 222, 0.8)"}
-              borderColor={"rgba(222, 222, 222, 0.8)"}
-            />
-          </View>
-          <Text style={styles.progressBarPercentage}>80%</Text>
+          {categories.map((categoryItem, index) => {
+            const [categoryKey, categoryValue] =
+              Object.entries(categoryItem)[0];
+            const [colorName, colorValue] = Object.entries(categoryItem)[1];
+            if (Math.floor(categoryValue)) {
+              return (
+                <View style={styles.sectorContainer} key={index}>
+                  <Text
+                    style={[
+                      styles.bullet,
+                      { backgroundColor: `${colorValue}` },
+                    ]}
+                  />
+                  <Text style={styles.sectorItem}>
+                    {categoryKey.toUpperCase()}
+                  </Text>
+                  <Text style={[styles.sectorPercentage]}>
+                    {Inrconvertor(Math.floor(categoryValue))}
+                  </Text>
+                </View>
+              );
+            }
+          })}
         </View>
       </View>
     </ScrollView>
@@ -275,9 +223,8 @@ const styles = StyleSheet.create({
   },
   sectorHeading: {
     color: "rgba(2, 48, 71, 1)",
-    fontWeight: "600",
-    fontSize: width * 0.045,
     marginBottom: height * 0.04,
+    fontWeight: "bold",
   },
   sectorContainer: {
     flexDirection: "row",
@@ -337,6 +284,10 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.04,
     fontSize: width * 0.035,
     fontWeight: "500",
+  },
+  pickerLabelStyle: {
+    fontSize: width * 0.04,
+    fontWeight: "bold",
   },
 });
 
