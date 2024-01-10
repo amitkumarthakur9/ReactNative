@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,114 +9,426 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { width, height } from "../../Dimension";
+import { Picker } from "@react-native-picker/picker";
+import { Entypo } from "@expo/vector-icons";
+import { Button, TextInput } from "react-native-paper";
+import { AntDesign } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const Reports = () => {
+  const [holdingtype, setHoldingtype] = useState("");
+  const [detailed, setDetailed] = useState("");
+  const [holdingwithbalance, setHoldingwithbalance] = useState("");
+
+  const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [userwise, setUserwise] = useState("");
+  const [allholdingtype, setAllholdingtype] = useState("");
+  const [includeredeem, setIncluderedeem] = useState("");
+
+  const [capitalgain, setCapitalgain] = useState("");
+
+  const [transaction, setTransaction] = useState("");
+
+  const [elsstransaction, setElsstransaction] = useState("");
+
+  const [dividend, setDividend] = useState("");
+
+  const handleDatePress = () => {
+    setShowDatePicker(true);
+  };
+
+  const handleDateChange = (event, selectedDate) => {
+    currentDate = selectedDate || date;
+    setShowDatePicker(false);
+    setDate(currentDate);
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <View style={styles.cart}>
         <View style={styles.individualCarts}>
           <ImageBackground
-            source={require("../../../assets/portfolio/rec1.png")}
-            style={styles.rec1}
+            source={require("../../../assets/topImage.png")}
             resizeMode="stretch"
           >
-            <Image
-              source={require("../../../assets/Goal/rectengal2.png")}
-              style={styles.rectengal2}
-            />
-            <View style={styles.investmentContainer}>
-              <View style={styles.headerBox}>
-                <Text style={styles.header}>
-                  Current Internal Portfolio Value
-                </Text>
-                <Text style={styles.desc}>₹ 2,59,000.00</Text>
-              </View>
-              <View style={styles.boxBottomContainer}>
-                <View style={styles.flexRow}>
-                  <Text style={styles.descHeader}>Initial Investment</Text>
-                  <Text style={styles.descHeader}>Returns</Text>
-                </View>
-                <View style={styles.flexRow}>
-                  <Text style={styles.descValue}> ₹ 2,00,000.00 </Text>
-                  <Text
-                    style={[
-                      styles.descValue,
-                      {
-                        color: "rgba(61, 193, 84, 1)",
-                      },
-                    ]}
-                  >
-                    32.8%
-                  </Text>
-                </View>
-
-                <View style={styles.valueContainer}>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descHeader}>One Day Gain</Text>
-                    <Text style={styles.descHeader}>One Day Return</Text>
-                  </View>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descValue}> ₹ 2,00.00 </Text>
-                    <Text
-                      style={[
-                        styles.descValue,
-                        {
-                          color: "rgba(61, 193, 84, 1)",
-                        },
-                      ]}
-                    >
-                      0.28%
-                    </Text>
-                  </View>
-                </View>
-
-                <View style={styles.valueContainer}>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descHeader}>Current Gain</Text>
-                    <Text style={styles.descHeader}>XIRR</Text>
-                  </View>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descValue}> ₹ 59,00.00 </Text>
-                    <Text
-                      style={[
-                        styles.descValue,
-                        {
-                          color: "rgba(61, 193, 84, 1)",
-                        },
-                      ]}
-                    >
-                      12.8%
-                    </Text>
-                  </View>
-                </View>
-
-                <View style={styles.valueContainer}>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descHeader}>SIP - Total</Text>
-                    <Text style={styles.descHeader}>SIP Amount</Text>
-                  </View>
-                  <View style={styles.flexRow}>
-                    <Text style={styles.descValue}> 1 </Text>
-                    <Text
-                      style={[
-                        styles.descValue,
-                        {
-                          color: "black",
-                        },
-                      ]}
-                    >
-                      ₹ 5,000
-                    </Text>
-                  </View>
-                </View>
-                <TouchableOpacity style={styles.downloadReportsContainer}>
-                  <Text style={styles.downloadReportsText}>
-                    Download Reports
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <Text style={styles.desc}> Portfolio Statement</Text>
           </ImageBackground>
+          <View style={styles.dropdownContainer}>
+            <TouchableOpacity
+              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+            >
+              <Picker
+                selectedValue={holdingtype}
+                onValueChange={(itemValue) => setHoldingtype(itemValue)}
+                mode="dropdown"
+                style={styles.Picker}
+              >
+                <Picker.Item value="0" label="All Holding Type" />
+                <Picker.Item value="1" label="Internal Holding Type" />
+              </Picker>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.dropdown]}>
+              <Picker
+                selectedValue={detailed}
+                onValueChange={(itemValue) => setDetailed(itemValue)}
+                mode="dropdown"
+                style={styles.Picker}
+              >
+                <Picker.Item value="0" label="Detailed" />
+                <Picker.Item value="1" label="Summary" />
+              </Picker>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.dropdown]}>
+              <Picker
+                selectedValue={holdingwithbalance}
+                onValueChange={(itemValue) => setHoldingwithbalance(itemValue)}
+                mode="dropdown"
+                style={styles.Picker}
+              >
+                <Picker.Item value="0" label="Holdings With Balance" />
+                <Picker.Item value="1" label="All Holdings" />
+              </Picker>
+            </TouchableOpacity>
+            <View style={styles.shareContainer}>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="download" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="share" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.individualCarts}>
+          <ImageBackground
+            source={require("../../../assets/topImage.png")}
+            resizeMode="stretch"
+          >
+            <Text style={styles.desc}> Valuation Report</Text>
+          </ImageBackground>
+          <View style={styles.dropdownContainer}>
+            <TouchableOpacity onPress={handleDatePress}>
+              <TextInput
+                mode="outlined"
+                placeholder="Portfolio As On Date"
+                placeholderTextColor="rgb(191, 191, 191)"
+                value={date.toDateString()}
+                editable={false}
+                style={styles.input}
+                outlineStyle={styles.outline}
+                theme={styles.themeStyle}
+                contentStyle={styles.contentStyle}
+              />
+            </TouchableOpacity>
+            {showDatePicker && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) =>
+                  handleDateChange(event, selectedDate)
+                }
+              />
+            )}
+            <TouchableOpacity
+              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+            >
+              <Picker
+                selectedValue={userwise}
+                onValueChange={(itemValue) => setUserwise(itemValue)}
+                mode="dropdown"
+                style={styles.Picker}
+              >
+                <Picker.Item value="0" label="User Wise" />
+                <Picker.Item value="1" label="Family Wise" />
+              </Picker>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.dropdown]}>
+              <Picker
+                selectedValue={allholdingtype}
+                onValueChange={(itemValue) => setAllholdingtype(itemValue)}
+                mode="dropdown"
+                style={styles.Picker}
+              >
+                <Picker.Item value="2" label="All Holding Type" />
+                <Picker.Item value="0" label="Internal Holding Type" />
+                <Picker.Item value="1" label="External Holding Type" />
+              </Picker>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.dropdown]}>
+              <Picker
+                selectedValue={includeredeem}
+                onValueChange={(itemValue) => setIncluderedeem(itemValue)}
+                mode="dropdown"
+                style={styles.Picker}
+              >
+                <Picker.Item value="1" label="Include Redeemed Units" />
+                <Picker.Item value="0" label="Exclude Redeemed Units" />
+              </Picker>
+            </TouchableOpacity>
+            <View style={styles.shareContainer}>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="download" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="share" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.individualCarts}>
+          <ImageBackground
+            source={require("../../../assets/topImage.png")}
+            resizeMode="stretch"
+          >
+            <Text style={styles.desc}> Capital Gain Report</Text>
+          </ImageBackground>
+          <View style={styles.dropdownContainer}>
+            <TouchableOpacity
+              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+            >
+              <Picker
+                selectedValue={capitalgain}
+                onValueChange={(itemValue) => setCapitalgain(itemValue)}
+                mode="dropdown"
+                style={styles.Picker}
+              >
+                <Picker.Item value="2023" label="2023-2024" />
+                <Picker.Item value="2022" label="2022-2023" />
+                <Picker.Item value="2021" label="2021-2022" />
+                <Picker.Item value="2020" label="2020-2021" />
+                <Picker.Item value="2019" label="2019-2020" />
+                <Picker.Item value="2018" label="2018-2019" />
+              </Picker>
+            </TouchableOpacity>
+
+            <View style={styles.shareContainer}>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="download" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="share" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.individualCarts}>
+          <ImageBackground
+            source={require("../../../assets/topImage.png")}
+            resizeMode="stretch"
+          >
+            <Text style={styles.desc}> Transaction Report</Text>
+          </ImageBackground>
+          <View style={styles.dropdownContainer}>
+            <TouchableOpacity
+              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+            >
+              <Picker
+                selectedValue={transaction}
+                onValueChange={(itemValue) => setTransaction(itemValue)}
+                mode="dropdown"
+                style={styles.Picker}
+              >
+                <Picker.Item value="2023" label="2023-2024" />
+                <Picker.Item value="2022" label="2022-2023" />
+                <Picker.Item value="2021" label="2021-2022" />
+                <Picker.Item value="2020" label="2020-2021" />
+                <Picker.Item value="2019" label="2019-2020" />
+                <Picker.Item value="2018" label="2018-2019" />
+              </Picker>
+            </TouchableOpacity>
+            <View style={styles.shareContainer}>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="download" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="share" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.individualCarts}>
+          <ImageBackground
+            source={require("../../../assets/topImage.png")}
+            resizeMode="stretch"
+          >
+            <Text style={styles.desc}> 80C MF Transaction Report</Text>
+          </ImageBackground>
+          <View style={styles.dropdownContainer}>
+            <TouchableOpacity
+              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+            >
+              <Picker
+                selectedValue={elsstransaction}
+                onValueChange={(itemValue) => setElsstransaction(itemValue)}
+                mode="dropdown"
+                style={styles.Picker}
+              >
+                <Picker.Item value="2023" label="2023-2024" />
+                <Picker.Item value="2022" label="2022-2023" />
+                <Picker.Item value="2021" label="2021-2022" />
+                <Picker.Item value="2020" label="2020-2021" />
+                <Picker.Item value="2019" label="2019-2020" />
+                <Picker.Item value="2018" label="2018-2019" />
+              </Picker>
+            </TouchableOpacity>
+            <View style={styles.shareContainer}>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="download" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="share" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.individualCarts}>
+          <ImageBackground
+            source={require("../../../assets/topImage.png")}
+            resizeMode="stretch"
+          >
+            <Text style={styles.desc}> Holding Summary Report</Text>
+          </ImageBackground>
+          <View style={styles.dropdownContainer}>
+            <View style={styles.shareContainer}>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="download" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="share" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.individualCarts}>
+          <ImageBackground
+            source={require("../../../assets/topImage.png")}
+            resizeMode="stretch"
+          >
+            <Text style={styles.desc}> Dividend Report</Text>
+          </ImageBackground>
+          <View style={styles.dropdownContainer}>
+            <TouchableOpacity
+              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+            >
+              <Picker
+                selectedValue={dividend}
+                onValueChange={(itemValue) => setDividend(itemValue)}
+                mode="dropdown"
+                style={styles.Picker}
+              >
+                <Picker.Item value="2023" label="2023-2024" />
+                <Picker.Item value="2022" label="2022-2023" />
+                <Picker.Item value="2021" label="2021-2022" />
+                <Picker.Item value="2020" label="2020-2021" />
+                <Picker.Item value="2019" label="2019-2020" />
+                <Picker.Item value="2018" label="2018-2019" />
+              </Picker>
+            </TouchableOpacity>
+            <View style={styles.shareContainer}>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="download" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => console.log("Pressed")}
+                style={styles.downloadPdf}
+              >
+                <Entypo name="share" size={20} color="white" />
+                {"    "}
+                <AntDesign name="pdffile1" size={20} color="white" />
+              </Button>
+            </View>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -126,6 +438,44 @@ const Reports = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
+  },
+  individualCarts: {
+    marginTop: height * 0.02,
+    marginBottom: height * 0.02,
+  },
+  desc: {
+    color: "white",
+    fontSize: width * 0.05,
+    fontWeight: "700",
+    textAlign: "center",
+    padding: width * 0.05,
+  },
+  dropdown: {
+    borderWidth: height * 0.0015,
+    borderRadius: width * 0.02,
+    borderColor: "rgb(191, 191, 191)",
+    marginBottom: height * 0.02,
+  },
+  Picker: {
+    color: "rgb(115, 115, 115)",
+  },
+  dropdownContainer: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "rgb(230, 230, 230)",
+    padding: height * 0.02,
+  },
+  shareContainer: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: height * 0.015,
+  },
+  downloadPdf: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0, 53, 102, 1)",
+    margin: width * 0.01,
   },
   cart: {
     marginTop: height * 0.02,
@@ -142,13 +492,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     opacity: 0.3,
   },
-  desc: {
-    color: "rgba(33, 0, 93, 1)",
-    fontSize: width * 0.07,
-    fontWeight: "700",
-    lineHeight: height * 0.04,
-    marginTop: height * 0.01,
-  },
+
   boxBottomContainer: {
     marginTop: height * 0.05,
   },
@@ -200,6 +544,13 @@ const styles = StyleSheet.create({
     color: "rgba(33, 158, 188, 1)",
     fontWeight: "600",
     fontSize: width * 0.04,
+  },
+  input: {
+    borderRadius: width * 0.05,
+    fontSize: width * 0.043,
+    marginBottom: height * 0.015,
+    color: "red",
+    backgroundColor: "white",
   },
 });
 
