@@ -14,6 +14,7 @@ import { Entypo } from "@expo/vector-icons";
 import { Button, TextInput } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import Download from "./Download";
 
 const Reports = () => {
   const [holdingtype, setHoldingtype] = useState("");
