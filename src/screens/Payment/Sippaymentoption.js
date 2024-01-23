@@ -25,7 +25,7 @@ const Paymentoptions = (props) => {
 
   const navigation = useNavigation();
 
-  console.log("sippayment", orderData);
+  //   console.log("sippayment", orderData);
 
   const handlePicker = (value) => {
     setSelectedMandate(value);
@@ -35,14 +35,14 @@ const Paymentoptions = (props) => {
       mandateId: value,
     };
     setOrderData(updatedOrderData);
-    console.log("sip order data ", updatedOrderData);
+    // console.log("sip order data ", updatedOrderData);
   };
 
   const handleOrderCall = () => {
     setShowLoader(true);
     Orders(orderData)
       .then((response) => {
-        console.log("order success result", response);
+        // console.log("order success result", response);
         if (response.success === true) {
           setShowLoader(false);
           Clearcart().then((response) => {

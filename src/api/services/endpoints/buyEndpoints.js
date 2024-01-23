@@ -18,7 +18,7 @@ export const Removecartdata = (data) => {
   const urlEncodedData = Object.keys(data)
     .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
     .join("&");
-  console.log(urlEncodedData);
+  //   console.log(urlEncodedData);
   return apiClient.post("/app/mutualfund?" + urlEncodedData);
 };
 
@@ -32,7 +32,7 @@ export const Mandatedata = () => {
 
 export const Orderdata = (data) => {
   const urlEncodedData = queryString(data);
-  console.log("passed url", urlEncodedData);
+  //   console.log("passed url", urlEncodedData);
   return apiClient.post("/app/mfu/order?" + urlEncodedData);
 };
 

@@ -19,7 +19,7 @@ export const Fetchcart = async () => {
   //   return fetchCart;
   try {
     const response = await Fetchcartdata();
-    console.log("response in fetch", response.data);
+    // console.log("response in fetch", response.data);
     return response.data;
   } catch (erorr) {
     console.warn(erorr);
@@ -30,7 +30,7 @@ export const Fetchcart = async () => {
 export const Removecart = async (data) => {
   try {
     const response = await Removecartdata(data);
-    console.log("re", response.data);
+    // console.log("re", response.data);
     return response.data.success;
   } catch (erorr) {
     console.warn(erorr);

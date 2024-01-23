@@ -22,7 +22,7 @@ const Form = ({ data }) => {
       //   console.log("login details", login.data);
       Fetchuserdetails()
         .then((response) => {
-          console.log("fetch user details data", response.data);
+          //   console.log("fetch user details data", response.data);
           setAccountData(response.data.user || []);
         })
         .catch((error) => {

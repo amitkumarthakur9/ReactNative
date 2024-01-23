@@ -33,7 +33,7 @@ export const Foliodata = (mfId) => {
     Folio(mfId)
       .then((response) => {
         setFolio(response.data.folioArray);
-        console.log("folio fetched", response.data);
+        // console.log("folio fetched", response.data);
       })
       .catch((error) => {
         console.warn("folio error", error);

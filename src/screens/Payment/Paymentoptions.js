@@ -73,7 +73,7 @@ const Paymentoptions = (props) => {
     setShowLoader(true);
     Orders(orderData)
       .then((response) => {
-        console.log("order success result", response);
+        // console.log("order success result", response);
         if (response.success === true) {
           setShowLoader(false);
           Clearcart().then((response) => {

@@ -28,7 +28,7 @@ export default Singupwithphone = ({ navigation }) => {
   const loginWithPhone = () => {
     setShowLoader(true);
     Phonelogin(phone).then((response) => {
-      console.log(response.data);
+      //   console.log(response.data);
       if (response.data.success) {
         setOtpSent(true);
       }

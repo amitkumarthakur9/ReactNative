@@ -86,7 +86,7 @@ const Nominee = ({ data }) => {
     (nominee.userId = accountData.id),
       Mfuuserdata(nominee)
         .then((response) => {
-          console.log("mfu nominee response data", response.data);
+          //   console.log("mfu nominee response data", response.data);
         })
         .catch((error) => {
           console.warn(error);
@@ -95,7 +95,7 @@ const Nominee = ({ data }) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {console.log(JSON.stringify(nominee, null, 1))}
+      {/* {console.log(JSON.stringify(nominee, null, 1))} */}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Nominee
       </Text>

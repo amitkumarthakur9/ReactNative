@@ -77,12 +77,12 @@ const Bankdetails = ({ data }) => {
     accountData["basket[0][bankCode]"] = searchBankCode;
     accountData.action = "bankDetails";
 
-    console.log("send bank details", accountData);
+    // console.log("send bank details", accountData);
     // console.log(accountData);
 
     Mfuuserdata(accountData)
       .then((response) => {
-        console.log("bank reponse", response.data);
+        // console.log("bank reponse", response.data);
         response.data.success
           ? (setLoader(false), setCurrentForm(currentForm + 1))
           : (Alert.alert("Failed", response.data.error), setLoader(false));
@@ -100,7 +100,7 @@ const Bankdetails = ({ data }) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {console.log("bank data", accountData)}
+      {/* {console.log("bank data", accountData)} */}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Bank
       </Text>

@@ -148,7 +148,7 @@ export default Onetimesip = ({ navigation }) => {
                 >
                   ₹
                 </Text>
-                {console.log(typeof mfData.minPurchase)}
+                {/* {console.log(typeof mfData.minPurchase)} */}
                 <TextInput
                   mode="outlined"
                   placeholder="Enter Amount"

@@ -53,7 +53,7 @@ const DashboardData = () => {
 export const addToCart = async (data) => {
   try {
     const response = await Cart(data);
-    console.log("add to cart", response.data);
+    // console.log("add to cart", response.data);
     return response.data.success;
   } catch (error) {
     console.log(error);

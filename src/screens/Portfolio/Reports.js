@@ -15,6 +15,7 @@ import { Button, TextInput } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Download from "./Download";
+import { useSelector } from "react-redux";
 
 const Reports = () => {
   const [holdingtype, setHoldingtype] = useState("");
@@ -34,6 +35,10 @@ const Reports = () => {
   const [elsstransaction, setElsstransaction] = useState("");
 
   const [dividend, setDividend] = useState("");
+
+  const reduxData = useSelector((state) => state.user.userId);
+
+  console.log("userId", reduxData);
 
   const handleDatePress = () => {
     setShowDatePicker(true);

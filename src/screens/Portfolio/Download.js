@@ -1,34 +1,40 @@
-// import react from "react";
-// import RNFS from "react-native-fs";
+import React from "react";
+import { View, Button, Alert } from "react-native";
+import RNFS from "react-native-fs";
 
-// const Downloadfile = () => {
-//   const url = "https://www.africau.edu/images/default/sample.pdf"; // Replace with your file URL
-//   const destinationPath = `${RNFS.DocumentDirectoryPath}/yourfile.pdf`;
+const FileDownloadComponent = () => {
+  const handleDownload = async () => {
+    const url = "https://www.africau.edu/images/default/sample.pdf";
+    const destination = RNFS.DownloadDirectoryPath + "/your-file-name.pdf";
 
-//   const options = {
-//     fromUrl: url,
-//     toFile: destinationPath,
-//     background: true, // Enable background downloading on Android
-//     discretionary: true, // Allow the OS to control the timing of the download
-//     progressDivider: 1, // Progress event interval in percentage (optional)
-//     begin: (res) => {
-//       console.log("Download has begun:", res);
-//     },
-//     progress: (res) => {
-//       const percentage = ((res.bytesWritten / res.contentLength) * 100).toFixed(
-//         2
-//       );
-//       console.log(`Download progress: ${percentage}%`);
-//     },
-//   };
+    try {
+      const response = await RNFS.downloadFile({
+        fromUrl: url,
+        toFile: destination,
+      });
 
-//   RNFS.downloadFile(options)
-//     .promise.then((response) => {
-//       console.log("File downloaded successfully:", response);
-//     })
-//     .catch((error) => {
-//       console.error("Download failed:", error);
-//     });
-// };
+      if (response.statusCode === 200) {
+        // File has been downloaded successfully
+        Alert.alert("Download Complete", `File saved to: ${destination}`);
+      } else {
+        // Handle other status codes
+        console.error(
+          "Error downloading file. Status code:",
+          response.statusCode
+        );
+        Alert.alert("Download Failed", "Unable to download the file.");
+      }
+    } catch (error) {
+      console.error("Error downloading file:", error);
+      Alert.alert("Download Failed", "Unable to download the file.");
+    }
+  };
 
-// export default Downloadfile;
+  return (
+    <View>
+      <Button title="Download File" onPress={handleDownload} />
+    </View>
+  );
+};
+
+export default FileDownloadComponent;

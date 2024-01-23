@@ -49,10 +49,10 @@ export const Risknav = (mfId, trendDuration) => {
     "-" +
     currentDate.getDay().toString().padStart(2, "0");
 
-  console.log(
-    "passed url",
-    `/app/nav?action=getNavOfGrowthFundWeb&id=${mfId}&startDate=${oneTimestartdate}&endDate=${oneTimestartdate}`
-  );
+  //   console.log(
+  //     "passed url",
+  //     `/app/nav?action=getNavOfGrowthFundWeb&id=${mfId}&startDate=${oneTimestartdate}&endDate=${oneTimestartdate}`
+  //   );
 
   return apiClient.get(
     `/app/nav?action=getNavOfGrowthFundWeb&id=${mfId}&startDate=${oneTimestartdate}&endDate=${oneTimestartdate}`

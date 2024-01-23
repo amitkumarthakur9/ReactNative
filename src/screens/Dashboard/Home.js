@@ -31,8 +31,8 @@ const Home = ({ navigation }) => {
   const [image, setImage] = useState(null);
 
   Userlogin();
-  console.log("user details amit", userData);
-  console.log("session", session);
+  //   console.log("user details amit", userData);
+  //   console.log("session", session);
 
   const handleLogout = async () => {
     SessionEnd();

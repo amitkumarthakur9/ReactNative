@@ -48,7 +48,7 @@ export default Index = (mfId, timePeriod, MonthlyInvestment) => {
 
     const firstDates = getFirstDates(startDate, endDate);
 
-    console.log("first date", firstDates);
+    // console.log("first date", firstDates);
 
     sipNavs = [];
     firstDates.forEach((searchDate) => {
@@ -60,13 +60,13 @@ export default Index = (mfId, timePeriod, MonthlyInvestment) => {
         sipNavs.push(foundElement);
       }
     });
-    console.log("sipNavs", sipNavs);
+    // console.log("sipNavs", sipNavs);
 
     allUnits = sipNavs.reduce((accumulator, value) => {
       return accumulator + MonthlyInvestment / value.nav;
     }, 0);
 
-    console.log("all Units", allUnits);
+    // console.log("all Units", allUnits);
   }
 
   //firstDates()

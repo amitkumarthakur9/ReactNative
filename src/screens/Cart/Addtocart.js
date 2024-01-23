@@ -35,7 +35,7 @@ export const AddToCart = () => {
     Fetchcart()
       .then((response) => {
         setFetchCart(response);
-        console.log("car data", response);
+        // console.log("car data", response);
         setRemoved(null);
       })
       .catch((erorr) => {
@@ -68,7 +68,7 @@ export const AddToCart = () => {
     }
   }, [fetchCart, removed]);
 
-  console.log("amit lumpsum", orderData);
+  //   console.log("amit lumpsum", orderData);
 
   const handleRemovefromcart = (cartId, mutualFundId) => {
     const data = {
@@ -77,7 +77,7 @@ export const AddToCart = () => {
       cartId: cartId,
     };
     Removecart(data).then((response) => {
-      console.log("card removed", response);
+      //   console.log("card removed", response);
       setRemoved(response);
     });
   };

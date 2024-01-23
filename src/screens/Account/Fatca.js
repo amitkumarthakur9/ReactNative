@@ -97,7 +97,7 @@ const Fatca = ({ data }) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {console.log("fatca", accountData)}
+      {/* {console.log("fatca", accountData)} */}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Fatca
       </Text>
