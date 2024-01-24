@@ -6,6 +6,7 @@ import {
 } from "../../api/services/endpoints/userEndpoints";
 import { useSelector, useDispatch } from "react-redux";
 import { userDetails } from "../../redux/slices/user/Index";
+import { Userpassword } from "../../api/services/endpoints/userEndpoints";
 
 export const UserDetails = () => {
   const dispatch = useDispatch();
@@ -14,8 +15,9 @@ export const UserDetails = () => {
     Fetchuserdetails()
       .then((response) => {
         setUserData(response.data.user);
-        console.log("user data", JSON.stringify(response.data.user, 1, 1));
-        dispatch(userDetails(response.data.user.id));
+        console.log("user data", response.data.user.id);
+        dispatch(userDetails({ id: response.data.user.id }));
+        Userpass(dispatch);
       })
       .catch((error) => {
         console.log(error);
@@ -45,4 +47,14 @@ export const Session = () => {
 
 export const SessionEnd = () => {
   Logout();
+};
+
+export const Userpass = async (dispatch) => {
+  try {
+    const token = await Userpassword();
+    dispatch(userDetails({ token: token.data.password }));
+    console.log(token.data.password);
+  } catch (eror) {
+    console.warn("password error", eror);
+  }
 };

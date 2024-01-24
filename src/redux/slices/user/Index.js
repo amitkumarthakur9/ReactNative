@@ -1,15 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userId: 0,
+  id: 0,
+  token: "",
 };
 
 const UserSlice = createSlice({
-  name: "userDetails",
+  name: "userData",
   initialState,
   reducers: {
     userDetails: (state, action) => {
-      state.userId = action.payload;
+      // Update only the id field, keep the existing token value
+      state.id = action.payload.id !== undefined ? action.payload.id : state.id;
+
+      // Update the token field if provided
+      state.token =
+        action.payload.token !== undefined ? action.payload.token : state.token;
     },
   },
 });

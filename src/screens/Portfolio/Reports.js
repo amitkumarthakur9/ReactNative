@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -36,9 +36,11 @@ const Reports = () => {
 
   const [dividend, setDividend] = useState("");
 
-  const reduxData = useSelector((state) => state.user.userId);
+  const redux = useSelector((state) => state.user);
 
-  console.log("userId", reduxData);
+  console.log("userId", redux);
+
+  //   console.log("token", token);
 
   const handleDatePress = () => {
     setShowDatePicker(true);
@@ -52,6 +54,7 @@ const Reports = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+      {/* <Download /> */}
       <View style={styles.cart}>
         <View style={styles.individualCarts}>
           <ImageBackground

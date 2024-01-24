@@ -19,6 +19,10 @@ export const Userlogin = () => {
   );
 };
 
+export const Userpassword = () => {
+  return apiClient.get("/app/user?action=getPassword");
+};
+
 export const Fetchuserdetails = () => {
   return apiClient.get("/app/user?action=fetchUserDetails");
 };
