@@ -16,6 +16,14 @@ import { AntDesign } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Download from "./Download";
 import { useSelector } from "react-redux";
+import {
+  Capitalgain,
+  Transaction,
+  Elss,
+  Holdingsummary,
+  Dividend,
+  Portfoliovaluation,
+} from "./Data";
 
 const Reports = () => {
   const [holdingtype, setHoldingtype] = useState("");
@@ -24,23 +32,32 @@ const Reports = () => {
 
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [userwise, setUserwise] = useState("");
-  const [allholdingtype, setAllholdingtype] = useState("");
-  const [includeredeem, setIncluderedeem] = useState("");
+  const [userwise, setUserwise] = useState("0");
+  const [allholdingtype, setAllholdingtype] = useState("2");
+  const [includeredeem, setIncluderedeem] = useState("1");
 
-  const [capitalgain, setCapitalgain] = useState("");
+  const [capitalgain, setCapitalgain] = useState("2023");
 
-  const [transaction, setTransaction] = useState("");
+  const [downloadyear, SetDownloadyear] = useState("2023");
 
-  const [elsstransaction, setElsstransaction] = useState("");
+  const [transaction, setTransaction] = useState("2023");
 
-  const [dividend, setDividend] = useState("");
+  const [elsstransaction, setElsstransaction] = useState("2023");
 
-  const redux = useSelector((state) => state.user);
+  const [dividend, setDividend] = useState("2023");
+  const [category, setCategory] = useState("");
 
-  console.log("userId", redux);
-
-  //   console.log("token", token);
+  const pdfUrl = Capitalgain(capitalgain);
+  const tpdfUrl = Transaction(transaction);
+  const elsspdfUrl = Elss(elsstransaction);
+  const hpdfUrl = Holdingsummary();
+  const dpdfUrl = Dividend(dividend);
+  const pvpdfUrl = Portfoliovaluation(
+    date,
+    userwise,
+    allholdingtype,
+    includeredeem
+  );
 
   const handleDatePress = () => {
     setShowDatePicker(true);
@@ -50,6 +67,42 @@ const Reports = () => {
     currentDate = selectedDate || date;
     setShowDatePicker(false);
     setDate(currentDate);
+  };
+
+  const handleDownload = (value, categories) => {
+    if (categories == "capitalgain") {
+      setCapitalgain(value);
+      setCategory("capitalgain");
+      SetDownloadyear(value);
+    } else if (categories == "transaction") {
+      setTransaction(value);
+      setCategory("transaction");
+      SetDownloadyear(value);
+    } else if (categories == "80C MF") {
+      setElsstransaction(value);
+      setCategory("80C MF");
+      SetDownloadyear(value);
+    } else if (categories == "dividend") {
+      setDividend(value);
+      setCategory("dividend");
+      SetDownloadyear(value);
+    }
+  };
+
+  const DownloadPdfs = (categories) => {
+    if (categories == "capitalgain") {
+      Download(pdfUrl, categories, downloadyear);
+    } else if (categories == "transaction") {
+      Download(tpdfUrl, categories, downloadyear);
+    } else if (categories == "80C MF") {
+      Download(elsspdfUrl, categories, downloadyear);
+    } else if (categories == "holding summary") {
+      Download(hpdfUrl, categories);
+    } else if (categories == "dividend") {
+      Download(dpdfUrl, categories, downloadyear);
+    } else if (categories == "portfolio valuation") {
+      Download(pvpdfUrl, categories);
+    }
   };
 
   return (
@@ -196,7 +249,7 @@ const Reports = () => {
             <View style={styles.shareContainer}>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => DownloadPdfs("portfolio valuation")}
                 style={styles.downloadPdf}
               >
                 <Entypo name="download" size={20} color="white" />
@@ -229,7 +282,9 @@ const Reports = () => {
             >
               <Picker
                 selectedValue={capitalgain}
-                onValueChange={(itemValue) => setCapitalgain(itemValue)}
+                onValueChange={(itemValue) =>
+                  handleDownload(itemValue, "capitalgain")
+                }
                 mode="dropdown"
                 style={styles.Picker}
               >
@@ -245,7 +300,7 @@ const Reports = () => {
             <View style={styles.shareContainer}>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => DownloadPdfs("capitalgain")}
                 style={styles.downloadPdf}
               >
                 <Entypo name="download" size={20} color="white" />
@@ -278,7 +333,9 @@ const Reports = () => {
             >
               <Picker
                 selectedValue={transaction}
-                onValueChange={(itemValue) => setTransaction(itemValue)}
+                onValueChange={(itemValue) =>
+                  handleDownload(itemValue, "transaction")
+                }
                 mode="dropdown"
                 style={styles.Picker}
               >
@@ -293,7 +350,7 @@ const Reports = () => {
             <View style={styles.shareContainer}>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => DownloadPdfs("transaction")}
                 style={styles.downloadPdf}
               >
                 <Entypo name="download" size={20} color="white" />
@@ -326,7 +383,9 @@ const Reports = () => {
             >
               <Picker
                 selectedValue={elsstransaction}
-                onValueChange={(itemValue) => setElsstransaction(itemValue)}
+                onValueChange={(itemValue) =>
+                  handleDownload(itemValue, "80C MF")
+                }
                 mode="dropdown"
                 style={styles.Picker}
               >
@@ -341,7 +400,7 @@ const Reports = () => {
             <View style={styles.shareContainer}>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => DownloadPdfs("80C MF")}
                 style={styles.downloadPdf}
               >
                 <Entypo name="download" size={20} color="white" />
@@ -372,7 +431,7 @@ const Reports = () => {
             <View style={styles.shareContainer}>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => DownloadPdfs("holding summary")}
                 style={styles.downloadPdf}
               >
                 <Entypo name="download" size={20} color="white" />
@@ -405,7 +464,9 @@ const Reports = () => {
             >
               <Picker
                 selectedValue={dividend}
-                onValueChange={(itemValue) => setDividend(itemValue)}
+                onValueChange={(itemValue) =>
+                  handleDownload(itemValue, "dividend")
+                }
                 mode="dropdown"
                 style={styles.Picker}
               >
@@ -420,7 +481,7 @@ const Reports = () => {
             <View style={styles.shareContainer}>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => DownloadPdfs("dividend")}
                 style={styles.downloadPdf}
               >
                 <Entypo name="download" size={20} color="white" />
