@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   id: 0,
   token: "",
+  profilepic: undefined,
 };
 
 const UserSlice = createSlice({
@@ -16,6 +17,11 @@ const UserSlice = createSlice({
       // Update the token field if provided
       state.token =
         action.payload.token !== undefined ? action.payload.token : state.token;
+
+      state.profilepic =
+        action.payload.profilepic !== undefined
+          ? action.payload.profilepic
+          : state.profilepic;
     },
   },
 });

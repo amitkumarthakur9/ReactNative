@@ -6,16 +6,25 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
+import { Badge, Button } from "react-native-paper";
 
 import { height, width } from "../../Dimension";
 import Header from "../Components/Header";
 import { useNavigation } from "@react-navigation/native";
+import Goallist from "../../api/services/endpoints/goalEndpoints";
+import Tooltip from "react-native-walkthrough-tooltip";
+import { useSelector } from "react-redux";
+import inrconvertor from "../Components/Inrconverter";
 
 const Goal = () => {
   const navigation = useNavigation();
   const scrollViewRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
+  const goallistData = Goallist(2);
+  const profilePic = useSelector((state) => state.user.profilepic);
+  const [activeTooltipIndex, setActiveTooltipIndex] = useState(null);
 
   const contentItems = [
     {
@@ -34,57 +43,112 @@ const Goal = () => {
     scrollViewRef.current.scrollTo({ x: newIndex * width, animated: true });
   };
 
-  useEffect(() => {
-    // Automatically move to the next slide every 5 seconds
-    const interval = setInterval(moveCarousel, 3000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [activeSlide]);
-
   return (
     <View style={styles.container}>
       <Header title="Goals" showPlusSign={true} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.contentContainer}>
-          <Image
+        <View style={styles.mainContentContainer}>
+          <ImageBackground
             source={require("../../../assets/Goal/1.png")}
             style={styles.circleImage}
-          />
-          <TouchableOpacity style={styles.circleContainer}>
-            <Image
-              source={require("../../../assets/Goal/profile.png")}
-              style={styles.profileImage}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.mobileImagecircleContainer}>
-            <Image
-              source={require("../../../assets/Goal/mobile.png")}
-              style={styles.mobileImage}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.tripImagecircleContainer}>
-            <Image
-              source={require("../../../assets/Goal/trip.png")}
-              style={styles.tripImage}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.homeImagecircleContainer}>
-            <Image
-              source={require("../../../assets/Goal/Home.png")}
-              style={styles.homeImage}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.educationImagecircleContainer}
-            onPress={() => navigation.navigate("Education")}
           >
-            <Image
-              source={require("../../../assets/Goal/education.png")}
-              style={styles.educationImage}
-            />
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.circleContainer}>
+              <Image
+                source={
+                  profilePic != undefined
+                    ? { uri: profilePic }
+                    : require("../../../assets/Goal/profile.png")
+                }
+                style={styles.profileImage}
+              />
+            </TouchableOpacity>
+
+            {goallistData.length > 0 &&
+              goallistData.map((data, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={{
+                    ...styles.imageContainer,
+                    [data.direction]: data.directionPixel - data.duration,
+                  }}
+                  onPress={() => setActiveTooltipIndex(index)}
+                >
+                  {activeTooltipIndex === index && (
+                    <Tooltip
+                      isVisible={true}
+                      content={
+                        <>
+                          <View style={styles.table}>
+                            <View style={styles.row}>
+                              <Text style={styles.cell}>Name</Text>
+                              <Text style={styles.cell}>{data.goalName}</Text>
+                            </View>
+                            <View
+                              style={[styles.row, { borderBottomWidth: 0 }]}
+                            >
+                              <Text style={styles.cell}>Amount</Text>
+                              <Text style={styles.cell}>
+                                {inrconvertor(data.amount)}
+                              </Text>
+                            </View>
+                          </View>
+                          <Button
+                            mode="contained"
+                            onPress={() => navigation.navigate("Education")}
+                            style={{
+                              backgroundColor: "rgba(0, 53, 102, 1)",
+                            }}
+                          >
+                            View
+                          </Button>
+                        </>
+                      }
+                      placement="top"
+                      onClose={() => setActiveTooltipIndex(null)}
+                    >
+                      <Badge
+                        style={{
+                          position: "absolute",
+                          bottom: -height * 0.005,
+                          backgroundColor: "rgba(33, 158, 188, 1)",
+                          fontWeight: "600",
+                        }}
+                      >
+                        40 %
+                      </Badge>
+                      <Image
+                        source={require("../../../assets/Goal/mobile.png")}
+                        style={{
+                          width: data.iconWidth,
+                          height: data.iconWidth,
+                        }}
+                      />
+                    </Tooltip>
+                  )}
+                  {activeTooltipIndex !== index && (
+                    <View>
+                      <Badge
+                        style={{
+                          position: "absolute",
+                          bottom: -height * 0.005,
+                          backgroundColor: "rgba(33, 158, 188, 1)",
+                          fontWeight: "600",
+                        }}
+                      >
+                        40 %
+                      </Badge>
+                      <Image
+                        source={require("../../../assets/Goal/mobile.png")}
+                        style={{
+                          width: data.iconWidth,
+                          height: data.iconWidth,
+                        }}
+                      />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              ))}
+          </ImageBackground>
         </View>
         <View style={styles.sliderContainer}>
           <ScrollView
@@ -133,57 +197,32 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
   },
-  contentContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    bottom: 0,
+  mainContentContainer: {
+    position: "relative",
   },
   circleImage: {
-    alignSelf: "center",
+    marginTop: height * 0.05,
     width: width,
-    height: height * 0.6,
-  },
-  profileImage: {
-    width: width * 0.21,
-    height: width * 0.21,
+    height: width,
+    justifyContent: "center",
+    alignItems: "center",
   },
   circleContainer: {
     position: "absolute",
   },
-  mobileImage: {
-    width: width * 0.25,
-    height: width * 0.25,
+  profileImage: {
+    width: width * 0.21,
+    height: width * 0.21,
+    borderRadius: width * 0.2,
   },
-  mobileImagecircleContainer: {
+  imageContainer: {
     position: "absolute",
-    top: height * 0.1,
-    right: width * 0.1,
   },
-  tripImagecircleContainer: {
-    position: "absolute",
-    bottom: height * 0.1,
+  imageWidthHeight: {
+    width: width * 0.21,
+    height: width * 0.21,
   },
-  tripImage: {
-    width: width * 0.3,
-    height: width * 0.3,
-  },
-  homeImagecircleContainer: {
-    position: "absolute",
-    left: height * 0.07,
-    top: height * 0.18,
-  },
-  homeImage: {
-    width: width * 0.35,
-    height: width * 0.35,
-  },
-  educationImagecircleContainer: {
-    position: "absolute",
-    right: height * 0.16,
-  },
-  educationImage: {
-    width: width * 0.15,
-    height: width * 0.15,
-  },
+
   slider: {
     width: width,
     padding: width * 0.06,
@@ -214,7 +253,34 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.03,
   },
   sliderContainer: {
-    bottom: height * 0.08,
+    //top: ,
+  },
+  //   tooltipContainer: {
+  //     width: width * 0.3,
+  //     alignItems: "center",
+  //     justifyContent: "center",
+  //   },
+  toolpitContainer: {
+    borderWidth: 1,
+    borderColor: "red",
+  },
+
+  table: {
+    width: width * 0.4,
+    borderWidth: 1,
+    borderColor: "#000",
+    marginBottom: 10,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: "#000",
+    paddingVertical: 5,
+  },
+  cell: {
+    flex: 1,
+    textAlign: "center",
   },
 });
 

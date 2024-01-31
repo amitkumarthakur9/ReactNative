@@ -15,8 +15,21 @@ export const UserDetails = () => {
     Fetchuserdetails()
       .then((response) => {
         setUserData(response.data.user);
-        console.log("user data", response.data.user.id);
+        // console.log("user data", response.data.user);
+        const responseObj = response.data.user;
         dispatch(userDetails({ id: response.data.user.id }));
+        if (responseObj.hasOwnProperty("profilepic")) {
+          dispatch(
+            userDetails({
+              profilepic: `https://data.fundexpert.in/profilepic/${response.data.user.profilepic}`,
+            })
+          );
+        } else {
+          userDetails({
+            profilepic: undefined,
+          });
+        }
+
         Userpass(dispatch);
       })
       .catch((error) => {

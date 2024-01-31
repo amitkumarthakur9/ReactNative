@@ -15,6 +15,7 @@ import { Button, TextInput } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Download from "./Download";
+import Share from "./Share";
 import { useSelector } from "react-redux";
 import {
   Capitalgain,
@@ -107,7 +108,7 @@ const Reports = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-      {/* <Download /> */}
+      {/* <Share /> */}
       <View style={styles.cart}>
         <View style={styles.individualCarts}>
           <ImageBackground

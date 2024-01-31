@@ -68,7 +68,7 @@ const MenuModal = () => {
         style={[
           styles.menuModalHeader,
           {
-            fontSize: width * 0.08,
+            fontSize: width * 0.05,
             opacity: 0.6,
             marginBottom: height * 0.01,
           },
@@ -76,27 +76,63 @@ const MenuModal = () => {
       >
         Actions
       </Text>
-      <View style={[styles.flexRow, { margin: width * 0.03 }]}>
-        <MaterialIcons name="local-atm" size={24} color="black" />
+      <View style={[styles.flexRow, { margin: width * 0.02 }]}>
+        {/* <MaterialIcons name="local-atm" size={24} color="black" /> */}
+        <Image
+          source={require("../../../assets/Actions/buy.png")}
+          style={{
+            width: width * 0.15,
+            height: height * 0.04,
+            resizeMode: "contain",
+          }}
+        />
         <Text style={styles.menuModalHeader}>Buy</Text>
       </View>
 
-      <View style={[styles.flexRow, { margin: width * 0.03 }]}>
-        <FontAwesome name="money" size={24} color="black" />
+      <View style={[styles.flexRow, { margin: width * 0.02 }]}>
+        <Image
+          source={require("../../../assets/Actions/swp.png")}
+          style={{
+            width: width * 0.15,
+            height: height * 0.04,
+            resizeMode: "contain",
+          }}
+        />
         <Text style={styles.menuModalHeader}>SWP</Text>
       </View>
-      <View style={[styles.flexRow, { margin: width * 0.03 }]}>
-        <MaterialIcons name="redeem" size={24} color="black" />
+      <View style={[styles.flexRow, { margin: width * 0.02 }]}>
+        <Image
+          source={require("../../../assets/Actions/redeem.png")}
+          style={{
+            width: width * 0.15,
+            height: height * 0.04,
+            resizeMode: "contain",
+          }}
+        />
         <Text style={styles.menuModalHeader}>Redeem</Text>
       </View>
 
-      <View style={[styles.flexRow, { margin: width * 0.03 }]}>
-        <Entypo name="switch" size={24} color="black" />
+      <View style={[styles.flexRow, { margin: width * 0.02 }]}>
+        <Image
+          source={require("../../../assets/Actions/switch.png")}
+          style={{
+            width: width * 0.15,
+            height: height * 0.04,
+            resizeMode: "contain",
+          }}
+        />
         <Text style={styles.menuModalHeader}>Switch/STP</Text>
       </View>
 
-      <View style={[styles.flexRow, { margin: width * 0.03 }]}>
-        <Entypo name="download" size={24} color="black" />
+      <View style={[styles.flexRow, { margin: width * 0.02 }]}>
+        <Image
+          source={require("../../../assets/Actions/download.png")}
+          style={{
+            width: width * 0.15,
+            height: height * 0.04,
+            resizeMode: "contain",
+          }}
+        />
         <Text style={styles.menuModalHeader}>Download SOA</Text>
       </View>
     </View>
@@ -586,7 +622,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.005,
   },
   menuContainer: {
-    alignSelf: "center",
+    alignSelf: "left",
   },
 });
 
