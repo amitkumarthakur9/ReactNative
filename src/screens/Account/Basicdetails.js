@@ -19,6 +19,7 @@ import Formatdate from "../Components/Formatdate";
 const Basicdetails = ({ data }) => {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [occupation, setOccupation] = useState("41");
   const [image, setImage] = useState(null);
   const { accountData, setAccountData, currentForm, setCurrentForm } =
     data || [];
@@ -64,12 +65,27 @@ const Basicdetails = ({ data }) => {
     });
   };
 
+  const isValidDateFormat = (dateString) => {
+    const regex = /^\d{2}-\d{2}-\d{4}$/;
+    return regex.test(dateString);
+  };
+
   const handlemfu = () => {
     setLoader(true);
+    if (!isValidDateFormat(accountData.dob)) {
+      const dob = Formatdate(accountData.dob);
+      accountData.dob = dob;
+    }
     accountData.userId = accountData.id;
     accountData.minorAccount = 0;
     accountData.holdingMode = "SI";
+    accountData.occupation =
+      accountData.occupation != "" && accountData.occupation
+        ? accountData.occupation
+        : occupation;
     accountData.action = "basicDetails";
+
+    console.log("basic details", accountData.dob);
     Mfuuserdata(accountData)
       .then((response) => {
         response.data.success
