@@ -28,29 +28,31 @@ const Goallist = (str) => {
 
   const cordinateArr = [{ 1: "top", 2: "bottom", 3: "left", 4: "right" }];
 
-  goaldata.map((data, index) => {
-    if (maxcurrentamount < data.currentTermAmount) {
-      maxcurrentamount = data.currentTermAmount;
-    }
-    if (maximumduration < data.duration) {
-      maximumduration = data.duration;
-    }
-  });
+  if (goaldata != undefined) {
+    goaldata.map((data, index) => {
+      if (maxcurrentamount < data.currentTermAmount) {
+        maxcurrentamount = data.currentTermAmount;
+      }
+      if (maximumduration < data.duration) {
+        maximumduration = data.duration;
+      }
+    });
 
-  goaldata.map((data, index) => {
-    const iconWidth =
-      (maxWidth / 2) * (data.currentTermAmount / maxcurrentamount);
-    const durationWidth = data.duration * (maxWidth / maximumduration);
+    goaldata.map((data, index) => {
+      const iconWidth =
+        (maxWidth / 2) * (data.currentTermAmount / maxcurrentamount);
+      const durationWidth = data.duration * (maxWidth / maximumduration);
 
-    allData[index] = {
-      goalName: data.name,
-      direction: cordinateArr[0][((index + 1) % 4) + 1],
-      directionPixel: fixeddirectionPixel,
-      iconWidth: iconWidth + maxWidth / 2,
-      duration: durationWidth + iconWidth / 2,
-      amount: data.currentTermAmount,
-    };
-  });
+      allData[index] = {
+        goalName: data.name,
+        direction: cordinateArr[0][((index + 1) % 4) + 1],
+        directionPixel: fixeddirectionPixel,
+        iconWidth: iconWidth + maxWidth / 2,
+        duration: durationWidth + iconWidth / 2,
+        amount: data.currentTermAmount,
+      };
+    });
+  }
 
   return allData;
 };

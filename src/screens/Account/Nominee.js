@@ -5,12 +5,14 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Button, TextInput, Checkbox } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { height, width } from "../../Dimension";
 import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import Loader from "../Components/Loader";
 
 const Nominee = ({ data }) => {
   const [checked, setChecked] = useState(false);
@@ -18,6 +20,7 @@ const Nominee = ({ data }) => {
   const { accountData, setAccountData } = data || [];
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
+  const [loader, setLoader] = useState();
   const [nominee, setNominee] = useState({
     name: "",
     relation: "",
@@ -83,10 +86,23 @@ const Nominee = ({ data }) => {
   };
 
   const handlemfu = () => {
+    setLoader(true);
     (nominee.userId = accountData.id),
       Mfuuserdata(nominee)
         .then((response) => {
-          //   console.log("mfu nominee response data", response.data);
+          if (response.data.success) {
+            const sendForCan = {
+              userId: nominee.userId,
+              action: "submitUserToMfu",
+            };
+            Mfuuserdata(sendForCan).then((canResponse) => {
+              setLoader(false);
+              console.log("canResponse", canResponse.data);
+            });
+          }
+          //   response.data.success
+          //     ? (Alert.alert("success"), setLoader(false))
+          //     : (Alert.alert("Failed", response.data.error), setLoader(false));
         })
         .catch((error) => {
           console.warn(error);
@@ -320,20 +336,26 @@ const Nominee = ({ data }) => {
           />
         </>
       )}
-      <TouchableOpacity activeOpacity={0.7} onPress={handlemfu}>
-        <Button
-          mode="contained"
-          style={styles.button}
-          labelStyle={{
-            fontSize: width * 0.05,
-            color: "rgba(255, 255, 255, 1)",
-            textAlign: "center",
-            fontWeight: "600",
-          }}
-        >
-          Done
-        </Button>
-      </TouchableOpacity>
+      {loader ? (
+        <Loader />
+      ) : (
+        <>
+          <TouchableOpacity activeOpacity={0.7} onPress={handlemfu}>
+            <Button
+              mode="contained"
+              style={styles.button}
+              labelStyle={{
+                fontSize: width * 0.05,
+                color: "rgba(255, 255, 255, 1)",
+                textAlign: "center",
+                fontWeight: "600",
+              }}
+            >
+              Next
+            </Button>
+          </TouchableOpacity>
+        </>
+      )}
     </ScrollView>
   );
 };

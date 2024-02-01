@@ -14,9 +14,16 @@ export const Banksdata = () => {
 };
 
 export const Userlogin = () => {
-  return apiClient.post(
-    "/app/user?action=login&email=513356&password=Amit123@&addedBy=186100"
-  );
+  apiClient
+    .post(
+      "/app/user?action=login&email=1293623&password=test@1234&addedBy=237106"
+    )
+    .then((response) => {
+      console.log("user login manually", response.data);
+    })
+    .catch((e) => {
+      console.warn(e);
+    });
 };
 
 export const Userpassword = () => {

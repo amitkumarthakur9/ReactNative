@@ -23,26 +23,12 @@ const Bankdetails = ({ data }) => {
   const banks = Getbank();
   const [searchBank, setSearchBank] = useState();
   const [searchBankCode, setSearchBankCode] = useState();
+  const [accountType, setAccountType] = useState("SB");
+  const [ifscCode, setIfscCode] = useState("");
+  const [accountNo, setAccountNo] = useState("");
+  const [proofOfAccount, setProofOfAccount] = useState("14");
   const [filteredBank, setFilteredBank] = useState();
   const [optionsVisible, setOptionsVisible] = useState(false);
-
-  //   {
-  //     if (accountData.hasOwnProperty("basket")) {
-  //       //   console.log("yes");
-  //     } else {
-  //       accountData.basket = [
-  //         {
-  //           ifscCode: "",
-  //           micr: "",
-  //           proofOfAccount: "",
-  //           bankName: "",
-  //           accountNo: "",
-  //           accountType: "",
-  //           bankCode: "",
-  //         },
-  //       ];
-  //     }
-  //   }
 
   const handleSearch = (text) => {
     const filtered = banks.filter((item) =>
@@ -58,14 +44,14 @@ const Bankdetails = ({ data }) => {
       const newData = { ...preData };
       {
         key == "ifscCode"
-          ? (newData["basket[0][ifscCode]"] = e)
+          ? setIfscCode(e)
           : key == "accountNo"
-          ? (newData["basket[0][accountNo]"] = e)
+          ? setAccountNo(e)
           : key == "accountType"
-          ? (newData["basket[0][accountType]"] = e)
+          ? setAccountType(e)
           : key == "proofOfAccount"
-          ? (newData["basket[0][proofOfAccount]"] = e)
-          : (newData[key] = e);
+          ? setProofOfAccount(e)
+          : "";
       }
       return newData;
     });
@@ -73,16 +59,22 @@ const Bankdetails = ({ data }) => {
 
   const handlemfu = () => {
     setLoader(true);
-    accountData["basket[0][bankName]"] = searchBank;
-    accountData["basket[0][bankCode]"] = searchBankCode;
-    accountData.action = "bankDetails";
 
-    // console.log("send bank details", accountData);
-    // console.log(accountData);
+    accountData["basket[0][ifscCode]"] = ifscCode;
+    accountData["basket[0][accountNumber]"] = "";
+    accountData["basket[0][bankAccountType]"] = accountType;
+    accountData["basket[0][micr]"] = "";
+    accountData["basket[0][proofOfAccount]"] = proofOfAccount;
+    accountData["basket[0][bankName]"] = searchBank;
+    accountData["basket[0][accountNo]"] = accountNo;
+    accountData["basket[0][accountType]"] = accountType;
+    accountData["basket[0][bankCode]"] = searchBankCode;
+    accountData.web = true;
+    accountData.action = "bankDetails";
 
     Mfuuserdata(accountData)
       .then((response) => {
-        // console.log("bank reponse", response.data);
+        console.log("response data of bank details", response.data);
         response.data.success
           ? (setLoader(false), setCurrentForm(currentForm + 1))
           : (Alert.alert("Failed", response.data.error), setLoader(false));
@@ -100,7 +92,6 @@ const Bankdetails = ({ data }) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {/* {console.log("bank data", accountData)} */}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Bank
       </Text>
@@ -189,7 +180,7 @@ const Bankdetails = ({ data }) => {
           mode="dropdown"
           style={styles.Picker}
         >
-          <Picker.Item label="Proof Of Account" />
+          {/* <Picker.Item label="Proof Of Account" /> */}
           <Picker.Item value="14" label="Latest Bank Passbook" />
           <Picker.Item value="15" label="Latest Bank Account Statement" />
           <Picker.Item value="77" label="Cheque Copy" />
