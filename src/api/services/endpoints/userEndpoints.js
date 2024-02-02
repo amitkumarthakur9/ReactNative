@@ -36,20 +36,20 @@ export const Fetchuserdetails = () => {
 
 export const Googlelogin = (googleToken) => {
   return apiClient.post(
-    `/app/user?action=googleLogin&token=${googleToken}&fromApp=1@&addedBy=186100`
+    `/app/user?action=googleLogin&token=${googleToken}&fromApp=1@&addedBy=237106`
   );
 };
 
 export const Phonelogin = (mobileNumber) => {
   return apiClient.post(
-    `/app/user?action=sendOTP&mobile=${mobileNumber}&addedBy=186100&firstUserLogin=true`
+    `/app/user?action=sendOTP&mobile=${mobileNumber}&addedBy=237106&firstUserLogin=true`
   );
 };
 
 export const Otpverify = (data) => {
   const { mobileNumber, otp } = data;
   return apiClient.post(
-    `/app/user?action=confirmOtpForLogin&mobile=${mobileNumber}&addedBy=186100&firstUserLogin=true&otp=${otp}`
+    `/app/user?action=confirmOtpForLogin&mobile=${mobileNumber}&addedBy=237106&firstUserLogin=true&otp=${otp}`
   );
 };
 

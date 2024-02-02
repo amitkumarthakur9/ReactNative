@@ -92,17 +92,19 @@ const Bankdetails = ({ data }) => {
   };
 
   useEffect(() => {
-    if (accountData.bankDetails[0].hasOwnProperty("ifscCode")) {
-      setIfscCode(accountData.bankDetails[0]["ifscCode"]);
-    }
-    if (accountData.bankDetails[0].hasOwnProperty("accountNo")) {
-      setAccountNo(accountData.bankDetails[0]["accountNo"]);
-    }
-    if (accountData.bankDetails[0].hasOwnProperty("bankName")) {
-      setSearchBank(accountData.bankDetails[0]["bankName"]);
-    }
-    if (accountData.bankDetails[0].hasOwnProperty("bankCode")) {
-      setSearchBankCode(accountData.bankDetails[0]["bankCode"]);
+    if (accountData != undefined && accountData.bankDetails[0] != undefined) {
+      if (accountData.bankDetails[0].hasOwnProperty("ifscCode")) {
+        setIfscCode(accountData.bankDetails[0]["ifscCode"]);
+      }
+      if (accountData.bankDetails[0].hasOwnProperty("accountNo")) {
+        setAccountNo(accountData.bankDetails[0]["accountNo"]);
+      }
+      if (accountData.bankDetails[0].hasOwnProperty("bankName")) {
+        setSearchBank(accountData.bankDetails[0]["bankName"]);
+      }
+      if (accountData.bankDetails[0].hasOwnProperty("bankCode")) {
+        setSearchBankCode(accountData.bankDetails[0]["bankCode"]);
+      }
     }
   }, []);
 
