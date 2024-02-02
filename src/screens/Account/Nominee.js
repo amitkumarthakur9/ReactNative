@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,11 +13,12 @@ import { height, width } from "../../Dimension";
 import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Loader from "../Components/Loader";
+import Isovereeighteen from "../Components/Datediff";
 
 const Nominee = ({ data }) => {
   const [checked, setChecked] = useState(false);
   const [thirdNomineeCheck, setThirdNomineeCheck] = useState(false);
-  const { accountData, setAccountData } = data || [];
+  const { accountData, setAccountData, nomineeData } = data || [];
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [loader, setLoader] = useState();
@@ -85,8 +86,46 @@ const Nominee = ({ data }) => {
     setShowDatePicker(true);
   };
 
+  const isValidDateFormat = (dateString) => {
+    const regex = /^\d{2}-\d{2}-\d{4}$/;
+    return regex.test(dateString);
+  };
+
   const handlemfu = () => {
     setLoader(true);
+    if (nominee.dob) {
+      if (!isValidDateFormat(nominee.dob)) {
+        const dob = Formatdate(nominee.dob);
+        nominee.dob = dob;
+      }
+      if (!Isovereeighteen(nominee.dob)) {
+        Alert.alert("Dob Should be greater than 18");
+        setLoader(false);
+        return;
+      }
+    }
+    if (nominee.dob2) {
+      if (!isValidDateFormat(nominee.dob2)) {
+        const dob2 = Formatdate(nominee.dob2);
+        nominee.dob2 = dob2;
+      }
+      if (!Isovereeighteen(dob2)) {
+        Alert.alert("Dob2 Should be greater than 18");
+        setLoader(false);
+        return;
+      }
+    }
+    if (nominee.dob3) {
+      if (!isValidDateFormat(nominee.dob3)) {
+        const dob3 = Formatdate(nominee.dob3);
+        nominee.dob3 = dob3;
+      }
+      if (!Isovereeighteen(dob3)) {
+        Alert.alert("Dob3 Should be greater than 18");
+        setLoader(false);
+        return;
+      }
+    }
     (nominee.userId = accountData.id),
       Mfuuserdata(nominee)
         .then((response) => {
@@ -96,22 +135,60 @@ const Nominee = ({ data }) => {
               action: "submitUserToMfu",
             };
             Mfuuserdata(sendForCan).then((canResponse) => {
-              setLoader(false);
-              console.log("canResponse", canResponse.data);
+              canResponse.data.success
+                ? (Alert.alert("success"), setLoader(false))
+                : (Alert.alert("Failed", canResponse.data.error),
+                  setLoader(false));
             });
           }
-          //   response.data.success
-          //     ? (Alert.alert("success"), setLoader(false))
-          //     : (Alert.alert("Failed", response.data.error), setLoader(false));
         })
         .catch((error) => {
           console.warn(error);
         });
   };
 
+  useEffect(() => {
+    if (nomineeData != undefined && nomineeData.hasOwnProperty("name")) {
+      setNominee((preData) => {
+        const newData = { ...preData };
+
+        newData["name"] = nomineeData.name;
+        newData["relation"] = nomineeData.relation;
+        newData["dob"] = nomineeData.dob;
+        newData["percentage"] = nomineeData.percentage;
+        return newData;
+      });
+    }
+
+    if (nomineeData != undefined && nomineeData.hasOwnProperty("name2")) {
+      setNominee((preData) => {
+        const newData = { ...preData };
+
+        newData["name2"] = nomineeData.name2;
+        newData["relation2"] = nomineeData.relation2;
+        newData["dob2"] = nomineeData.dob2;
+        newData["percentage2"] = nomineeData.percentage2;
+        return newData;
+      });
+    }
+
+    if (nomineeData != undefined && nomineeData.hasOwnProperty("name3")) {
+      setNominee((preData) => {
+        const newData = { ...preData };
+
+        newData["name3"] = nomineeData.name3;
+        newData["relation3"] = nomineeData.relation3;
+        newData["dob3"] = nomineeData.dob3;
+        newData["percentage3"] = nomineeData.percentage3;
+        return newData;
+      });
+    }
+  }, []);
+
+  console.log("nominee details", nomineeData);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {/* {console.log(JSON.stringify(nominee, null, 1))} */}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Nominee
       </Text>

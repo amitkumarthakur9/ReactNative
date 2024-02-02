@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -70,6 +70,7 @@ const Bankdetails = ({ data }) => {
     accountData["basket[0][accountType]"] = accountType;
     accountData["basket[0][bankCode]"] = searchBankCode;
     accountData.web = true;
+    accountData.userId = accountData.id;
     accountData.action = "bankDetails";
 
     Mfuuserdata(accountData)
@@ -90,6 +91,23 @@ const Bankdetails = ({ data }) => {
     setOptionsVisible(false);
   };
 
+  useEffect(() => {
+    if (accountData.bankDetails[0].hasOwnProperty("ifscCode")) {
+      setIfscCode(accountData.bankDetails[0]["ifscCode"]);
+    }
+    if (accountData.bankDetails[0].hasOwnProperty("accountNo")) {
+      setAccountNo(accountData.bankDetails[0]["accountNo"]);
+    }
+    if (accountData.bankDetails[0].hasOwnProperty("bankName")) {
+      setSearchBank(accountData.bankDetails[0]["bankName"]);
+    }
+    if (accountData.bankDetails[0].hasOwnProperty("bankCode")) {
+      setSearchBankCode(accountData.bankDetails[0]["bankCode"]);
+    }
+  }, []);
+
+  //   console.log("accountCode", accountData);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.desc}>
@@ -101,7 +119,8 @@ const Bankdetails = ({ data }) => {
         mode="outlined"
         placeholder="Bank IFSC Code"
         placeholderTextColor="rgb(191, 191, 191)"
-        value={accountData["basket[0][ifscCode]"]}
+        // value={accountData["basket[0][ifscCode]"]}
+        value={ifscCode}
         onChangeText={(e) => handleChange(e, "ifscCode")}
         style={styles.input}
         outlineStyle={styles.outline}
@@ -112,7 +131,8 @@ const Bankdetails = ({ data }) => {
         mode="outlined"
         placeholder="Account Number"
         placeholderTextColor="rgb(191, 191, 191)"
-        value={accountData["basket[0][accountNo]"]}
+        // value={accountData["basket[0][accountNo]"]}
+        value={accountNo}
         onChangeText={(e) => handleChange(e, "accountNo")}
         style={styles.input}
         outlineStyle={styles.outline}

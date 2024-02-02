@@ -85,7 +85,7 @@ const Basicdetails = ({ data }) => {
         : occupation;
     accountData.action = "basicDetails";
 
-    console.log("basic details", accountData.dob);
+    // console.log("basic details", accountData.dob);
     Mfuuserdata(accountData)
       .then((response) => {
         response.data.success

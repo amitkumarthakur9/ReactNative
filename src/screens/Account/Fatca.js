@@ -47,22 +47,6 @@ const Fatca = ({ data }) => {
     accountData.userId = accountData.id;
     accountData.action = "fatcaReg";
   }
-  //   if (!accountData.hasOwnProperty("incomeSlab")) {
-  //     accountData.incomeSlab = "01";
-  //     accountData.wealthSource = accountData.sourceOfwealth;
-  //     accountData.politicallyExposed = "N/A";
-  //     accountData.city = accountData.birthCity;
-  //     accountData.occupationCode = accountData.occupation;
-  //     accountData.netWorthDate = new Date(accountData.netWorthDate)
-  //       .toLocaleDateString("en-US", options)
-  //       .replace(/\//g, "-");
-  //     accountData.updatedOn = new Date(accountData.updatedOn)
-  //       .toLocaleDateString("en-US", options)
-  //       .replace(/\//g, "-");
-  //     accountData.createdOn = new Date(accountData.createdOn)
-  //       .toLocaleDateString("en-US", options)
-  //       .replace(/\//g, "-");
-  //   }
 
   const handleChange = (e, key) => {
     setAccountData((preData) => {
@@ -94,6 +78,8 @@ const Fatca = ({ data }) => {
         console.warn(error);
       });
   };
+
+  //   console.log("nominee", accountData.city);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
