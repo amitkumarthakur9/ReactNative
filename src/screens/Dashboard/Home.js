@@ -30,7 +30,7 @@ const Home = ({ navigation }) => {
   const session = Session();
   const [image, setImage] = useState(null);
 
-  Userlogin();
+  //   Userlogin();
   //   console.log("user details amit", userData);
   //   console.log("session", session);
 
@@ -157,7 +157,10 @@ const Home = ({ navigation }) => {
                           {" "}
                           0{"%"}
                         </Text>
-                        <TouchableOpacity style={styles.investNow}>
+                        <TouchableOpacity
+                          style={styles.investNow}
+                          onPress={() => navigation.push("Explore")}
+                        >
                           <Text style={styles.investNowText}>Invest Now</Text>
                         </TouchableOpacity>
                       </View>
@@ -226,7 +229,10 @@ const Home = ({ navigation }) => {
                             : "N/A"}
                           {"%"}
                         </Text>
-                        <TouchableOpacity style={styles.investNow}>
+                        <TouchableOpacity
+                          style={styles.investNow}
+                          onPress={() => navigation.push("Explore")}
+                        >
                           <Text style={styles.investNowText}>Invest Now</Text>
                         </TouchableOpacity>
                       </View>

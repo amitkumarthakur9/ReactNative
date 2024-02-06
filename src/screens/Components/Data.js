@@ -66,7 +66,7 @@ export const Userpass = async (dispatch) => {
   try {
     const token = await Userpassword();
     dispatch(userDetails({ token: token.data.password }));
-    console.log(token.data.password);
+    // console.log(token.data.password);
   } catch (eror) {
     console.warn("password error", eror);
   }

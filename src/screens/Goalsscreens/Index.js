@@ -90,12 +90,12 @@ export default Goalsscreen = () => {
   };
 
   const handleInflation = (yearValue) => {
-    console.log("inflation:", Math.round(yearValue * 100) / 100);
+    // console.log("inflation:", Math.round(yearValue * 100) / 100);
     setTimePeriod(Math.floor(yearValue, 2));
     const yeartoCalculate = year();
-    console.log("year:", Math.round(yeartoCalculate * 100) / 100);
+    // console.log("year:", Math.round(yeartoCalculate * 100) / 100);
 
-    console.log("amount:", goalAmount);
+    // console.log("amount:", goalAmount);
 
     const current =
       goalAmount *
@@ -103,7 +103,7 @@ export default Goalsscreen = () => {
         1 + Math.round(yearValue * 100) / 100 / 100,
         Math.round(yeartoCalculate * 100) / 100
       );
-    console.log("current:", current);
+    // console.log("current:", current);
     setGoalInflationAmount(Math.floor(current));
   };
 

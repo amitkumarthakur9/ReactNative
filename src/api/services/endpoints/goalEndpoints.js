@@ -16,7 +16,7 @@ const Goallist = () => {
       .get($baseUrl)
       .then((response) => {
         setGoaldata(response.data.goals);
-        console.log("running");
+        // console.log("running");
       })
       .catch((error) => {
         console.warn("error", error);
@@ -62,7 +62,7 @@ const Goallist = () => {
 
 export const AddGoal = (data) => {
   const urlEncodedData = queryString(data);
-  console.log("url passed", urlEncodedData);
+  //   console.log("url passed", urlEncodedData);
   return apiClient.post("/app/wish?" + urlEncodedData);
 };
 

@@ -75,7 +75,7 @@ const Bankdetails = ({ data }) => {
 
     Mfuuserdata(accountData)
       .then((response) => {
-        console.log("response data of bank details", response.data);
+        // console.log("response data of bank details", response.data);
         response.data.success
           ? (setLoader(false), setCurrentForm(currentForm + 1))
           : (Alert.alert("Failed", response.data.error), setLoader(false));
