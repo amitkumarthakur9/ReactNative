@@ -22,7 +22,7 @@ const Goal = () => {
   const navigation = useNavigation();
   const scrollViewRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
-  const goallistData = Goallist(2);
+  const goallistData = Goallist();
   const profilePic = useSelector((state) => state.user.profilepic);
   const [activeTooltipIndex, setActiveTooltipIndex] = useState(null);
 
@@ -59,7 +59,15 @@ const Goal = () => {
                     ? { uri: profilePic }
                     : require("../../../assets/Goal/profile.png")
                 }
-                style={styles.profileImage}
+                style={[
+                  styles.profileImage,
+                  //   {
+                  //     borderRadius: 50,
+                  //     borderWidth: 5,
+                  //     borderBottomWidth: 0,
+                  //     borderColor: "red",
+                  //   },
+                ]}
               />
             </TouchableOpacity>
 

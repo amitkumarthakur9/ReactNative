@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { width, height } from "../../../Dimension";
-const Goallist = (str) => {
+import apiClient from "../apiClient";
+import queryString from "./queryString";
+
+const Goallist = () => {
   const [goaldata, setGoaldata] = useState([]);
   const [duration, setDuration] = useState(0);
   const userId = useSelector((state) => state.user.id);
@@ -13,7 +16,7 @@ const Goallist = (str) => {
       .get($baseUrl)
       .then((response) => {
         setGoaldata(response.data.goals);
-        //console.log("whole data", response.data);
+        console.log("running");
       })
       .catch((error) => {
         console.warn("error", error);
@@ -55,6 +58,12 @@ const Goallist = (str) => {
   }
 
   return allData;
+};
+
+export const AddGoal = (data) => {
+  const urlEncodedData = queryString(data);
+  console.log("url passed", urlEncodedData);
+  return apiClient.post("/app/wish?" + urlEncodedData);
 };
 
 export default Goallist;
