@@ -4,6 +4,7 @@ const initialState = {
   id: 0,
   token: "",
   profilepic: undefined,
+  profileCompleted: false,
 };
 
 const UserSlice = createSlice({
@@ -22,6 +23,11 @@ const UserSlice = createSlice({
         action.payload.profilepic !== undefined
           ? action.payload.profilepic
           : state.profilepic;
+
+      state.profileCompleted =
+        action.payload.profileCompleted !== undefined
+          ? action.payload.profileCompleted
+          : state.profileCompleted;
     },
   },
 });

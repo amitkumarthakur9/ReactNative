@@ -31,13 +31,13 @@ const Drawermenu = (props) => {
               <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
                 <EvilIcons name="search" size={width * 0.07} color="white" />
               </TouchableOpacity>
-              <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
+              {/* <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
                 <Ionicons
                   name="notifications-outline"
                   size={width * 0.06}
                   color="white"
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </ImageBackground>
         ),

@@ -44,13 +44,13 @@ const Exploredrawermenu = (props) => {
                   color="white"
                 />
               </TouchableOpacity>
-              <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
+              {/* <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
                 <Ionicons
                   name="notifications-outline"
                   size={width * 0.06}
                   color="white"
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={styles.contentContainer}>
               <TextInput

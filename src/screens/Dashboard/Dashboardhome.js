@@ -72,7 +72,7 @@ const Dashboardhome = () => {
       <View style={styles.fundContainer}>
         <View style={[styles.flexRow, { marginBottom: height * 0.02 }]}>
           <Text style={styles.leftContent}>Suggested for you</Text>
-          <Text style={styles.rightContent}>View all</Text>
+          {/* <Text style={styles.rightContent}>View all</Text> */}
         </View>
         <View style={styles.flexRow}>
           <Image
@@ -82,7 +82,7 @@ const Dashboardhome = () => {
         </View>
         <View style={[styles.flexRow, { marginTop: height * 0.04 }]}>
           <Text style={styles.leftContent}>Investment Baskets</Text>
-          <Text style={styles.rightContent}>View all</Text>
+          {/* <Text style={styles.rightContent}>View all</Text> */}
         </View>
       </View>
     </View>

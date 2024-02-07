@@ -9,6 +9,7 @@ import {
   Image,
   Alert,
 } from "react-native";
+import { Badge } from "react-native-paper";
 import Backgroundimage from "../Components/Backgroundimage";
 import { height, width } from "../../Dimension";
 import { Ionicons, EvilIcons } from "@expo/vector-icons";
@@ -18,9 +19,10 @@ import DashboardData, { Thematicbasket } from "./Data";
 import usePortfolioData from "../Portfolio/Useportfoliodata";
 import Loader from "../Components/Loader";
 import formatNumberWithCommas from "../Components/Inrconverter";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { Userlogin } from "../../api/services/endpoints/userEndpoints";
 import { UserDetails, Session, SessionEnd } from "../Components/Data";
+import { useSelector } from "react-redux";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
@@ -52,6 +54,10 @@ const Home = ({ navigation }) => {
       setImage("https://data.fundexpert.in/profilepic/" + userData.profilepic);
     }
   }, [userData, session]);
+
+  const profileCompleted = useSelector((state) => state.user.profileCompleted);
+  const Cartcount = useSelector((state) => state.cart.count);
+
   return (
     <View style={styles.container}>
       <Backgroundimage Headerheight={0.29} />
@@ -67,7 +73,7 @@ const Home = ({ navigation }) => {
             style={{ backgroundColor: "white" }}
           />
           <Text style={styles.name}>
-            Hello {userData ? userData.firstName : "Guest"} !
+            Hello {userData ? userData.firstName.split(" ")[0] : "Guest"} !
           </Text>
           <View
             style={[
@@ -84,12 +90,28 @@ const Home = ({ navigation }) => {
             >
               <EvilIcons name="search" size={width * 0.07} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.headerIcon}>
+            {/* <TouchableOpacity style={styles.headerIcon}>
               <Ionicons
                 name="notifications-outline"
                 size={width * 0.06}
                 color="white"
               />
+            </TouchableOpacity> */}
+            <TouchableOpacity
+              style={styles.headerIcon}
+              onPress={() => navigation.push("AddToCart")}
+            >
+              <Feather name="shopping-cart" size={width * 0.06} color="white" />
+              <Badge
+                style={{
+                  position: "absolute",
+                  top: -height * 0.015,
+                  backgroundColor: "rgba(33, 158, 188, 1)",
+                  fontWeight: "600",
+                }}
+              >
+                {Cartcount}
+              </Badge>
             </TouchableOpacity>
             <TouchableOpacity style={styles.headerIcon} onPress={handleLogout}>
               <MaterialCommunityIcons
@@ -157,12 +179,23 @@ const Home = ({ navigation }) => {
                           {" "}
                           0{"%"}
                         </Text>
-                        <TouchableOpacity
-                          style={styles.investNow}
-                          onPress={() => navigation.push("Explore")}
-                        >
-                          <Text style={styles.investNowText}>Invest Now</Text>
-                        </TouchableOpacity>
+                        {profileCompleted ? (
+                          <TouchableOpacity
+                            style={styles.investNow}
+                            onPress={() => navigation.push("Exploremenu")}
+                          >
+                            <Text style={styles.investNowText}>Invest Now</Text>
+                          </TouchableOpacity>
+                        ) : (
+                          <TouchableOpacity
+                            style={styles.investNow}
+                            onPress={() => navigation.push("Accountmenu")}
+                          >
+                            <Text style={styles.investNowText}>
+                              Complete Profile
+                            </Text>
+                          </TouchableOpacity>
+                        )}
                       </View>
                     </View>
                   </View>
@@ -231,7 +264,7 @@ const Home = ({ navigation }) => {
                         </Text>
                         <TouchableOpacity
                           style={styles.investNow}
-                          onPress={() => navigation.push("Explore")}
+                          onPress={() => navigation.push("Exploremenu")}
                         >
                           <Text style={styles.investNowText}>Invest Now</Text>
                         </TouchableOpacity>
@@ -263,7 +296,7 @@ const Home = ({ navigation }) => {
               ]}
             >
               <Text style={styles.leftContent}>Trending NFOs </Text>
-              <Text style={styles.rightContent}>View all</Text>
+              {/* <Text style={styles.rightContent}>View all</Text> */}
             </View>
             <ScrollView horizontal>
               {trendingNfo ? <NforenderItem nfo={trendingNfo} /> : <Loader />}
@@ -275,7 +308,7 @@ const Home = ({ navigation }) => {
               ]}
             >
               <Text style={styles.leftContent}>Trending Schemes </Text>
-              <Text style={styles.rightContent}>View all</Text>
+              {/* <Text style={styles.rightContent}>View all</Text> */}
             </View>
             <ScrollView horizontal>
               {trendingschemes ? (
@@ -420,7 +453,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(251, 133, 0, 1)",
   },
   investNowText: {
-    left: width * 0.02,
+    // left: width * 0.02,
     fontSize: width * 0.04,
     lineHeight: height * 0.028,
     fontWeight: "600",

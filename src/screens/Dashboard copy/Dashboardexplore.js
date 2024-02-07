@@ -214,7 +214,7 @@ const Dashboardexplore = ({ navigation }) => {
         <View style={styles.NfoContainer}>
           <View style={styles.flexRow}>
             <Text style={styles.leftContent}>Trending NFO’s</Text>
-            <Text style={styles.rightContent}>View all</Text>
+            {/* <Text style={styles.rightContent}>View all</Text> */}
           </View>
         </View>
         <View>
@@ -254,7 +254,7 @@ const Dashboardexplore = ({ navigation }) => {
         <View style={styles.TrendingSchemes}>
           <View style={styles.flexRow}>
             <Text style={styles.leftContent}>Trending Schemes</Text>
-            <Text style={styles.rightContent}>View all</Text>
+            {/* <Text style={styles.rightContent}>View all</Text> */}
           </View>
         </View>
         <View>

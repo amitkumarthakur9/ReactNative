@@ -144,8 +144,8 @@ export const SchemesrenderItem = (props) => {
               <View style={styles.cagrContainer}>
                 <Text style={styles.cagr}>1Y Return</Text>
                 <Text style={styles.Cagrpercentage}>
-                  {item.oneYearReturns
-                    ? parseFloat(item.oneYearReturns).toFixed(2) + "%"
+                  {item.oneYearReturn
+                    ? parseFloat(item.oneYearReturn).toFixed(2) + "%"
                     : "N/A"}
                 </Text>
               </View>
@@ -158,7 +158,7 @@ export const SchemesrenderItem = (props) => {
                 </Text>
               </View>
               <View style={styles.benchmarkContainer}>
-                <Text style={styles.cagr}>3Y Return</Text>
+                <Text style={styles.cagr}>5Y Return</Text>
                 <Text style={styles.Cagrpercentage}>
                   {item.fiveYearReturns
                     ? parseFloat(item.fiveYearReturns).toFixed(2) + "%"
@@ -206,7 +206,7 @@ export const NforenderItem = (props) => {
           onPress={() => handleInvest(item.id, navigation)}
         >
           <View style={styles.card}>
-            <View style={[styles.flexRow]}>
+            <View style={styles.flexRow}>
               <View style={styles.trendImage}>
                 <Image
                   style={{ width: width * 0.14, height: width * 0.14 }}
@@ -216,36 +216,16 @@ export const NforenderItem = (props) => {
                   resizeMode="contain"
                 />
               </View>
-              {/* <View>
-                <Text style={styles.percentage}>
-                  {item.fiveYearReturns
-                    ? item.fiveYearReturns.toFixed(2) + "%"
-                    : item.threeYearReturns
-                    ? item.threeYearReturns.toFixed(2) + "%"
-                    : item.oneYearReturns
-                    ? item.oneYearReturns.toFixed(2) + "%"
-                    : "N/A"}
-                </Text>
-                <Text style={styles.desc}>
-                  {item.fiveYearReturns
-                    ? "5yr Return"
-                    : item.threeYearReturns
-                    ? "3yr Return"
-                    : item.oneYearReturns
-                    ? "1yr Return"
-                    : "N/A"}
-                </Text>
-              </View> */}
+              <Text style={[styles.fundName, { flex: 2 }]}>
+                {Formatfundname(item.name)}
+              </Text>
             </View>
-            <Text style={styles.fundName}>{Formatfundname(item.name)}</Text>
-            <View style={[styles.flexRow, { marginTop: height * 0.02 }]}>
-              <View style={styles.flexContent}>
-                <Text style={styles.type}>
-                  {item.schemeType} {item.type ? "-" + item.type : ""}
-                </Text>
-              </View>
-              {/* <Text style={styles.starNumber}>{item.rating}</Text>
-              <Foundation name="star" size={width * 0.04} style={styles.star} /> */}
+
+            <View style={styles.flexRow}>
+              <View style={styles.trendImage}></View>
+              <Text style={[styles.type, { flex: 2 }]}>
+                {item.schemeType} {item.type ? "-" + item.type : ""}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -285,13 +265,13 @@ const Explore = () => {
                 {Cartcount}
               </Badge>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.headerIcon}>
+            {/* <TouchableOpacity style={styles.headerIcon}>
               <Ionicons
                 name="notifications-outline"
                 size={width * 0.06}
                 color="white"
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.headerIcon}>
               <MaterialCommunityIcons
                 name="logout"
@@ -321,7 +301,7 @@ const Explore = () => {
           <View style={styles.NfoContainer}>
             <View style={styles.flexRow}>
               <Text style={styles.leftContent}>Trending NFOs</Text>
-              <Text style={styles.rightContent}>View all</Text>
+              {/* <Text style={styles.rightContent}>View all</Text> */}
             </View>
           </View>
           <View>
@@ -332,7 +312,7 @@ const Explore = () => {
           <View style={styles.TrendingSchemes}>
             <View style={styles.flexRow}>
               <Text style={styles.leftContent}>Trending Schemes</Text>
-              <Text style={styles.rightContent}>View all</Text>
+              {/* <Text style={styles.rightContent}>View all</Text> */}
             </View>
           </View>
           <View>
@@ -397,8 +377,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   trendImage: {
-    width: "50%",
     flex: 1,
+    justifyContent: "center",
   },
   percentage: {
     color: "rgba(251, 133, 0, 1)",
@@ -431,6 +411,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
+    textAlign: "justify",
     // marginTop: height * 0.015,
   },
   flexContent: {
@@ -451,7 +432,7 @@ const styles = StyleSheet.create({
   type: {
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.03,
-    lineHeight: height * 0.02,
+    lineHeight: height * 0.06,
     fontWeight: "500",
     opacity: 0.5,
   },
@@ -501,6 +482,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderTopWidth: 0,
     flex: 1,
+    alignItems: "center",
   },
   benchmarkContainer: {
     width: width,
@@ -511,7 +493,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderRightWidth: 0,
     flex: 1,
-    alignItems: "flex-start",
+    alignItems: "center",
   },
   benchmarkReturn: {
     color: "rgba(0, 0, 0, 1)",

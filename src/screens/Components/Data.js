@@ -17,6 +17,9 @@ export const UserDetails = () => {
         setUserData(response.data.user);
         // console.log("user data", response.data.user);
         const responseObj = response.data.user;
+        const profileCompleted =
+          checkProfileCompleted(responseObj) == 5 ? true : false;
+        dispatch(userDetails({ profileCompleted: profileCompleted }));
         dispatch(userDetails({ id: response.data.user.id }));
         if (responseObj.hasOwnProperty("profilepic")) {
           dispatch(
@@ -69,5 +72,22 @@ export const Userpass = async (dispatch) => {
     // console.log(token.data.password);
   } catch (eror) {
     console.warn("password error", eror);
+  }
+};
+
+export const checkProfileCompleted = (Userdata) => {
+  if (
+    !Userdata.mfuAdditional.basicDetails ||
+    !Userdata.mfuAdditional.contactDetails
+  ) {
+    return 1;
+  } else if (!Userdata.mfuAdditional.bankDetails) {
+    return 2;
+  } else if (!Userdata.isFatcaDone) {
+    return 3;
+  } else if (!Userdata.mfuAdditional.nomineeDetails || !Userdata.mfuCan) {
+    return 4;
+  } else {
+    return 5;
   }
 };

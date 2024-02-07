@@ -27,13 +27,15 @@ export default Searchbox = ({ navigation }) => {
   const [searchData, setSearchData] = useState();
   const handleSearch = (text) => {
     setSearch(text);
-    searchFund(text)
-      .then((response) => {
-        setSearchData(response.data);
-      })
-      .catch((error) => {
-        console.error("search data error:", error);
-      });
+    if (text.length >= 3) {
+      searchFund(text)
+        .then((response) => {
+          setSearchData(response.data);
+        })
+        .catch((error) => {
+          console.error("search data error:", error);
+        });
+    }
   };
 
   const clearText = () => {
@@ -129,7 +131,7 @@ export default Searchbox = ({ navigation }) => {
           value={search}
           mode="outlined"
           style={styles.searchInput}
-          placeholder="Search"
+          placeholder="Search Fund (Min 3 char)"
           outlineStyle={{ borderRadius: width * 0.06, borderColor: "white" }}
           right={
             search ? (
