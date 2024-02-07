@@ -4,7 +4,7 @@ import { height, width } from "../../Dimension";
 
 const Accountpagination = ({ data }) => {
   const { currentForm, setCurrentForm } = data;
-  const totalDots = 4;
+  const totalDots = 5;
   return (
     <View style={styles.contentContainer}>
       <Text style={styles.header}>Account Setup - Profile</Text>

@@ -6,6 +6,7 @@ import Bankdetails from "./Bankdetails";
 import Fatca from "./Fatca";
 import Nominee from "./Nominee";
 import Basicdetails from "./Basicdetails";
+import Upload from "./Upload";
 import {
   Userlogin,
   Fetchuserdetails,
@@ -74,12 +75,23 @@ const Form = ({ data }) => {
             setCurrentForm: setCurrentForm,
           }}
         />
-      ) : (
+      ) : currentForm === 3 ? (
         <Nominee
           data={{
             accountData: accountData,
             setAccountData: setAccountData,
             nomineeData: nominee,
+            currentForm: currentForm,
+            setCurrentForm: setCurrentForm,
+          }}
+        />
+      ) : (
+        <Upload
+          data={{
+            accountData: accountData,
+            setAccountData: setAccountData,
+            currentForm: currentForm,
+            setCurrentForm: setCurrentForm,
           }}
         />
       )}

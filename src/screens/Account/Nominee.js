@@ -18,10 +18,20 @@ import Isovereeighteen from "../Components/Datediff";
 const Nominee = ({ data }) => {
   const [checked, setChecked] = useState(false);
   const [thirdNomineeCheck, setThirdNomineeCheck] = useState(false);
-  const { accountData, setAccountData, nomineeData } = data || [];
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
-  const [loader, setLoader] = useState();
+  const {
+    accountData,
+    setAccountData,
+    currentForm,
+    nomineeData,
+    setCurrentForm,
+  } = data || [];
+  const [showDatePickerDob, setShowDatePickerDob] = useState(false);
+  const [showDatePickerDob2, setShowDatePickerDob2] = useState(false);
+  const [showDatePickerDob3, setShowDatePickerDob3] = useState(false);
+  const [dateDob, setDateDob] = useState(new Date());
+  const [dateDob2, setDateDob2] = useState(new Date());
+  const [dateDob3, setDateDob3] = useState(new Date());
+  const [loader, setLoader] = useState(false);
   const [nominee, setNominee] = useState({
     name: "",
     relation: "",
@@ -41,28 +51,29 @@ const Nominee = ({ data }) => {
       setNominee((preData) => {
         const newData = { ...preData };
         newData["secondNominee"] = true;
-        newData["name2"] = "";
-        newData["relation2"] = "";
-        newData["dob2"] = "";
-        newData["percentage2"] = "";
+        // newData["name2"] = "";
+        // newData["relation2"] = "";
+        // newData["dob2"] = "";
+        // newData["percentage2"] = "";
         newData["minor2"] = false;
-        newData["percentage2"] = "";
+        // newData["percentage2"] = "";
         return newData;
       });
     }
   };
+
   const handlethirdCheckboxChange = () => {
     setThirdNomineeCheck(!thirdNomineeCheck);
     if (!thirdNomineeCheck) {
       setNominee((preData) => {
         const newData = { ...preData };
         newData["thirdNominee"] = true;
-        newData["name3"] = "";
-        newData["relation3"] = "";
-        newData["dob3"] = "";
-        newData["percentage3"] = "";
+        // newData["name3"] = "";
+        // newData["relation3"] = "";
+        // newData["dob3"] = "";
+        // newData["percentage3"] = "";
         newData["minor3"] = false;
-        newData["percentage3"] = "";
+        // newData["percentage3"] = "";
         return newData;
       });
     }
@@ -71,19 +82,33 @@ const Nominee = ({ data }) => {
   const handleChange = (e, key) => {
     setNominee((preData) => {
       const newData = { ...preData };
-      key == "dob"
-        ? ((newData[key] = Formatdate(e)), setShowDatePicker(false))
-        : key == "dob2"
-        ? ((newData[key] = Formatdate(e)), setShowDatePicker(false))
-        : key == "dob3"
-        ? ((newData[key] = Formatdate(e)), setShowDatePicker(false))
-        : (newData[key] = e);
+      if (key === "dob") {
+        newData[key] = Formatdate(e);
+        setDateDob(e);
+        setShowDatePickerDob(false);
+      } else if (key === "dob2") {
+        newData[key] = Formatdate(e);
+        setDateDob2(e);
+        setShowDatePickerDob2(false);
+      } else if (key === "dob3") {
+        newData[key] = Formatdate(e);
+        setDateDob3(e);
+        setShowDatePickerDob3(false);
+      } else {
+        newData[key] = e;
+      }
       return newData;
     });
   };
 
-  const handleDatePress = () => {
-    setShowDatePicker(true);
+  const handleDatePress = (key) => {
+    if (key === "dob") {
+      setShowDatePickerDob(true);
+    } else if (key === "dob2") {
+      setShowDatePickerDob2(true);
+    } else if (key === "dob3") {
+      setShowDatePickerDob3(true);
+    }
   };
 
   const isValidDateFormat = (dateString) => {
@@ -104,23 +129,23 @@ const Nominee = ({ data }) => {
         return;
       }
     }
-    if (nominee.dob2) {
+    if (nominee.hasOwnProperty("dob2") && checked) {
       if (!isValidDateFormat(nominee.dob2)) {
         const dob2 = Formatdate(nominee.dob2);
         nominee.dob2 = dob2;
       }
-      if (!Isovereeighteen(dob2)) {
+      if (!Isovereeighteen(nominee.dob2)) {
         Alert.alert("Dob2 Should be greater than 18");
         setLoader(false);
         return;
       }
     }
-    if (nominee.dob3) {
+    if (nominee.hasOwnProperty("dob3") && thirdNomineeCheck) {
       if (!isValidDateFormat(nominee.dob3)) {
         const dob3 = Formatdate(nominee.dob3);
         nominee.dob3 = dob3;
       }
-      if (!Isovereeighteen(dob3)) {
+      if (!Isovereeighteen(nominee.dob3)) {
         Alert.alert("Dob3 Should be greater than 18");
         setLoader(false);
         return;
@@ -136,10 +161,15 @@ const Nominee = ({ data }) => {
             };
             Mfuuserdata(sendForCan).then((canResponse) => {
               canResponse.data.success
-                ? (Alert.alert("success"), setLoader(false))
+                ? (Alert.alert("success"),
+                  setLoader(false),
+                  setCurrentForm(currentForm + 1))
                 : (Alert.alert("Failed", canResponse.data.error),
                   setLoader(false));
             });
+          } else {
+            Alert.alert("failed", response.data.error);
+            setLoader(false);
           }
         })
         .catch((error) => {
@@ -185,8 +215,6 @@ const Nominee = ({ data }) => {
     }
   }, []);
 
-  console.log("nominee details", nomineeData);
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Text style={styles.desc}>
@@ -217,7 +245,7 @@ const Nominee = ({ data }) => {
         contentStyle={styles.contentStyle}
         placeholderTextColor="rgb(191, 191, 191)"
       />
-      <TouchableOpacity onPress={handleDatePress}>
+      <TouchableOpacity onPress={() => handleDatePress("dob")}>
         <TextInput
           label="Date Of Birth"
           mode="outlined"
@@ -231,9 +259,9 @@ const Nominee = ({ data }) => {
           contentStyle={styles.contentStyle}
         />
       </TouchableOpacity>
-      {showDatePicker && (
+      {showDatePickerDob && (
         <DateTimePicker
-          value={date}
+          value={dateDob}
           mode="date"
           display="default"
           onChange={(e, value) => handleChange(value, "dob")}
@@ -255,9 +283,7 @@ const Nominee = ({ data }) => {
       <View style={{ flexDirection: "row" }}>
         <Checkbox
           status={checked ? "checked" : "unchecked"}
-          onPress={() => {
-            handleCheckboxChange(); // Call the function to update the state
-          }}
+          onPress={handleCheckboxChange}
         />
         <Text
           style={[
@@ -296,7 +322,7 @@ const Nominee = ({ data }) => {
             placeholderTextColor="rgb(191, 191, 191)"
           />
 
-          <TouchableOpacity onPress={handleDatePress}>
+          <TouchableOpacity onPress={() => handleDatePress("dob2")}>
             <TextInput
               label="Date Of Birth"
               mode="outlined"
@@ -310,9 +336,9 @@ const Nominee = ({ data }) => {
               contentStyle={styles.contentStyle}
             />
           </TouchableOpacity>
-          {showDatePicker && (
+          {showDatePickerDob2 && (
             <DateTimePicker
-              value={date}
+              value={dateDob2}
               mode="date"
               display="default"
               onChange={(e, value) => handleChange(value, "dob2")}
@@ -334,9 +360,7 @@ const Nominee = ({ data }) => {
           <View style={{ flexDirection: "row" }}>
             <Checkbox
               status={thirdNomineeCheck ? "checked" : "unchecked"}
-              onPress={() => {
-                handlethirdCheckboxChange();
-              }}
+              onPress={handlethirdCheckboxChange}
             />
             <Text
               style={[
@@ -377,7 +401,7 @@ const Nominee = ({ data }) => {
             placeholderTextColor="rgb(191, 191, 191)"
           />
 
-          <TouchableOpacity onPress={handleDatePress}>
+          <TouchableOpacity onPress={() => handleDatePress("dob3")}>
             <TextInput
               label="Date Of Birth"
               mode="outlined"
@@ -391,9 +415,9 @@ const Nominee = ({ data }) => {
               contentStyle={styles.contentStyle}
             />
           </TouchableOpacity>
-          {showDatePicker && (
+          {showDatePickerDob3 && (
             <DateTimePicker
-              value={date}
+              value={dateDob3}
               mode="date"
               display="default"
               onChange={(e, value) => handleChange(value, "dob3")}
