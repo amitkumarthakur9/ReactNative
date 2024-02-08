@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Image,
 } from "react-native";
 import { Button, TextInput, Checkbox } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
@@ -14,178 +15,66 @@ import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Loader from "../Components/Loader";
 import Isovereeighteen from "../Components/Datediff";
+import * as ImagePicker from "expo-image-picker";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Uploadsignature } from "./Data";
+import * as FileSystem from "expo-file-system";
+import { useNavigation } from "@react-navigation/native";
 
 const Upload = ({ data }) => {
-  const [checked, setChecked] = useState(false);
-  const [thirdNomineeCheck, setThirdNomineeCheck] = useState(false);
-  const { accountData, setAccountData, nomineeData } = data || [];
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
   const [loader, setLoader] = useState();
-  const [nominee, setNominee] = useState({
-    name: "",
-    relation: "",
-    dob: "",
-    percentage: "",
-    nomineeOptedFlag: "Y",
-    minor: false,
-    secondNominee: false,
-    thirdNominee: false,
-    holdingMode: "SI",
-    action: "NomineeDetails",
-  });
+  const [image, setImage] = useState(null);
+  const [imageAllData, setImageAllData] = useState(null);
+  const [imageName, setImageName] = useState(null);
 
-  const handleCheckboxChange = () => {
-    setChecked(!checked);
-    if (!checked) {
-      setNominee((preData) => {
-        const newData = { ...preData };
-        newData["secondNominee"] = true;
-        newData["name2"] = "";
-        newData["relation2"] = "";
-        newData["dob2"] = "";
-        newData["percentage2"] = "";
-        newData["minor2"] = false;
-        newData["percentage2"] = "";
-        return newData;
-      });
-    }
-  };
-  const handlethirdCheckboxChange = () => {
-    setThirdNomineeCheck(!thirdNomineeCheck);
-    if (!thirdNomineeCheck) {
-      setNominee((preData) => {
-        const newData = { ...preData };
-        newData["thirdNominee"] = true;
-        newData["name3"] = "";
-        newData["relation3"] = "";
-        newData["dob3"] = "";
-        newData["percentage3"] = "";
-        newData["minor3"] = false;
-        newData["percentage3"] = "";
-        return newData;
-      });
-    }
-  };
+  const navigation = useNavigation();
 
-  const handleChange = (e, key) => {
-    setNominee((preData) => {
-      const newData = { ...preData };
-      key == "dob"
-        ? ((newData[key] = Formatdate(e)), setShowDatePicker(false))
-        : key == "dob2"
-        ? ((newData[key] = Formatdate(e)), setShowDatePicker(false))
-        : key == "dob3"
-        ? ((newData[key] = Formatdate(e)), setShowDatePicker(false))
-        : (newData[key] = e);
-      return newData;
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      setImageAllData(result.assets[0]);
+      setImageName(result.assets[0].uri.split("ImagePicker/")[1]);
+    }
   };
 
-  const handleDatePress = () => {
-    setShowDatePicker(true);
-  };
-
-  const isValidDateFormat = (dateString) => {
-    const regex = /^\d{2}-\d{2}-\d{4}$/;
-    return regex.test(dateString);
-  };
-
-  const handlemfu = () => {
+  const handlemfu = async () => {
+    let fileInfo = await FileSystem.getInfoAsync(image);
+    let fileSizeInBytes = fileInfo.size;
+    let fileSizeInKB = fileSizeInBytes / 1024;
+    const filesizeInstr = Math.floor(fileSizeInKB.toString());
+    const data = {
+      uri: image,
+      imageObj: imageAllData,
+      action: "fileUpload",
+      fileName: imageName,
+      documentType: "PAN",
+      filesize: filesizeInstr,
+    };
     setLoader(true);
-    if (nominee.dob) {
-      if (!isValidDateFormat(nominee.dob)) {
-        const dob = Formatdate(nominee.dob);
-        nominee.dob = dob;
-      }
-      if (!Isovereeighteen(nominee.dob)) {
-        Alert.alert("Dob Should be greater than 18");
-        setLoader(false);
-        return;
-      }
-    }
-    if (nominee.dob2) {
-      if (!isValidDateFormat(nominee.dob2)) {
-        const dob2 = Formatdate(nominee.dob2);
-        nominee.dob2 = dob2;
-      }
-      if (!Isovereeighteen(dob2)) {
-        Alert.alert("Dob2 Should be greater than 18");
-        setLoader(false);
-        return;
-      }
-    }
-    if (nominee.dob3) {
-      if (!isValidDateFormat(nominee.dob3)) {
-        const dob3 = Formatdate(nominee.dob3);
-        nominee.dob3 = dob3;
-      }
-      if (!Isovereeighteen(dob3)) {
-        Alert.alert("Dob3 Should be greater than 18");
-        setLoader(false);
-        return;
-      }
-    }
-    (nominee.userId = accountData.id),
-      Mfuuserdata(nominee)
-        .then((response) => {
-          if (response.data.success) {
-            const sendForCan = {
-              userId: nominee.userId,
-              action: "submitUserToMfu",
-            };
-            Mfuuserdata(sendForCan).then((canResponse) => {
-              canResponse.data.success
-                ? (Alert.alert("success"), setLoader(false))
-                : (Alert.alert("Failed", canResponse.data.error),
-                  setLoader(false));
-            });
-          }
-        })
-        .catch((error) => {
-          console.warn(error);
-        });
+    Uploadsignature(data)
+      .then((response) => {
+        if (response.success) {
+          Alert.alert("Success . File has been uploaded successfully");
+          navigation.push("Dashboard");
+        } else {
+          Alert.alert("Failed", response.mfuResponse.responseMsg);
+          setLoader(false);
+        }
+      })
+      .catch((error) => {
+        Alert.alert("Failed", error);
+      });
   };
-
-  useEffect(() => {
-    if (nomineeData != undefined && nomineeData.hasOwnProperty("name")) {
-      setNominee((preData) => {
-        const newData = { ...preData };
-
-        newData["name"] = nomineeData.name;
-        newData["relation"] = nomineeData.relation;
-        newData["dob"] = nomineeData.dob;
-        newData["percentage"] = nomineeData.percentage;
-        return newData;
-      });
-    }
-
-    if (nomineeData != undefined && nomineeData.hasOwnProperty("name2")) {
-      setNominee((preData) => {
-        const newData = { ...preData };
-
-        newData["name2"] = nomineeData.name2;
-        newData["relation2"] = nomineeData.relation2;
-        newData["dob2"] = nomineeData.dob2;
-        newData["percentage2"] = nomineeData.percentage2;
-        return newData;
-      });
-    }
-
-    if (nomineeData != undefined && nomineeData.hasOwnProperty("name3")) {
-      setNominee((preData) => {
-        const newData = { ...preData };
-
-        newData["name3"] = nomineeData.name3;
-        newData["relation3"] = nomineeData.relation3;
-        newData["dob3"] = nomineeData.dob3;
-        newData["percentage3"] = nomineeData.percentage3;
-        return newData;
-      });
-    }
-  }, []);
-
-  console.log("nominee details", nomineeData);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -194,17 +83,19 @@ const Upload = ({ data }) => {
       </Text>
 
       <Text style={styles.header}>Signature Image</Text>
-      <TextInput
-        mode="outlined"
-        value={nominee.name}
-        onChangeText={(e) => handleChange(e, "name")}
-        style={styles.input}
-        outlineStyle={styles.outline}
-        placeholder="Nominee Name"
-        theme={styles.themeStyle}
-        contentStyle={styles.contentStyle}
-        placeholderTextColor="rgb(191, 191, 191)"
-      />
+
+      <Button
+        title="Pick an image from camera roll"
+        onPress={pickImage}
+        mode="contained-tonal"
+        style={styles.imageButton}
+      >
+        <FontAwesome5 name="file-signature" size={24} color="black" /> Upload
+        Signature Image
+      </Button>
+      {image && (
+        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+      )}
       {loader ? (
         <Loader />
       ) : (
@@ -220,7 +111,7 @@ const Upload = ({ data }) => {
                 fontWeight: "600",
               }}
             >
-              Next
+              Done
             </Button>
           </TouchableOpacity>
         </>
@@ -245,34 +136,6 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.015,
     opacity: 0.6,
   },
-  input: {
-    borderRadius: width * 0.05,
-    fontSize: width * 0.043,
-    marginBottom: height * 0.02,
-  },
-  outline: {
-    borderRadius: width * 0.02,
-    backgroundColor: "white",
-    borderColor: "rgb(191, 191, 191)",
-  },
-  themeStyle: {
-    colors: {
-      primary: "rgba(2, 48, 71, 1)",
-    },
-  },
-  contentStyle: {
-    color: "rgba(2, 48, 71, 1)",
-    fontWeight: "600",
-  },
-  dropdown: {
-    borderWidth: height * 0.0015,
-    borderRadius: width * 0.02,
-    borderColor: "rgb(191, 191, 191)",
-    marginBottom: height * 0.02,
-  },
-  Picker: {
-    color: "rgb(191, 191, 191)",
-  },
   button: {
     marginBottom: height * 0.04,
     marginTop: height * 0.03,
@@ -281,6 +144,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "rgba(0, 53, 102, 1)",
+  },
+  imageButton: {
+    backgroundColor: "rgba(33, 158, 188, 1)",
+    borderWidth: 1,
+    borderRadius: 50,
+    width: "70%",
+    alignSelf: "center",
+    marginTop: height * 0.02,
+    marginBottom: height * 0.02,
   },
 });
 

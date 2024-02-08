@@ -3,7 +3,10 @@ import {
   Userlogin,
   Fetchuserdetails,
 } from "../../api/services/endpoints/userEndpoints";
-import { Banksdata } from "../../api/services/endpoints/userEndpoints";
+import {
+  Banksdata,
+  uploadDoc,
+} from "../../api/services/endpoints/userEndpoints";
 export const Accountdata = () => {
   const [accountData, setAccountData] = useState([]);
   useEffect(() => {
@@ -43,4 +46,13 @@ export const Getbank = () => {
   }, []);
 
   return banks;
+};
+
+export const Uploadsignature = async (data) => {
+  try {
+    const result = await uploadDoc(data);
+    return result.data;
+  } catch (error) {
+    console.warn("error", error);
+  }
 };

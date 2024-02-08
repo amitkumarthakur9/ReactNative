@@ -32,7 +32,7 @@ const Home = ({ navigation }) => {
   const session = Session();
   const [image, setImage] = useState(null);
 
-  //   Userlogin();
+  Userlogin();
   //   console.log("user details amit", userData);
   //   console.log("session", session);
 

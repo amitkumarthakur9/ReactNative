@@ -8,7 +8,13 @@
       "@react-native-firebase/auth",
       "@react-native-firebase/perf",
       "@react-native-firebase/crashlytics",
-      "expo-image-picker"
+    //   "expo-image-picker"
+	  [
+        "expo-image-picker",
+        {
+          "photosPermission": "growthvine want to access gallery"
+        }
+      ]
     ],
     "version": "1.0.0",
     "orientation": "portrait",
