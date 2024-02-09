@@ -84,8 +84,8 @@ export default Searchbox = ({ navigation }) => {
             <View style={styles.cagrContainer}>
               <Text style={styles.cagr}>1Y Return</Text>
               <Text style={styles.Cagrpercentage}>
-                {item.oneYearReturns
-                  ? parseFloat(item.oneYearReturns).toFixed(2) + "%"
+                {item.oneYearReturn
+                  ? parseFloat(item.oneYearReturn).toFixed(2) + "%"
                   : "N/A"}
               </Text>
             </View>
@@ -278,6 +278,7 @@ const styles = StyleSheet.create({
     margin: width * 0.02,
     width: width * 0.38,
     alignItems: "center",
+    flex: 1,
   },
   AddToCart: {
     color: "rgba(33, 158, 188, 1)",

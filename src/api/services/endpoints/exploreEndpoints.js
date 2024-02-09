@@ -2,7 +2,7 @@ import apiClient from "../apiClient";
 
 export const searchFund = (fundName) => {
   const encodedFundName = encodeURIComponent(fundName);
-  console.log("passed url", encodedFundName);
+  // console.log("passed url", encodedFundName);
   return apiClient.get(
     `/app/mutualfund?action=search&term=${fundName}&optiontype=GROWTH`
   );
