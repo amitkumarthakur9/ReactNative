@@ -40,7 +40,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Dashboard"
+          initialRouteName="Splash"
           screenOptions={{
             headerShown: false,
           }}

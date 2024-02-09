@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { width, height } from "../../Dimension";
 import Header from "../Components/Header";
-import { Foundation, SimpleLineIcons } from "@expo/vector-icons";
+import { Foundation, SimpleLineIcons, FontAwesome } from "@expo/vector-icons";
 import { Fetchcart, Removecart } from "./Data";
 import Loader from "../Components/Loader";
 import Formatfundname from "../Components/Formatfundname";
@@ -147,13 +147,12 @@ export const AddToCart = () => {
                         >
                           <View style={styles.flexContent}>
                             <Text style={styles.type}>
-                              Amount {item.amount}
+                              Start Date : {item.sipDate}
                               {removed}
                             </Text>
                           </View>
-                          <Text style={styles.rating}>
-                            {item.mutualFund.rating}/5
-                          </Text>
+                          <FontAwesome name="rupee" size={20} color="black" />
+                          <Text style={styles.rating}>{item.amount}</Text>
                         </View>
                       </View>
                     </TouchableOpacity>
@@ -247,11 +246,12 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   rating: {
-    backgroundColor: "green",
-    color: "white",
-    fontWeight: "400",
-    padding: width * 0.01,
-    borderRadius: width * 0.01,
+    // backgroundColor: "green",
+    // color: "white",
+    fontWeight: "500",
+    marginLeft: width * 0.02,
+    // padding: width * 0.01,
+    // borderRadius: width * 0.01,
   },
   headerText: {
     color: "#023047",

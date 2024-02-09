@@ -47,8 +47,12 @@ export default Assetheader = (props) => {
               />
               <Text style={styles.header}>{Formatfundname(Data.name)}</Text>
               <View style={styles.flexContainer}>
-                <Text style={styles.mfTypeButtons}>{Data.schemeType}</Text>
-                <Text style={styles.mfTypeButtons}>{Data.type}</Text>
+                {Data.schemeType && (
+                  <Text style={styles.mfTypeButtons}>{Data.schemeType}</Text>
+                )}
+                {Data.type && (
+                  <Text style={styles.mfTypeButtons}>{Data.type}</Text>
+                )}
               </View>
               <View style={{ flexDirection: "row" }}>
                 {renderStars(Data.rating)}
