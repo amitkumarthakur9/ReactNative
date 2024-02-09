@@ -12,7 +12,7 @@ const Assetpreview = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [mfData, setMfData] = useState({});
   const route = useRoute();
-  const { mfId } = route.params;
+  const { mfId, trendType } = route.params;
 
   useEffect(() => {
     AssetPreview(mfId)
@@ -35,7 +35,7 @@ const Assetpreview = ({ navigation }) => {
       ) : (
         <>
           <Assetheader mfData={mfData} />
-          <Content mfData={mfData} />
+          <Content mfData={mfData} trendType={trendType} />
           <Assetfooter mfData={mfData} />
         </>
       )}

@@ -13,6 +13,7 @@ const Tab = createMaterialTopTabNavigator();
 
 export default Content = (props) => {
   const Data = props.mfData;
+  const trendType = props.trendType;
   return (
     <View style={styles.tabContainer}>
       <Tab.Navigator
@@ -29,12 +30,16 @@ export default Content = (props) => {
           component={Overview}
           initialParams={{ mfData: Data }}
         />
-        <Tab.Screen
-          name="Portfolio"
-          component={Portfolio}
-          initialParams={{ mfId: Data.id, currentNav: Data.nav }}
-        />
-        <Tab.Screen name="Holdings" component={Holdings} />
+        {trendType == "schemes" && (
+          <>
+            <Tab.Screen
+              name="Portfolio"
+              component={Portfolio}
+              initialParams={{ mfId: Data.id, currentNav: Data.nav }}
+            />
+            <Tab.Screen name="Holdings" component={Holdings} />
+          </>
+        )}
       </Tab.Navigator>
     </View>
   );
@@ -43,7 +48,7 @@ export default Content = (props) => {
 const styles = StyleSheet.create({
   tabContainer: {
     flex: 1,
-    padding: width * 0.06,
+    padding: width * 0.05,
     marginTop: -height * 0.02,
   },
 });

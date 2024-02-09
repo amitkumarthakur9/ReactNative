@@ -31,8 +31,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { incrementToCart } from "../../redux/slices/cart/Index";
 import { useFonts } from "expo-font";
 
-const handleInvest = (mfId, navigation) => {
-  navigation.navigate("Assetpreview", { mfId });
+const handleInvest = (mfId, navigation, trendType) => {
+  navigation.navigate("Assetpreview", { mfId, trendType });
 };
 
 export const addToCarts = (
@@ -187,7 +187,7 @@ export const SchemesrenderItem = (props) => {
                   styles.Button,
                   { backgroundColor: "rgba(33, 158, 188, 1)" },
                 ]}
-                onPress={() => handleInvest(item.id, navigation)}
+                onPress={() => handleInvest(item.id, navigation, "schemes")}
               >
                 <Text style={styles.invest}>Invest</Text>
               </TouchableOpacity>
@@ -210,7 +210,7 @@ export const NforenderItem = (props) => {
         <TouchableOpacity
           style={styles.flexRow}
           key={key}
-          onPress={() => handleInvest(item.id, navigation)}
+          onPress={() => handleInvest(item.id, navigation, "nfo")}
         >
           <View style={styles.card}>
             <View style={styles.flexRow}>
