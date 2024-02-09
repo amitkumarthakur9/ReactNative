@@ -11,7 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Avatar } from "react-native-paper";
 import { width, height } from "../../Dimension";
 import { Userlogin } from "../../api/services/endpoints/userEndpoints";
-
+import { useFonts } from "expo-font";
 const Dashboardhome = () => {
   //   useEffect(() => {
   //     Userlogin()
@@ -22,6 +22,10 @@ const Dashboardhome = () => {
   //         console.warn("login failed:", error);
   //       });
   //   }, []);
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   return (
     <View style={styles.container}>
@@ -109,12 +113,14 @@ const styles = StyleSheet.create({
   header: {
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     opacity: 0.3,
   },
   desc: {
     color: "rgba(33, 0, 93, 1)",
     fontSize: width * 0.07,
+    fontFamily: "Inter-Black",
     fontWeight: "700",
     lineHeight: height * 0.04,
     marginTop: height * 0.01,
@@ -129,6 +135,7 @@ const styles = StyleSheet.create({
   },
   investmentHeader: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     lineHeight: height * 0.035,
@@ -150,6 +157,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     lineHeight: height * 0.03,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.3,
     flex: 1,
@@ -158,6 +166,7 @@ const styles = StyleSheet.create({
     color: "rgba(73, 69, 79, 1)",
     lineHeight: height * 0.025,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     flex: 1,
   },
@@ -173,6 +182,7 @@ const styles = StyleSheet.create({
     left: width * 0.02,
     fontSize: width * 0.04,
     lineHeight: height * 0.028,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     color: "rgba(255, 255, 255, 1)",
   },
@@ -183,6 +193,7 @@ const styles = StyleSheet.create({
   leftContent: {
     textAlign: "left",
     color: "rgba(33, 0, 93, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     width: "50%",
@@ -191,6 +202,7 @@ const styles = StyleSheet.create({
   rightContent: {
     textAlign: "right",
     color: "rgba(0, 0, 0, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.035,
     opacity: 0.4,

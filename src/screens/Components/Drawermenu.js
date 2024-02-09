@@ -3,12 +3,16 @@ import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Ionicons, EvilIcons } from "@expo/vector-icons";
 import { height, width } from "../../Dimension";
+import { useFonts } from "expo-font";
 
 const Drawer = createDrawerNavigator();
 
 const Drawermenu = (props) => {
   const { initialRouteName, component, component1, component1name } =
     props.data;
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <Drawer.Navigator
       initialRouteName={initialRouteName}
@@ -48,6 +52,7 @@ const Drawermenu = (props) => {
           color: "rgba(255, 255, 255, 1)",
           lineHeight: height * 0.03,
           fontSize: width * 0.06,
+          fontFamily: "Inter-Black",
           fontWeight: "700",
         },
       }}

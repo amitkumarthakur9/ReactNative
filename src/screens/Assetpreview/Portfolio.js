@@ -14,6 +14,7 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import { Navdata, Risknavdata } from "./Data";
 import Loader from "../Components/Loader";
 import Getfirstdates from "./Monthlycalculation";
+import { useFonts } from "expo-font";
 
 const Handleriskcalculator = async (
   investment,
@@ -51,6 +52,10 @@ const Portfolio = () => {
     timePeriod,
     MonthlyInvestment
   );
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   useEffect(() => {
     if (ptData.length > 0 && ptData != null) {
@@ -226,6 +231,7 @@ const Portfolio = () => {
                         >
                           <Text
                             style={{
+                              fontFamily: "Inter-Black",
                               fontWeight: "bold",
                               textAlign: "center",
                               color: "rgba(193, 241, 142, 1)",
@@ -373,6 +379,7 @@ const styles = StyleSheet.create({
   Trend: {
     marginTop: height * 0.03,
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     lineHeight: height * 0.035,
@@ -383,11 +390,13 @@ const styles = StyleSheet.create({
   },
   Picker: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     width: width * 0.45,
   },
   buttonTextStyle: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
@@ -399,6 +408,7 @@ const styles = StyleSheet.create({
   gain: {
     marginLeft: width * 0.05,
     color: "rgba(35, 179, 113, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.035,
     marginTop: -height * 0.015,
@@ -412,6 +422,7 @@ const styles = StyleSheet.create({
     color: "rgba(2, 48, 71, 1)",
     lineHeight: height * 0.02,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     textAlign: "center",
     opacity: 0.8,
@@ -419,6 +430,7 @@ const styles = StyleSheet.create({
   amount: {
     marginTop: height * 0.01,
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
   },
@@ -429,10 +441,12 @@ const styles = StyleSheet.create({
   absolute: {
     color: "rgba(2, 48, 71, 0.5)",
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
   },
   percentage: {
     color: "rgba(35, 179, 113, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.035,
   },
@@ -450,6 +464,7 @@ const styles = StyleSheet.create({
     // opacity: 0.6,
     fontSize: width * 0.035,
     lineHeight: height * 0.025,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
   },
   rangeText: {
@@ -458,6 +473,7 @@ const styles = StyleSheet.create({
     color: "rgba(2, 48, 71, 1)",
     lineHeight: height * 0.025,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.8,
   },
@@ -467,6 +483,7 @@ const styles = StyleSheet.create({
     color: "rgba(73, 69, 79, 1)",
     lineHeight: height * 0.03,
     fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
   },
 });

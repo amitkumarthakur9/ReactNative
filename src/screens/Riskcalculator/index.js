@@ -3,8 +3,11 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { Button } from "react-native-paper";
 import { width, height } from "../../Dimension";
 import Header from "../Components/Header";
-
+import { useFonts } from "expo-font";
 const Riskcalculator = ({ navigation }) => {
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <View style={styles.container}>
       <Header title="Risk Profile Calculator" />
@@ -46,6 +49,7 @@ const styles = StyleSheet.create({
     // marginTop: height * 0.1,
   },
   skip: {
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     lineHeight: height * 0.03,
@@ -60,6 +64,7 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: height * 0.05,
+    fontFamily: "Inter-Black",
     fontWeight: "700",
     fontSize: width * 0.08,
     lineHeight: height * 0.04,
@@ -68,6 +73,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     marginTop: height * 0.02,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,

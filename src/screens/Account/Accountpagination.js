@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { height, width } from "../../Dimension";
+import { useFonts } from "expo-font";
 
 const Accountpagination = ({ data }) => {
   const { currentForm, setCurrentForm } = data;
   const totalDots = 5;
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <View style={styles.contentContainer}>
       <Text style={styles.header}>Account Setup - Profile</Text>
@@ -38,6 +42,7 @@ const styles = StyleSheet.create({
   header: {
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     marginBottom: height * 0.015,
   },

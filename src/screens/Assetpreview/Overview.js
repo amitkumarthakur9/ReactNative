@@ -12,11 +12,16 @@ import { height, width } from "../../Dimension";
 import { Card, Button, Avatar } from "react-native-paper";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import Loader from "../Components/Loader";
+import { useFonts } from "expo-font";
 
 export default Overview = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const data = route.params.mfData;
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   const handleLinkPress = (url) => {
     Linking.openURL(url);
@@ -46,7 +51,7 @@ export default Overview = () => {
                 {
                   color: "rgba(2, 48, 71, 1)",
                   fontSize: width * 0.045,
-                  fontWeight: "600",
+                   fontFamily: "Inter-Black",fontWeight: "600",
                   lineHeight: height * 0.03,
                   textAlign: "left",
                 },
@@ -215,6 +220,7 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: width * 0.03,
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.6,
     lineHeight: height * 0.02,
@@ -227,6 +233,7 @@ const styles = StyleSheet.create({
   },
   duration: {
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     lineHeight: height * 0.025,
     color: "rgba(0, 0, 0, 1)",
@@ -235,6 +242,7 @@ const styles = StyleSheet.create({
   percentage: {
     fontSize: width * 0.039,
     color: "rgba(73, 69, 79, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     lineHeight: height * 0.03,
   },
@@ -251,6 +259,7 @@ const styles = StyleSheet.create({
   },
   detailsName: {
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     lineHeight: width * 0.045,
     color: "rgba(2, 48, 71, 1)",
@@ -259,6 +268,7 @@ const styles = StyleSheet.create({
   detailsPercentage: {
     fontSize: width * 0.036,
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     lineHeight: height * 0.025,
   },
@@ -271,6 +281,7 @@ const styles = StyleSheet.create({
   fundManagerHeader: {
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.046,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     marginBottom: height * 0.01,
   },
@@ -288,6 +299,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.046,
     lineHeight: height * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     textAlign: "center",
   },
@@ -295,6 +307,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.015,
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.03,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     textAlign: "center",
     lineHeight: height * 0.02,
@@ -303,6 +316,7 @@ const styles = StyleSheet.create({
   moreDetails: {
     color: "rgba(33, 158, 188, 1)",
     fontSize: width * 0.03,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     textAlign: "center",
     lineHeight: height * 0.02,

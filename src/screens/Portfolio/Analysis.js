@@ -13,6 +13,7 @@ import * as progress from "react-native-progress";
 import { Portfolio } from "../Assetpreview/Data";
 import Loader from "../Components/Loader";
 import Inrconvertor from "../Components/Inrconverter";
+import { useFonts } from "expo-font";
 
 const Holdings = () => {
   const [wise, setWise] = useState("categoryWise");
@@ -61,6 +62,9 @@ const Holdings = () => {
     "#e3ca4a",
     "#a192f1",
   ];
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   useEffect(() => {
     Portfolio().then((response) => {
@@ -224,6 +228,7 @@ const styles = StyleSheet.create({
   sectorHeading: {
     color: "rgba(2, 48, 71, 1)",
     marginBottom: height * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "bold",
   },
   sectorContainer: {
@@ -232,6 +237,7 @@ const styles = StyleSheet.create({
   sectorHeader: {
     flex: 1,
     margin: width * 0.025,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
     lineHeight: height * 0.027,
@@ -240,6 +246,7 @@ const styles = StyleSheet.create({
   sectorItem: {
     flex: 1,
     margin: width * 0.03,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.035,
     lineHeight: height * 0.027,
@@ -250,6 +257,7 @@ const styles = StyleSheet.create({
   sectorPercentage: {
     flex: 1,
     margin: width * 0.03,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.038,
     lineHeight: height * 0.028,
@@ -259,6 +267,7 @@ const styles = StyleSheet.create({
   },
   companyHolding: {
     marginTop: height * 0.05,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     lineHeight: height * 0.035,
@@ -277,16 +286,19 @@ const styles = StyleSheet.create({
     color: "rgba(33, 158, 188, 0.6)",
     fontSize: width * 0.035,
     lineHeight: height * 0.02,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
   },
   progressHeader: {
     color: "rgba(0, 0, 0, 1)",
     lineHeight: height * 0.04,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
   },
   pickerLabelStyle: {
     fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "bold",
   },
 });

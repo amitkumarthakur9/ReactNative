@@ -5,9 +5,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { Button } from "react-native-paper";
 import { useRoute, useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 export default Assetfooter = (props) => {
   const navigation = useNavigation();
   const mfData = props.mfData;
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <View style={styles.footerContainer}>
       <TouchableOpacity
@@ -63,6 +68,7 @@ const styles = StyleSheet.create({
   },
   labelStyle: {
     color: "rgba(33, 158, 188, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.042,
   },

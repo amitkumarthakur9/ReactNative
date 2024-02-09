@@ -15,6 +15,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Mfuuserdata } from "../../api/services/endpoints/userEndpoints";
 import Loader from "../Components/Loader";
 import Formatdate from "../Components/Formatdate";
+import { useFonts } from "expo-font";
 
 const Basicdetails = ({ data }) => {
   const [date, setDate] = useState(new Date());
@@ -42,6 +43,10 @@ const Basicdetails = ({ data }) => {
   //       setImage(result.assets[0].uri);
   //     }
   //   };
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   useEffect(() => {
     if (accountData.hasOwnProperty("profilepic")) {
@@ -223,6 +228,7 @@ const Basicdetails = ({ data }) => {
                   fontSize: width * 0.05,
                   color: "rgba(255, 255, 255, 1)",
                   textAlign: "center",
+                  fontFamily: "Inter-Black",
                   fontWeight: "600",
                 }}
               >
@@ -244,6 +250,7 @@ const styles = StyleSheet.create({
   desc: {
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "400",
     lineHeight: height * 0.03,
     marginTop: height * 0.01,
@@ -251,6 +258,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: width * 0.045,
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     marginBottom: height * 0.015,
     opacity: 0.6,
@@ -278,6 +286,7 @@ const styles = StyleSheet.create({
   },
   contentStyle: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
   },
   Picker: {

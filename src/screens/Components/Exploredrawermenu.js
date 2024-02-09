@@ -11,6 +11,7 @@ import { Ionicons, Feather } from "@expo/vector-icons";
 import { height, width } from "../../Dimension";
 import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-paper";
+import { useFonts } from "expo-font";
 
 const Drawer = createDrawerNavigator();
 
@@ -18,6 +19,9 @@ const Exploredrawermenu = (props) => {
   const { initialRouteName, component, component1, component1name } =
     props.data;
   const navigation = useNavigation();
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <Drawer.Navigator
       initialRouteName={initialRouteName}
@@ -75,6 +79,7 @@ const Exploredrawermenu = (props) => {
           color: "rgba(255, 255, 255, 1)",
           lineHeight: height * 0.03,
           fontSize: width * 0.06,
+          fontFamily: "Inter-Black",
           fontWeight: "700",
         },
       }}

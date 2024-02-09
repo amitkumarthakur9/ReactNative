@@ -25,7 +25,7 @@ import {
   Dividend,
   Portfoliovaluation,
 } from "./Data";
-
+import { useFonts } from "expo-font";
 const Reports = () => {
   const [holdingtype, setHoldingtype] = useState("");
   const [detailed, setDetailed] = useState("");
@@ -105,6 +105,10 @@ const Reports = () => {
       Download(pvpdfUrl, categories);
     }
   };
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -517,6 +521,7 @@ const styles = StyleSheet.create({
   desc: {
     color: "white",
     fontSize: width * 0.05,
+    fontFamily: "Inter-Black",
     fontWeight: "700",
     textAlign: "center",
     padding: width * 0.05,
@@ -560,6 +565,7 @@ const styles = StyleSheet.create({
   header: {
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     opacity: 0.3,
   },
@@ -588,6 +594,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     lineHeight: height * 0.03,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.3,
     flex: 1,
@@ -596,6 +603,7 @@ const styles = StyleSheet.create({
     color: "rgba(73, 69, 79, 1)",
     lineHeight: height * 0.025,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     flex: 1,
   },
@@ -613,6 +621,7 @@ const styles = StyleSheet.create({
   },
   downloadReportsText: {
     color: "rgba(33, 158, 188, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
   },

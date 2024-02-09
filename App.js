@@ -33,6 +33,8 @@ import Explore from "./src/screens/Dashboard/Explore";
 import Exploremenu from "./src/screens/Dashboard/Exploremenu";
 import Goalmenu from "./src/screens/Dashboard/Goalmenu";
 import Accountmenu from "./src/screens/Dashboard/Accountmenu";
+import UploadDoc from "./src/screens/Account/Upload";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -74,6 +76,7 @@ export default function App() {
           <Stack.Screen name="Exploremenu" component={Exploremenu} />
           <Stack.Screen name="Goalmenu" component={Goalmenu} />
           <Stack.Screen name="Accountmenu" component={Accountmenu} />
+          <Stack.Screen name="UploadDoc" component={UploadDoc} />
         </Stack.Navigator>
         <StatusBar />
       </NavigationContainer>

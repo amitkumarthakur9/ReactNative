@@ -16,7 +16,7 @@ import { Fetchcart } from "../Cart/Data";
 import { useNavigation } from "@react-navigation/native";
 import Loader from "../Components/Loader";
 import { Picker } from "@react-native-picker/picker";
-
+import { useFonts } from "expo-font";
 const Paymentoptions = (props) => {
   const [selectedMandate, setSelectedMandate] = useState();
   const [orderData, setOrderData] = useState(props.orderData || {});
@@ -24,6 +24,10 @@ const Paymentoptions = (props) => {
   const mandate = Mandate();
 
   const navigation = useNavigation();
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   //   console.log("sippayment", orderData);
 
@@ -120,6 +124,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "#023047",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.037,
     marginTop: height * 0.032,
@@ -167,6 +172,7 @@ const styles = StyleSheet.create({
   desc: {
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     marginLeft: width * 0.07,
   },

@@ -5,7 +5,7 @@ import { width, height } from "../../Dimension";
 import MCQ from "./Mcq";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-
+import { useFonts } from "expo-font";
 export default Questions = ({ data, updateActiveIndex }) => {
   const mcq = MCQ;
   const { activeIndex } = data;
@@ -33,6 +33,10 @@ export default Questions = ({ data, updateActiveIndex }) => {
     }
   };
 
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
+
   return (
     <View style={styles.contentContainer}>
       <Text style={styles.header}>{mcq[activeIndex].question}</Text>
@@ -53,7 +57,11 @@ export default Questions = ({ data, updateActiveIndex }) => {
               key={index}
               mode="contained"
               style={styles.optionButton}
-              labelStyle={{ fontSize: width * 0.042, fontWeight: "700" }}
+              labelStyle={{
+                fontSize: width * 0.042,
+                fontFamily: "Inter-Black",
+                fontWeight: "700",
+              }}
             >
               {option}
             </Button>
@@ -76,6 +84,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.05,
     textAlign: "center",

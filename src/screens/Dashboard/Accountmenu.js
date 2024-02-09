@@ -6,12 +6,16 @@ import Home from "../Dashboard/Home";
 import Explore from "../Dashboard/Explore";
 import Account from "../Account/Index";
 import Goal from "../Goal/Index";
+import { useFonts } from "expo-font";
 
 const Tab = createBottomTabNavigator();
 
 const Profiles = () => <Text>amit kumar thakur</Text>;
 
 const Menu = () => {
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <Tab.Navigator
       initialRouteName="account"
@@ -31,6 +35,7 @@ const Menu = () => {
         tabBarLabelStyle: {
           fontSize: width * 0.035,
           lineHeight: height * 0.025,
+          fontFamily: "Inter-Black",
           fontWeight: "500",
           marginBottom: height * 0.015,
         },

@@ -8,8 +8,11 @@ import {
   ScrollView,
 } from "react-native";
 import { height, width } from "../../Dimension";
-
+import { useFonts } from "expo-font";
 const Navigatescreen = ({ navigation }) => {
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -131,11 +134,13 @@ const styles = StyleSheet.create({
   },
   topHeading: {
     fontSize: width * 0.073,
+    fontFamily: "Inter-Black",
     fontWeight: "700",
     color: "#023047",
   },
   toppara: {
     fontSize: width * 0.037,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     marginTop: height * 0.028,
     marginBottom: height * 0.015,

@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Header from "../Components/Header";
 import Loader from "../Components/Loader";
 import { Phonelogin } from "../../api/services/endpoints/userEndpoints";
-
+import { useFonts } from "expo-font";
 export default Singupwithphone = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
   const [phone, setPhone] = useState("");
@@ -50,6 +50,10 @@ export default Singupwithphone = ({ navigation }) => {
     const numberValidation = phonePattern.test(number);
     setPhonevalidation(numberValidation);
   };
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <View style={styles.container}>
       <Header title="Sign Up" />
@@ -171,6 +175,7 @@ const styles = StyleSheet.create({
   },
   signupText: {
     marginBottom: height * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "700",
     fontSize: width * 0.08,
     lineHeight: width * 0.09,
@@ -178,12 +183,14 @@ const styles = StyleSheet.create({
   },
   signupDescHeader: {
     marginBottom: height * 0.015,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.04,
     lineHeight: width * 0.06,
     color: "rgba(2, 48, 71, 1)",
   },
   signupDesc: {
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.04,
     lineHeight: width * 0.06,
@@ -196,6 +203,7 @@ const styles = StyleSheet.create({
   },
   phoneText: {
     marginTop: height * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.05,
     lineHeight: width * 0.07,
@@ -211,6 +219,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: width * 0.2,
     padding: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     marginRight: width * 0.02, // Add margin here for spacing
@@ -227,6 +236,7 @@ const styles = StyleSheet.create({
   terms: {
     marginTop: width * 0.01,
     marginLeft: width * 0.02,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.04,
     lineHeight: width * 0.07,
@@ -254,6 +264,7 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     fontSize: width * 0.05, // Adjust the font size based on screen width
+    fontFamily: "Inter-Black",
     fontWeight: "bold",
     color: "white",
   },
@@ -262,6 +273,7 @@ const styles = StyleSheet.create({
     width: width * 0.6,
     fontSize: width * 0.04,
     color: "rgb(166, 166, 166)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     lineHeight: width * 0.05,
   },
@@ -271,6 +283,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "rgba(186, 27, 27, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.036,
     lineHeight: width * 0.06,

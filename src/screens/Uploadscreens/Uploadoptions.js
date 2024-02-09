@@ -12,7 +12,7 @@ import React, { useState, useCallback } from "react";
 import { Button } from "react-native-paper";
 import { height, width } from "../../Dimension";
 import DocumentPicker from "@react-native-picker/picker";
-
+import { useFonts } from "expo-font";
 export default Uploadoptions = () => {
   const [fileResponse, setFileResponse] = useState([]);
 
@@ -25,9 +25,13 @@ export default Uploadoptions = () => {
       });
       setFileResponse(response);
     } catch (err) {
-     // console.warn(err);
+      // console.warn(err);
     }
   }, []);
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   return (
     <View style={styles.optionsContainer}>
@@ -98,6 +102,7 @@ export default Uploadoptions = () => {
           <Text
             style={{
               fontFamily: "Metropolis",
+              fontFamily: "Inter-Black",
               fontWeight: "500",
               fontSize: width * 0.034,
             }}
@@ -168,6 +173,7 @@ const styles = StyleSheet.create({
   },
   optionText: {
     color: "#023047",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.037,
     fontFamily: "Metropolis",
@@ -177,6 +183,7 @@ const styles = StyleSheet.create({
   orText: {
     color: "#023047",
     fontSize: width * 0.033,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     textAlign: "center",
     fontFamily: "Metropolis",

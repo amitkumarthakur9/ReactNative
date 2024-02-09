@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     color: "rgba(2, 48, 71, 1)",
     lineHeight: width * 0.09, // Adjust the line height based on screen width
     fontFamily: "Inter-Black",
+    fontFamily: "Inter-Black",
     fontWeight: 600,
     marginTop: height * 0.09,
     // fontFamily: "italic",
@@ -149,6 +150,7 @@ const styles = StyleSheet.create({
     lineHeight: width * 0.06, // Adjust the line height based on screen width
     textAlign: "center",
     color: "rgba(0, 8, 20, 1)",
+    fontFamily: "Inter-Black",
     fontFamily: "Inter-Black",
     fontWeight: 500,
     lineHeight: height * 0.028,

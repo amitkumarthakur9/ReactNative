@@ -5,7 +5,7 @@ import { width, height } from "../../Dimension";
 import CircularProgress from "react-native-circular-progress-indicator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../Components/Header";
-
+import { useFonts } from "expo-font";
 const Riskcalculator = ({ navigation }) => {
   const [finalscore, setFinalscore] = useState(0);
   const [imageUrl, setImageUrl] = useState(
@@ -53,6 +53,10 @@ const Riskcalculator = ({ navigation }) => {
     };
   }, []);
 
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
+
   return (
     <View style={styles.container}>
       <Header title="Your Risk Score" />
@@ -70,7 +74,7 @@ const Riskcalculator = ({ navigation }) => {
             clockwise={false}
             title={"Out of 40"}
             titleColor={"rgba(33, 158, 188, 1)"}
-            titleStyle={{ fontWeight: "600", fontSize: width * 0.04 }}
+            titleStyle={{  fontFamily: "Inter-Black",fontWeight: "600", fontSize: width * 0.04 }}
             progressValueColor={"rgba(2, 48, 71, 1)"}
             progressValueFontSize={width * 0.175}
             activeStrokeColor={"rgba(251, 133, 0, 1)"}
@@ -126,6 +130,7 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: height * 0.01,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.06,
     lineHeight: height * 0.04,
@@ -134,6 +139,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     marginTop: height * 0.01,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
@@ -159,6 +165,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: height * 0.04,
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.042,
   },

@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Header from "../Components/Header";
 import { Otpverify } from "../../api/services/endpoints/userEndpoints";
 import Loader from "../Components/Loader";
-
+import { useFonts } from "expo-font";
 export default Otp = () => {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [isSignUpDisabled, setIsSignUpDisabled] = useState(true);
@@ -75,6 +75,10 @@ export default Otp = () => {
     }
   };
 
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
+
   return (
     <View style={styles.container}>
       <Header title="Phone Verification" />
@@ -112,6 +116,7 @@ export default Otp = () => {
             <Text
               style={{
                 color: "rgba(251, 133, 0, 1)",
+                fontFamily: "Inter-Black",
                 fontWeight: "600",
                 fontSize: width * 0.045,
               }}
@@ -160,12 +165,14 @@ const styles = StyleSheet.create({
   },
   header: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "700",
     fontSize: width * 0.08,
     lineHeight: width * 0.1,
     marginBottom: height * 0.04,
   },
   desc: {
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.04,
     lineHeight: width * 0.06,
@@ -177,6 +184,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   verificationHeader: {
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.05,
     lineHeight: width * 0.07,
@@ -194,6 +202,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   resend: {
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
     color: "rgba(2, 48, 71, 1)",
@@ -220,6 +229,7 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     fontSize: width * 0.05, // Adjust the font size based on screen width
+    fontFamily: "Inter-Black",
     fontWeight: "bold",
     color: "white",
   },

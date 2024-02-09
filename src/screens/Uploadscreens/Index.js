@@ -4,8 +4,14 @@ import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
 import { TextInput } from "react-native-paper";
 import Uploadoptions from "./Uploadoptions";
+import { useFonts } from "expo-font";
 export default Uploadscreens = ({ navigation }) => {
   const [text, setText] = React.useState("");
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -41,6 +47,7 @@ export default Uploadscreens = ({ navigation }) => {
             backgroundColor: "transparent",
             marginTop: height * 0.032,
             fontSize: width * 0.032,
+            fontFamily: "Inter-Black",
             fontWeight: "500",
             fontFamily: "Metropolis",
             lineHeight: height * 0.016,
@@ -88,6 +95,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "#FFFFFF",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontFamily: "Metropolis",
     fontSize: width * 0.037,
@@ -104,6 +112,7 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.028,
     fontSize: width * 0.037,
     fontFamily: "Metropolis",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     marginLeft: width * 0.047,
   },

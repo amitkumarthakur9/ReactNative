@@ -2,8 +2,12 @@ import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { height, width } from "../../Dimension";
 import { Button } from "react-native-paper";
+import { useFonts } from "expo-font";
 
 const Navigatescreen = ({ navigation }) => {
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <View style={styles.container}>
       <View style={styles.bodyContainer}>
@@ -83,11 +87,13 @@ const styles = StyleSheet.create({
   },
   topHeading: {
     fontSize: width * 0.073,
-    fontWeight: "700",
+    fontFamily: "Inter-Black",
+    fontWeight: "600",
     color: "#023047",
   },
   toppara: {
     fontSize: width * 0.037,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     marginTop: height * 0.028,
     marginBottom: height * 0.015,
@@ -115,6 +121,7 @@ const styles = StyleSheet.create({
     marginLeft: width * 0.018,
     lineHeight: height * 0.028,
     textAlign: "center",
+    fontFamily: "Inter-Black",
   },
   signupContainer: {
     marginTop: height * 0.04,
@@ -150,6 +157,7 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     fontSize: width * 0.045, // Adjust the font size based on screen width
+    fontFamily: "Inter-Black",
     fontWeight: "600",
   },
   icon: {

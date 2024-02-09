@@ -19,7 +19,7 @@ import { Addgoalitem } from "./Data";
 import convertToDateTime from "../Components/Datetime";
 import Loader from "../Components/Loader";
 import { useRoute, useNavigation } from "@react-navigation/native";
-
+import { useFonts } from "expo-font";
 export default Goalsscreen = () => {
   const [category, setCategory] = useState("Education");
   const [timePeriod, setTimePeriod] = useState(1);
@@ -107,6 +107,10 @@ export default Goalsscreen = () => {
     setGoalInflationAmount(Math.floor(current));
   };
 
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
+
   return (
     <View style={styles.container}>
       <Header title="Add Goal" showPlusSign={false} />
@@ -116,7 +120,7 @@ export default Goalsscreen = () => {
           <TextInput
             mode="outlined"
             // label={
-            //   <Text style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}>
+            //   <Text style={{ color: "rgb(191, 191, 191)",  fontFamily: "Inter-Black",fontWeight: "400" }}>
             //     Goal Name
             //   </Text>
             // }
@@ -132,7 +136,7 @@ export default Goalsscreen = () => {
           <TextInput
             mode="outlined"
             // label={
-            //   <Text style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}>
+            //   <Text style={{ color: "rgb(191, 191, 191)",  fontFamily: "Inter-Black",fontWeight: "400" }}>
             //     Goal Description
             //   </Text>
             // }
@@ -182,7 +186,7 @@ export default Goalsscreen = () => {
               mode="outlined"
               //   label={
               //     <Text
-              //       style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}
+              //       style={{ color: "rgb(191, 191, 191)",  fontFamily: "Inter-Black",fontWeight: "400" }}
               //     >
               //       Choose Date
               //     </Text>
@@ -210,7 +214,7 @@ export default Goalsscreen = () => {
           <TextInput
             mode="outlined"
             // label={
-            //   <Text style={{ color: "rgb(191, 191, 191)", fontWeight: "400" }}>
+            //   <Text style={{ color: "rgb(191, 191, 191)",  fontFamily: "Inter-Black",fontWeight: "400" }}>
             //     Enter Amount required to Achieve goal
             //   </Text>
             // }
@@ -309,6 +313,7 @@ export default Goalsscreen = () => {
                   fontSize: width * 0.05,
                   color: "rgba(255, 255, 255, 1)",
                   textAlign: "center",
+                  fontFamily: "Inter-Black",
                   fontWeight: "600",
                 }}
               >
@@ -344,6 +349,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "#023047",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     // fontFamily: "Metropolis",
     fontSize: width * 0.042,
@@ -359,6 +365,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: width * 0.037,
     color: "#023047",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     marginBottom: height * 0.015,
     opacity: 0.6,
@@ -381,6 +388,7 @@ const styles = StyleSheet.create({
   },
   contentStyle: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
   },
   dropdown: {
@@ -400,6 +408,7 @@ const styles = StyleSheet.create({
     color: "#023047",
     lineHeight: height * 0.025,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.8,
   },
@@ -409,6 +418,7 @@ const styles = StyleSheet.create({
     color: "rgba(73, 69, 79, 1)",
     lineHeight: height * 0.03,
     fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     marginRight: width * 0.08,
     marginTop: height * 0.01,
@@ -425,6 +435,7 @@ const styles = StyleSheet.create({
   },
   curentAmount: {
     fontSize: width * 0.037,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     lineHeight: height * 0.028,
     marginLeft: width * -0.235,

@@ -8,10 +8,15 @@ import { useNavigation } from "@react-navigation/native";
 import { Foundation } from "@expo/vector-icons";
 import Formatfundname from "../Components/Formatfundname";
 import Loader from "../Components/Loader";
+import { useFonts } from "expo-font";
 
 export default Assetheader = (props) => {
   const Data = props.mfData;
   const navigation = useNavigation();
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   const renderStars = (rating) => {
     const stars = [];
@@ -111,6 +116,7 @@ const styles = StyleSheet.create({
   },
   header: {
     marginTop: height * 0.02,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.056,
     color: "rgba(255, 255, 255, 1)",
@@ -144,12 +150,14 @@ const styles = StyleSheet.create({
     fontSize: width * 0.035,
     color: "rgba(255, 255, 255, 1)",
     opacity: 0.6,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     lineHeight: height * 0.025,
   },
   percentage: {
     fontSize: width * 0.035,
     color: "rgba(255, 255, 255, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
   },
   star: {

@@ -20,7 +20,7 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Yearmonthday } from "../Components/Formatdate";
 import { addToCartSip } from "../Dashboard/Explore";
-
+import { useFonts } from "expo-font";
 export default Sip = ({ navigation }) => {
   const [folioNumber, setFolioNumber] = useState();
   const [timePeriod, setTimePeriod] = useState(1);
@@ -54,6 +54,10 @@ export default Sip = ({ navigation }) => {
       }
     );
   };
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   return (
     <View style={styles.container}>
@@ -94,6 +98,7 @@ export default Sip = ({ navigation }) => {
                       style={{
                         color: "rgba(2, 48, 71, 1)",
                         fontSize: width * 0.045,
+                        fontFamily: "Inter-Black",
                         fontWeight: "600",
                         lineHeight: height * 0.035,
                         textAlign: "left",
@@ -184,6 +189,7 @@ export default Sip = ({ navigation }) => {
                         <Text
                           style={{
                             color: "rgb(191, 191, 191)",
+                            fontFamily: "Inter-Black",
                             fontWeight: "400",
                           }}
                         >
@@ -259,6 +265,7 @@ export default Sip = ({ navigation }) => {
                     style={{
                       textAlign: "right",
                       marginTop: width * 0.04,
+                      fontFamily: "Inter-Black",
                       fontWeight: "600",
                       fontSize: width * 0.05,
                       marginRight: width * 0.053,
@@ -375,6 +382,7 @@ const styles = StyleSheet.create({
   goal: {
     marginLeft: -width * 0.55,
     color: "rgba(255, 255, 255, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     lineHeight: height * 0.04,
@@ -393,6 +401,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: width * 0.045,
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     marginBottom: height * 0.015,
     opacity: 0.6,
@@ -418,6 +427,7 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: width * 0.03,
     color: "#023047",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.6,
     lineHeight: height * 0.02,
@@ -427,6 +437,7 @@ const styles = StyleSheet.create({
   percentage: {
     fontSize: width * 0.037,
     color: "#023047",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     lineHeight: height * 0.03,
     padding: width * 0.04,
@@ -453,6 +464,7 @@ const styles = StyleSheet.create({
   },
   contentStyle: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
   },
   dropdown: {
@@ -472,6 +484,7 @@ const styles = StyleSheet.create({
 
   percentage1: {
     color: "rgba(35, 179, 113, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.035,
   },
@@ -482,6 +495,7 @@ const styles = StyleSheet.create({
     color: "#023047",
     lineHeight: height * 0.025,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.8,
   },
@@ -491,6 +505,7 @@ const styles = StyleSheet.create({
     color: "rgba(73, 69, 79, 1)",
     lineHeight: height * 0.03,
     fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     width: width * 0.373,
     borderWidth: width * 0.001,

@@ -17,6 +17,7 @@ import { Entypo } from "@expo/vector-icons";
 import Paymentoptions from "../Payment/Paymentoptions";
 import Sippaymentoptions from "../Payment/Sippaymentoption";
 import Formatdate from "../Components/Formatdate";
+import { useFonts } from "expo-font";
 
 export const AddToCart = () => {
   const [fetchCart, setFetchCart] = useState(null);
@@ -24,6 +25,10 @@ export const AddToCart = () => {
   const [show, setShow] = useState(false);
 
   const [orderData, setOrderData] = useState({});
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   useEffect(() => {
     Fetchcart()
@@ -214,6 +219,7 @@ const styles = StyleSheet.create({
   },
   fundName: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
@@ -227,11 +233,13 @@ const styles = StyleSheet.create({
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.032,
     lineHeight: height * 0.02,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     // opacity: 0.5,
   },
   percentage: {
     color: "rgba(251, 133, 0, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.035,
     lineHeight: height * 0.03,
@@ -239,6 +247,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     color: "rgba(0, 0, 0, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.03,
     lineHeight: height * 0.02,
@@ -248,6 +257,7 @@ const styles = StyleSheet.create({
   rating: {
     // backgroundColor: "green",
     // color: "white",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     marginLeft: width * 0.02,
     // padding: width * 0.01,
@@ -255,6 +265,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "#023047",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
     marginTop: height * 0.032,

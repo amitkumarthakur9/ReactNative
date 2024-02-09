@@ -6,7 +6,7 @@ import Pagination from "./Pagination";
 import Questions from "./Questions";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../Components/Header";
-
+import { useFonts } from "expo-font";
 export default Rpscreens = ({ navigation }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const totalDots = 10;
@@ -14,6 +14,9 @@ export default Rpscreens = ({ navigation }) => {
   const updateActiveIndex = (newIndex) => {
     setActiveIndex(newIndex);
   };
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <View style={styles.container}>
       <Header title="Risk Profile Calculator" />
@@ -43,6 +46,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
   },

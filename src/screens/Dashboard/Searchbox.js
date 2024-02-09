@@ -21,6 +21,7 @@ import { searchFund } from "../../api/services/endpoints/exploreEndpoints";
 import { Foundation, SimpleLineIcons } from "@expo/vector-icons";
 import Formatfundname from "../Components/Formatfundname";
 import RenderStars from "../Components/Star";
+import { useFonts } from "expo-font";
 
 export default Searchbox = ({ navigation }) => {
   const [search, setSearch] = useState();
@@ -45,6 +46,10 @@ export default Searchbox = ({ navigation }) => {
   const handleInvest = (mfId) => {
     navigation.navigate("Assetpreview", { mfId });
   };
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   const renderItem = ({ item }) => {
     return (
@@ -186,6 +191,7 @@ const styles = StyleSheet.create({
   },
   trendingFundName: {
     color: "rgba(255, 255, 255, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.035,
   },
@@ -210,12 +216,14 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
     lineHeight: height * 0.025,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.3,
   },
   Cagrpercentage: {
     fontSize: width * 0.04,
     color: "rgba(61, 193, 84, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     lineHeight: height * 0.03,
   },
@@ -235,12 +243,14 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
     lineHeight: height * 0.025,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.3,
     marginLeft: width * 0.03,
   },
   benchmarkPercentage: {
     color: "rgba(73, 69, 79, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
@@ -254,6 +264,7 @@ const styles = StyleSheet.create({
   riskText: {
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.6,
     lineHeight: height * 0.025,
@@ -271,11 +282,13 @@ const styles = StyleSheet.create({
   AddToCart: {
     color: "rgba(33, 158, 188, 1)",
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
   },
   invest: {
     color: "white",
     fontSize: width * 0.037,
+    fontFamily: "Inter-Black",
     fontWeight: "700",
   },
   star: {

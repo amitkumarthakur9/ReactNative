@@ -23,6 +23,7 @@ import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { Userlogin } from "../../api/services/endpoints/userEndpoints";
 import { UserDetails, Session, SessionEnd } from "../Components/Data";
 import { useSelector } from "react-redux";
+import { useFonts } from "expo-font";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
@@ -35,6 +36,10 @@ const Home = ({ navigation }) => {
   //Userlogin();
   //   console.log("user details amit", userData);
   //   console.log("session", session);
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   const handleLogout = async () => {
     SessionEnd();
@@ -107,6 +112,7 @@ const Home = ({ navigation }) => {
                   position: "absolute",
                   top: -height * 0.015,
                   backgroundColor: "rgba(33, 158, 188, 1)",
+                  fontFamily: "Inter-Black",
                   fontWeight: "600",
                 }}
               >
@@ -373,7 +379,8 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, 1)",
     lineHeight: height * 0.03,
     fontSize: width * 0.06,
-    fontWeight: "700",
+    fontFamily: "Inter-Black",
+    fontWeight: "600",
     flex: 2,
     marginLeft: width * 0.05,
     alignSelf: "center",
@@ -395,12 +402,14 @@ const styles = StyleSheet.create({
   header: {
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     opacity: 0.3,
   },
   desc: {
     color: "rgba(33, 0, 93, 1)",
     fontSize: width * 0.07,
+    fontFamily: "Inter-Black",
     fontWeight: "700",
     lineHeight: height * 0.04,
     marginTop: height * 0.01,
@@ -415,6 +424,7 @@ const styles = StyleSheet.create({
   },
   investmentHeader: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     lineHeight: height * 0.035,
@@ -433,6 +443,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     lineHeight: height * 0.03,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.3,
     flex: 1,
@@ -441,6 +452,7 @@ const styles = StyleSheet.create({
     color: "rgba(73, 69, 79, 1)",
     lineHeight: height * 0.025,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     flex: 1,
   },
@@ -456,6 +468,7 @@ const styles = StyleSheet.create({
     // left: width * 0.02,
     fontSize: width * 0.04,
     lineHeight: height * 0.028,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     color: "rgba(255, 255, 255, 1)",
   },
@@ -466,6 +479,7 @@ const styles = StyleSheet.create({
   leftContent: {
     textAlign: "left",
     color: "rgba(33, 0, 93, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     flex: 1,
@@ -473,6 +487,7 @@ const styles = StyleSheet.create({
   rightContent: {
     textAlign: "right",
     color: "rgba(0, 0, 0, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.035,
     opacity: 0.4,
@@ -493,6 +508,7 @@ const styles = StyleSheet.create({
   basketName: {
     fontSize: width * 0.035,
     lineHeight: height * 0.028,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
   },
   basketRow: {

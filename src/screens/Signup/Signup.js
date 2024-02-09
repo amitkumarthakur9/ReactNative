@@ -22,11 +22,16 @@ import {
   Phonelogin,
 } from "../../api/services/endpoints/userEndpoints";
 import Header from "../Components/Header";
+import { useFonts } from "expo-font";
 
 export default Signup = ({ navigation }) => {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   GoogleSignin.configure({
     webClientId:
@@ -93,7 +98,10 @@ export default Signup = ({ navigation }) => {
         />
       </View>
       <Text style={styles.header}>
-        Welcome to <Text style={{ fontWeight: "600" }}>Growthvine</Text>
+        Welcome to{" "}
+        <Text style={{ fontWeight: "600", fontFamily: "Inter-Black" }}>
+          Growthvine
+        </Text>
       </Text>
       <View style={styles.signupContainer}>
         <TouchableOpacity onPress={() => navigation.push("swphone")}>
@@ -158,6 +166,7 @@ const styles = StyleSheet.create({
     width: width,
     height: height * 0.05,
     fontWeight: "400",
+    fontFamily: "Inter-Black",
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
@@ -198,6 +207,7 @@ const styles = StyleSheet.create({
   buttonLabel: {
     fontSize: width * 0.045, // Adjust the font size based on screen width
     fontWeight: "600",
+    fontFamily: "Inter-Black",
   },
   alreayRegistered: {
     top: width * 0.03,
@@ -206,6 +216,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.04,
     color: "rgb(166, 166, 166)",
     fontWeight: "600",
+    fontFamily: "Inter-Black",
     lineHeight: width * 0.05,
   },
   icon: {

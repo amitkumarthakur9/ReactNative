@@ -12,11 +12,16 @@ import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
 import { Slider } from "@miblanchard/react-native-slider";
 import Header from "../Components/Header";
+import { useFonts } from "expo-font";
 export default Uploadscreens = () => {
   const [isMonthly, setIsMonthly] = useState(true);
   const [investmentAmount, setInvestmentAmount] = useState(1000);
   const [annualReturn, setAnnualReturn] = useState(5);
   const [timePeriod, setTimePeriod] = useState(5);
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   const calculateTotalWealth = () => {
     const principal = isMonthly
@@ -225,6 +230,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "#023047",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.037,
     lineHeight: height * 0.028,
@@ -239,6 +245,7 @@ const styles = StyleSheet.create({
 
   buttonTextStyle: {
     color: "ntainter",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
@@ -252,6 +259,7 @@ const styles = StyleSheet.create({
     color: "#023047",
     lineHeight: height * 0.02,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     textAlign: "center",
     opacity: 0.8,
@@ -259,6 +267,7 @@ const styles = StyleSheet.create({
   amount: {
     marginTop: height * 0.01,
     color: "#023047",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
   },
@@ -269,10 +278,12 @@ const styles = StyleSheet.create({
   absolute: {
     color: "rgba(2, 48, 71, 0.5)",
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
   },
   percentage: {
     color: "rgba(35, 179, 113, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.035,
   },
@@ -299,6 +310,7 @@ const styles = StyleSheet.create({
     // color: "#023047",
     fontSize: width * 0.032,
     lineHeight: height * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
   },
 
@@ -306,6 +318,7 @@ const styles = StyleSheet.create({
     // color: "#023047",
     fontSize: width * 0.032,
     lineHeight: height * 0.024,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     marginTop: height * -0.024,
     marginBottom: height * 0.004,
@@ -316,6 +329,7 @@ const styles = StyleSheet.create({
     color: "#023047",
     lineHeight: height * 0.025,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.8,
   },
@@ -325,6 +339,7 @@ const styles = StyleSheet.create({
     color: "rgba(73, 69, 79, 1)",
     lineHeight: height * 0.03,
     fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
   },
   footer: {
@@ -344,6 +359,7 @@ const styles = StyleSheet.create({
     marginLeft: width * -0.4,
     fontSize: width * 0.042,
 
+    fontFamily: "Inter-Black",
     fontWeight: "400",
     overflow: "hidden",
     color: "#C3C3C3",
@@ -353,6 +369,7 @@ const styles = StyleSheet.create({
     marginLeft: width * -0.4,
     fontSize: width * 0.053,
 
+    fontFamily: "Inter-Black",
     fontWeight: "400",
     overflow: "hidden",
     color: "#FFFFFF",
@@ -364,6 +381,7 @@ const styles = StyleSheet.create({
     marginRight: width * -0.41,
     fontSize: width * 0.042,
 
+    fontFamily: "Inter-Black",
     fontWeight: "400",
     overflow: "hidden",
     color: "#C3C3C3",
@@ -374,6 +392,7 @@ const styles = StyleSheet.create({
     marginRight: width * -0.4,
     fontSize: width * 0.053,
 
+    fontFamily: "Inter-Black",
     fontWeight: "400",
     overflow: "hidden",
     color: "#FFFFFF",
@@ -384,6 +403,7 @@ const styles = StyleSheet.create({
     marginTop: height * -0.16,
     fontSize: width * 0.042,
 
+    fontFamily: "Inter-Black",
     fontWeight: "400",
     overflow: "hidden",
     color: "#C3C3C3",
@@ -392,6 +412,7 @@ const styles = StyleSheet.create({
   totalWealthText3: {
     fontSize: width * 0.066,
 
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     overflow: "hidden",
     marginTop: height * -0.12,

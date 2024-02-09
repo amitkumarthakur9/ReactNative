@@ -14,8 +14,11 @@ import Header from "../Components/Header";
 import { Fontisto } from "@expo/vector-icons";
 import CircularProgress from "react-native-circular-progress-indicator";
 import { Card, Avatar, Button } from "react-native-paper";
-
+import { useFonts } from "expo-font";
 export default Education = () => {
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <View style={styles.container}>
       <Header title="Education" showPlusSign={true} />
@@ -329,6 +332,7 @@ const styles = StyleSheet.create({
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.045,
     lineHeight: height * 0.03,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     margin: width * 0.01,
     opacity: 0.85,
@@ -337,6 +341,7 @@ const styles = StyleSheet.create({
     color: "rgba(61, 193, 84, 1)",
     fontSize: width * 0.04,
     lineHeight: height * 0.025,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     margin: width * 0.01,
   },
@@ -344,12 +349,14 @@ const styles = StyleSheet.create({
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.09,
     lineHeight: height * 0.055,
+    fontFamily: "Inter-Black",
     fontWeight: "400",
   },
   percentOf: {
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.035,
     lineHeight: height * 0.025,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.5,
     marginBottom: height * 0.025,
@@ -363,6 +370,7 @@ const styles = StyleSheet.create({
   },
   fundName: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
@@ -370,6 +378,7 @@ const styles = StyleSheet.create({
   },
   fundAmount: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.045,
     lineHeight: height * 0.035,
@@ -380,6 +389,7 @@ const styles = StyleSheet.create({
     padding: width * 0.02,
   },
   fundpercentOf: {
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.03,
     lineHeight: height * 0.02,
@@ -390,6 +400,7 @@ const styles = StyleSheet.create({
     color: "rgba(61, 193, 84, 1)",
     fontSize: width * 0.025,
     lineHeight: height * 0.02,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
   },
   your: {
@@ -399,6 +410,7 @@ const styles = StyleSheet.create({
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.045,
     lineHeight: height * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     left: width * 0.05,
   },
@@ -417,6 +429,7 @@ const styles = StyleSheet.create({
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.045,
     lineHeight: height * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     textAlign: "center",
   },
@@ -424,6 +437,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.015,
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.03,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     textAlign: "center",
     lineHeight: height * 0.02,
@@ -433,6 +447,7 @@ const styles = StyleSheet.create({
   moreDetails: {
     color: "rgba(33, 158, 188, 1)",
     fontSize: width * 0.03,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     textAlign: "center",
     lineHeight: height * 0.02,
@@ -444,6 +459,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
     lineHeight: height * 0.025,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.3,
     flex: 1,
@@ -452,6 +468,7 @@ const styles = StyleSheet.create({
     color: "rgba(73, 69, 79, 1)",
     fontSize: width * 0.03,
     lineHeight: height * 0.03,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     flex: 1,
   },
@@ -471,6 +488,7 @@ const styles = StyleSheet.create({
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.03,
     lineHeight: height * 0.02,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     textAlign: "center",
   },
@@ -485,6 +503,7 @@ const styles = StyleSheet.create({
   },
   investmentHeader: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     lineHeight: height * 0.035,
@@ -507,6 +526,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     lineHeight: height * 0.025,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.3,
     flex: 1,
@@ -516,6 +536,7 @@ const styles = StyleSheet.create({
     color: "rgba(73, 69, 79, 1)",
     lineHeight: height * 0.025,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     flex: 1,
   },

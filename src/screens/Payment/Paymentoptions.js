@@ -15,7 +15,7 @@ import Mfubanks, { Orders, Clearcart } from "../Payment/Data";
 import { Fetchcart } from "../Cart/Data";
 import { useNavigation } from "@react-navigation/native";
 import Loader from "../Components/Loader";
-
+import { useFonts } from "expo-font";
 const Paymentoptions = (props) => {
   const [upicheck, setUpicheck] = useState(false);
   const [netbankingcheck, setNetbankingcheck] = useState(false);
@@ -30,6 +30,9 @@ const Paymentoptions = (props) => {
   const mfubanks = Mfubanks();
 
   const navigation = useNavigation();
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   //   console.log("order sip data in paymentoptions", siporderData);
 
@@ -244,6 +247,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "#023047",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.037,
     marginTop: height * 0.032,
@@ -291,6 +295,7 @@ const styles = StyleSheet.create({
   desc: {
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     marginLeft: width * 0.07,
   },

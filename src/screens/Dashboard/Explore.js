@@ -29,6 +29,7 @@ import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { incrementToCart } from "../../redux/slices/cart/Index";
+import { useFonts } from "expo-font";
 
 const handleInvest = (mfId, navigation) => {
   navigation.navigate("Assetpreview", { mfId });
@@ -109,6 +110,9 @@ export const SchemesrenderItem = (props) => {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   return (
     <>
@@ -197,6 +201,9 @@ export const SchemesrenderItem = (props) => {
 
 export const NforenderItem = (props) => {
   const navigation = useNavigation();
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <>
       {props.nfo.map((item, key) => (
@@ -238,6 +245,9 @@ const Explore = () => {
   const { trendingschemes, trendingNfo } = DashboardData();
   const Cartcount = useSelector((state) => state.cart.count);
   const navigation = useNavigation();
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <Backgroundimage Headerheight={0.29} />
@@ -259,6 +269,7 @@ const Explore = () => {
                   position: "absolute",
                   top: -height * 0.015,
                   backgroundColor: "rgba(33, 158, 188, 1)",
+                  fontFamily: "Inter-Black",
                   fontWeight: "600",
                 }}
               >
@@ -362,6 +373,7 @@ const styles = StyleSheet.create({
   leftContent: {
     textAlign: "left",
     color: "rgba(33, 0, 93, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     width: "50%",
@@ -370,6 +382,7 @@ const styles = StyleSheet.create({
   rightContent: {
     textAlign: "right",
     color: "rgba(0, 0, 0, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.035,
     opacity: 0.4,
@@ -382,6 +395,7 @@ const styles = StyleSheet.create({
   },
   percentage: {
     color: "rgba(251, 133, 0, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.035,
     lineHeight: height * 0.03,
@@ -389,6 +403,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     color: "rgba(0, 0, 0, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     fontSize: width * 0.03,
     lineHeight: height * 0.02,
@@ -408,6 +423,7 @@ const styles = StyleSheet.create({
   },
   fundName: {
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
@@ -421,6 +437,7 @@ const styles = StyleSheet.create({
   starNumber: {
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.03,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     lineHeight: height * 0.02,
     opacity: 0.8,
@@ -433,6 +450,7 @@ const styles = StyleSheet.create({
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.03,
     lineHeight: height * 0.06,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.5,
   },
@@ -458,6 +476,7 @@ const styles = StyleSheet.create({
   },
   trendingFundName: {
     color: "rgba(255, 255, 255, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.035,
   },
@@ -465,12 +484,14 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
     lineHeight: height * 0.025,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.3,
   },
   Cagrpercentage: {
     fontSize: width * 0.04,
     color: "rgba(61, 193, 84, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     lineHeight: height * 0.03,
   },
@@ -499,12 +520,14 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
     lineHeight: height * 0.025,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.3,
     marginLeft: width * 0.03,
   },
   benchmarkPercentage: {
     color: "rgba(73, 69, 79, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,
     lineHeight: height * 0.03,
@@ -516,6 +539,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
     lineHeight: height * 0.025,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.5,
   },
@@ -530,6 +554,7 @@ const styles = StyleSheet.create({
   riskText: {
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.6,
     lineHeight: height * 0.025,
@@ -548,11 +573,13 @@ const styles = StyleSheet.create({
   AddToCart: {
     color: "rgba(33, 158, 188, 1)",
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
   },
   invest: {
     color: "white",
     fontSize: width * 0.037,
+    fontFamily: "Inter-Black",
     fontWeight: "700",
   },
   paginationContainer: {
@@ -570,6 +597,7 @@ const styles = StyleSheet.create({
     color: "rgba(255, 255, 255, 1)",
     lineHeight: height * 0.03,
     fontSize: width * 0.06,
+    fontFamily: "Inter-Black",
     fontWeight: "700",
     flex: 2,
     marginLeft: width * 0.05,

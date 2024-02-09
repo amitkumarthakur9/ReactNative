@@ -20,12 +20,17 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Uploadsignature } from "./Data";
 import * as FileSystem from "expo-file-system";
 import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 
 const Upload = ({ data }) => {
   const [loader, setLoader] = useState();
   const [image, setImage] = useState(null);
   const [imageAllData, setImageAllData] = useState(null);
   const [imageName, setImageName] = useState(null);
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   const navigation = useNavigation();
 
@@ -64,6 +69,7 @@ const Upload = ({ data }) => {
     Uploadsignature(data)
       .then((response) => {
         if (response.success) {
+          setLoader(false);
           Alert.alert("Success . File has been uploaded successfully");
           navigation.push("Dashboard");
         } else {
@@ -108,6 +114,7 @@ const Upload = ({ data }) => {
                 fontSize: width * 0.05,
                 color: "rgba(255, 255, 255, 1)",
                 textAlign: "center",
+                fontFamily: "Inter-Black",
                 fontWeight: "600",
               }}
             >
@@ -124,6 +131,7 @@ const styles = StyleSheet.create({
   desc: {
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
     fontWeight: "400",
     lineHeight: height * 0.03,
     marginTop: height * 0.01,
@@ -132,6 +140,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: width * 0.045,
     color: "rgba(2, 48, 71, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     marginBottom: height * 0.015,
     opacity: 0.6,

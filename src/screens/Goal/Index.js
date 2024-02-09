@@ -17,7 +17,7 @@ import Goallist from "../../api/services/endpoints/goalEndpoints";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { useSelector } from "react-redux";
 import inrconvertor from "../Components/Inrconverter";
-
+import { useFonts } from "expo-font";
 const Goal = () => {
   const navigation = useNavigation();
   const scrollViewRef = useRef(null);
@@ -42,6 +42,10 @@ const Goal = () => {
     setActiveSlide(newIndex);
     scrollViewRef.current.scrollTo({ x: newIndex * width, animated: true });
   };
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   return (
     <View style={styles.container}>
@@ -119,6 +123,7 @@ const Goal = () => {
                           position: "absolute",
                           bottom: -height * 0.005,
                           backgroundColor: "rgba(33, 158, 188, 1)",
+                          fontFamily: "Inter-Black",
                           fontWeight: "600",
                         }}
                       >
@@ -140,6 +145,7 @@ const Goal = () => {
                           position: "absolute",
                           bottom: -height * 0.005,
                           backgroundColor: "rgba(33, 158, 188, 1)",
+                          fontFamily: "Inter-Black",
                           fontWeight: "600",
                         }}
                       >
@@ -248,6 +254,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: "center",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     color: "rgba(2, 48, 71, 1)",
     fontSize: width * 0.045,
@@ -255,6 +262,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     textAlign: "center",
+    fontFamily: "Inter-Black",
     fontWeight: "400",
     color: "rgba(0, 8, 20, 1)",
     fontSize: width * 0.04,

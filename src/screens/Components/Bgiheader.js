@@ -10,10 +10,14 @@ import {
 import { height, width } from "../../Dimension";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 
 export default Header = (Props) => {
   const { title, showPlusSign, Headerheight } = Props;
   const navigation = useNavigation();
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
   return (
     <ImageBackground
       source={require("../../../assets/icons/header.png")}
@@ -69,6 +73,7 @@ const styles = StyleSheet.create({
   goal: {
     marginLeft: -width * 0.55,
     color: "rgba(255, 255, 255, 1)",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.045,
     lineHeight: height * 0.04,

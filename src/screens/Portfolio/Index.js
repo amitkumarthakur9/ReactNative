@@ -16,7 +16,7 @@ import usePortfolioData from "./Useportfoliodata";
 import Loader from "../Components/Loader";
 import formatNumberWithCommas from "../Components/Inrconverter";
 import renderPaginationDots from "../Components/Pagination";
-
+import { useFonts } from "expo-font";
 const Portfolio = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const { completePortfolioData, allPortfolioData } = usePortfolioData();
@@ -38,6 +38,10 @@ const Portfolio = () => {
       setObjKey(keys[newPage]);
     }
   };
+
+  const [fontsLoaded] = useFonts({
+    "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
+  });
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -200,6 +204,7 @@ const styles = StyleSheet.create({
   header: {
     color: "rgba(0, 0, 0, 1)",
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     opacity: 0.3,
     textTransform: "capitalize",
@@ -207,6 +212,7 @@ const styles = StyleSheet.create({
   desc: {
     color: "rgba(33, 0, 93, 1)",
     fontSize: width * 0.07,
+    fontFamily: "Inter-Black",
     fontWeight: "700",
     lineHeight: height * 0.04,
     marginTop: height * 0.01,
@@ -235,6 +241,7 @@ const styles = StyleSheet.create({
     color: "rgba(0, 0, 0, 1)",
     lineHeight: height * 0.03,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "500",
     opacity: 0.3,
     flex: 1,
@@ -243,6 +250,7 @@ const styles = StyleSheet.create({
     color: "rgba(73, 69, 79, 1)",
     lineHeight: height * 0.025,
     fontSize: width * 0.035,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     flex: 1,
   },
@@ -258,6 +266,7 @@ const styles = StyleSheet.create({
     left: width * 0.02,
     fontSize: width * 0.04,
     lineHeight: height * 0.028,
+    fontFamily: "Inter-Black",
     fontWeight: "600",
     color: "rgba(255, 255, 255, 1)",
   },
