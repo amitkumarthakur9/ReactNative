@@ -93,7 +93,7 @@ export default Otp = () => {
           />
           <Text style={styles.header}>Phone Verification</Text> */}
           <Text style={styles.desc}>
-            Please enter the 6-digit verification code sent to your phone.
+            Please enter the 4-digit verification code sent to your phone.
           </Text>
           <Text style={styles.verificationHeader}>Verification Code</Text>
           <View style={styles.inputContainer}>
@@ -111,7 +111,7 @@ export default Otp = () => {
               />
             ))}
           </View>
-          <Text style={styles.resend}>
+          {/* <Text style={styles.resend}>
             Didn't receive the code ?
             <Text
               style={{
@@ -123,7 +123,7 @@ export default Otp = () => {
             >
               Resend Code
             </Text>
-          </Text>
+          </Text> */}
           {showLoader ? (
             <Loader />
           ) : (

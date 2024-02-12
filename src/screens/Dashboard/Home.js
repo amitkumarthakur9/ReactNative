@@ -24,13 +24,14 @@ import { Userlogin } from "../../api/services/endpoints/userEndpoints";
 import { UserDetails, Session, SessionEnd } from "../Components/Data";
 import { useSelector } from "react-redux";
 import { useFonts } from "expo-font";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
   const { allPortfolioData } = usePortfolioData();
   const { basketData } = Thematicbasket();
   const userData = UserDetails();
-  const session = Session();
+  const [sessioncheck, setSessioncheck] = useState(null);
   const [image, setImage] = useState(null);
 
   // Userlogin();
@@ -47,7 +48,14 @@ const Home = ({ navigation }) => {
   };
 
   useEffect(() => {
-    if (session === true) {
+    Session()
+      .then((response) => {
+        setSessioncheck(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    if (sessioncheck === true) {
       Alert.alert("Session has been expired . please login again");
       navigation.push("Signup");
     }
@@ -58,7 +66,13 @@ const Home = ({ navigation }) => {
     ) {
       setImage("https://data.fundexpert.in/profilepic/" + userData.profilepic);
     }
-  }, [userData, session]);
+  }, [userData, sessioncheck]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setSessioncheck(null);
+    }, [])
+  );
 
   const profileCompleted = useSelector((state) => state.user.profileCompleted);
   const Cartcount = useSelector((state) => state.cart.count);

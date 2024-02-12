@@ -43,22 +43,13 @@ export const UserDetails = () => {
   return userData;
 };
 
-export const Session = () => {
-  const [session, setSession] = useState(null);
-  useEffect(() => {
-    Checksession()
-      .then((response) => {
-        setSession(response.data.success);
-      })
-      .catch((error) => {
-        console.warn("session:", error);
-      });
-    return () => {
-      setSession(false);
-    };
-  }, []);
-
-  return session;
+export const Session = async () => {
+  try {
+    const result = await Checksession();
+    return result.data.success;
+  } catch (error) {
+    console.log("error in session check", error);
+  }
 };
 
 export const SessionEnd = () => {

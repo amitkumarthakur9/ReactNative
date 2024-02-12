@@ -10,6 +10,7 @@ import { Text, Button } from "react-native-paper";
 // import Footer from "../../Footer";
 import { width, height } from "../../Dimension";
 import { useFonts } from "expo-font";
+import { Session } from "../Components/Data";
 
 const carouselData = [
   {
@@ -42,16 +43,24 @@ const Carousels = ({ navigation }) => {
     setActiveIndex(index);
   };
 
-  const scrollToNextItem = () => {
-    const nextIndex = (activeIndex + 1) % carouselData.length;
-    setActiveIndex(nextIndex);
-    flatListRef.current.scrollToIndex({ index: nextIndex });
-  };
+  //   const scrollToNextItem = () => {
+  //     const nextIndex = (activeIndex + 1) % carouselData.length;
+  //     setActiveIndex(nextIndex);
+  //     flatListRef.current.scrollToIndex({ index: nextIndex });
+  //   };
+
+  //   useEffect(() => {
+  //     const timer = setInterval(scrollToNextItem, 3000); // Change slide every 3 seconds
+  //     return () => clearInterval(timer);
+  //   }, [activeIndex]);
 
   useEffect(() => {
-    const timer = setInterval(scrollToNextItem, 3000); // Change slide every 3 seconds
-    return () => clearInterval(timer);
-  }, [activeIndex]);
+    Session().then((response) => {
+      if (response === false) {
+        navigation.push("Dashboard");
+      }
+    });
+  }, []);
 
   const renderItem = ({ item, index }) => {
     return (
