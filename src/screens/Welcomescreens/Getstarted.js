@@ -10,7 +10,6 @@ import { Text, Button } from "react-native-paper";
 // import Footer from "../../Footer";
 import { width, height } from "../../Dimension";
 import { useFonts } from "expo-font";
-import { Session } from "../Components/Data";
 
 const carouselData = [
   {
@@ -53,14 +52,6 @@ const Carousels = ({ navigation }) => {
   //     const timer = setInterval(scrollToNextItem, 3000); // Change slide every 3 seconds
   //     return () => clearInterval(timer);
   //   }, [activeIndex]);
-
-  useEffect(() => {
-    Session().then((response) => {
-      if (response === false) {
-        navigation.push("Dashboard");
-      }
-    });
-  }, []);
 
   const renderItem = ({ item, index }) => {
     return (

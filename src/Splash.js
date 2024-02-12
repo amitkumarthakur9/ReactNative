@@ -1,18 +1,41 @@
 import React, { useEffect } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { width, height } from "./Dimension";
+import { Session } from "./screens/Components/Data";
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Getstarted" }],
-      });
-    }, 5600); // 6000 milliseconds = 6 seconds
+    Session().then((response) => {
+      if (response === false) {
+        navigation.push("Dashboard");
+      } else {
+        const timer = setTimeout(() => {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Getstarted" }],
+          });
+        }, 5600);
 
-    return () => clearTimeout(timer);
-  });
+        return () => clearTimeout(timer);
+      }
+    });
+    // const timer = setTimeout(() => {
+    //   navigation.reset({
+    //     index: 0,
+    //     routes: [{ name: "Getstarted" }],
+    //   });
+    // }, 5600);
+
+    // return () => clearTimeout(timer);
+  }, []);
+
+  //   useEffect(() => {
+  //     Session().then((response) => {
+  //       if (response === false) {
+  //         navigation.push("Dashboard");
+  //       }
+  //     });
+  //   }, []);
 
   return (
     <View style={styles.container}>

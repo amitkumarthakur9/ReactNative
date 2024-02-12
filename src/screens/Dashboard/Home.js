@@ -44,7 +44,7 @@ const Home = ({ navigation }) => {
 
   const handleLogout = async () => {
     SessionEnd();
-    navigation.push("Signup");
+    navigation.push("Navigatescreens");
   };
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Home = ({ navigation }) => {
       });
     if (sessioncheck === true) {
       Alert.alert("Session has been expired . please login again");
-      navigation.push("Signup");
+      navigation.push("Navigatescreens");
     }
     if (
       userData !== null &&
