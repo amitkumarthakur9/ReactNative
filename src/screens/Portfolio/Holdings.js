@@ -76,7 +76,11 @@ const MenuModal = (holdingDatas) => {
   //   const folio = holdingDatas.holdingDatas.folioNumberString;
   //   const fundName = holdingDatas.holdingDatas.mutualFund.name;
   //   const currentValue = holdingDatas.holdingDatas.currValue;
+  const mfId = holdingDatas.holdingDatas.mutualFund.id;
   const navigation = useNavigation();
+
+  const trendType = "schemes";
+
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
@@ -104,7 +108,13 @@ const MenuModal = (holdingDatas) => {
             resizeMode: "contain",
           }}
         />
-        <Text style={styles.menuModalHeader}>Buy</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Assetpreview", { mfId, trendType })
+          }
+        >
+          <Text style={styles.menuModalHeader}>Buy</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={[styles.flexRow, { margin: width * 0.02 }]}>

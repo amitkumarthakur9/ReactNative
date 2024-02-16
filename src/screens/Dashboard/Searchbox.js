@@ -44,7 +44,8 @@ export default Searchbox = ({ navigation }) => {
   };
 
   const handleInvest = (mfId) => {
-    navigation.navigate("Assetpreview", { mfId });
+    const trendType = "schemes";
+    navigation.navigate("Assetpreview", { mfId, trendType });
   };
 
   const [fontsLoaded] = useFonts({
