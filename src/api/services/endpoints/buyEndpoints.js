@@ -47,3 +47,7 @@ export const Redeemholding = (data) => {
   console.log("passed url", urlEncodedData);
   return apiClient.post("/app/mfu/order?" + urlEncodedData);
 };
+
+export const Orders = () => {
+  return apiClient.get("/app/order?action=fetch");
+};

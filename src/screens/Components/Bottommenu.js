@@ -7,10 +7,9 @@ import Explore from "../Dashboard/Explore";
 import Account from "../Account/Index";
 import Goal from "../Goal/Index";
 import { useFonts } from "expo-font";
+import Order from "../Dashboard/Order";
 
 const Tab = createBottomTabNavigator();
-
-const Profiles = () => <Text>amit kumar thakur</Text>;
 
 const Menu = () => {
   const [fontsLoaded] = useFonts({
@@ -126,7 +125,7 @@ const Menu = () => {
       />
       <Tab.Screen
         name="product"
-        component={Profiles}
+        component={Order}
         options={{
           tabBarLabel: "Products",
           tabBarIcon: ({ color, size }) => (
