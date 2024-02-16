@@ -48,7 +48,7 @@ export default Redeem = () => {
       });
   }, []);
 
-  handleSubmit = (holdingId) => {
+  const handleSubmit = (holdingId) => {
     if (bankid == null) {
       Alert.alert("Please select bank account");
       return;

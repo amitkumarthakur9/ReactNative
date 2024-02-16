@@ -21,6 +21,9 @@ import {
   Redeemholding,
 } from "../../api/services/endpoints/buyEndpoints";
 import { Switchfund } from "../../api/services/endpoints/exploreEndpoints";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Yearmonthday } from "../Components/Formatdate";
+
 export default Switch = () => {
   const [check, setCheck] = useState(true);
   const [redeemOption, setRedeemOption] = useState("Amount");
@@ -31,6 +34,13 @@ export default Switch = () => {
   const [unitsInput, setUnitsInput] = useState("0");
   const [loader, setLoader] = useState(false);
   const [frequency, setFrequency] = useState("one-time");
+  const [noOfInstallments, setNoOfInstallments] = useState("6");
+  const [startdate, setStartdate] = useState("");
+  const [enddate, setEnddate] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [date2, setDate2] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
 
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
@@ -53,7 +63,19 @@ export default Switch = () => {
   //       });
   //   }, []);
 
-  handleSubmit = () => {
+  const handleOption = (itemValue) => {
+    setRedeemOption(itemValue);
+    if (itemValue == "Units") {
+      setAmountInput("0");
+      setEnddate("");
+      setStartdate("");
+      setFrequency("one-time");
+    } else {
+      setUnitsInput("0");
+    }
+  };
+
+  const handleSubmit = () => {
     setLoader(true);
     const data = {
       action: "stpRegister",
@@ -61,12 +83,14 @@ export default Switch = () => {
       holdingId: holdingDatas.id,
       mutualfundId: holdingDatas.mutualFund.id,
       toMutualfundId: mfData.id,
-      startDate: "Invalid date",
+      startDate: startdate,
       frequencyType: frequency,
       amount: amountInput,
-      noOfInstallments: 6,
+      noOfInstallments: noOfInstallments,
       switchAll: check,
       quantity: unitsInput,
+      stpAmc: 1,
+      endDate: enddate,
     };
     Switchfund(data)
       .then((response) => {
@@ -89,6 +113,27 @@ export default Switch = () => {
     setCheck(!check);
     setAmountInput("0");
     setUnitsInput("0");
+    setEnddate("");
+    setStartdate("");
+    setFrequency("one-time");
+  };
+
+  const handleDatePress = (type) => {
+    if (type == "endDate") {
+      setShowDatePicker(true);
+    } else {
+      setShowStartDatePicker(true);
+    }
+  };
+
+  const handleChange = (value, type) => {
+    if (type == "endDate") {
+      setShowDatePicker(false);
+      setEnddate(Yearmonthday(value));
+    } else {
+      setShowStartDatePicker(false);
+      setStartdate(Yearmonthday(value));
+    }
   };
 
   return (
@@ -219,7 +264,7 @@ export default Switch = () => {
                       status={check ? "checked" : "unchecked"}
                       onPress={handleCheck}
                     />
-                    <Text style={styles.percentage}>Redeem All</Text>
+                    <Text style={styles.percentage}>Switch All</Text>
                   </View>
 
                   {!check && (
@@ -229,7 +274,7 @@ export default Switch = () => {
                         <Picker
                           selectedValue={redeemOption}
                           onValueChange={(itemValue, itemIndex) =>
-                            setRedeemOption(itemValue)
+                            handleOption(itemValue)
                           }
                           mode="dropdown"
                         >
@@ -256,9 +301,9 @@ export default Switch = () => {
                               mode="dropdown"
                             >
                               <Picker.Item label="One Time" value="one-time" />
-                              <Picker.Item label="Daily" value="1" />
-                              <Picker.Item label="Monthly" value="3" />
-                              <Picker.Item label="Quarterly" value="4" />
+                              <Picker.Item label="Daily" value="D" />
+                              <Picker.Item label="Monthly" value="M" />
+                              <Picker.Item label="Quarterly" value="Q" />
                             </Picker>
                           </TouchableOpacity>
                           <TextInput
@@ -271,6 +316,65 @@ export default Switch = () => {
                             keyboardType="number-pad"
                             onChangeText={(e) => setAmountInput(e)}
                           />
+                          {frequency != "one-time" && (
+                            <TouchableOpacity
+                              onPress={() => handleDatePress("endDate")}
+                            >
+                              <TextInput
+                                label="End Date"
+                                mode="outlined"
+                                placeholder="End Date"
+                                placeholderTextColor="rgb(191, 191, 191)"
+                                value={enddate}
+                                editable={false}
+                                style={styles.input}
+                                outlineStyle={styles.outline}
+                                theme={styles.themeStyle}
+                                contentStyle={styles.contentStyle}
+                              />
+                            </TouchableOpacity>
+                          )}
+
+                          {showDatePicker && (
+                            <DateTimePicker
+                              value={date}
+                              mode="date"
+                              display="default"
+                              onChange={(e, value) =>
+                                handleChange(value, "endDate")
+                              }
+                            />
+                          )}
+
+                          {frequency != "one-time" && frequency != "D" && (
+                            <TouchableOpacity
+                              onPress={() => handleDatePress("startDate")}
+                            >
+                              <TextInput
+                                label="Start Date"
+                                mode="outlined"
+                                placeholder="Start Date"
+                                placeholderTextColor="rgb(191, 191, 191)"
+                                value={startdate}
+                                editable={false}
+                                style={styles.input}
+                                outlineStyle={styles.outline}
+                                theme={styles.themeStyle}
+                                contentStyle={styles.contentStyle}
+                              />
+                            </TouchableOpacity>
+                          )}
+
+                          {showStartDatePicker && (
+                            <DateTimePicker
+                              value={date2}
+                              mode="date"
+                              display="default"
+                              onChange={(e, value) =>
+                                handleChange(value, "startDate")
+                              }
+                            />
+                          )}
                         </>
                       ) : (
                         <TextInput
@@ -298,7 +402,7 @@ export default Switch = () => {
                     ) : (
                       <TouchableOpacity onPress={() => handleSubmit(mfData.id)}>
                         <Button mode="contained" style={styles.Button}>
-                          Switch
+                          {frequency != "one-time" ? "Start STP" : "Switch"}
                         </Button>
                       </TouchableOpacity>
                     )}
