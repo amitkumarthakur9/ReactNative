@@ -37,6 +37,8 @@ export default Onetimesip = ({ navigation }) => {
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
 
+  console.log("mfdatas", mfData);
+
   return (
     <View style={styles.container}>
       <View style={styles.container1}>

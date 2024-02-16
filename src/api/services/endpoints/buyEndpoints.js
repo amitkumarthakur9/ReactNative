@@ -41,3 +41,9 @@ export const Cleardata = () => {
   //   console.log("passed url", urlEncodedData);
   return apiClient.post("/app/mutualfund?action=clearCart");
 };
+
+export const Redeemholding = (data) => {
+  const urlEncodedData = queryString(data);
+  console.log("passed url", urlEncodedData);
+  return apiClient.post("/app/mfu/order?" + urlEncodedData);
+};

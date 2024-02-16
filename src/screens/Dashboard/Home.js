@@ -34,7 +34,7 @@ const Home = ({ navigation }) => {
   const [sessioncheck, setSessioncheck] = useState(null);
   const [image, setImage] = useState(null);
 
-  // Userlogin();
+  Userlogin();
   //   console.log("user details amit", userData);
   //   console.log("session", session);
 

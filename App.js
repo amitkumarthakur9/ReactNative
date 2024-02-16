@@ -34,6 +34,9 @@ import Exploremenu from "./src/screens/Dashboard/Exploremenu";
 import Goalmenu from "./src/screens/Dashboard/Goalmenu";
 import Accountmenu from "./src/screens/Dashboard/Accountmenu";
 import UploadDoc from "./src/screens/Account/Upload";
+import Redeem from "./src/screens/Portfolio/Redeem";
+import Switchsearch from "./src/screens/Portfolio/Switchsearch";
+import Switch from "./src/screens/Portfolio/Switch";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +45,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Splash"
+          initialRouteName="Dashboard"
           screenOptions={{
             headerShown: false,
           }}
@@ -77,6 +80,9 @@ export default function App() {
           <Stack.Screen name="Goalmenu" component={Goalmenu} />
           <Stack.Screen name="Accountmenu" component={Accountmenu} />
           <Stack.Screen name="UploadDoc" component={UploadDoc} />
+          <Stack.Screen name="Redeem" component={Redeem} />
+          <Stack.Screen name="Switchsearch" component={Switchsearch} />
+          <Stack.Screen name="Switch" component={Switch} />
         </Stack.Navigator>
         <StatusBar />
       </NavigationContainer>

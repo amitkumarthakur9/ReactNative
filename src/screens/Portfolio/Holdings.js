@@ -19,6 +19,7 @@ import Modal from "react-native-modal";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import { useNavigation } from "@react-navigation/native";
 const Table = (props) => {
   const { transaction } = props;
   const [fontsLoaded] = useFonts({
@@ -64,7 +65,18 @@ const Table = (props) => {
   );
 };
 
-const MenuModal = () => {
+const MenuModal = (holdingDatas) => {
+  console.log(
+    "holdings object",
+    JSON.stringify(holdingDatas, 1, 2),
+    holdingDatas.holdingDatas.id
+  );
+  //   const fundHouseId = holdingDatas.holdingDatas.mutualFund.fundHouse.id;
+  //   const fundId = holdingDatas.holdingDatas.mutualFund.id;
+  //   const folio = holdingDatas.holdingDatas.folioNumberString;
+  //   const fundName = holdingDatas.holdingDatas.mutualFund.name;
+  //   const currentValue = holdingDatas.holdingDatas.currValue;
+  const navigation = useNavigation();
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
@@ -115,7 +127,11 @@ const MenuModal = () => {
             resizeMode: "contain",
           }}
         />
-        <Text style={styles.menuModalHeader}>Redeem</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Redeem", { holdingDatas })}
+        >
+          <Text style={styles.menuModalHeader}>Redeem</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={[styles.flexRow, { margin: width * 0.02 }]}>
@@ -127,7 +143,11 @@ const MenuModal = () => {
             resizeMode: "contain",
           }}
         />
-        <Text style={styles.menuModalHeader}>Switch/STP</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Switchsearch", { holdingDatas })}
+        >
+          <Text style={styles.menuModalHeader}>Switch/STP</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={[styles.flexRow, { margin: width * 0.02 }]}>
@@ -171,6 +191,8 @@ const Holdings = (props) => {
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
+
+  // console.log("filteredHoldingData", filteredHoldingData);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -235,7 +257,7 @@ const Holdings = (props) => {
                           }}
                         />
                       </TouchableOpacity>
-                      <MenuModal />
+                      <MenuModal holdingDatas={obj} />
                     </View>
                   </Modal>
 
