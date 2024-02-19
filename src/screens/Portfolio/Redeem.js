@@ -105,12 +105,7 @@ export default Redeem = () => {
         {Object.keys(holdingDatas).length > 0 ? (
           <>
             <View style={styles.axisBox}>
-              <View
-                style={{
-                  marginTop: height * -0.12,
-                  marginBottom: height * -0.02,
-                }}
-              >
+              <View>
                 <View style={styles.headerContainer}>
                   <Image
                     source={{ uri: holdingDatas.mutualFund.fundHouse.logoUrl }}
@@ -316,13 +311,11 @@ const styles = StyleSheet.create({
   },
 
   axisBox: {
-    padding: width * 0.053,
-    borderColor: "#D9D9D9",
+    padding: width * 0.05,
     borderWidth: width * 0.003,
+    borderColor: "#D9D9D9",
     borderRadius: width * 0.042,
-    marginLeft: width * 0.027,
-    marginRight: width * 0.027,
-    marginTop: height * 0.026,
+    margin: width * 0.04,
   },
 
   header: {
@@ -341,8 +334,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: "row",
-    marginTop: height * 0.1,
-    padding: width * 0.05,
+    padding: width * 0.025,
   },
 
   titleBox: {

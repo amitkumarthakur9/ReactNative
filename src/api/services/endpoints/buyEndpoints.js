@@ -42,6 +42,12 @@ export const Cleardata = () => {
   return apiClient.post("/app/mutualfund?action=clearCart");
 };
 
+export const Mandateregister = (data) => {
+  const urlEncodedData = queryString(data);
+  console.log("passed url", urlEncodedData);
+  return apiClient.post("/app/mandate?" + urlEncodedData);
+};
+
 export const Redeemholding = (data) => {
   const urlEncodedData = queryString(data);
   console.log("passed url", urlEncodedData);
