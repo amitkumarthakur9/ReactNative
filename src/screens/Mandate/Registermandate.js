@@ -23,6 +23,7 @@ import {
 import Formatdate from "../Components/Formatdate";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Mandateregister } from "../../api/services/endpoints/buyEndpoints";
+import Header from "../Components/Header";
 
 export default Registermandate = () => {
   const [check, setCheck] = useState(true);
@@ -93,22 +94,16 @@ export default Registermandate = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.container1}>
-        <View style={styles.contentContainer}>
-          <Ionicons
-            name="arrow-back"
-            size={width * 0.08}
-            color="white"
-            onPress={() => navigation.goBack()}
-            style={styles.item}
-          />
-          <Text style={[styles.item, styles.goal]}>Register Mandate </Text>
-        </View>
-      </View>
+      <Header title="Register Mandate" />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{ marginTop: height * 0.02 }}
+      >
         <View style={styles.Box}>
-          <Text style={styles.header}>Mandate Amount</Text>
+          <Text style={[styles.header, { marginTop: height * 0.02 }]}>
+            Mandate Amount
+          </Text>
           <TextInput
             mode="outlined"
             value={amountInput}
@@ -183,7 +178,9 @@ export default Registermandate = () => {
             />
           )}
 
-          <View>
+          <View
+            style={{ marginTop: height * 0.03, marginBottom: height * 0.04 }}
+          >
             {loader ? (
               <Loader />
             ) : (
@@ -206,32 +203,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     backgroundColor: "white",
   },
-  container1: {
-    backgroundColor: "rgba(2, 48, 71, 1)",
-    width: width,
-    height: height * 0.17,
-    borderColor: "rgba(0, 0, 0, 0.3)",
-    borderRadius: width * 0.06,
-  },
-  contentContainer: {
-    flexDirection: "row",
-    padding: width * 0.02,
-    marginTop: height * 0.025,
-  },
-
-  item: {
-    marginTop: height * 0.06,
-    margin: width * 0.03,
-    flex: 1,
-  },
-  goal: {
-    marginLeft: -width * 0.55,
-    color: "rgba(255, 255, 255, 1)",
-    fontFamily: "Inter-Black",
-    fontWeight: "600",
-    fontSize: width * 0.045,
-    lineHeight: height * 0.04,
-  },
   Box: {
     padding: width * 0.05,
     borderWidth: width * 0.003,
@@ -248,48 +219,8 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.015,
     opacity: 0.6,
   },
-
-  inputContainer: {
-    marginTop: height * 0.2,
-    paddingLeft: width * 0.04,
-    position: "absolute",
-  },
-  headerContainer: {
-    flexDirection: "row",
-    padding: width * 0.025,
-  },
-
-  titleBox: {
-    flex: 1,
-    justifyContent: "center",
-    marginLeft: width * 0.02,
-  },
-  desc: {
-    fontSize: width * 0.03,
-    color: "#023047",
-    fontFamily: "Inter-Black",
-    fontWeight: "500",
-    opacity: 0.6,
-    lineHeight: height * 0.02,
-    padding: width * 0.04,
-  },
-
-  percentage: {
-    fontSize: width * 0.037,
-    color: "rgba(2, 48, 71, 1)",
-    fontFamily: "Inter-Black",
-    fontWeight: "600",
-    lineHeight: height * 0.03,
-  },
   typeContainer: {
     flexDirection: "row",
-  },
-
-  detailsView: {
-    borderBottomWidth: width * 0.004,
-    borderBottomColor: "rgb(230, 230, 230)",
-    margin: width * 0.02,
-    paddingBottom: width * 0.02,
   },
 
   input: {
@@ -317,47 +248,7 @@ const styles = StyleSheet.create({
     borderColor: "rgb(191, 191, 191)",
     marginBottom: height * 0.02,
   },
-  Picker: {
-    // color: "rgb(191, 191, 191)",
-  },
 
-  flexContainer: {
-    flexDirection: "row",
-    marginTop: height * 0.026,
-  },
-
-  percentage1: {
-    color: "rgba(35, 179, 113, 1)",
-    fontFamily: "Inter-Black",
-    fontWeight: "600",
-    fontSize: width * 0.035,
-  },
-
-  rangeText: {
-    flex: 1,
-    textAlign: "right",
-    color: "#023047",
-    lineHeight: height * 0.025,
-    fontSize: width * 0.035,
-    fontFamily: "Inter-Black",
-    fontWeight: "500",
-    opacity: 0.8,
-  },
-  rangeTextPercentage: {
-    flex: 1,
-    textAlign: "left",
-    color: "rgba(73, 69, 79, 1)",
-    lineHeight: height * 0.03,
-    fontSize: width * 0.04,
-    fontFamily: "Inter-Black",
-    fontWeight: "600",
-    width: width * 0.373,
-    borderWidth: width * 0.001,
-    marginLeft: width * 0.2,
-    borderColor: "#48484A",
-    borderRadius: width * 0.021,
-    padding: width * 0.04,
-  },
   Button: {
     alignItems: "center",
     borderRadius: width * 0.03,
@@ -367,20 +258,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#023047",
     marginTop: height * 0.02,
   },
-  table: {
-    borderWidth: width * 0.001,
-    marginVertical: 10,
-    borderRadius: width * 0.02,
-  },
-  row: {
-    flexDirection: "row",
-    borderBottomWidth: width * 0.001,
-  },
-  cell: {
-    flex: 1,
-    padding: width * 0.03,
-    textAlign: "center",
-  },
+
   radioTitle: {
     alignSelf: "center",
     color: "rgba(2, 48, 71, 1)",

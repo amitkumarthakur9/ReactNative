@@ -5,22 +5,15 @@ import { height, width } from "../../Dimension";
 import Accountpagination from "./Accountpagination";
 import Form from "./Form";
 import Header from "../Components/Header";
+import { useSelector } from "react-redux";
+import Setting from "./Setting";
+import Myprofile from "./Myprofile";
 
 const Account = () => {
-  const [currentForm, setCurrentForm] = useState(0);
+  const profileCompleted = useSelector((state) => state.user.profileCompleted);
   return (
     <View style={styles.container}>
-      <Header title="Account Setup" showPlusSign={false} />
-      <ScrollView>
-        <View style={styles.profileContainer}>
-          <Accountpagination
-            data={{ currentForm: currentForm, setCurrentForm: setCurrentForm }}
-          />
-          <Form
-            data={{ currentForm: currentForm, setCurrentForm: setCurrentForm }}
-          />
-        </View>
-      </ScrollView>
+      {profileCompleted ? <Setting /> : <Myprofile />}
     </View>
   );
 };

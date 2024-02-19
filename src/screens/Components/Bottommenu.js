@@ -8,7 +8,6 @@ import Account from "../Account/Index";
 import Goal from "../Goal/Index";
 import { useFonts } from "expo-font";
 import Order from "../Dashboard/Order";
-import Registermandate from "../Mandate/Registermandate";
 
 const Tab = createBottomTabNavigator();
 
@@ -126,7 +125,7 @@ const Menu = () => {
       />
       <Tab.Screen
         name="product"
-        component={Registermandate}
+        component={Order}
         options={{
           tabBarLabel: "Products",
           tabBarIcon: ({ color, size }) => (

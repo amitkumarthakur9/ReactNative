@@ -37,6 +37,9 @@ import UploadDoc from "./src/screens/Account/Upload";
 import Redeem from "./src/screens/Portfolio/Redeem";
 import Switchsearch from "./src/screens/Portfolio/Switchsearch";
 import Switch from "./src/screens/Portfolio/Switch";
+import Setting from "./src/screens/Account/Setting";
+import Registermandate from "./src/screens/Mandate/Registermandate";
+import Myprofile from "./src/screens/Account/Myprofile";
 
 const Stack = createNativeStackNavigator();
 
@@ -83,6 +86,9 @@ export default function App() {
           <Stack.Screen name="Redeem" component={Redeem} />
           <Stack.Screen name="Switchsearch" component={Switchsearch} />
           <Stack.Screen name="Switch" component={Switch} />
+          <Stack.Screen name="Setting" component={Setting} />
+          <Stack.Screen name="Registermandate" component={Registermandate} />
+          <Stack.Screen name="Myprofile" component={Myprofile} />
         </Stack.Navigator>
         <StatusBar />
       </NavigationContainer>
