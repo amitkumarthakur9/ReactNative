@@ -50,7 +50,7 @@ export const Mandateregister = (data) => {
 
 export const Redeemholding = (data) => {
   const urlEncodedData = queryString(data);
-  console.log("passed url", urlEncodedData);
+  //console.log("passed url", urlEncodedData);
   return apiClient.post("/app/mfu/order?" + urlEncodedData);
 };
 
