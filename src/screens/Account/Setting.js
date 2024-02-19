@@ -12,8 +12,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import { height, width } from "../../Dimension";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
-import Registermandate from "../Mandate/Registermandate";
-import Riskcalculator from "../Riskcalculator/Index";
 
 export default Setting = () => {
   const [fontsLoaded] = useFonts({
@@ -60,7 +58,7 @@ export default Setting = () => {
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.push("Registermandate")}>
+        <TouchableOpacity onPress={() => navigation.push("Mandatelist")}>
           <View style={styles.flexContainer}>
             <View style={styles.firstflex}>
               <Image
@@ -69,7 +67,7 @@ export default Setting = () => {
                 style={styles.imageStyle}
               />
             </View>
-            <Text style={[styles.secondflex, styles.text]}>Track Mandates</Text>
+            <Text style={[styles.secondflex, styles.text]}>My Mandates</Text>
             <FontAwesome
               name="angle-right"
               size={width * 0.07}
@@ -183,7 +181,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: width * 0.045,
-    fontFamily: "fontsLoaded",
+    fontFamily: "Inter-Black",
     fontWeight: "600",
   },
   arrow: {

@@ -95,7 +95,6 @@ export default Registermandate = () => {
   return (
     <View style={styles.container}>
       <Header title="Register Mandate" />
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ marginTop: height * 0.02 }}

@@ -54,6 +54,10 @@ export const Redeemholding = (data) => {
   return apiClient.post("/app/mfu/order?" + urlEncodedData);
 };
 
+export const Mandatelistdata = (data) => {
+  return apiClient.get("/app/user?action=getAllMandates");
+};
+
 export const Orders = () => {
   return apiClient.get("/app/order?action=fetch");
 };

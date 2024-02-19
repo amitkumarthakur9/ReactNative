@@ -40,6 +40,7 @@ import Switch from "./src/screens/Portfolio/Switch";
 import Setting from "./src/screens/Account/Setting";
 import Registermandate from "./src/screens/Mandate/Registermandate";
 import Myprofile from "./src/screens/Account/Myprofile";
+import Mandatelist from "./src/screens/Mandate/Mandatelist";
 
 const Stack = createNativeStackNavigator();
 
@@ -89,6 +90,7 @@ export default function App() {
           <Stack.Screen name="Setting" component={Setting} />
           <Stack.Screen name="Registermandate" component={Registermandate} />
           <Stack.Screen name="Myprofile" component={Myprofile} />
+          <Stack.Screen name="Mandatelist" component={Mandatelist} />
         </Stack.Navigator>
         <StatusBar />
       </NavigationContainer>
