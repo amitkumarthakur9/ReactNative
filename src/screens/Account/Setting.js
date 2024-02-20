@@ -12,6 +12,8 @@ import { FontAwesome } from "@expo/vector-icons";
 import { height, width } from "../../Dimension";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
+import onShare from "./Share";
+import Inappbrowser from "../Components/Inappbrowser";
 
 export default Setting = () => {
   const [fontsLoaded] = useFonts({
@@ -94,7 +96,7 @@ export default Setting = () => {
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => onShare()}>
           <View style={styles.flexContainer}>
             <View style={styles.firstflex}>
               <Image
@@ -111,7 +113,9 @@ export default Setting = () => {
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Inappbrowser("https://www.fundexpert.in/")}
+        >
           <View style={styles.flexContainer}>
             <View style={styles.firstflex}>
               <Image

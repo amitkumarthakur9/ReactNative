@@ -144,7 +144,7 @@ export default Order = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Header title="Order" showPlusSign={false} />
+      <Header title="Orders" showPlusSign={false} />
       {orderData != null && orderData != undefined ? (
         <View style={styles.contentContainer}>
           <FlatList
