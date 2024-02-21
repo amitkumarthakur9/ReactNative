@@ -26,6 +26,7 @@ import Header from "../Components/Header";
 import { Orders } from "../../api/services/endpoints/buyEndpoints";
 import Formatdate from "../Components/Formatdate";
 import Loader from "../Components/Loader";
+import Inappbrowser from "../Components/Inappbrowser";
 
 export default Order = ({ navigation }) => {
   const [orderData, setOrderData] = useState(null);
@@ -132,7 +133,7 @@ export default Order = ({ navigation }) => {
                 styles.Button,
                 { backgroundColor: "rgba(33, 158, 188, 1)" },
               ]}
-              //   onPress={() => handleInvest(item.id)}
+              onPress={() => Inappbrowser(item.paymentLinkUrl)}
             >
               <Text style={styles.invest}>Pay Now</Text>
             </TouchableOpacity>
