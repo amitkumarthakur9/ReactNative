@@ -25,35 +25,24 @@ import {
   Portfoliovaluation,
 } from "./Data";
 import { useFonts } from "expo-font";
-import Share from "../Components/Share";
+import Share from "../Components/Sharefile";
+import Loader from "../Components/Loader";
 const Reports = () => {
   const [holdingtype, setHoldingtype] = useState("");
   const [detailed, setDetailed] = useState("");
   const [holdingwithbalance, setHoldingwithbalance] = useState("");
-
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [userwise, setUserwise] = useState("0");
   const [allholdingtype, setAllholdingtype] = useState("2");
   const [includeredeem, setIncluderedeem] = useState("1");
-
   const [capitalgain, setCapitalgain] = useState("2023");
-
   const [downloadyear, SetDownloadyear] = useState("2023");
-
   const [transaction, setTransaction] = useState("2023");
-
   const [elsstransaction, setElsstransaction] = useState("2023");
-
   const [dividend, setDividend] = useState("2023");
   const [category, setCategory] = useState("");
-
-  const [capitalgainshareurl, setCapitalgainshareurl] = useState(null);
-  const [transactionshareurl, setTransactionshareurl] = useState(null);
-  const [elssshareurl, setElssshareurl] = useState(null);
-  const [holdingshareurl, setHoldingshareurl] = useState(null);
-  const [dividendshareurl, setDividendshareurl] = useState(null);
-  const [portfolioshareurl, setPortfolioshareurl] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   const pdfUrl = Capitalgain(capitalgain);
   const tpdfUrl = Transaction(transaction);
@@ -98,433 +87,472 @@ const Reports = () => {
   };
 
   const DownloadPdfs = (categories) => {
+    setLoader(true);
+    const type = "download";
     if (categories == "capitalgain") {
-      Download(pdfUrl, categories, downloadyear).then((response) => {
-        setCapitalgainshareurl(response);
+      Download(pdfUrl, categories, downloadyear, type).then((response) => {
+        setLoader(false);
       });
     } else if (categories == "transaction") {
-      Download(tpdfUrl, categories, downloadyear).then((response) => {
-        setTransactionshareurl(response);
+      Download(tpdfUrl, categories, downloadyear, type).then((response) => {
+        setLoader(false);
       });
     } else if (categories == "80C MF") {
-      Download(elsspdfUrl, categories, downloadyear).then((response) => {
-        setElssshareurl(response);
+      Download(elsspdfUrl, categories, downloadyear, type).then((response) => {
+        setLoader(false);
       });
     } else if (categories == "holding summary") {
-      Download(hpdfUrl, categories).then((response) => {
-        setHoldingshareurl(response);
+      Download(hpdfUrl, categories, undefined, type).then((response) => {
+        setLoader(false);
       });
     } else if (categories == "dividend") {
-      Download(dpdfUrl, categories, downloadyear).then((response) => {
-        setDividendshareurl(response);
+      Download(dpdfUrl, categories, downloadyear, type).then((response) => {
+        setLoader(false);
       });
     } else if (categories == "portfolio valuation") {
-      Download(pvpdfUrl, categories).then((response) => {
-        setPortfolioshareurl(response);
+      Download(pvpdfUrl, categories, undefined, type).then((response) => {
+        setLoader(false);
       });
     }
+  };
+
+  const sharePdfs = async (categories) => {
+    const type = "share";
+    let response = "";
+    if (categories == "capitalgain") {
+      response = Download(pdfUrl, categories, downloadyear, type);
+    } else if (categories == "transaction") {
+      response = Download(tpdfUrl, categories, downloadyear, type);
+    } else if (categories == "80C MF") {
+      response = Download(elsspdfUrl, categories, downloadyear, type);
+    } else if (categories == "holding summary") {
+      response = Download(hpdfUrl, categories, undefined, type);
+    } else if (categories == "dividend") {
+      response = Download(dpdfUrl, categories, downloadyear, type);
+    } else if (categories == "portfolio valuation") {
+      response = Download(pvpdfUrl, categories, undefined, type);
+    }
+    return response;
   };
 
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
 
+  const handleShare = (categories) => {
+    setLoader(true);
+    sharePdfs(categories)
+      .then((response) => {
+        setLoader(false);
+        Share(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-      {/* <Share /> */}
-      <View style={styles.cart}>
-        <View style={styles.individualCarts}>
-          <ImageBackground
-            source={require("../../../assets/topImage.png")}
-            resizeMode="stretch"
-          >
-            <Text style={styles.desc}> Portfolio Statement</Text>
-          </ImageBackground>
-          <View style={styles.dropdownContainer}>
-            <TouchableOpacity
-              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+      {!loader ? (
+        <View style={styles.cart}>
+          <View style={styles.individualCarts}>
+            <ImageBackground
+              source={require("../../../assets/topImage.png")}
+              resizeMode="stretch"
             >
-              <Picker
-                selectedValue={holdingtype}
-                onValueChange={(itemValue) => setHoldingtype(itemValue)}
-                mode="dropdown"
-                style={styles.Picker}
+              <Text style={styles.desc}> Portfolio Statement</Text>
+            </ImageBackground>
+            <View style={styles.dropdownContainer}>
+              <TouchableOpacity
+                style={[styles.dropdown, { marginTop: height * 0.005 }]}
               >
-                <Picker.Item value="0" label="All Holding Type" />
-                <Picker.Item value="1" label="Internal Holding Type" />
-              </Picker>
-            </TouchableOpacity>
+                <Picker
+                  selectedValue={holdingtype}
+                  onValueChange={(itemValue) => setHoldingtype(itemValue)}
+                  mode="dropdown"
+                  style={styles.Picker}
+                >
+                  <Picker.Item value="0" label="All Holding Type" />
+                  <Picker.Item value="1" label="Internal Holding Type" />
+                </Picker>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.dropdown]}>
-              <Picker
-                selectedValue={detailed}
-                onValueChange={(itemValue) => setDetailed(itemValue)}
-                mode="dropdown"
-                style={styles.Picker}
-              >
-                <Picker.Item value="0" label="Detailed" />
-                <Picker.Item value="1" label="Summary" />
-              </Picker>
-            </TouchableOpacity>
+              <TouchableOpacity style={[styles.dropdown]}>
+                <Picker
+                  selectedValue={detailed}
+                  onValueChange={(itemValue) => setDetailed(itemValue)}
+                  mode="dropdown"
+                  style={styles.Picker}
+                >
+                  <Picker.Item value="0" label="Detailed" />
+                  <Picker.Item value="1" label="Summary" />
+                </Picker>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.dropdown]}>
-              <Picker
-                selectedValue={holdingwithbalance}
-                onValueChange={(itemValue) => setHoldingwithbalance(itemValue)}
-                mode="dropdown"
-                style={styles.Picker}
-              >
-                <Picker.Item value="0" label="Holdings With Balance" />
-                <Picker.Item value="1" label="All Holdings" />
-              </Picker>
-            </TouchableOpacity>
-            <View style={styles.shareContainer}>
-              <Button
-                mode="contained"
-                onPress={() => console.log("Pressed")}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="download" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => console.log("Pressed")}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="share" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
+              <TouchableOpacity style={[styles.dropdown]}>
+                <Picker
+                  selectedValue={holdingwithbalance}
+                  onValueChange={(itemValue) =>
+                    setHoldingwithbalance(itemValue)
+                  }
+                  mode="dropdown"
+                  style={styles.Picker}
+                >
+                  <Picker.Item value="0" label="Holdings With Balance" />
+                  <Picker.Item value="1" label="All Holdings" />
+                </Picker>
+              </TouchableOpacity>
+              <View style={styles.shareContainer}>
+                <Button
+                  mode="contained"
+                  onPress={() => console.log("Pressed")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="download" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+                <Button
+                  mode="contained"
+                  onPress={() => console.log("Pressed")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="share" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={styles.individualCarts}>
-          <ImageBackground
-            source={require("../../../assets/topImage.png")}
-            resizeMode="stretch"
-          >
-            <Text style={styles.desc}> Valuation Report</Text>
-          </ImageBackground>
-          <View style={styles.dropdownContainer}>
-            <TouchableOpacity onPress={handleDatePress}>
-              <TextInput
-                mode="outlined"
-                placeholder="Portfolio As On Date"
-                placeholderTextColor="rgb(191, 191, 191)"
-                value={date.toDateString()}
-                editable={false}
-                style={styles.input}
-                outlineStyle={styles.outline}
-                theme={styles.themeStyle}
-                contentStyle={styles.contentStyle}
-              />
-            </TouchableOpacity>
-            {showDatePicker && (
-              <DateTimePicker
-                value={date}
-                mode="date"
-                display="default"
-                onChange={(event, selectedDate) =>
-                  handleDateChange(event, selectedDate)
-                }
-              />
-            )}
-            <TouchableOpacity
-              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+          <View style={styles.individualCarts}>
+            <ImageBackground
+              source={require("../../../assets/topImage.png")}
+              resizeMode="stretch"
             >
-              <Picker
-                selectedValue={userwise}
-                onValueChange={(itemValue) => setUserwise(itemValue)}
-                mode="dropdown"
-                style={styles.Picker}
+              <Text style={styles.desc}> Valuation Report</Text>
+            </ImageBackground>
+            <View style={styles.dropdownContainer}>
+              <TouchableOpacity onPress={handleDatePress}>
+                <TextInput
+                  mode="outlined"
+                  placeholder="Portfolio As On Date"
+                  placeholderTextColor="rgb(191, 191, 191)"
+                  value={date.toDateString()}
+                  editable={false}
+                  style={styles.input}
+                  outlineStyle={styles.outline}
+                  theme={styles.themeStyle}
+                  contentStyle={styles.contentStyle}
+                />
+              </TouchableOpacity>
+              {showDatePicker && (
+                <DateTimePicker
+                  value={date}
+                  mode="date"
+                  display="default"
+                  onChange={(event, selectedDate) =>
+                    handleDateChange(event, selectedDate)
+                  }
+                />
+              )}
+              <TouchableOpacity
+                style={[styles.dropdown, { marginTop: height * 0.005 }]}
               >
-                <Picker.Item value="0" label="User Wise" />
-                <Picker.Item value="1" label="Family Wise" />
-              </Picker>
-            </TouchableOpacity>
+                <Picker
+                  selectedValue={userwise}
+                  onValueChange={(itemValue) => setUserwise(itemValue)}
+                  mode="dropdown"
+                  style={styles.Picker}
+                >
+                  <Picker.Item value="0" label="User Wise" />
+                  <Picker.Item value="1" label="Family Wise" />
+                </Picker>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.dropdown]}>
-              <Picker
-                selectedValue={allholdingtype}
-                onValueChange={(itemValue) => setAllholdingtype(itemValue)}
-                mode="dropdown"
-                style={styles.Picker}
-              >
-                <Picker.Item value="2" label="All Holding Type" />
-                <Picker.Item value="0" label="Internal Holding Type" />
-                <Picker.Item value="1" label="External Holding Type" />
-              </Picker>
-            </TouchableOpacity>
+              <TouchableOpacity style={[styles.dropdown]}>
+                <Picker
+                  selectedValue={allholdingtype}
+                  onValueChange={(itemValue) => setAllholdingtype(itemValue)}
+                  mode="dropdown"
+                  style={styles.Picker}
+                >
+                  <Picker.Item value="2" label="All Holding Type" />
+                  <Picker.Item value="0" label="Internal Holding Type" />
+                  <Picker.Item value="1" label="External Holding Type" />
+                </Picker>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.dropdown]}>
-              <Picker
-                selectedValue={includeredeem}
-                onValueChange={(itemValue) => setIncluderedeem(itemValue)}
-                mode="dropdown"
-                style={styles.Picker}
-              >
-                <Picker.Item value="1" label="Include Redeemed Units" />
-                <Picker.Item value="0" label="Exclude Redeemed Units" />
-              </Picker>
-            </TouchableOpacity>
-            <View style={styles.shareContainer}>
-              <Button
-                mode="contained"
-                onPress={() => DownloadPdfs("portfolio valuation")}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="download" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => Share(portfolioshareurl)}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="share" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
+              <TouchableOpacity style={[styles.dropdown]}>
+                <Picker
+                  selectedValue={includeredeem}
+                  onValueChange={(itemValue) => setIncluderedeem(itemValue)}
+                  mode="dropdown"
+                  style={styles.Picker}
+                >
+                  <Picker.Item value="1" label="Include Redeemed Units" />
+                  <Picker.Item value="0" label="Exclude Redeemed Units" />
+                </Picker>
+              </TouchableOpacity>
+              <View style={styles.shareContainer}>
+                <Button
+                  mode="contained"
+                  onPress={() => DownloadPdfs("portfolio valuation")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="download" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+                <Button
+                  mode="contained"
+                  onPress={() => handleShare("portfolio valuation")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="share" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={styles.individualCarts}>
-          <ImageBackground
-            source={require("../../../assets/topImage.png")}
-            resizeMode="stretch"
-          >
-            <Text style={styles.desc}> Capital Gain Report</Text>
-          </ImageBackground>
-          <View style={styles.dropdownContainer}>
-            <TouchableOpacity
-              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+          <View style={styles.individualCarts}>
+            <ImageBackground
+              source={require("../../../assets/topImage.png")}
+              resizeMode="stretch"
             >
-              <Picker
-                selectedValue={capitalgain}
-                onValueChange={(itemValue) =>
-                  handleDownload(itemValue, "capitalgain")
-                }
-                mode="dropdown"
-                style={styles.Picker}
+              <Text style={styles.desc}> Capital Gain Report</Text>
+            </ImageBackground>
+            <View style={styles.dropdownContainer}>
+              <TouchableOpacity
+                style={[styles.dropdown, { marginTop: height * 0.005 }]}
               >
-                <Picker.Item value="2023" label="2023-2024" />
-                <Picker.Item value="2022" label="2022-2023" />
-                <Picker.Item value="2021" label="2021-2022" />
-                <Picker.Item value="2020" label="2020-2021" />
-                <Picker.Item value="2019" label="2019-2020" />
-                <Picker.Item value="2018" label="2018-2019" />
-              </Picker>
-            </TouchableOpacity>
+                <Picker
+                  selectedValue={capitalgain}
+                  onValueChange={(itemValue) =>
+                    handleDownload(itemValue, "capitalgain")
+                  }
+                  mode="dropdown"
+                  style={styles.Picker}
+                >
+                  <Picker.Item value="2023" label="2023-2024" />
+                  <Picker.Item value="2022" label="2022-2023" />
+                  <Picker.Item value="2021" label="2021-2022" />
+                  <Picker.Item value="2020" label="2020-2021" />
+                  <Picker.Item value="2019" label="2019-2020" />
+                  <Picker.Item value="2018" label="2018-2019" />
+                </Picker>
+              </TouchableOpacity>
 
-            <View style={styles.shareContainer}>
-              <Button
-                mode="contained"
-                onPress={() => DownloadPdfs("capitalgain")}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="download" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => Share(capitalgainshareurl)}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="share" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
+              <View style={styles.shareContainer}>
+                <Button
+                  mode="contained"
+                  onPress={() => DownloadPdfs("capitalgain")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="download" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+
+                <Button
+                  mode="contained"
+                  onPress={() => handleShare("capitalgain")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="share" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={styles.individualCarts}>
-          <ImageBackground
-            source={require("../../../assets/topImage.png")}
-            resizeMode="stretch"
-          >
-            <Text style={styles.desc}> Transaction Report</Text>
-          </ImageBackground>
-          <View style={styles.dropdownContainer}>
-            <TouchableOpacity
-              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+          <View style={styles.individualCarts}>
+            <ImageBackground
+              source={require("../../../assets/topImage.png")}
+              resizeMode="stretch"
             >
-              <Picker
-                selectedValue={transaction}
-                onValueChange={(itemValue) =>
-                  handleDownload(itemValue, "transaction")
-                }
-                mode="dropdown"
-                style={styles.Picker}
+              <Text style={styles.desc}> Transaction Report</Text>
+            </ImageBackground>
+            <View style={styles.dropdownContainer}>
+              <TouchableOpacity
+                style={[styles.dropdown, { marginTop: height * 0.005 }]}
               >
-                <Picker.Item value="2023" label="2023-2024" />
-                <Picker.Item value="2022" label="2022-2023" />
-                <Picker.Item value="2021" label="2021-2022" />
-                <Picker.Item value="2020" label="2020-2021" />
-                <Picker.Item value="2019" label="2019-2020" />
-                <Picker.Item value="2018" label="2018-2019" />
-              </Picker>
-            </TouchableOpacity>
-            <View style={styles.shareContainer}>
-              <Button
-                mode="contained"
-                onPress={() => DownloadPdfs("transaction")}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="download" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => Share(transactionshareurl)}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="share" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
+                <Picker
+                  selectedValue={transaction}
+                  onValueChange={(itemValue) =>
+                    handleDownload(itemValue, "transaction")
+                  }
+                  mode="dropdown"
+                  style={styles.Picker}
+                >
+                  <Picker.Item value="2023" label="2023-2024" />
+                  <Picker.Item value="2022" label="2022-2023" />
+                  <Picker.Item value="2021" label="2021-2022" />
+                  <Picker.Item value="2020" label="2020-2021" />
+                  <Picker.Item value="2019" label="2019-2020" />
+                  <Picker.Item value="2018" label="2018-2019" />
+                </Picker>
+              </TouchableOpacity>
+              <View style={styles.shareContainer}>
+                <Button
+                  mode="contained"
+                  onPress={() => DownloadPdfs("transaction")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="download" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+                <Button
+                  mode="contained"
+                  onPress={() => handleShare("transaction")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="share" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={styles.individualCarts}>
-          <ImageBackground
-            source={require("../../../assets/topImage.png")}
-            resizeMode="stretch"
-          >
-            <Text style={styles.desc}> 80C MF Transaction Report</Text>
-          </ImageBackground>
-          <View style={styles.dropdownContainer}>
-            <TouchableOpacity
-              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+          <View style={styles.individualCarts}>
+            <ImageBackground
+              source={require("../../../assets/topImage.png")}
+              resizeMode="stretch"
             >
-              <Picker
-                selectedValue={elsstransaction}
-                onValueChange={(itemValue) =>
-                  handleDownload(itemValue, "80C MF")
-                }
-                mode="dropdown"
-                style={styles.Picker}
+              <Text style={styles.desc}> 80C MF Transaction Report</Text>
+            </ImageBackground>
+            <View style={styles.dropdownContainer}>
+              <TouchableOpacity
+                style={[styles.dropdown, { marginTop: height * 0.005 }]}
               >
-                <Picker.Item value="2023" label="2023-2024" />
-                <Picker.Item value="2022" label="2022-2023" />
-                <Picker.Item value="2021" label="2021-2022" />
-                <Picker.Item value="2020" label="2020-2021" />
-                <Picker.Item value="2019" label="2019-2020" />
-                <Picker.Item value="2018" label="2018-2019" />
-              </Picker>
-            </TouchableOpacity>
-            <View style={styles.shareContainer}>
-              <Button
-                mode="contained"
-                onPress={() => DownloadPdfs("80C MF")}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="download" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => Share(elssshareurl)}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="share" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
+                <Picker
+                  selectedValue={elsstransaction}
+                  onValueChange={(itemValue) =>
+                    handleDownload(itemValue, "80C MF")
+                  }
+                  mode="dropdown"
+                  style={styles.Picker}
+                >
+                  <Picker.Item value="2023" label="2023-2024" />
+                  <Picker.Item value="2022" label="2022-2023" />
+                  <Picker.Item value="2021" label="2021-2022" />
+                  <Picker.Item value="2020" label="2020-2021" />
+                  <Picker.Item value="2019" label="2019-2020" />
+                  <Picker.Item value="2018" label="2018-2019" />
+                </Picker>
+              </TouchableOpacity>
+              <View style={styles.shareContainer}>
+                <Button
+                  mode="contained"
+                  onPress={() => DownloadPdfs("80C MF")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="download" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+                <Button
+                  mode="contained"
+                  onPress={() => handleShare("80C MF")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="share" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={styles.individualCarts}>
-          <ImageBackground
-            source={require("../../../assets/topImage.png")}
-            resizeMode="stretch"
-          >
-            <Text style={styles.desc}> Holding Summary Report</Text>
-          </ImageBackground>
-          <View style={styles.dropdownContainer}>
-            <View style={styles.shareContainer}>
-              <Button
-                mode="contained"
-                onPress={() => DownloadPdfs("holding summary")}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="download" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => Share(holdingshareurl)}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="share" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.individualCarts}>
-          <ImageBackground
-            source={require("../../../assets/topImage.png")}
-            resizeMode="stretch"
-          >
-            <Text style={styles.desc}> Dividend Report</Text>
-          </ImageBackground>
-          <View style={styles.dropdownContainer}>
-            <TouchableOpacity
-              style={[styles.dropdown, { marginTop: height * 0.005 }]}
+          <View style={styles.individualCarts}>
+            <ImageBackground
+              source={require("../../../assets/topImage.png")}
+              resizeMode="stretch"
             >
-              <Picker
-                selectedValue={dividend}
-                onValueChange={(itemValue) =>
-                  handleDownload(itemValue, "dividend")
-                }
-                mode="dropdown"
-                style={styles.Picker}
+              <Text style={styles.desc}> Holding Summary Report</Text>
+            </ImageBackground>
+            <View style={styles.dropdownContainer}>
+              <View style={styles.shareContainer}>
+                <Button
+                  mode="contained"
+                  onPress={() => DownloadPdfs("holding summary")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="download" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+                <Button
+                  mode="contained"
+                  onPress={() => handleShare("holding summary")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="share" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.individualCarts}>
+            <ImageBackground
+              source={require("../../../assets/topImage.png")}
+              resizeMode="stretch"
+            >
+              <Text style={styles.desc}> Dividend Report</Text>
+            </ImageBackground>
+            <View style={styles.dropdownContainer}>
+              <TouchableOpacity
+                style={[styles.dropdown, { marginTop: height * 0.005 }]}
               >
-                <Picker.Item value="2023" label="2023-2024" />
-                <Picker.Item value="2022" label="2022-2023" />
-                <Picker.Item value="2021" label="2021-2022" />
-                <Picker.Item value="2020" label="2020-2021" />
-                <Picker.Item value="2019" label="2019-2020" />
-                <Picker.Item value="2018" label="2018-2019" />
-              </Picker>
-            </TouchableOpacity>
-            <View style={styles.shareContainer}>
-              <Button
-                mode="contained"
-                onPress={() => DownloadPdfs("dividend")}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="download" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => Share(dividendshareurl)}
-                style={styles.downloadPdf}
-              >
-                <Entypo name="share" size={20} color="white" />
-                {"    "}
-                <AntDesign name="pdffile1" size={20} color="white" />
-              </Button>
+                <Picker
+                  selectedValue={dividend}
+                  onValueChange={(itemValue) =>
+                    handleDownload(itemValue, "dividend")
+                  }
+                  mode="dropdown"
+                  style={styles.Picker}
+                >
+                  <Picker.Item value="2023" label="2023-2024" />
+                  <Picker.Item value="2022" label="2022-2023" />
+                  <Picker.Item value="2021" label="2021-2022" />
+                  <Picker.Item value="2020" label="2020-2021" />
+                  <Picker.Item value="2019" label="2019-2020" />
+                  <Picker.Item value="2018" label="2018-2019" />
+                </Picker>
+              </TouchableOpacity>
+              <View style={styles.shareContainer}>
+                <Button
+                  mode="contained"
+                  onPress={() => DownloadPdfs("dividend")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="download" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+                <Button
+                  mode="contained"
+                  onPress={() => handleShare("dividend")}
+                  style={styles.downloadPdf}
+                >
+                  <Entypo name="share" size={20} color="white" />
+                  {"    "}
+                  <AntDesign name="pdffile1" size={20} color="white" />
+                </Button>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      ) : (
+        <Loader />
+      )}
     </ScrollView>
   );
 };
