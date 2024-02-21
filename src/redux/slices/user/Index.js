@@ -5,6 +5,7 @@ const initialState = {
   token: "",
   profilepic: undefined,
   profileCompleted: false,
+  name: "",
 };
 
 const UserSlice = createSlice({
@@ -14,6 +15,9 @@ const UserSlice = createSlice({
     userDetails: (state, action) => {
       // Update only the id field, keep the existing token value
       state.id = action.payload.id !== undefined ? action.payload.id : state.id;
+
+      state.name =
+        action.payload.name !== undefined ? action.payload.name : state.name;
 
       // Update the token field if provided
       state.token =

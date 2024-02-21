@@ -21,6 +21,7 @@ export const UserDetails = () => {
           checkProfileCompleted(responseObj) == 5 ? true : false;
         dispatch(userDetails({ profileCompleted: profileCompleted }));
         dispatch(userDetails({ id: response.data.user.id }));
+        dispatch(userDetails({ name: response.data.user.name }));
         if (responseObj.hasOwnProperty("profilepic")) {
           dispatch(
             userDetails({

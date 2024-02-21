@@ -15,7 +15,6 @@ import { Button, TextInput } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Download from "./Download";
-import Share from "./Share";
 import { useSelector } from "react-redux";
 import {
   Capitalgain,
@@ -26,6 +25,7 @@ import {
   Portfoliovaluation,
 } from "./Data";
 import { useFonts } from "expo-font";
+import Share from "../Components/Share";
 const Reports = () => {
   const [holdingtype, setHoldingtype] = useState("");
   const [detailed, setDetailed] = useState("");
@@ -47,6 +47,13 @@ const Reports = () => {
 
   const [dividend, setDividend] = useState("2023");
   const [category, setCategory] = useState("");
+
+  const [capitalgainshareurl, setCapitalgainshareurl] = useState(null);
+  const [transactionshareurl, setTransactionshareurl] = useState(null);
+  const [elssshareurl, setElssshareurl] = useState(null);
+  const [holdingshareurl, setHoldingshareurl] = useState(null);
+  const [dividendshareurl, setDividendshareurl] = useState(null);
+  const [portfolioshareurl, setPortfolioshareurl] = useState(null);
 
   const pdfUrl = Capitalgain(capitalgain);
   const tpdfUrl = Transaction(transaction);
@@ -92,17 +99,29 @@ const Reports = () => {
 
   const DownloadPdfs = (categories) => {
     if (categories == "capitalgain") {
-      Download(pdfUrl, categories, downloadyear);
+      Download(pdfUrl, categories, downloadyear).then((response) => {
+        setCapitalgainshareurl(response);
+      });
     } else if (categories == "transaction") {
-      Download(tpdfUrl, categories, downloadyear);
+      Download(tpdfUrl, categories, downloadyear).then((response) => {
+        setTransactionshareurl(response);
+      });
     } else if (categories == "80C MF") {
-      Download(elsspdfUrl, categories, downloadyear);
+      Download(elsspdfUrl, categories, downloadyear).then((response) => {
+        setElssshareurl(response);
+      });
     } else if (categories == "holding summary") {
-      Download(hpdfUrl, categories);
+      Download(hpdfUrl, categories).then((response) => {
+        setHoldingshareurl(response);
+      });
     } else if (categories == "dividend") {
-      Download(dpdfUrl, categories, downloadyear);
+      Download(dpdfUrl, categories, downloadyear).then((response) => {
+        setDividendshareurl(response);
+      });
     } else if (categories == "portfolio valuation") {
-      Download(pvpdfUrl, categories);
+      Download(pvpdfUrl, categories).then((response) => {
+        setPortfolioshareurl(response);
+      });
     }
   };
 
@@ -263,7 +282,7 @@ const Reports = () => {
               </Button>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => Share(portfolioshareurl)}
                 style={styles.downloadPdf}
               >
                 <Entypo name="share" size={20} color="white" />
@@ -314,7 +333,7 @@ const Reports = () => {
               </Button>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => Share(capitalgainshareurl)}
                 style={styles.downloadPdf}
               >
                 <Entypo name="share" size={20} color="white" />
@@ -364,7 +383,7 @@ const Reports = () => {
               </Button>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => Share(transactionshareurl)}
                 style={styles.downloadPdf}
               >
                 <Entypo name="share" size={20} color="white" />
@@ -414,7 +433,7 @@ const Reports = () => {
               </Button>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => Share(elssshareurl)}
                 style={styles.downloadPdf}
               >
                 <Entypo name="share" size={20} color="white" />
@@ -445,7 +464,7 @@ const Reports = () => {
               </Button>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => Share(holdingshareurl)}
                 style={styles.downloadPdf}
               >
                 <Entypo name="share" size={20} color="white" />
@@ -495,7 +514,7 @@ const Reports = () => {
               </Button>
               <Button
                 mode="contained"
-                onPress={() => console.log("Pressed")}
+                onPress={() => Share(dividendshareurl)}
                 style={styles.downloadPdf}
               >
                 <Entypo name="share" size={20} color="white" />

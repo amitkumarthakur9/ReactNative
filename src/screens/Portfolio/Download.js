@@ -3,7 +3,7 @@ import { View, Button, Alert } from "react-native";
 import RNFS from "react-native-fs";
 
 const handleDownload = async (url, category, year) => {
-  const downloadDirectory = RNFS.DownloadDirectoryPath;
+  const downloadDirectory = RNFS.ExternalDirectoryPath;
   var destination = "";
   if (year === undefined) {
     destination = `${downloadDirectory}/${category}.pdf`;
@@ -30,6 +30,9 @@ const handleDownload = async (url, category, year) => {
       if (result.statusCode === 200) {
         // File has been downloaded successfully
         Alert.alert("Download Complete", `File saved to: ${destination}`);
+        //console.log(destination);
+
+        return `file://${destination}`;
 
         // Set the path in state for rendering
         // setPath(destination);

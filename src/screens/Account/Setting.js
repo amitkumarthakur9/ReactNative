@@ -14,6 +14,7 @@ import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import onShare from "./Share";
 import Inappbrowser from "../Components/Inappbrowser";
+// import Test from "./Test";
 
 export default Setting = () => {
   const [fontsLoaded] = useFonts({
@@ -24,6 +25,7 @@ export default Setting = () => {
     <View style={styles.container}>
       <Header title="Setting" />
       <ScrollView style={styles.scrollviewContainer}>
+        {/* <Test /> */}
         <TouchableOpacity onPress={() => navigation.push("Myprofile")}>
           <View style={styles.flexContainer}>
             <View style={styles.firstflex}>
