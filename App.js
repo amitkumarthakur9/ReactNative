@@ -41,6 +41,7 @@ import Setting from "./src/screens/Account/Setting";
 import Registermandate from "./src/screens/Mandate/Registermandate";
 import Myprofile from "./src/screens/Account/Myprofile";
 import Mandatelist from "./src/screens/Mandate/Mandatelist";
+import Mfotp from "./src/screens/Uploadscreens/Mfotp";
 
 const Stack = createNativeStackNavigator();
 
@@ -91,6 +92,7 @@ export default function App() {
           <Stack.Screen name="Registermandate" component={Registermandate} />
           <Stack.Screen name="Myprofile" component={Myprofile} />
           <Stack.Screen name="Mandatelist" component={Mandatelist} />
+          <Stack.Screen name="Mfotp" component={Mfotp} />
         </Stack.Navigator>
         <StatusBar />
       </NavigationContainer>

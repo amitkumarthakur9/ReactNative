@@ -6,6 +6,7 @@ const initialState = {
   profilepic: undefined,
   profileCompleted: false,
   name: "",
+  pan: "",
 };
 
 const UserSlice = createSlice({
@@ -18,6 +19,9 @@ const UserSlice = createSlice({
 
       state.name =
         action.payload.name !== undefined ? action.payload.name : state.name;
+
+      state.pan =
+        action.payload.pan !== undefined ? action.payload.pan : state.pan;
 
       // Update the token field if provided
       state.token =

@@ -8,7 +8,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import { height, width } from "../../Dimension";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
@@ -43,17 +43,18 @@ export default Setting = () => {
             />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push("Upload")}>
           <View style={styles.flexContainer}>
             <View style={styles.firstflex}>
-              <Image
+              {/* <Image
                 source={require("../../../assets/setting/payment.png")}
                 resizeMode="contain"
                 style={styles.imageStyle}
-              />
+              /> */}
+              <AntDesign name="filetext1" size={24} color="black" />
             </View>
             <Text style={[styles.secondflex, styles.text]}>
-              My Payment Methods
+              Get MF Portfolio
             </Text>
             <FontAwesome
               name="angle-right"

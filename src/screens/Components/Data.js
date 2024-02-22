@@ -22,6 +22,7 @@ export const UserDetails = () => {
         dispatch(userDetails({ profileCompleted: profileCompleted }));
         dispatch(userDetails({ id: response.data.user.id }));
         dispatch(userDetails({ name: response.data.user.name }));
+        dispatch(userDetails({ pan: response.data.user.panNumber }));
         if (responseObj.hasOwnProperty("profilepic")) {
           dispatch(
             userDetails({
