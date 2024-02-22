@@ -21,7 +21,7 @@ const baseUrl = "https://docgenerator.mailuser.in/administrators/login";
 export const Capitalgain = (finalyear) => {
   const { id, token } = UserAuthData();
   const financialYear = finalyear;
-  url = `${baseUrl}?user=${id}&year=${financialYear}&password=${token}&report=capitalgains`;
+  const url = `${baseUrl}?user=${id}&year=${financialYear}&password=${token}&report=capitalgains`;
   return url;
 };
 
@@ -31,7 +31,7 @@ export const Transaction = (year) => {
   const ed = sd;
   const ed1 = sd;
   const fy = 1;
-  url = `${baseUrl}?sd=${sd}&ed=${ed}&ed1=${ed1}&user=${id}&fy=${fy}&year=${year}&password=${token}&report=transaction`;
+  const url = `${baseUrl}?sd=${sd}&ed=${ed}&ed1=${ed1}&user=${id}&fy=${fy}&year=${year}&password=${token}&report=transaction`;
   return url;
 };
 
@@ -41,13 +41,13 @@ export const Elss = (year) => {
   const ed = sd;
   const ed1 = sd;
   const fy = 1;
-  url = `${baseUrl}?sd=${sd}&ed=${ed}&ed1=${ed1}&user=${id}&fy=${fy}&year=${year}&password=${token}&report=elsstransaction`;
+  const url = `${baseUrl}?sd=${sd}&ed=${ed}&ed1=${ed1}&user=${id}&fy=${fy}&year=${year}&password=${token}&report=elsstransaction`;
   return url;
 };
 
 export const Holdingsummary = () => {
   const { id, token } = UserAuthData();
-  url = `${baseUrl}?user=${id}&password=${token}&report=familyreport`;
+  const url = `${baseUrl}?user=${id}&password=${token}&report=familyreport`;
   return url;
 };
 
@@ -57,7 +57,7 @@ export const Dividend = (year) => {
   const ed = sd;
   const ed1 = sd;
   const fy = 1;
-  url = `${baseUrl}?sd=${sd}&ed=${ed}&ed1=${ed1}&user=${id}&fy=${fy}&year=${year}&password=${token}&report=divident`;
+  const url = `${baseUrl}?sd=${sd}&ed=${ed}&ed1=${ed1}&user=${id}&fy=${fy}&year=${year}&password=${token}&report=divident`;
   return url;
 };
 
@@ -69,6 +69,11 @@ export const Portfoliovaluation = (
 ) => {
   const formatEd = Yearmonthday(ed);
   const { id, token } = UserAuthData();
-  url = `${baseUrl}?ed=${formatEd}&user=${id}&portfolioType=${portfolioType}&holdingType=${holdingType}&includeRedeemedUnits=${includeRedeemedUnits}&password=${token}&report=portfoliovaluationpdf`;
+  const url = `${baseUrl}?ed=${formatEd}&user=${id}&portfolioType=${portfolioType}&holdingType=${holdingType}&includeRedeemedUnits=${includeRedeemedUnits}&password=${token}&report=portfoliovaluationpdf`;
+  return url;
+};
+
+export const Portfoliostatement = (internal, summary, withZeroBalance) => {
+  const url = `https://www.fundexpert.in/app/portfoliorequest?action=downloadPdf&internal=${internal}&summary=${summary}&withZeroBalance=${withZeroBalance}`;
   return url;
 };

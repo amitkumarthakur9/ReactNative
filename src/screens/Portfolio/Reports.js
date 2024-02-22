@@ -23,14 +23,15 @@ import {
   Holdingsummary,
   Dividend,
   Portfoliovaluation,
+  Portfoliostatement,
 } from "./Data";
 import { useFonts } from "expo-font";
 import Share from "../Components/Sharefile";
 import Loader from "../Components/Loader";
 const Reports = () => {
-  const [holdingtype, setHoldingtype] = useState("");
-  const [detailed, setDetailed] = useState("");
-  const [holdingwithbalance, setHoldingwithbalance] = useState("");
+  const [holdingtype, setHoldingtype] = useState("0");
+  const [detailed, setDetailed] = useState("0");
+  const [holdingwithbalance, setHoldingwithbalance] = useState("0");
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [userwise, setUserwise] = useState("0");
@@ -54,6 +55,11 @@ const Reports = () => {
     userwise,
     allholdingtype,
     includeredeem
+  );
+  const pspdfUrl = Portfoliostatement(
+    holdingtype,
+    detailed,
+    holdingwithbalance
   );
 
   const handleDatePress = () => {
@@ -113,6 +119,10 @@ const Reports = () => {
       Download(pvpdfUrl, categories, undefined, type).then((response) => {
         setLoader(false);
       });
+    } else if (categories == "portfolio statement") {
+      Download(pspdfUrl, categories, undefined, type).then((response) => {
+        setLoader(false);
+      });
     }
   };
 
@@ -131,6 +141,8 @@ const Reports = () => {
       response = Download(dpdfUrl, categories, downloadyear, type);
     } else if (categories == "portfolio valuation") {
       response = Download(pvpdfUrl, categories, undefined, type);
+    } else if (categories == "portfolio statement") {
+      response = Download(pspdfUrl, categories, undefined, type);
     }
     return response;
   };
@@ -205,7 +217,7 @@ const Reports = () => {
               <View style={styles.shareContainer}>
                 <Button
                   mode="contained"
-                  onPress={() => console.log("Pressed")}
+                  onPress={() => DownloadPdfs("portfolio statement")}
                   style={styles.downloadPdf}
                 >
                   <Entypo name="download" size={20} color="white" />
@@ -214,7 +226,7 @@ const Reports = () => {
                 </Button>
                 <Button
                   mode="contained"
-                  onPress={() => console.log("Pressed")}
+                  onPress={() => handleShare("portfolio statement")}
                   style={styles.downloadPdf}
                 >
                   <Entypo name="share" size={20} color="white" />
