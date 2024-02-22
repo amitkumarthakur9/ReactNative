@@ -50,7 +50,49 @@ export default Mfotp = () => {
         Alert.alert("Failed", response.data.error);
       } else if (response.data.success === true) {
         const result = await Casdetails(clientRefNo);
-        console.log("result", result.data);
+        if (!result.data.success) {
+          const result = await Casdetails(clientRefNo);
+        } else {
+          Alert.alert("Success");
+          navigation.push("Dashboard");
+        }
+      }
+    } catch (error) {
+      Alert.alert("Failed", error.message);
+    } finally {
+      setShowLoader(false);
+      setOtp(["", "", "", "", "", ""]);
+    }
+  }
+
+  async function confirmCode() {
+    setShowLoader(true);
+    try {
+      const stringOtp = otp.join("");
+      let data = {
+        clientRefNo: clientRefNo,
+        otp: stringOtp,
+      };
+      data = JSON.stringify(data);
+
+      const response = await Valideotp(data);
+      console.log("fkdjfajlk", response.data);
+      if (response.data.success === false) {
+        Alert.alert("Failed", response.data.error);
+      } else if (response.data.success === true) {
+        let success = false;
+        while (!success) {
+          const result = await Casdetails(clientRefNo);
+          if (!result.data.success) {
+            console.log("Retrying Casdetails...");
+            setShowLoader(true);
+          } else {
+            success = true;
+            Alert.alert("Successfully fetched MF Portfolio");
+            navigation.push("Dashboard");
+            setShowLoader(false);
+          }
+        }
       }
     } catch (error) {
       Alert.alert("Failed", error.message);
@@ -83,49 +125,54 @@ export default Mfotp = () => {
   return (
     <View style={styles.container}>
       <Header title="Phone Verification" />
-      <ScrollView>
-        <View style={styles.otpContainer}>
-          <Text style={styles.desc}>
-            Please enter the 6-digit verification code sent to your phone.
-          </Text>
-          <Text style={styles.verificationHeader}>Verification Code</Text>
-          <View style={styles.inputContainer}>
-            {otp.map((digit, index) => (
-              <TextInput
-                key={index}
-                style={styles.input}
-                keyboardType="numeric"
-                maxLength={1}
-                onChangeText={(oneTimePassword) =>
-                  handleOtpChange(oneTimePassword, index)
-                }
-                value={digit}
-                ref={(ref) => (inputRefs.current[index] = ref)}
-              />
-            ))}
-          </View>
-          {showLoader ? (
-            <Loader />
-          ) : (
-            <>
-              <TouchableOpacity onPress={confirmCode}>
-                <Button
-                  mode="contained"
-                  labelStyle={styles.buttonLabel}
-                  disabled={isSignUpDisabled}
-                  style={
-                    isSignUpDisabled
-                      ? styles.disabledButton
-                      : styles.enabledButton
+      {!showLoader ? (
+        <ScrollView>
+          <View style={styles.otpContainer}>
+            <Text style={styles.desc}>
+              Please enter the 6-digit verification code sent to your selected
+              mode.
+            </Text>
+            <Text style={styles.verificationHeader}>Verification Code</Text>
+            <View style={styles.inputContainer}>
+              {otp.map((digit, index) => (
+                <TextInput
+                  key={index}
+                  style={styles.input}
+                  keyboardType="numeric"
+                  maxLength={1}
+                  onChangeText={(oneTimePassword) =>
+                    handleOtpChange(oneTimePassword, index)
                   }
-                >
-                  Submit
-                </Button>
-              </TouchableOpacity>
-            </>
-          )}
-        </View>
-      </ScrollView>
+                  value={digit}
+                  ref={(ref) => (inputRefs.current[index] = ref)}
+                />
+              ))}
+            </View>
+            {showLoader ? (
+              <Loader />
+            ) : (
+              <>
+                <TouchableOpacity onPress={confirmCode}>
+                  <Button
+                    mode="contained"
+                    labelStyle={styles.buttonLabel}
+                    disabled={isSignUpDisabled}
+                    style={
+                      isSignUpDisabled
+                        ? styles.disabledButton
+                        : styles.enabledButton
+                    }
+                  >
+                    Submit
+                  </Button>
+                </TouchableOpacity>
+              </>
+            )}
+          </View>
+        </ScrollView>
+      ) : (
+        <Loader />
+      )}
     </View>
   );
 };
