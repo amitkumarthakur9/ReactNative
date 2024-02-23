@@ -6,12 +6,14 @@ import CircularProgress from "react-native-circular-progress-indicator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../Components/Header";
 import { useFonts } from "expo-font";
+import { Session } from "../Components/Data";
 const Riskcalculator = ({ navigation }) => {
   const [finalscore, setFinalscore] = useState(0);
   const [imageUrl, setImageUrl] = useState(
     require("../../../assets/riskCalculator/1.png")
   );
   const [riskName, setRiskName] = useState("Conservative");
+  const [issession, setIssession] = useState("");
   useEffect(() => {
     async function fetchData() {
       try {
@@ -47,6 +49,14 @@ const Riskcalculator = ({ navigation }) => {
 
     fetchData(); // Call the async function immediately
 
+    Session()
+      .then((response) => {
+        setIssession(response);
+      })
+      .catch((e) => {
+        console.warn("session issue", e);
+      });
+
     // Return an empty function for cleanup
     return () => {
       // You can add cleanup code here if needed
@@ -56,6 +66,14 @@ const Riskcalculator = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
+
+  const handleContinue = () => {
+    if (!issession) {
+      navigation.push("Dashboard");
+    } else {
+      navigation.push("Signup");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -108,9 +126,7 @@ const Riskcalculator = ({ navigation }) => {
               flexDirection: "row-reverse",
             }}
             labelStyle={styles.buttonLabel}
-            onPress={() => {
-              navigation.push("Signup");
-            }}
+            onPress={() => handleContinue()}
           >
             Continue
           </Button>

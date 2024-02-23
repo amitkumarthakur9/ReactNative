@@ -19,6 +19,9 @@ export const UserDetails = () => {
         const responseObj = response.data.user;
         const profileCompleted =
           checkProfileCompleted(responseObj) == 5 ? true : false;
+        const sessionCheck = Session().then((re) => {
+          dispatch(userDetails({ session: re }));
+        });
         dispatch(userDetails({ profileCompleted: profileCompleted }));
         dispatch(userDetails({ id: response.data.user.id }));
         dispatch(userDetails({ name: response.data.user.name }));
