@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -40,6 +40,13 @@ export default Uploadscreens = ({ navigation }) => {
       setMobile("");
     }
   };
+
+  useEffect(() => {
+    if (!pan) {
+      Alert.alert("Pan is not available . please fillup the pan first");
+      navigation.push("Myprofile");
+    }
+  }, []);
 
   const handleSubmit = async () => {
     setLoader(true);

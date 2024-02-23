@@ -24,9 +24,11 @@ const usePortfolioData = () => {
           : setAllPortfolioData("showLoader");
 
         setCompletePortfolioData(response.data.portfolioObj);
-        setInternalPortfolioData(
-          response.data.portfolioObj.internal.all.all.all
-        );
+        if (response.data.portfolioObj.hasOwnProperty("internal")) {
+          setInternalPortfolioData(
+            response.data.portfolioObj.internal.all.all.all
+          );
+        }
         setholdingData(response.data.holdingsObj);
         if (response.data.portfolioObj.hasOwnProperty("external")) {
           setExternalPortfolioData(

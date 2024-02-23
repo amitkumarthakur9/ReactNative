@@ -30,15 +30,17 @@ export default Mandatelist = () => {
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
 
-  const filteredMandateData = mandateData.filter((value) => {
-    if (type === "Approved") {
-      return value.feStatus === 4;
-    } else if (type === "Pending") {
-      return value.feStatus < 3;
-    } else if (type === "Rejected") {
-      return value.feStatus === 3;
-    }
-  });
+  if (mandateData) {
+    var filteredMandateData = mandateData.filter((value) => {
+      if (type === "Approved") {
+        return value.feStatus === 4;
+      } else if (type === "Pending") {
+        return value.feStatus < 3;
+      } else if (type === "Rejected") {
+        return value.feStatus === 3;
+      }
+    });
+  }
 
   const getStatusTextStyle = (feStatus) => {
     if (feStatus === 4) {
@@ -70,7 +72,7 @@ export default Mandatelist = () => {
             <Picker.Item label={"Rejected"} value={"Rejected"} />
           </Picker>
         </TouchableOpacity>
-        {filteredMandateData.length > 0 ? (
+        {filteredMandateData ? (
           filteredMandateData.map((value, index) => (
             <View style={styles.box} key={index}>
               <View style={styles.flexContainer}>

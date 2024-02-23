@@ -147,13 +147,27 @@ export default Order = ({ navigation }) => {
     <View style={styles.container}>
       <Header title="Orders" showPlusSign={false} />
       {orderData != null && orderData != undefined ? (
-        <View style={styles.contentContainer}>
-          <FlatList
-            data={orderData}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
+        <>
+          {orderData.length == 0 ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.text}>No Order Found</Text>
+            </View>
+          ) : (
+            <View style={styles.contentContainer}>
+              <FlatList
+                data={orderData}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+              />
+            </View>
+          )}
+        </>
       ) : (
         <Loader />
       )}
@@ -292,5 +306,11 @@ const styles = StyleSheet.create({
     color: "rgba(255, 195, 0, 1)",
     marginBottom: height * 0.01,
     margin: width * 0.01,
+  },
+  text: {
+    textAlign: "center",
+    justifyContent: "center",
+    fontSize: width * 0.055,
+    fontFamily: "Inter-Black",
   },
 });

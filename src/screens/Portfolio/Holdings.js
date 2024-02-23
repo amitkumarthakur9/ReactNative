@@ -202,7 +202,7 @@ const Holdings = (props) => {
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
 
-  // console.log("filteredHoldingData", filteredHoldingData);
+  console.log("holdingData", holdingData);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>

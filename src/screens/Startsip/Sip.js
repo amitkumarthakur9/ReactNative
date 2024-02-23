@@ -185,17 +185,18 @@ export default Sip = ({ navigation }) => {
                   <TouchableOpacity onPress={handleDatePress}>
                     <TextInput
                       mode="outlined"
-                      label={
-                        <Text
-                          style={{
-                            color: "rgb(191, 191, 191)",
-                            fontFamily: "Inter-Black",
-                            fontWeight: "400",
-                          }}
-                        >
-                          Choose Date
-                        </Text>
-                      }
+                      //   label={
+                      //     <Text
+                      //       style={{
+                      //         color: "rgb(191, 191, 191)",
+                      //         fontFamily: "Inter-Black",
+                      //         fontWeight: "400",
+                      //       }}
+                      //     >
+                      //       Choose Date
+                      //     </Text>
+                      //   }
+                      placeholder="Date"
                       value={date.toDateString()}
                       editable={false}
                       style={[
