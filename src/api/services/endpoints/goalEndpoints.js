@@ -53,6 +53,7 @@ const Goallist = () => {
         iconWidth: iconWidth + maxWidth / 2,
         duration: durationWidth + iconWidth / 2,
         amount: data.currentTermAmount,
+        id: data.id,
       };
     });
   }
@@ -64,6 +65,13 @@ export const AddGoal = (data) => {
   const urlEncodedData = queryString(data);
   //   console.log("url passed", urlEncodedData);
   return apiClient.post("/app/wish?" + urlEncodedData);
+};
+
+export const Goalassets = (data) => {
+  const { wishId, userId } = data;
+  return axios.get(
+    `https://data.fundexpert.in/goal.php?action=fetchGoalHoldingsSelect&wishId=${wishId}&userId=${userId}`
+  );
 };
 
 export default Goallist;

@@ -106,7 +106,11 @@ const Goal = () => {
                           </View>
                           <Button
                             mode="contained"
-                            onPress={() => navigation.navigate("Education")}
+                            onPress={() =>
+                              navigation.navigate("Education", {
+                                wishId: data.id,
+                              })
+                            }
                             style={{
                               backgroundColor: "rgba(0, 53, 102, 1)",
                             }}

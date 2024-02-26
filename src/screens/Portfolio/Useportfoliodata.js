@@ -14,7 +14,7 @@ const usePortfolioData = () => {
   useEffect(() => {
     allPortfolio()
       .then((response) => {
-        console.log("showZeroValue", response.data);
+        // console.log("showZeroValue", response.data);
         response.data.success == false
           ? setAllPortfolioData("showZeroValue")
           : Object.keys(response.data.portfolioObj).length == 0
