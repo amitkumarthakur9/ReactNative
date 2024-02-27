@@ -47,6 +47,8 @@ const Goal = () => {
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
 
+  console.log("goallistData", goallistData);
+
   return (
     <View style={styles.container}>
       <Header title="Goals" showPlusSign={true} />

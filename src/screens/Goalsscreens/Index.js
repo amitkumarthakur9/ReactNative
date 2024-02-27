@@ -20,32 +20,50 @@ import convertToDateTime from "../Components/Datetime";
 import Loader from "../Components/Loader";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
+import Formatdate from "../Components/Formatdate";
 export default Goalsscreen = () => {
-  const [category, setCategory] = useState("Education");
-  const [timePeriod, setTimePeriod] = useState(1);
+  const [category, setCategory] = useState("");
+  const [timePeriod, setTimePeriod] = useState(5);
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [goalAmount, setGoalAmount] = useState("");
-  const [color, setColor] = useState("#ffa500");
+  const [goalAmount, setGoalAmount] = useState("100000");
+  const [color, setColor] = useState("");
   const [goalInflationAmount, setGoalInflationAmount] = useState("0");
   const [loader, setLoader] = useState(false);
+  const [targetdate, setTargetdate] = useState(new Date());
+  const [numberofyear, setNumberofyear] = useState("1");
+  const [yearValue, setyearValue] = useState("5");
 
   const navigation = useNavigation();
 
-  const handleDatePress = () => {
-    setShowDatePicker(true);
-  };
-
-  const handleDateChange = (event, selectedDate) => {
-    currentDate = selectedDate || date;
-    setShowDatePicker(false);
-    setDate(currentDate);
-  };
-
   const handleAddGoal = () => {
+    if (title == "") {
+      Alert.alert("Please enter goal name");
+      return;
+    }
+    if (category == "") {
+      Alert.alert("Please select category");
+      return;
+    }
+    if (color == "") {
+      Alert.alert("Please select color");
+      return;
+    }
+    if (goalAmount == "") {
+      Alert.alert("Please enter goal amount");
+      return;
+    }
+    if (goalInflationAmount == 0) {
+      Alert.alert("Please select expected average inflation");
+      return;
+    }
+    if (numberofyear == 0) {
+      Alert.alert("Number of year should be greater than 0");
+      return;
+    }
     setLoader(true);
     const Year = date.getFullYear();
     const goalData = {
@@ -54,7 +72,7 @@ export default Goalsscreen = () => {
       description: desc,
       icon: "",
       color: color,
-      years: Year,
+      years: numberofyear,
       wishAmount: goalInflationAmount,
       category: category,
       lumpsumAmount: goalAmount,
@@ -65,45 +83,23 @@ export default Goalsscreen = () => {
           ? (Alert.alert("Goal has been added successfully"),
             navigation.push("Goalmenu"))
           : Alert.alert("Failed, Try Later");
+        setLoader(false);
       })
       .catch((error) => {
         console.log("error", error);
+        setLoader(false);
       });
   };
 
-  const year = () => {
-    const currentDate = new Date();
-
-    const targetDate = date;
-
-    const differenceInMs = targetDate.getTime() - currentDate.getTime();
-
-    const millisecondsInOneDay = 1000 * 60 * 60 * 24;
-
-    const a = millisecondsInOneDay * 365;
-
-    const differenceInyears = differenceInMs / a;
-
-    return differenceInyears;
-
-    // console.log("Difference in days:", differenceInyears);
-  };
-
-  const handleInflation = (yearValue) => {
-    // console.log("inflation:", Math.round(yearValue * 100) / 100);
-    setTimePeriod(Math.floor(yearValue, 2));
-    const yeartoCalculate = year();
-    // console.log("year:", Math.round(yeartoCalculate * 100) / 100);
-
-    // console.log("amount:", goalAmount);
-
+  const handleInflation = () => {
+    const yeartoCalculate = numberofyear;
     const current =
       goalAmount *
       Math.pow(
         1 + Math.round(yearValue * 100) / 100 / 100,
         Math.round(yeartoCalculate * 100) / 100
       );
-    // console.log("current:", current);
+
     setGoalInflationAmount(Math.floor(current));
   };
 
@@ -111,20 +107,44 @@ export default Goalsscreen = () => {
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
 
+  const handleNumberOfYear = (e) => {
+    setNumberofyear(e);
+    const currentDate = new Date();
+    const dmy = Formatdate(currentDate).split("-");
+
+    const day = dmy[0];
+    const month = dmy[1];
+    const year = dmy[2];
+
+    const targetYear = +year + +e;
+    setTargetdate(`${targetYear}-${month}-${day}`);
+    console.log("e", e);
+    handleInflation();
+  };
+
+  const handlegoalamount = (e) => {
+    setGoalAmount(e);
+    handleInflation();
+  };
+
+  useEffect(() => {
+    handleInflation();
+  }, [goalInflationAmount, goalAmount, timePeriod]);
+
+  const handleSlider = (yearValue) => {
+    setyearValue(yearValue);
+    setTimePeriod(Math.floor(yearValue, 2));
+    handleInflation();
+  };
+
   return (
     <View style={styles.container}>
       <Header title="Add Goal" showPlusSign={false} />
       <ScrollView>
         <View style={{ padding: width * 0.04 }}>
-          <Text style={styles.header}>Goal Title</Text>
           <TextInput
             mode="outlined"
-            // label={
-            //   <Text style={{ color: "rgb(191, 191, 191)",  fontFamily: "Inter-Black",fontWeight: "400" }}>
-            //     Goal Name
-            //   </Text>
-            // }
-            // placeholder="Enter Goal Name"
+            label="Goal Title"
             value={title}
             onChangeText={(e) => setTitle(e)}
             style={styles.input}
@@ -132,15 +152,9 @@ export default Goalsscreen = () => {
             theme={styles.themeStyle}
             contentStyle={styles.contentStyle}
           />
-          <Text style={styles.header}>Goal Description</Text>
           <TextInput
             mode="outlined"
-            // label={
-            //   <Text style={{ color: "rgb(191, 191, 191)",  fontFamily: "Inter-Black",fontWeight: "400" }}>
-            //     Goal Description
-            //   </Text>
-            // }
-            // placeholder="Enter Goal Description"
+            label="Goal Description"
             value={desc}
             onChangeText={(e) => setDesc(e)}
             style={styles.input}
@@ -148,7 +162,6 @@ export default Goalsscreen = () => {
             theme={styles.themeStyle}
             contentStyle={styles.contentStyle}
           />
-          <Text style={styles.header}>Category</Text>
           <TouchableOpacity style={styles.dropdown}>
             <Picker
               selectedValue={category}
@@ -156,6 +169,7 @@ export default Goalsscreen = () => {
               mode="dropdown"
               style={styles.Picker}
             >
+              <Picker.Item label="Select Category" value="" />
               <Picker.Item label="Education" value="Education" />
               <Picker.Item label="Car" value="Car" />
               <Picker.Item label="House" value="House" />
@@ -165,7 +179,6 @@ export default Goalsscreen = () => {
               <Picker.Item label="Emergency" value="Emergency" />
             </Picker>
           </TouchableOpacity>
-          <Text style={styles.header}>Color</Text>
           <TouchableOpacity style={styles.dropdown}>
             <Picker
               selectedValue={color}
@@ -173,6 +186,7 @@ export default Goalsscreen = () => {
               mode="dropdown"
               style={styles.Picker}
             >
+              <Picker.Item label="Select Color" value="" />
               <Picker.Item label="Red" value="#ff0000" />
               <Picker.Item label="Orange" value="#ffa500" />
               <Picker.Item label="Blue" value="#0000ff" />
@@ -180,47 +194,27 @@ export default Goalsscreen = () => {
               <Picker.Item label="Pink" value="#ffc0cb" />
             </Picker>
           </TouchableOpacity>
-          <Text style={styles.header}>Achieve By</Text>
-          <TouchableOpacity onPress={handleDatePress}>
-            <TextInput
-              mode="outlined"
-              //   label={
-              //     <Text
-              //       style={{ color: "rgb(191, 191, 191)",  fontFamily: "Inter-Black",fontWeight: "400" }}
-              //     >
-              //       Choose Date
-              //     </Text>
-              //   }
-              //   placeholder="Select Date"
-              value={date.toDateString()}
-              editable={false}
-              style={styles.input}
-              outlineStyle={styles.outline}
-              theme={styles.themeStyle}
-              contentStyle={styles.contentStyle}
-            />
-          </TouchableOpacity>
-          {showDatePicker && (
-            <DateTimePicker
-              value={date}
-              mode="date"
-              display="default"
-              onChange={(event, selectedDate) =>
-                handleDateChange(event, selectedDate)
-              }
-            />
-          )}
-          <Text style={styles.header}>Goal Amount</Text>
           <TextInput
             mode="outlined"
-            // label={
-            //   <Text style={{ color: "rgb(191, 191, 191)",  fontFamily: "Inter-Black",fontWeight: "400" }}>
-            //     Enter Amount required to Achieve goal
-            //   </Text>
-            // }
-            // placeholder="Enter Goal Amount"
+            keyboardType="phone-pad"
+            value={numberofyear}
+            style={styles.input}
+            outlineStyle={styles.outline}
+            theme={styles.themeStyle}
+            contentStyle={styles.contentStyle}
+            label="Number of year"
+            onChangeText={(e) => handleNumberOfYear(e)}
+          />
+          {numberofyear > 0 && (
+            <Text style={styles.msg}>
+              Selected target date will be {Formatdate(targetdate)}
+            </Text>
+          )}
+          <TextInput
+            mode="outlined"
+            label="Goal Amount"
             value={goalAmount}
-            onChangeText={(e) => setGoalAmount(e)}
+            onChangeText={(e) => handlegoalamount(e)}
             style={styles.input}
             outlineStyle={styles.outline}
             theme={styles.themeStyle}
@@ -237,7 +231,7 @@ export default Goalsscreen = () => {
               minimumTrackTintColor={"#023047"}
               maximumValue={100}
               minimumValue={0}
-              onValueChange={(yearValue) => handleInflation(yearValue)}
+              onValueChange={(yearValue) => handleSlider(yearValue)}
               value={timePeriod}
               thumbTintColor={"rgba(33, 158, 188, 1)"}
               trackStyle={{
@@ -249,54 +243,18 @@ export default Goalsscreen = () => {
             />
             <Text style={styles.rangeTextPercentage}>{timePeriod} %</Text>
           </View>
-          <View>
-            <View
-              style={[
-                styles.flexContainer,
-                { marginTop: height * -0.065, marginBottom: height * 0.168 },
-              ]}
-            >
-              <View style={styles.arrowContainer}>
-                <View>
-                  <Text
-                    style={{
-                      color: "#000000",
-                      fontFamily: "Metropolis",
-                      fontSize: width * 0.032,
-                      lineHeight: height * 0.028,
-                      marginLeft: width * -0.011,
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    Current Goal Amount
-                  </Text>
-                </View>
-                <View>
-                  <Text style={styles.curentAmount}>
-                    ₹ {goalAmount ? formatNumberWithCommas(goalAmount) : 0}
-                  </Text>
-                </View>
-                <View style={styles.verticleLine}></View>
-                <View>
-                  <Text
-                    style={{
-                      color: "#000000",
-                      fontSize: width * 0.032,
-                      lineHeight: height * 0.024,
-                      marginLeft: width * 0.1,
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    Goal after Inflation
-                  </Text>
-                </View>
-
-                <View>
-                  <Text style={styles.curentAmount}>
-                    ₹ {goalInflationAmount}
-                  </Text>
-                </View>
-              </View>
+          <View style={styles.flexContainer}>
+            <View style={styles.text}>
+              <Text style={styles.header}>Current Goal Amount</Text>
+              <Text style={styles.desc}>
+                ₹ {goalAmount ? formatNumberWithCommas(goalAmount) : 0}
+              </Text>
+            </View>
+            <View style={[styles.text, { borderColor: "white" }]}>
+              <Text style={styles.header}>Goal after Inflation</Text>
+              <Text style={styles.desc}>
+                ₹ {goalAmount ? formatNumberWithCommas(goalInflationAmount) : 0}
+              </Text>
             </View>
           </View>
         </View>
@@ -371,9 +329,18 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     lineHeight: height * 0.028,
   },
+  msg: {
+    fontSize: width * 0.037,
+    color: "red",
+    fontFamily: "Inter-Black",
+    fontWeight: "500",
+    marginBottom: height * 0.015,
+    opacity: 0.6,
+    lineHeight: height * 0.028,
+  },
   input: {
     borderRadius: width * 0.05,
-    marginBottom: height * 0.01,
+    marginBottom: height * 0.02,
     fontSize: width * 0.043,
   },
   outline: {
@@ -394,7 +361,7 @@ const styles = StyleSheet.create({
   dropdown: {
     borderWidth: height * 0.0015,
     borderRadius: width * 0.02,
-    marginBottom: height * 0.01,
+    marginBottom: height * 0.02,
     borderColor: "rgb(191, 191, 191)",
   },
   Picker: {},
@@ -461,5 +428,12 @@ const styles = StyleSheet.create({
     borderWidth: width * 0.002,
     borderColor: "rgb(230, 230, 230)",
     elevation: width * 0.04,
+  },
+  text: {
+    margin: width * 0.01,
+    flex: 1,
+    borderRightWidth: 1,
+    borderColor: "orange",
+    alignItems: "center",
   },
 });

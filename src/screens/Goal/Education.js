@@ -172,7 +172,7 @@ export default Education = () => {
           </View>
         </View>
         <View style={styles.your}>
-          <Text style={styles.yourHeader}> Your Investment</Text>
+          <Text style={styles.yourHeader}> Linked Investment</Text>
           <View style={styles.cart}>
             {goaldata && holding ? (
               goaldata.map((value, index) =>
@@ -200,9 +200,7 @@ export default Education = () => {
                         <View style={[styles.flexRow]}>
                           <Text style={styles.descHeader}>Holding Value</Text>
                           <Text style={styles.descHeader}>Contribution</Text>
-                          <Text style={styles.descHeader}>
-                            Amount available
-                          </Text>
+                          <Text style={styles.descHeader}>Amount</Text>
                         </View>
                         <View style={[styles.flexRow]}>
                           <Text style={styles.descValue}>

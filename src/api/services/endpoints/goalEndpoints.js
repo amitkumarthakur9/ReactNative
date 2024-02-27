@@ -16,7 +16,7 @@ const Goallist = () => {
       .get($baseUrl)
       .then((response) => {
         setGoaldata(response.data.goals);
-        // console.log("running");
+        console.log("api response running", response.data.goals);
       })
       .catch((error) => {
         console.warn("error", error);
@@ -33,18 +33,23 @@ const Goallist = () => {
 
   if (goaldata != undefined) {
     goaldata.map((data, index) => {
-      if (maxcurrentamount < data.currentTermAmount) {
-        maxcurrentamount = data.currentTermAmount;
+      if (parseInt(maxcurrentamount) < parseInt(data.currentTermAmount)) {
+        maxcurrentamount = parseInt(data.currentTermAmount);
       }
-      if (maximumduration < data.duration) {
-        maximumduration = data.duration;
+      if (parseInt(maximumduration) < parseInt(data.duration)) {
+        maximumduration = parseInt(data.duration);
       }
     });
 
     goaldata.map((data, index) => {
+      console.log("maxcurrentamount", maxcurrentamount);
+      console.log("currentTermAmount", data.currentTermAmount);
       const iconWidth =
         (maxWidth / 2) * (data.currentTermAmount / maxcurrentamount);
+
       const durationWidth = data.duration * (maxWidth / maximumduration);
+      console.log("iconWidth", iconWidth);
+      console.log("maxWidth", maxWidth);
 
       allData[index] = {
         goalName: data.name,
@@ -63,7 +68,7 @@ const Goallist = () => {
 
 export const AddGoal = (data) => {
   const urlEncodedData = queryString(data);
-  //   console.log("url passed", urlEncodedData);
+  console.log("url passed", urlEncodedData);
   return apiClient.post("/app/wish?" + urlEncodedData);
 };
 
