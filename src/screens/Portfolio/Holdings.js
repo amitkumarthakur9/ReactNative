@@ -117,7 +117,7 @@ const MenuModal = (holdingDatas) => {
         </TouchableOpacity>
       </View>
 
-      <View style={[styles.flexRow, { margin: width * 0.02 }]}>
+      {/* <View style={[styles.flexRow, { margin: width * 0.02 }]}>
         <Image
           source={require("../../../assets/Actions/swp.png")}
           style={{
@@ -127,7 +127,7 @@ const MenuModal = (holdingDatas) => {
           }}
         />
         <Text style={styles.menuModalHeader}>SWP</Text>
-      </View>
+      </View> */}
       <View style={[styles.flexRow, { margin: width * 0.02 }]}>
         <Image
           source={require("../../../assets/Actions/redeem.png")}
@@ -159,8 +159,21 @@ const MenuModal = (holdingDatas) => {
           <Text style={styles.menuModalHeader}>Switch/STP</Text>
         </TouchableOpacity>
       </View>
-
       <View style={[styles.flexRow, { margin: width * 0.02 }]}>
+        <Image
+          source={require("../../../assets/Actions/goal.png")}
+          style={{
+            width: width * 0.15,
+            height: height * 0.04,
+            resizeMode: "contain",
+          }}
+        />
+        <TouchableOpacity onPress={() => navigation.navigate("Attachgoal")}>
+          <Text style={styles.menuModalHeader}>Attach Goal</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* <View style={[styles.flexRow, { margin: width * 0.02 }]}>
         <Image
           source={require("../../../assets/Actions/download.png")}
           style={{
@@ -170,7 +183,7 @@ const MenuModal = (holdingDatas) => {
           }}
         />
         <Text style={styles.menuModalHeader}>Download SOA</Text>
-      </View>
+      </View> */}
     </View>
   );
 };

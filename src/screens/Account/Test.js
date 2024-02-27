@@ -1,34 +1,21 @@
-// import React from "react";
-// import { View, Dimensions } from "react-native";
-// import Pdf from "react-native-pdf";
+// import * as LocalAuthentication from "expo-local-authentication";
 
-// export default function App() {
-//   return (
-//     <View style={{ flex: 1 }}>
-//       <Pdf
-//         source={{
-//           uri: "file:///storage/emulated/0/Android/data/com.growthvinecapitalapp.app/files/capitalgain_2020.pdf",
-//           cache: true,
-//         }}
-//         onLoadComplete={(numberOfPages, filePath) => {
-//           console.log(`number of pages: ${numberOfPages}`);
-//         }}
-//         onPageChanged={(page, numberOfPages) => {
-//           console.log(`current page: ${page}`);
-//         }}
-//         onError={(error) => {
-//           console.log(error);
-//         }}
-//         style={styles.pdf}
-//       />
-//     </View>
-//   );
-// }
+// export default Test = async () => {
+//   const isBiometricAvailable = await LocalAuthentication.hasHardwareAsync();
 
-// const styles = {
-//   pdf: {
-//     flex: 1,
-//     width: Dimensions.get("window").width, // Adjust width to fit the entire screen
-//     height: Dimensions.get("window").height, // Adjust height to fit the entire screen
-//   },
+//   if (isBiometricAvailable) {
+//     // Authenticate using biometrics
+//     const result = await LocalAuthentication.authenticateAsync();
+
+//     if (result.success) {
+//       // Biometric authentication successful
+//       console.log("Biometric authentication successful");
+//     } else {
+//       // Biometric authentication failed or user cancelled
+//       console.log("Biometric authentication failed or cancelled");
+//     }
+//   } else {
+//     // Biometric authentication is not available on the device
+//     console.log("Biometric authentication is not available on this device");
+//   }
 // };

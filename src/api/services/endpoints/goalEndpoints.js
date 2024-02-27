@@ -79,4 +79,10 @@ export const Goalassets = (data) => {
   );
 };
 
+export const Goalfetch = (userId) => {
+  return axios.get(
+    `https://data.fundexpert.in/goal.php?action=fetchGoals&userId=${userId}`
+  );
+};
+
 export default Goallist;

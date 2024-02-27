@@ -22,9 +22,9 @@ import { useSelector } from "react-redux";
 import Formatfundname from "../Components/Formatfundname";
 import formatNumberWithCommas from "../Components/Inrconverter";
 import Loader from "../Components/Loader";
-export default Education = () => {
+export default Index = () => {
   const route = useRoute();
-  const { wishId } = route.params;
+  const { wishId, title } = route.params;
   const userId = useSelector((state) => state.user.id);
   const [goaldata, setGoaldata] = useState(null);
   const [holding, setHolding] = useState(null);
@@ -59,7 +59,7 @@ export default Education = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Education" showPlusSign={true} />
+      <Header title={title} showPlusSign={true} />
       <ScrollView>
         <View style={styles.contentContainer}>
           <View style={styles.chartItem}>

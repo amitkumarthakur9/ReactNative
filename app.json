@@ -8,11 +8,16 @@
       "@react-native-firebase/auth",
       "@react-native-firebase/perf",
       "@react-native-firebase/crashlytics",
-    //   "expo-image-picker"
 	  [
         "expo-image-picker",
         {
           "photosPermission": "growthvine want to access gallery"
+        }
+      ],
+	   [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow growthvine to use Face ID."
         }
       ]
     ],

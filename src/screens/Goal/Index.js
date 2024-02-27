@@ -109,8 +109,9 @@ const Goal = () => {
                           <Button
                             mode="contained"
                             onPress={() =>
-                              navigation.navigate("Education", {
+                              navigation.navigate("Goalasset", {
                                 wishId: data.id,
+                                title: data.goalName,
                               })
                             }
                             style={{

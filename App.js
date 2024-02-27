@@ -14,7 +14,7 @@ import Result from "./src/screens/Riskcalculator/Result";
 import Account from "./src/screens/Account/Index";
 import Assetpreview from "./src/screens/Assetpreview/Index";
 import Navigatescreens from "./src/screens/Navigatescreens/Index";
-import Education from "./src/screens/Goal/Education";
+import Goalasset from "./src/screens/Goal/Goalasset";
 import Upload from "./src/screens/Uploadscreens/Index";
 import Corpus from "./src/screens/Corpusscreens/Index";
 import Goalform from "./src/screens/Goalsscreens/Index";
@@ -42,6 +42,7 @@ import Registermandate from "./src/screens/Mandate/Registermandate";
 import Myprofile from "./src/screens/Account/Myprofile";
 import Mandatelist from "./src/screens/Mandate/Mandatelist";
 import Mfotp from "./src/screens/Uploadscreens/Mfotp";
+import Attachgoal from "./src/screens/Portfolio/Attachgoal";
 
 const Stack = createNativeStackNavigator();
 
@@ -67,7 +68,7 @@ export default function App() {
           <Stack.Screen name="Account" component={Account} />
           <Stack.Screen name="Assetpreview" component={Assetpreview} />
           <Stack.Screen name="Navigatescreens" component={Navigatescreens} />
-          <Stack.Screen name="Education" component={Education} />
+          <Stack.Screen name="Goalasset" component={Goalasset} />
           <Stack.Screen name="Upload" component={Upload} />
           <Stack.Screen name="Corpus" component={Corpus} />
           <Stack.Screen name="Goalform" component={Goalform} />
@@ -93,6 +94,7 @@ export default function App() {
           <Stack.Screen name="Myprofile" component={Myprofile} />
           <Stack.Screen name="Mandatelist" component={Mandatelist} />
           <Stack.Screen name="Mfotp" component={Mfotp} />
+          <Stack.Screen name="Attachgoal" component={Attachgoal} />
         </Stack.Navigator>
         <StatusBar />
       </NavigationContainer>
