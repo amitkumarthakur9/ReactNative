@@ -61,18 +61,23 @@ const Paymentoptions = (props) => {
   const handleBankCheckboxChange = (bank) => {
     setBankcheck(true);
     setSelectedBank(bank);
-
-    // Assuming orderData is immutable, create a new object with the updated value
     const updatedOrderData = {
       ...orderData,
       selectBankAccount: bank,
     };
-
-    // Set the updated orderData to state
     setOrderData(updatedOrderData);
   };
 
   const handleOrderCall = () => {
+    if (selectedBank == null) {
+      Alert.alert("Please select bank account");
+      return;
+    }
+    if (upicheck == false && netbankingcheck == false) {
+      Alert.alert("Please select mode of payment");
+      return;
+    }
+
     setShowLoader(true);
     Orders(orderData)
       .then((response) => {
