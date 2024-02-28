@@ -1,13 +1,34 @@
 import React, { useEffect } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, Alert } from "react-native";
 import { width, height } from "./Dimension";
 import { Session } from "./screens/Components/Data";
-
+import Biometric from "./screens/Components/Biometric";
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     Session().then((response) => {
       if (response === false) {
-        navigation.push("Dashboard");
+        Biometric()
+          .then((bio) => {
+            if (bio) {
+              navigation.push("Dashboard");
+            } else {
+              Alert.alert(
+                "Authentication Cancelled",
+                "Please approve the authentication for going ahead.",
+                [
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      navigation.push("Splash");
+                    },
+                  },
+                ]
+              );
+            }
+          })
+          .catch((e) => {
+            Alert.alert(e);
+          });
       } else {
         const timer = setTimeout(() => {
           navigation.reset({

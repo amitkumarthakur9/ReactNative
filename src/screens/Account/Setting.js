@@ -14,7 +14,7 @@ import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import onShare from "./Share";
 import Inappbrowser from "../Components/Inappbrowser";
-import Test from "./Test";
+// import Test from "./Test";
 
 export default Setting = () => {
   const [fontsLoaded] = useFonts({
@@ -25,23 +25,6 @@ export default Setting = () => {
     <View style={styles.container}>
       <Header title="Setting" />
       <ScrollView style={styles.scrollviewContainer}>
-        <TouchableOpacity onPress={() => Test()}>
-          <View style={styles.flexContainer}>
-            <View style={styles.firstflex}>
-              <Image
-                source={require("../../../assets/setting/account.png")}
-                resizeMode="contain"
-                style={styles.imageStyle}
-              />
-            </View>
-            <Text style={[styles.secondflex, styles.text]}>Authenticate </Text>
-            <FontAwesome
-              name="angle-right"
-              size={width * 0.07}
-              style={[styles.thirdflex, styles.arrow]}
-            />
-          </View>
-        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.push("Myprofile")}>
           <View style={styles.flexContainer}>
             <View style={styles.firstflex}>

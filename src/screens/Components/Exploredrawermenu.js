@@ -65,7 +65,7 @@ const Exploredrawermenu = (props) => {
                   borderRadius: width * 0.06,
                   borderColor: "white",
                 }}
-                right={<TextInput.Icon icon="microphone" />}
+                // right={<TextInput.Icon icon="microphone" />}
                 contentStyle={styles.contentStyle}
                 onFocus={(e) => navigation.push("Searchbox")}
               />
