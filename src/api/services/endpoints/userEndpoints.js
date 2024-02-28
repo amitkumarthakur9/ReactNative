@@ -35,15 +35,15 @@ export const Fetchuserdetails = () => {
   return apiClient.get("/app/user?action=fetchUserDetails");
 };
 
-export const Googlelogin = (googleToken) => {
+export const Googlelogin = (googleToken, panNumber = "") => {
   return apiClient.post(
-    `/app/user?action=googleLogin&token=${googleToken}&fromApp=1@&addedBy=237106`
+    `/app/user?action=googleLogin&token=${googleToken}&fromApp=1@&addedBy=237106&panNumber=${panNumber}`
   );
 };
 
-export const Phonelogin = (mobileNumber) => {
+export const Phonelogin = (mobileNumber, panNumber = "") => {
   return apiClient.post(
-    `/app/user?action=sendOTP&mobile=${mobileNumber}&addedBy=237106&firstUserLogin=true`
+    `/app/user?action=sendOTP&mobile=${mobileNumber}&addedBy=237106&firstUserLogin=true&panNumber=${panNumber}`
   );
 };
 

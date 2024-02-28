@@ -16,6 +16,7 @@ import Header from "../Components/Header";
 import Loader from "../Components/Loader";
 import { Phonelogin } from "../../api/services/endpoints/userEndpoints";
 import { useFonts } from "expo-font";
+import { useRoute } from "@react-navigation/native";
 export default Singupwithphone = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
   const [phone, setPhone] = useState("");
@@ -25,9 +26,12 @@ export default Singupwithphone = ({ navigation }) => {
   const [showLoader, setShowLoader] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
 
+  const route = useRoute();
+  const { pan } = route.params;
+
   const loginWithPhone = () => {
     setShowLoader(true);
-    Phonelogin(phone).then((response) => {
+    Phonelogin(phone, pan).then((response) => {
       //   console.log(response.data);
       if (response.data.success) {
         setOtpSent(true);

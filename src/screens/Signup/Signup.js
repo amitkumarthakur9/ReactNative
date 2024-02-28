@@ -23,11 +23,15 @@ import {
 } from "../../api/services/endpoints/userEndpoints";
 import Header from "../Components/Header";
 import { useFonts } from "expo-font";
+import { useRoute } from "@react-navigation/native";
 
 export default Signup = ({ navigation }) => {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+
+  const route = useRoute();
+  const { pan } = route.params || "";
 
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
@@ -58,7 +62,7 @@ export default Signup = ({ navigation }) => {
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-    Googlelogin(idToken).then((response) => {
+    Googlelogin(idToken, pan).then((response) => {
       if (response.data.success === false) {
         Alert.alert("Failed", response.data.error);
         signOut();
@@ -104,7 +108,9 @@ export default Signup = ({ navigation }) => {
         </Text>
       </Text>
       <View style={styles.signupContainer}>
-        <TouchableOpacity onPress={() => navigation.push("swphone")}>
+        <TouchableOpacity
+          onPress={() => navigation.push("swphone", { pan: pan })}
+        >
           <Button
             icon={() => (
               <View>

@@ -25,8 +25,9 @@ export default Uploadscreens = ({ navigation }) => {
   const [mail, setMail] = useState("");
   const [loader, setLoader] = useState(false);
 
-  const pan = useSelector((state) => state.user.pan);
+  const [pan, setPan] = useState(useSelector((state) => state.user.pan));
   const session = useSelector((state) => state.user.session);
+  const [isdisabled, setIsdisabled] = useState(true);
 
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
@@ -43,46 +44,51 @@ export default Uploadscreens = ({ navigation }) => {
   };
 
   useEffect(() => {
-    if (session == true || session == "") {
-      Alert.alert("You are not logged in");
-      navigation.push("Navigatescreens");
+    if (session !== false) {
+      //   Alert.alert("You are not logged in");
+      //   navigation.push("Navigatescreens");
+      setIsdisabled(false);
+      return;
     } else {
       if (!pan) {
         Alert.alert("Pan is not available . please fillup the pan first");
         navigation.push("Myprofile");
       }
+      //   setIsdisabled(true);
     }
   }, []);
 
   const handleSubmit = async () => {
-    setLoader(true);
-    if (mobile != "" || mail != "") {
-      let data = {
-        pan: pan,
-        email: mail,
-        mobile: mobile,
-      };
-      data = JSON.stringify(data);
-      console.log(data);
-      try {
-        const result = await Sendotp(data);
-        console.log(result.data);
-        if (result.data.success) {
-          const clientRefNo = result.data.clientRefNo;
-          setLoader(false);
-          navigation.push("Mfotp", { clientRefNo });
-        } else {
-          Alert.alert(result.data.error);
+    if (session !== false) {
+      navigation.push("Signup", { pan: pan });
+    } else {
+      setLoader(true);
+      if (mobile != "" || mail != "") {
+        let data = {
+          pan: pan,
+          email: mail,
+          mobile: mobile,
+        };
+        data = JSON.stringify(data);
+        try {
+          const result = await Sendotp(data);
+          if (result.data.success) {
+            const clientRefNo = result.data.clientRefNo;
+            setLoader(false);
+            navigation.push("Mfotp", { clientRefNo });
+          } else {
+            Alert.alert(result.data.error);
+            setLoader(false);
+          }
+        } catch (e) {
+          console.warn(e);
+          Alert.alert("Please try later");
           setLoader(false);
         }
-      } catch (e) {
-        console.warn(e);
-        Alert.alert("Please try later");
+      } else {
+        Alert.alert("Please Enter Mobile Or Mail Id");
         setLoader(false);
       }
-    } else {
-      Alert.alert("Please Enter Mobile Or Mail Id");
-      setLoader(false);
     }
   };
 
@@ -99,10 +105,10 @@ export default Uploadscreens = ({ navigation }) => {
           {" "}
           * Daily Request Limit of 10 attempts has been set to your account.{" "}
         </Text>
-        <Text style={styles.text}>PAN NUMBER</Text>
+        {/* <Text style={styles.text}>PAN NUMBER</Text> */}
         <TextInput
           mode="outlined"
-          placeholder="Adhar Number"
+          label="PAN Number"
           placeholderTextColor="rgb(191, 191, 191)"
           value={pan}
           style={styles.input}
@@ -110,52 +116,57 @@ export default Uploadscreens = ({ navigation }) => {
           theme={styles.themeStyle}
           contentStyle={[
             styles.contentStyle,
-            { backgroundColor: "rgb(230, 230, 230)" },
+            isdisabled ? { backgroundColor: "rgb(204, 204, 204)" } : "",
           ]}
-          disabled
+          disabled={isdisabled}
+          onChangeText={(e) => setPan(e)}
         />
 
-        <Text style={styles.text}>Select Option</Text>
-        <TouchableOpacity style={styles.dropdown}>
-          <Picker
-            selectedValue={type}
-            onValueChange={(itemValue) => handleOption(itemValue)}
-            mode="dropdown"
-          >
-            <Picker.Item value="mobile" label="Mobile Number" />
-            <Picker.Item value="mail" label="Email Id" />
-          </Picker>
-        </TouchableOpacity>
-        {type == "mobile" ? (
+        {session === false && (
           <>
-            <Text style={styles.text}>Mobile Number</Text>
-            <TextInput
-              mode="outlined"
-              placeholder="Enter Mobile Number"
-              placeholderTextColor="rgb(191, 191, 191)"
-              value={mobile}
-              onChangeText={(e) => setMobile(e)}
-              style={styles.input}
-              outlineStyle={styles.outline}
-              theme={styles.themeStyle}
-              contentStyle={styles.contentStyle}
-              keyboardType="number-pad"
-            />
-          </>
-        ) : (
-          <>
-            <Text style={styles.text}>Email Id</Text>
-            <TextInput
-              mode="outlined"
-              placeholder="Enter Email Id"
-              placeholderTextColor="rgb(191, 191, 191)"
-              value={mail}
-              onChangeText={(e) => setMail(e)}
-              style={styles.input}
-              outlineStyle={styles.outline}
-              theme={styles.themeStyle}
-              contentStyle={styles.contentStyle}
-            />
+            <Text style={styles.text}>Select Option</Text>
+            <TouchableOpacity style={styles.dropdown}>
+              <Picker
+                selectedValue={type}
+                onValueChange={(itemValue) => handleOption(itemValue)}
+                mode="dropdown"
+              >
+                <Picker.Item value="mobile" label="Mobile Number" />
+                <Picker.Item value="mail" label="Email Id" />
+              </Picker>
+            </TouchableOpacity>
+            {type == "mobile" ? (
+              <>
+                {/* <Text style={styles.text}>Mobile Number</Text> */}
+                <TextInput
+                  mode="outlined"
+                  label="Mobile Number"
+                  placeholderTextColor="rgb(191, 191, 191)"
+                  value={mobile}
+                  onChangeText={(e) => setMobile(e)}
+                  style={styles.input}
+                  outlineStyle={styles.outline}
+                  theme={styles.themeStyle}
+                  contentStyle={styles.contentStyle}
+                  keyboardType="number-pad"
+                />
+              </>
+            ) : (
+              <>
+                {/* <Text style={styles.text}>Email Id</Text> */}
+                <TextInput
+                  mode="outlined"
+                  label="Email Id"
+                  placeholderTextColor="rgb(191, 191, 191)"
+                  value={mail}
+                  onChangeText={(e) => setMail(e)}
+                  style={styles.input}
+                  outlineStyle={styles.outline}
+                  theme={styles.themeStyle}
+                  contentStyle={styles.contentStyle}
+                />
+              </>
+            )}
           </>
         )}
 
