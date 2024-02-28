@@ -26,6 +26,7 @@ export default Uploadscreens = ({ navigation }) => {
   const [loader, setLoader] = useState(false);
 
   const pan = useSelector((state) => state.user.pan);
+  const session = useSelector((state) => state.user.session);
 
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
@@ -42,9 +43,14 @@ export default Uploadscreens = ({ navigation }) => {
   };
 
   useEffect(() => {
-    if (!pan) {
-      Alert.alert("Pan is not available . please fillup the pan first");
-      navigation.push("Myprofile");
+    if (session == true || session == "") {
+      Alert.alert("You are not logged in");
+      navigation.push("Navigatescreens");
+    } else {
+      if (!pan) {
+        Alert.alert("Pan is not available . please fillup the pan first");
+        navigation.push("Myprofile");
+      }
     }
   }, []);
 
