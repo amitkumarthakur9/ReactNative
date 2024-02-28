@@ -124,7 +124,7 @@ export default Mfotp = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Phone Verification" />
+      <Header title="Portfolio Authentication" />
       {!showLoader ? (
         <ScrollView>
           <View style={styles.otpContainer}>

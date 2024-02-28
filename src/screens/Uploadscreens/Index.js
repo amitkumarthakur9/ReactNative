@@ -15,7 +15,8 @@ import Uploadoptions from "./Uploadoptions";
 import { useFonts } from "expo-font";
 import Bgiheader from "../Components/Bgiheader";
 import { Picker } from "@react-native-picker/picker";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { userDetails } from "../../redux/slices/user/Index";
 import Loader from "../Components/Loader";
 import Sendotp from "../../api/services/endpoints/mfcenteral";
 
@@ -28,6 +29,7 @@ export default Uploadscreens = ({ navigation }) => {
   const [pan, setPan] = useState(useSelector((state) => state.user.pan));
   const session = useSelector((state) => state.user.session);
   const [isdisabled, setIsdisabled] = useState(true);
+  const dispatch = useDispatch();
 
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
@@ -54,13 +56,18 @@ export default Uploadscreens = ({ navigation }) => {
         Alert.alert("Pan is not available . please fillup the pan first");
         navigation.push("Myprofile");
       }
-      //   setIsdisabled(true);
+      //setIsdisabled(false);
     }
   }, []);
 
   const handleSubmit = async () => {
     if (session !== false) {
-      navigation.push("Signup", { pan: pan });
+      if (pan) {
+        dispatch(userDetails({ temPan: pan }));
+        navigation.push("Signup");
+      } else {
+        Alert.alert("Please fill up PAN number");
+      }
     } else {
       setLoader(true);
       if (mobile != "" || mail != "") {

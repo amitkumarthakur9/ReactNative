@@ -24,14 +24,18 @@ import {
 import Header from "../Components/Header";
 import { useFonts } from "expo-font";
 import { useRoute } from "@react-navigation/native";
+import { useSelector, useDispatch } from "react-redux";
+import { userDetails } from "../../redux/slices/user/Index";
 
 export default Signup = ({ navigation }) => {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const dispatch = useDispatch();
+  const pan = useSelector((state) => state.user.temPan);
 
-  const route = useRoute();
-  const { pan } = route.params || "";
+  //   const route = useRoute();
+  //   const { pan } = route.params || "";
 
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
@@ -68,6 +72,8 @@ export default Signup = ({ navigation }) => {
         signOut();
       }
       if (response.data.success === true) {
+        dispatch(userDetails({ tempMail: response.data.user.email }));
+        dispatch(userDetails({ logedInVia: "email" }));
         signOut();
         navigation.push("Dashboard");
       }
@@ -108,9 +114,7 @@ export default Signup = ({ navigation }) => {
         </Text>
       </Text>
       <View style={styles.signupContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.push("swphone", { pan: pan })}
-        >
+        <TouchableOpacity onPress={() => navigation.push("swphone")}>
           <Button
             icon={() => (
               <View>

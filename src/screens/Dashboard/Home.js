@@ -25,6 +25,8 @@ import { UserDetails, Session, SessionEnd } from "../Components/Data";
 import { useSelector } from "react-redux";
 import { useFonts } from "expo-font";
 import { useFocusEffect } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { userDetails } from "../../redux/slices/user/Index";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
@@ -33,7 +35,7 @@ const Home = ({ navigation }) => {
   const userData = UserDetails();
   const [sessioncheck, setSessioncheck] = useState(null);
   const [image, setImage] = useState(null);
-
+  const dispatch = useDispatch();
   //Userlogin();
   //   console.log("user details amit", userData);
   //   console.log("session", session);
@@ -43,6 +45,7 @@ const Home = ({ navigation }) => {
   });
 
   const handleLogout = async () => {
+    dispatch(userDetails({ session: true }));
     SessionEnd();
     navigation.push("Navigatescreens");
   };

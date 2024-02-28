@@ -26,3 +26,12 @@ export const Casdetails = (clientRefNo) => {
     },
   });
 };
+
+export const Mfsendotpoutside = (mfdata) => {
+  mfdata = JSON.stringify(mfdata);
+  return apiClient.post("/app/rest/mfCentral/sendOtp", mfdata, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};

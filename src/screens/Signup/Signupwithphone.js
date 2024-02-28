@@ -17,6 +17,8 @@ import Loader from "../Components/Loader";
 import { Phonelogin } from "../../api/services/endpoints/userEndpoints";
 import { useFonts } from "expo-font";
 import { useRoute } from "@react-navigation/native";
+import { useSelector, useDispatch } from "react-redux";
+import { userDetails } from "../../redux/slices/user/Index";
 export default Singupwithphone = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
   const [phone, setPhone] = useState("");
@@ -25,9 +27,12 @@ export default Singupwithphone = ({ navigation }) => {
   const countryCode = "+91";
   const [showLoader, setShowLoader] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
+  const dispatch = useDispatch();
 
-  const route = useRoute();
-  const { pan } = route.params;
+  const pan = useSelector((state) => state.user.temPan);
+
+  //   const route = useRoute();
+  //   const { pan } = route.params;
 
   const loginWithPhone = () => {
     setShowLoader(true);
@@ -41,6 +46,8 @@ export default Singupwithphone = ({ navigation }) => {
 
   useEffect(() => {
     if (showLoader) {
+      dispatch(userDetails({ tempMobile: phone }));
+      dispatch(userDetails({ logedInVia: "mobileNumber" }));
       navigation.navigate("Otp", { mobileNumber: phone });
     }
     return () => {
