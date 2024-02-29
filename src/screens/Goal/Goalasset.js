@@ -40,6 +40,7 @@ export default Index = () => {
     Goalassets(data)
       .then((response) => {
         if (response.data.success) {
+          console.log("console.warn(e);", response.data.data);
           setGoaldata(response.data.data);
           allPortfolio()
             .then((res) => {
@@ -57,63 +58,61 @@ export default Index = () => {
       });
   }, []);
 
+  const radius = width * 0.15;
+  const additionalRadius = width * 0.08;
+  const duration = 2000;
+  const storkWidth = width * 0.04;
+
+  const inActiveStrokeColor = [
+    "#98b9eb",
+    "#edc2ed",
+    "#edc2c2",
+    "#f0ecd1",
+    "#d2f0d1",
+    "",
+  ];
+  const activeStrokeColor = [
+    "#1857b5",
+    "#d431d4",
+    "#d63636",
+    "#f5d820",
+    "#32b02e",
+  ];
+
   return (
     <View style={styles.container}>
       <Header title={title} showPlusSign={true} />
-      <ScrollView>
-        <View style={styles.contentContainer}>
-          <View style={styles.chartItem}>
-            <View style={styles.profileImageContainer}>
-              <View style={[styles.circleContainer, { top: 0 }]}>
-                <CircularProgress
-                  value={6}
-                  radius={180}
-                  duration={2000}
-                  maxValue={20}
-                  clockwise={true}
-                  progressValueColor={"transparent"}
-                  activeStrokeColor={"rgba(169, 190, 244, 1)"}
-                  inActiveStrokeColor={"rgb(210, 221, 249)"}
-                  inActiveStrokeWidth={width * 0.07}
-                  activeStrokeWidth={width * 0.07}
+      {goaldata ? (
+        <ScrollView>
+          <View style={styles.contentContainer}>
+            <View style={styles.chartItem}>
+              <View style={styles.profileImageContainer}>
+                {goaldata.map((value, index) =>
+                  value.map((item) => (
+                    <View style={[styles.circleContainer]} key={index}>
+                      <CircularProgress
+                        value={(item.currentAmount * item.gp) / 100}
+                        radius={radius + index * additionalRadius}
+                        duration={duration}
+                        maxValue={(item.targetAmount * item.gtp) / 100}
+                        clockwise={true}
+                        progressValueColor={"transparent"}
+                        activeStrokeColor={activeStrokeColor[index]}
+                        inActiveStrokeColor={inActiveStrokeColor[index]}
+                        inActiveStrokeWidth={storkWidth}
+                        activeStrokeWidth={storkWidth}
+                      />
+                    </View>
+                  ))
+                )}
+                <Image
+                  source={require("../../../assets/Goal/profile.png")}
+                  style={styles.profileImage}
                 />
               </View>
-              <View style={[styles.circleContainer, { top: 40 }]}>
-                <CircularProgress
-                  value={5}
-                  radius={140}
-                  duration={2000}
-                  maxValue={20}
-                  clockwise={true}
-                  progressValueColor={"transparent"}
-                  activeStrokeColor={"rgba(232, 193, 135, 1)"}
-                  inActiveStrokeColor={"rgb(247, 233, 212)"}
-                  inActiveStrokeWidth={width * 0.07}
-                  activeStrokeWidth={width * 0.07}
-                />
-              </View>
-              <View style={[styles.circleContainer, { top: 80 }]}>
-                <CircularProgress
-                  value={8}
-                  radius={100}
-                  duration={2000}
-                  maxValue={20}
-                  clockwise={true}
-                  progressValueColor={"transparent"}
-                  activeStrokeColor={"rgba(220, 110, 216, 1)"}
-                  inActiveStrokeColor={"rgb(245, 214, 244)"}
-                  inActiveStrokeWidth={width * 0.06}
-                  activeStrokeWidth={width * 0.06}
-                />
-              </View>
-              <Image
-                source={require("../../../assets/Goal/profile.png")}
-                style={styles.profileImage}
-              />
             </View>
-          </View>
-          <View style={styles.content}>
-            <View style={{ left: -width * 0.05 }}>
+            <View style={styles.content}>
+              {/* <View style={{ left: -width * 0.05 }}>
               <View style={styles.Achieved}>
                 <Text style={styles.AchievedItem}>Achieved</Text>
                 <Text style={styles.AchievedPercentage}>15%</Text>
@@ -121,8 +120,8 @@ export default Index = () => {
               </View>
               <Text style={styles.amount}> ₹ 80.4k</Text>
               <Text style={styles.percentOf}> 20% of 2L </Text>
-            </View>
-            {/* <View
+            </View> */}
+              {/* <View
               style={[
                 styles.fundDetails,
                 { borderLeftColor: "rgba(220, 110, 216, 1)" },
@@ -169,68 +168,79 @@ export default Index = () => {
                 </Text>
               </View>
             </View> */}
+            </View>
           </View>
-        </View>
-        <View style={styles.your}>
-          <Text style={styles.yourHeader}> Linked Investment</Text>
-          <View style={styles.cart}>
-            {goaldata && holding ? (
-              goaldata.map((value, index) =>
-                value.map((innerValues) => (
-                  <View style={styles.individualCarts} key={index}>
-                    <ImageBackground
-                      source={require("../../../assets/Goal/rectengal.png")}
+          <View style={styles.your}>
+            <Text style={styles.yourHeader}> Linked Investment</Text>
+            <View style={styles.cart}>
+              {goaldata && holding ? (
+                goaldata.map((value, index) =>
+                  value.map((innerValues) => (
+                    <View
+                      style={[
+                        styles.individualCarts,
+                        { backgroundColor: activeStrokeColor[index] },
+                      ]}
+                      key={index}
                     >
-                      <Image
-                        source={require("../../../assets/Goal/sideImage.png")}
-                        style={styles.sideImage}
-                      />
-                      <Image
-                        source={require("../../../assets/Goal/rectengal2.png")}
-                        style={styles.rectengal2}
-                      />
-                      <View style={styles.investmentContainer}>
-                        <View style={styles.flexRow}>
-                          <Text style={styles.investmentHeader}>
-                            {Formatfundname(
-                              holding[innerValues.hid].mutualFund.name
-                            )}
-                          </Text>
+                      <ImageBackground
+                        source={require("../../../assets/Goal/rectengal.png")}
+                        style={{
+                          width: width * 0.96,
+                          height: height * 0.2,
+                        }}
+                        resizeMode="stretch"
+                      >
+                        <View style={styles.investmentContainer}>
+                          <View style={styles.flexRow}>
+                            <Text style={styles.investmentHeader}>
+                              {Formatfundname(
+                                holding[innerValues.hid].mutualFund.name
+                              )}
+                            </Text>
+                          </View>
+                          <View style={[styles.flexRow]}>
+                            <Text style={styles.descHeader}>Holding Value</Text>
+                            <Text style={styles.descHeader}>Contribution</Text>
+                            <Text style={styles.descHeader}>Amount</Text>
+                          </View>
+                          <View style={[styles.flexRow]}>
+                            <Text style={styles.descValue}>
+                              ₹{" "}
+                              {formatNumberWithCommas(
+                                Math.round(innerValues.currentAmount)
+                              )}
+                            </Text>
+                            <Text style={styles.descValue}>
+                              ₹{" "}
+                              {formatNumberWithCommas(
+                                Math.round(
+                                  (innerValues.currentAmount * innerValues.gp) /
+                                    100
+                                )
+                              )}
+                            </Text>
+                            <Text style={styles.descValue}>3.8%</Text>
+                          </View>
                         </View>
-                        <View style={[styles.flexRow]}>
-                          <Text style={styles.descHeader}>Holding Value</Text>
-                          <Text style={styles.descHeader}>Contribution</Text>
-                          <Text style={styles.descHeader}>Amount</Text>
-                        </View>
-                        <View style={[styles.flexRow]}>
-                          <Text style={styles.descValue}>
-                            ₹{" "}
-                            {formatNumberWithCommas(
-                              Math.round(innerValues.currentAmount)
-                            )}
-                          </Text>
-                          <Text style={styles.descValue}>
-                            ₹{" "}
-                            {formatNumberWithCommas(
-                              Math.round(
-                                (innerValues.currentAmount * innerValues.gp) /
-                                  100
-                              )
-                            )}
-                          </Text>
-                          <Text style={styles.descValue}>3.8%</Text>
-                        </View>
-                      </View>
-                    </ImageBackground>
-                  </View>
-                ))
-              )
-            ) : (
-              <Loader />
-            )}
+                      </ImageBackground>
+                    </View>
+                  ))
+                )
+              ) : (
+                <Loader />
+              )}
+            </View>
           </View>
+        </ScrollView>
+      ) : (
+        <View style={styles.Noholdings}>
+          <Text style={styles.text}>
+            There is no holding attached with this goal . Please attach holding
+            first....
+          </Text>
         </View>
-      </ScrollView>
+      )}
     </View>
   );
 };
@@ -241,19 +251,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    marginTop: height * 0.04,
+    // marginTop: height * 0.04,
     flexDirection: "row",
     height: height * 0.5,
   },
   chartItem: {
-    width: width * 0.6,
-    height: height * 0.5,
+    width: width,
   },
   profileImageContainer: {
     flex: 1,
     justifyContent: "center",
-    left: -width * 0.28,
-    top: height * 0.05,
+    // left: -width * 0.28,
+    // top: height * 0.05,
   },
   content: {
     left: -width * 0.01,
@@ -262,8 +271,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: width * 0.21,
     height: width * 0.21,
-    left: width * 0.26,
-    top: 140,
+    justifyContent: "center",
+    alignSelf: "center",
+    // left: width * 0.26,
+    // top: 140,
   },
   Achieved: {
     flexDirection: "row",
@@ -342,7 +353,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   your: {
-    marginTop: height * 0.07,
+    // marginTop: height * 0.03,
   },
   yourHeader: {
     color: "rgba(2, 48, 71, 1)",
@@ -350,13 +361,14 @@ const styles = StyleSheet.create({
     lineHeight: height * 0.035,
     fontFamily: "Inter-Black",
     fontWeight: "600",
-    left: width * 0.05,
+    textAlign: "center",
   },
   cart: {
     flexDirection: "column",
   },
   individualCarts: {
     margin: height * 0.01,
+    borderRadius: width * 0.05,
   },
   cardTitle: {
     marginTop: height * 0.02,
@@ -406,34 +418,9 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     flex: 1,
   },
-  buttonContainer: {
-    flexDirection: "row",
-    marginTop: height * 0.04,
-    left: -width * 0.03,
-  },
-  buttonStyle: {
-    height: height * 0.05,
-    margin: width * 0.01,
-    borderWidth: width * 0.004,
-    borderColor: "rgba(26, 28, 23, 0.12)",
-    borderRadius: width * 0.03,
-  },
-  labelStyle: {
-    color: "rgba(2, 48, 71, 1)",
-    fontSize: width * 0.03,
-    lineHeight: height * 0.02,
-    fontFamily: "Inter-Black",
-    fontWeight: "500",
-    textAlign: "center",
-  },
-  sideImage: {
-    height: height * 0.2,
-    resizeMode: "contain",
-    left: -width * 0.02,
-  },
   investmentContainer: {
-    position: "absolute",
-    marginLeft: width * 0.08,
+    // position: "absolute",
+    marginLeft: width * 0.05,
   },
   investmentHeader: {
     color: "rgba(2, 48, 71, 1)",
@@ -448,14 +435,6 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: "row",
     width: width * 0.9,
-  },
-  rectengal2: {
-    position: "absolute",
-    height: height * 0.18,
-    resizeMode: "contain",
-    right: -width * 0.14,
-    top: -height * 0.03,
-    zIndex: -1,
   },
   descHeader: {
     marginLeft: width * 0.01,
@@ -475,5 +454,19 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-Black",
     fontWeight: "600",
     flex: 1,
+  },
+  text: {
+    color: "rgba(0, 0, 0, 1)",
+    lineHeight: height * 0.03,
+    fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
+    fontWeight: "500",
+    textAlign: "center",
+  },
+  Noholdings: {
+    alignContent: "center",
+    justifyContent: "center",
+    flex: 1,
+    padding: width * 0.05,
   },
 });
