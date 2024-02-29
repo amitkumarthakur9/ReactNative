@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Image } from "react-native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { width, height } from "../../Dimension";
 
 export default Loader = () => {
   return (
@@ -10,7 +11,15 @@ export default Loader = () => {
         color={"rgba(33, 0, 93, 1)"}
         size={"large"}
       />
-      <Text>Please Wait </Text>
+      <Image
+        source={require("../../../assets/loader.png")}
+        style={{
+          position: "absolute",
+          width: width * 0.09,
+          height: width * 0.2,
+          resizeMode: "contain",
+        }}
+      />
     </View>
   );
 };

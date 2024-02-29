@@ -85,4 +85,9 @@ export const Goalfetch = (userId) => {
   );
 };
 
+export const Attachgoal = (data) => {
+  const urlEncodedData = queryString(data);
+  return axios.get("https://data.fundexpert.in/goal.php?" + urlEncodedData);
+};
+
 export default Goallist;

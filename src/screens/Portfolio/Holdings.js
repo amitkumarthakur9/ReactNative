@@ -77,6 +77,7 @@ const MenuModal = (holdingDatas) => {
   //   const fundName = holdingDatas.holdingDatas.mutualFund.name;
   //   const currentValue = holdingDatas.holdingDatas.currValue;
   const mfId = holdingDatas.holdingDatas.mutualFund.id;
+  const holdingId = holdingDatas.holdingDatas.id;
   const navigation = useNavigation();
 
   const trendType = "schemes";
@@ -168,7 +169,9 @@ const MenuModal = (holdingDatas) => {
             resizeMode: "contain",
           }}
         />
-        <TouchableOpacity onPress={() => navigation.navigate("Attachgoal")}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Attachgoal", { holdingId })}
+        >
           <Text style={styles.menuModalHeader}>Attach Goal</Text>
         </TouchableOpacity>
       </View>

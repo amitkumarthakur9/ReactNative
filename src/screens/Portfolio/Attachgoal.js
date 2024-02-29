@@ -8,114 +8,47 @@ import {
   Alert,
 } from "react-native";
 import { height, width } from "../../Dimension";
-import { Ionicons } from "@expo/vector-icons";
 import { Button, TextInput } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import { Slider } from "@miblanchard/react-native-slider";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import Header from "../Components/Header";
-import formatNumberWithCommas from "../Components/Inrconverter";
-import { Addgoalitem } from "./Data";
-import convertToDateTime from "../Components/Datetime";
 import Loader from "../Components/Loader";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import Formatdate from "../Components/Formatdate";
-import { Goalfetch } from "../../api/services/endpoints/goalEndpoints";
+import {
+  Goalfetch,
+  Attachgoal,
+} from "../../api/services/endpoints/goalEndpoints";
 import { useSelector } from "react-redux";
 export default Index = () => {
-  const [category, setCategory] = useState("");
-  const [timePeriod, setTimePeriod] = useState(5);
-  const [date, setDate] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
-
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [goalAmount, setGoalAmount] = useState("100000");
-  const [color, setColor] = useState("");
-  const [goalInflationAmount, setGoalInflationAmount] = useState("0");
+  const [goal, setGoal] = useState("");
+  const [goalid, setGoalid] = useState("");
+  const [holdingtimeperiod, setHoldingtimeperiod] = useState(5);
+  const [goaltimeperiod, setGoaltimeperiod] = useState(5);
+  const [goalAmount, setGoalAmount] = useState("");
   const [loader, setLoader] = useState(false);
-  const [targetdate, setTargetdate] = useState(new Date());
-  const [numberofyear, setNumberofyear] = useState("1");
-  const [yearValue, setyearValue] = useState("5");
-  const [goallist, setGoallist] = useState(undefined);
+  const [holdingyear, setHoldingyear] = useState("5");
+  const [goalyear, setGoalyear] = useState("5");
+  const [goallist, setGoallist] = useState(null);
 
   const userId = useSelector((state) => state.user.id);
+  const route = useRoute();
+  const { holdingId } = route.params;
 
   const navigation = useNavigation();
-
-  const handleAddGoal = () => {
-    if (goallist != undefined) {
-      Alert.alert("Please select goal");
-      return;
-    }
-    setLoader(true);
-    const Year = date.getFullYear();
-    const goalData = {
-      action: "saveWish",
-      wishName: title,
-      description: desc,
-      icon: "",
-      color: color,
-      years: numberofyear,
-      wishAmount: goalInflationAmount,
-      category: category,
-      lumpsumAmount: goalAmount,
-    };
-    Addgoalitem(goalData)
-      .then((response) => {
-        response.success
-          ? (Alert.alert("Goal has been added successfully"),
-            navigation.push("Goalmenu"))
-          : Alert.alert("Failed, Try Later");
-        setLoader(false);
-      })
-      .catch((error) => {
-        console.log("error", error);
-        setLoader(false);
-      });
-  };
-
-  const handleInflation = () => {
-    const yeartoCalculate = numberofyear;
-    const current =
-      goalAmount *
-      Math.pow(
-        1 + Math.round(yearValue * 100) / 100 / 100,
-        Math.round(yeartoCalculate * 100) / 100
-      );
-
-    setGoalInflationAmount(Math.floor(current));
-  };
 
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
 
-  const handleNumberOfYear = (e) => {
-    setNumberofyear(e);
-    const currentDate = new Date();
-    const dmy = Formatdate(currentDate).split("-");
-
-    const day = dmy[0];
-    const month = dmy[1];
-    const year = dmy[2];
-
-    const targetYear = +year + +e;
-    setTargetdate(`${targetYear}-${month}-${day}`);
-    console.log("e", e);
-    handleInflation();
-  };
-
-  const handlegoalamount = (e) => {
-    setGoalAmount(e);
-    handleInflation();
-  };
-
-  const handleSlider = (yearValue) => {
-    setyearValue(yearValue);
-    setTimePeriod(Math.floor(yearValue, 2));
-    handleInflation();
+  const handleSlider = (yearValue, type) => {
+    if (type == "holding") {
+      setHoldingyear(yearValue);
+      setHoldingtimeperiod(Math.floor(yearValue));
+    } else if ((type = "goal")) {
+      setGoalyear(yearValue);
+      setGoaltimeperiod(Math.floor(yearValue));
+    }
   };
 
   useEffect(() => {
@@ -131,21 +64,68 @@ export default Index = () => {
       });
   }, []);
 
+  const handleGoal = (itemValue) => {
+    const splitvalue = itemValue.split("-");
+    setGoal(itemValue);
+    setGoalid(splitvalue[0]);
+    setGoalAmount(splitvalue[1]);
+  };
+
+  const handleSubmit = () => {
+    setLoader(true);
+    if (goal == "") {
+      Alert.alert("Please select goal");
+      setLoader(false);
+      return;
+    }
+    const data = {
+      action: "attachGoal",
+      wishId: goalid,
+      holdingId: holdingId,
+      assetType: "1",
+      percentage: holdingtimeperiod,
+      goalTargetPercent: goaltimeperiod,
+      userId: userId,
+    };
+
+    Attachgoal(data)
+      .then((response) => {
+        if (response.data.success) {
+          Alert.alert(
+            "Holding has been attached successfully .",
+            "In your selected goal"
+          );
+          setLoader(false);
+          navigation.push("Goalmenu");
+        } else {
+          Alert.alert("Failed", "please try later .");
+          setLoader(false);
+        }
+      })
+      .catch((e) => {
+        console.warn(e);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Header title="Attach Goal" showPlusSign={false} />
       <ScrollView style={styles.contentContainer}>
         <TouchableOpacity style={styles.dropdown}>
           <Picker
-            selectedValue={category}
-            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
+            selectedValue={goal}
+            onValueChange={(itemValue, itemIndex) => handleGoal(itemValue)}
             mode="dropdown"
             style={styles.Picker}
           >
             <Picker.Item label="Select Goal" value="" />
             {goallist &&
               goallist.map((value, index) => (
-                <Picker.Item label={value.name} value={value.id} key={index} />
+                <Picker.Item
+                  label={value.name}
+                  value={`${value.id}-${value.currentTermAmount}`}
+                  key={index}
+                />
               ))}
           </Picker>
         </TouchableOpacity>
@@ -153,12 +133,16 @@ export default Index = () => {
           mode="outlined"
           label="Goal Amount"
           value={goalAmount}
-          onChangeText={(e) => handlegoalamount(e)}
+          onChangeText={(e) => setGoalAmount(e)}
           style={styles.input}
-          outlineStyle={styles.outline}
+          outlineStyle={[
+            styles.outline,
+            { backgroundColor: "rgb(242, 242, 242)" },
+          ]}
           theme={styles.themeStyle}
           contentStyle={styles.contentStyle}
           keyboardType="phone-pad"
+          disabled
         />
         <Text style={[styles.header, { marginTop: height * 0.02 }]}>
           Holding Percentage
@@ -170,8 +154,8 @@ export default Index = () => {
             minimumTrackTintColor={"#023047"}
             maximumValue={100}
             minimumValue={0}
-            onValueChange={(yearValue) => handleSlider(yearValue)}
-            value={timePeriod}
+            onValueChange={(yearValue) => handleSlider(yearValue, "holding")}
+            value={holdingtimeperiod}
             thumbTintColor={"rgba(33, 158, 188, 1)"}
             trackStyle={{
               width: width * 0.704,
@@ -180,7 +164,7 @@ export default Index = () => {
               paddingRight: width * 0.05,
             }}
           />
-          <Text style={styles.rangeTextPercentage}>{timePeriod} %</Text>
+          <Text style={styles.rangeTextPercentage}>{holdingtimeperiod} %</Text>
         </View>
 
         <Text style={[styles.header, { marginTop: height * 0.02 }]}>
@@ -193,8 +177,8 @@ export default Index = () => {
             minimumTrackTintColor={"#023047"}
             maximumValue={100}
             minimumValue={0}
-            onValueChange={(yearValue) => handleSlider(yearValue)}
-            value={timePeriod}
+            onValueChange={(yearValue) => handleSlider(yearValue, "goal")}
+            value={goaltimeperiod}
             thumbTintColor={"rgba(33, 158, 188, 1)"}
             trackStyle={{
               width: width * 0.704,
@@ -203,14 +187,23 @@ export default Index = () => {
               paddingRight: width * 0.05,
             }}
           />
-          <Text style={styles.rangeTextPercentage}>{timePeriod} %</Text>
+          <Text style={styles.rangeTextPercentage}>{goaltimeperiod} %</Text>
         </View>
+
+        <Text style={[styles.header, { marginTop: height * 0.02 }]}>
+          <Text style={[styles.header, { color: "red" }]}>Note :</Text>{" "}
+          {holdingtimeperiod}% of this holding will contribute to{" "}
+          {goaltimeperiod}% of this goal .
+        </Text>
 
         <View style={styles.footerButton}>
           {loader ? (
             <Loader />
           ) : (
-            <TouchableOpacity activeOpacity={0.7}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => handleSubmit()}
+            >
               <Button
                 mode="contained"
                 style={styles.button}
