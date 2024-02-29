@@ -111,64 +111,64 @@ export default Index = () => {
                 />
               </View>
             </View>
-            <View style={styles.content}>
-              {/* <View style={{ left: -width * 0.05 }}>
-              <View style={styles.Achieved}>
-                <Text style={styles.AchievedItem}>Achieved</Text>
-                <Text style={styles.AchievedPercentage}>15%</Text>
-                <Fontisto name="angle-up" style={styles.AchievedPercentage} />
+            {/* <View style={styles.content}>
+              <View style={{ left: -width * 0.05 }}>
+                <View style={styles.Achieved}>
+                  <Text style={styles.AchievedItem}>Achieved</Text>
+                  <Text style={styles.AchievedPercentage}>15%</Text>
+                  <Fontisto name="angle-up" style={styles.AchievedPercentage} />
+                </View>
+                <Text style={styles.amount}> ₹ 80.4k</Text>
+                <Text style={styles.percentOf}> 20% of 2L </Text>
               </View>
-              <Text style={styles.amount}> ₹ 80.4k</Text>
-              <Text style={styles.percentOf}> 20% of 2L </Text>
+              <View
+                style={[
+                  styles.fundDetails,
+                  { borderLeftColor: "rgba(220, 110, 216, 1)" },
+                ]}
+              >
+                <Text style={styles.fundName}>Axis Multi Cap...</Text>
+                <Text style={styles.fundAmount}> ₹ 20.4k</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.fundpercentOf}> 20% of 2L </Text>
+                  <Text style={[styles.fundPercentage]}>
+                    15% <Fontisto name="angle-up" />
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={[
+                  styles.fundDetails,
+                  { borderLeftColor: "rgba(232, 193, 135, 1)" },
+                ]}
+              >
+                <Text style={styles.fundName}>Axis Multi Cap...</Text>
+                <Text style={styles.fundAmount}> ₹ 20.4k</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.fundpercentOf}> 20% of 2L </Text>
+                  <Text style={[styles.fundPercentage]}>
+                    15% <Fontisto name="angle-up" />
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={[
+                  styles.fundDetails,
+                  {
+                    borderLeftColor: "rgba(169, 190, 244, 1)",
+                  },
+                ]}
+              >
+                <Text style={styles.fundName}>Axis Multi Cap...</Text>
+                <Text style={styles.fundAmount}> ₹ 20.4k</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.fundpercentOf}> 20% of 2L </Text>
+                  <Text style={[styles.fundPercentage]}>
+                    15% <Fontisto name="angle-up" />
+                  </Text>
+                </View>
+              </View>
             </View> */}
-              {/* <View
-              style={[
-                styles.fundDetails,
-                { borderLeftColor: "rgba(220, 110, 216, 1)" },
-              ]}
-            >
-              <Text style={styles.fundName}>Axis Multi Cap...</Text>
-              <Text style={styles.fundAmount}> ₹ 20.4k</Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.fundpercentOf}> 20% of 2L </Text>
-                <Text style={[styles.fundPercentage]}>
-                  15% <Fontisto name="angle-up" />
-                </Text>
-              </View>
-            </View>
-            <View
-              style={[
-                styles.fundDetails,
-                { borderLeftColor: "rgba(232, 193, 135, 1)" },
-              ]}
-            >
-              <Text style={styles.fundName}>Axis Multi Cap...</Text>
-              <Text style={styles.fundAmount}> ₹ 20.4k</Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.fundpercentOf}> 20% of 2L </Text>
-                <Text style={[styles.fundPercentage]}>
-                  15% <Fontisto name="angle-up" />
-                </Text>
-              </View>
-            </View>
-            <View
-              style={[
-                styles.fundDetails,
-                {
-                  borderLeftColor: "rgba(169, 190, 244, 1)",
-                },
-              ]}
-            >
-              <Text style={styles.fundName}>Axis Multi Cap...</Text>
-              <Text style={styles.fundAmount}> ₹ 20.4k</Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.fundpercentOf}> 20% of 2L </Text>
-                <Text style={[styles.fundPercentage]}>
-                  15% <Fontisto name="angle-up" />
-                </Text>
-              </View>
-            </View> */}
-            </View>
           </View>
           <View style={styles.your}>
             <Text style={styles.yourHeader}> Linked Investment</Text>
@@ -251,7 +251,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    // marginTop: height * 0.04,
     flexDirection: "row",
     height: height * 0.5,
   },
@@ -419,7 +418,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   investmentContainer: {
-    // position: "absolute",
+    position: "absolute",
     marginLeft: width * 0.05,
   },
   investmentHeader: {
