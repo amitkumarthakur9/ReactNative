@@ -76,9 +76,9 @@ export default Mfotp = () => {
       data = JSON.stringify(data);
 
       const response = await Valideotp(data);
-      console.log("fkdjfajlk", response.data);
       if (response.data.success === false) {
         Alert.alert("Failed", response.data.error);
+        return;
       } else if (response.data.success === true) {
         let success = false;
         while (!success) {
@@ -96,6 +96,7 @@ export default Mfotp = () => {
       }
     } catch (error) {
       Alert.alert("Failed", error.message);
+      navigation.push("Dashboard");
     } finally {
       setShowLoader(false);
       setOtp(["", "", "", "", "", ""]);

@@ -141,9 +141,9 @@ const Dashboardexplore = ({ navigation }) => {
             <Text style={styles.riskText}>Very High Risk</Text>
           </View>
           <View style={styles.flexRow}>
-            <TouchableOpacity style={styles.Button}>
+            {/* <TouchableOpacity style={styles.Button}>
               <Text style={styles.AddToCart}>Add To Cart</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={[
                 styles.Button,

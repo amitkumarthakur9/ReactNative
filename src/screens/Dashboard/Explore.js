@@ -174,14 +174,14 @@ export const SchemesrenderItem = (props) => {
               {RenderStars(item.rating)}
             </View>
             <View style={styles.flexRow}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.Button}
                 onPress={() =>
                   addToCarts(item.id, item.minPurchase, null, dispatch)
                 }
               >
                 <Text style={styles.AddToCart}>Add To Cart</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 style={[
                   styles.Button,
@@ -263,7 +263,7 @@ const Explore = () => {
               style={styles.headerIcon}
               onPress={() => navigation.push("AddToCart")}
             >
-              <Feather name="shopping-cart" size={width * 0.06} color="white" />
+              {/* <Feather name="shopping-cart" size={width * 0.06} color="white" />
               <Badge
                 style={{
                   position: "absolute",
@@ -274,7 +274,7 @@ const Explore = () => {
                 }}
               >
                 {Cartcount}
-              </Badge>
+              </Badge> */}
             </TouchableOpacity>
             {/* <TouchableOpacity style={styles.headerIcon}>
               <Ionicons

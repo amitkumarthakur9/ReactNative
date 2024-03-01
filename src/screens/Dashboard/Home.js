@@ -119,7 +119,7 @@ const Home = ({ navigation }) => {
                 color="white"
               />
             </TouchableOpacity> */}
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.headerIcon}
               onPress={() => navigation.push("AddToCart")}
             >
@@ -135,7 +135,7 @@ const Home = ({ navigation }) => {
               >
                 {Cartcount}
               </Badge>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.headerIcon} onPress={handleLogout}>
               <MaterialCommunityIcons
                 name="logout"

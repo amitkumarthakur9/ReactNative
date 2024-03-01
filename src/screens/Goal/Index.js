@@ -65,15 +65,7 @@ const Goal = () => {
                     ? { uri: profilePic }
                     : require("../../../assets/Goal/profile.png")
                 }
-                style={[
-                  styles.profileImage,
-                  //   {
-                  //     borderRadius: 50,
-                  //     borderWidth: 5,
-                  //     borderBottomWidth: 0,
-                  //     borderColor: "red",
-                  //   },
-                ]}
+                style={[styles.profileImage]}
               />
             </TouchableOpacity>
 
@@ -87,7 +79,7 @@ const Goal = () => {
                   }}
                   onPress={() => setActiveTooltipIndex(index)}
                 >
-                  {activeTooltipIndex === index && (
+                  {/* {activeTooltipIndex === index && (
                     <Tooltip
                       isVisible={true}
                       content={
@@ -144,10 +136,17 @@ const Goal = () => {
                         }}
                       />
                     </Tooltip>
-                  )}
-                  {activeTooltipIndex !== index && (
-                    <View>
-                      <Badge
+                  )} */}
+                  {/* {activeTooltipIndex !== index && ( */}
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("Goalasset", {
+                        wishId: data.id,
+                        title: data.goalName,
+                      })
+                    }
+                  >
+                    {/* <Badge
                         style={{
                           position: "absolute",
                           bottom: -height * 0.005,
@@ -157,16 +156,16 @@ const Goal = () => {
                         }}
                       >
                         40 %
-                      </Badge>
-                      <Image
-                        source={require("../../../assets/Goal/mobile.png")}
-                        style={{
-                          width: data.iconWidth,
-                          height: data.iconWidth,
-                        }}
-                      />
-                    </View>
-                  )}
+                      </Badge> */}
+                    <Image
+                      source={require("../../../assets/Goal/mobile.png")}
+                      style={{
+                        width: data.iconWidth,
+                        height: data.iconWidth,
+                      }}
+                    />
+                  </TouchableOpacity>
+                  {/* )} */}
                 </TouchableOpacity>
               ))}
           </ImageBackground>

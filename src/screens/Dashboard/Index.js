@@ -40,11 +40,15 @@ const Dashboard = () => {
             dispatch(userDetails({ temPan: "" }));
             navigation.push("Mfotp", { clientRefNo });
           } else {
+            dispatch(userDetails({ temPan: "" }));
             Alert.alert(response.data.error);
+            navigation.push("Dashboard");
           }
         })
         .catch((e) => {
-          console.log(e);
+          dispatch(userDetails({ temPan: "" }));
+          Alert.alert("Failed ", "Something went wrong pls try later");
+          navigation.push("Dashboard");
         });
     }
   }, []);

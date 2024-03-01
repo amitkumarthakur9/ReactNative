@@ -41,13 +41,13 @@ const Exploredrawermenu = (props) => {
                 marginRight: width * 0.06,
               }}
             >
-              <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
+              {/* <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
                 <Feather
                   name="shopping-cart"
                   size={width * 0.07}
                   color="white"
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               {/* <TouchableOpacity style={{ marginLeft: width * 0.03 }}>
                 <Ionicons
                   name="notifications-outline"
