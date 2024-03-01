@@ -19,7 +19,7 @@ import Modal from "react-native-modal";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 const Table = (props) => {
   const { transaction } = props;
   const [fontsLoaded] = useFonts({
@@ -35,8 +35,8 @@ const Table = (props) => {
           <Text style={styles.tableHeader}>Units</Text>
           <Text style={styles.tableHeader}>Date</Text>
         </View>
-        {transaction.map((currentValue) => (
-          <View style={styles.tableRow}>
+        {transaction.map((currentValue, index) => (
+          <View style={styles.tableRow} key={index}>
             <Text style={styles.tableCell}>
               {currentValue.buySell == 1
                 ? "Purchase"
@@ -66,11 +66,11 @@ const Table = (props) => {
 };
 
 const MenuModal = (holdingDatas) => {
-  console.log(
-    "holdings object",
-    JSON.stringify(holdingDatas, 1, 2),
-    holdingDatas.holdingDatas.id
-  );
+  //   console.log(
+  //     "holdings object",
+  //     JSON.stringify(holdingDatas, 1, 2),
+  //     holdingDatas.holdingDatas.id
+  //   );
   //   const fundHouseId = holdingDatas.holdingDatas.mutualFund.fundHouse.id;
   //   const fundId = holdingDatas.holdingDatas.mutualFund.id;
   //   const folio = holdingDatas.holdingDatas.folioNumberString;
@@ -207,6 +207,15 @@ const Holdings = (props) => {
         )
       : Object.entries(holdingData).filter(([key, obj]) => obj.units > 0);
 
+  // Use useFocusEffect to persist the state of activeMenuModalIndex
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        setActiveMenuModalIndex(null); // Reset the state when navigating away from the page
+      };
+    }, [])
+  );
+
   const toggleModal = (index) => {
     setActiveModalIndex(activeModalIndex === index ? null : index);
   };
@@ -217,8 +226,6 @@ const Holdings = (props) => {
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
-
-  console.log("holdingData", holdingData);
 
   return (
     <ScrollView

@@ -54,6 +54,8 @@ export default function App() {
           initialRouteName="Splash"
           screenOptions={{
             headerShown: false,
+            animationTypeForReplace: "push",
+            animation: "slide_from_right",
           }}
         >
           <Stack.Screen name="Getstarted" component={Getstarted} />
