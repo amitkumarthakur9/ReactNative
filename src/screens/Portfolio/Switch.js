@@ -151,7 +151,10 @@ export default Switch = () => {
         </View>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
+      >
         {Object.keys(mfData).length > 0 ? (
           <>
             <View style={styles.axisBox}>

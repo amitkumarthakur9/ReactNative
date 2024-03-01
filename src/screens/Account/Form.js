@@ -46,6 +46,7 @@ const Form = ({ data }) => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always"
       style={styles.formContainer}
     >
       {currentForm === 0 ? (

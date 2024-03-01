@@ -68,7 +68,7 @@ export default Singupwithphone = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header title="Sign Up" />
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.signupContainer}>
           {/* <Ionicons
             name="arrow-back"

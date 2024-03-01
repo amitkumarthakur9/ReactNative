@@ -12,10 +12,10 @@ import Myprofile from "./Myprofile";
 const Account = () => {
   const profileCompleted = useSelector((state) => state.user.profileCompleted);
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* {profileCompleted ? <Setting /> : <Myprofile />} */}
       <Setting />
-    </View>
+    </ScrollView>
   );
 };
 

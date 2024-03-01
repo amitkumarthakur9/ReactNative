@@ -101,7 +101,10 @@ export default Redeem = () => {
         </View>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
+      >
         {Object.keys(holdingDatas).length > 0 ? (
           <>
             <View style={styles.axisBox}>

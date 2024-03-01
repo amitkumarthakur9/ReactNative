@@ -221,7 +221,11 @@ const Holdings = (props) => {
   console.log("holdingData", holdingData);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always"
+      style={styles.container}
+    >
       {holdingData != "holdingData" ? (
         <>
           {filteredHoldingData.map(

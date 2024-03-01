@@ -140,7 +140,7 @@ export default Goalsscreen = () => {
   return (
     <View style={styles.container}>
       <Header title="Add Goal" showPlusSign={false} />
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <View style={{ padding: width * 0.04 }}>
           <TextInput
             mode="outlined"

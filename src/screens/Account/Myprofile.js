@@ -11,7 +11,7 @@ const Myprofile = () => {
   return (
     <View style={styles.container}>
       <Header title="Account Setup" showPlusSign={false} />
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.profileContainer}>
           <Accountpagination
             data={{

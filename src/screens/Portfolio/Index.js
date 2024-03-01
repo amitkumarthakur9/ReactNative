@@ -44,7 +44,10 @@ const Portfolio = () => {
   });
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="always"
+    >
       <Bgiheader
         title="Portfolio"
         showPlusSign={false}

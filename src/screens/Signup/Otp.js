@@ -82,7 +82,7 @@ export default Otp = () => {
   return (
     <View style={styles.container}>
       <Header title="Phone Verification" />
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.otpContainer}>
           {/* <Ionicons
             name="arrow-back"

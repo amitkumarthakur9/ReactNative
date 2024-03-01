@@ -221,7 +221,10 @@ const Nominee = ({ data }) => {
   }, []);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always"
+    >
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Nominee
       </Text>

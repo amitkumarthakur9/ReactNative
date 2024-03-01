@@ -78,6 +78,7 @@ export default Mfotp = () => {
       const response = await Valideotp(data);
       if (response.data.success === false) {
         Alert.alert("Failed", response.data.error);
+        setShowLoader(false);
         return;
       } else if (response.data.success === true) {
         let success = false;

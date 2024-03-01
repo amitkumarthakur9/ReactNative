@@ -103,7 +103,10 @@ const Basicdetails = ({ data }) => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always"
+    >
       {/* {console.log("basic details data", JSON.stringify(accountData, null, 1))} */}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Profile

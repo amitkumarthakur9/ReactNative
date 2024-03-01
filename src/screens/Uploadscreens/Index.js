@@ -106,7 +106,10 @@ export default Uploadscreens = ({ navigation }) => {
         showPlusSign={false}
         Headerheight={0.25}
       />
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView
+        style={styles.scrollContainer}
+        keyboardShouldPersistTaps="always"
+      >
         <Text style={styles.header}>Import Portfolio Via OTP </Text>
         <Text style={styles.desc}>
           {" "}

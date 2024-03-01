@@ -23,7 +23,10 @@ export default Setting = () => {
   return (
     <View style={styles.container}>
       <Header title="Settings" />
-      <ScrollView style={styles.scrollviewContainer}>
+      <ScrollView
+        style={styles.scrollviewContainer}
+        keyboardShouldPersistTaps="always"
+      >
         <TouchableOpacity onPress={() => navigation.push("Myprofile")}>
           <View style={styles.flexContainer}>
             <View style={styles.firstflex}>
@@ -44,11 +47,6 @@ export default Setting = () => {
         <TouchableOpacity onPress={() => navigation.push("Upload")}>
           <View style={styles.flexContainer}>
             <View style={styles.firstflex}>
-              {/* <Image
-                source={require("../../../assets/setting/payment.png")}
-                resizeMode="contain"
-                style={styles.imageStyle}
-              /> */}
               <AntDesign name="filetext1" size={24} color="black" />
             </View>
             <Text style={[styles.secondflex, styles.text]}>
@@ -182,7 +180,7 @@ const styles = StyleSheet.create({
     flex: 4,
   },
   thirdflex: {
-    flex: 1,
+    flex: 0.5,
   },
   text: {
     fontSize: width * 0.045,

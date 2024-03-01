@@ -110,7 +110,10 @@ export default Index = () => {
   return (
     <View style={styles.container}>
       <Header title="Attach Goal" showPlusSign={false} />
-      <ScrollView style={styles.contentContainer}>
+      <ScrollView
+        style={styles.contentContainer}
+        keyboardShouldPersistTaps="always"
+      >
         <TouchableOpacity style={styles.dropdown}>
           <Picker
             selectedValue={goal}

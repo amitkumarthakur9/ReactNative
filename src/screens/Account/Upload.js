@@ -83,7 +83,10 @@ const Upload = ({ data }) => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always"
+    >
       <Text style={styles.desc}>
         Upload image of signature on white paper to complete the onboarding
       </Text>

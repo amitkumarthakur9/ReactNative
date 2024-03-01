@@ -164,7 +164,11 @@ const Reports = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always"
+      style={styles.container}
+    >
       {!loader ? (
         <View style={styles.cart}>
           <View style={styles.individualCarts}>

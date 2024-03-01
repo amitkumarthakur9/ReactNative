@@ -87,7 +87,10 @@ const Fatca = ({ data }) => {
   //   console.log("nominee", accountData.city);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always"
+    >
       {/* {console.log("fatca", accountData)} */}
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Fatca

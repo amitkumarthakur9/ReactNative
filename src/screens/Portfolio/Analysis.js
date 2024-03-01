@@ -120,7 +120,10 @@ const Holdings = () => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always"
+    >
       <View style={styles.container}>
         <View style={styles.donutContainer}>
           <TouchableOpacity>

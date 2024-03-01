@@ -116,7 +116,10 @@ const Bankdetails = ({ data }) => {
   //   console.log("accountCode", accountData);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="always"
+    >
       <Text style={styles.desc}>
         You can make changes to these details later under Account - Bank
       </Text>
@@ -182,7 +185,10 @@ const Bankdetails = ({ data }) => {
 
       {filteredBank && optionsVisible && (
         <>
-          <ScrollView contentContainerStyle={styles.optionContainer}>
+          <ScrollView
+            contentContainerStyle={styles.optionContainer}
+            keyboardShouldPersistTaps="always"
+          >
             {filteredBank.map((item) => (
               <TouchableOpacity
                 key={item.bankCode}
