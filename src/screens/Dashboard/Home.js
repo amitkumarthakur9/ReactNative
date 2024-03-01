@@ -108,7 +108,7 @@ const Home = ({ navigation }) => {
           >
             <TouchableOpacity
               onPress={() => navigation.push("Searchbox")}
-              style={styles.headerIcon}
+              style={[styles.headerIcon, { marginLeft: width * 0.05 }]}
             >
               <EvilIcons name="search" size={width * 0.07} color="white" />
             </TouchableOpacity>
