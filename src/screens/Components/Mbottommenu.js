@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
   flexBox: {
     flex: 1,
     alignItems: "center",
+    marginTop: height * 0.015,
   },
   imageview: {
     alignItems: "center",
@@ -148,9 +149,9 @@ const styles = StyleSheet.create({
   },
   flexContainer: {
     width: width,
-    height: height * 0.1,
+    height: height * 0.12,
     borderWidth: width * 0.002,
-    borderColor: "rgb(230, 230, 230)",
+    borderColor: "rgb(217, 217, 217)",
     backgroundColor: "white",
     borderTopLeftRadius: width * 0.05,
     borderTopRightRadius: width * 0.05,

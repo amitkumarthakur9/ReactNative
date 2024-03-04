@@ -14,6 +14,7 @@ import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import onShare from "./Share";
 import Inappbrowser from "../Components/Inappbrowser";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default Setting = () => {
   const [fontsLoaded] = useFonts({
@@ -37,6 +38,19 @@ export default Setting = () => {
               />
             </View>
             <Text style={[styles.secondflex, styles.text]}>My Profile</Text>
+            <FontAwesome
+              name="angle-right"
+              size={width * 0.07}
+              style={[styles.thirdflex, styles.arrow]}
+            />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.push("Order")}>
+          <View style={styles.flexContainer}>
+            <View style={styles.firstflex}>
+              <MaterialCommunityIcons name="purse" size={24} color="black" />
+            </View>
+            <Text style={[styles.secondflex, styles.text]}>Orders</Text>
             <FontAwesome
               name="angle-right"
               size={width * 0.07}

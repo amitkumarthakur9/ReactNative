@@ -27,8 +27,9 @@ import { Orders } from "../../api/services/endpoints/buyEndpoints";
 import Formatdate from "../Components/Formatdate";
 import Loader from "../Components/Loader";
 import Inappbrowser from "../Components/Inappbrowser";
+import Mbottommenu from "../Components/Mbottommenu";
 
-export default Order = ({ navigation }) => {
+export default Index = ({ navigation }) => {
   const [orderData, setOrderData] = useState(null);
 
   useEffect(() => {
@@ -171,6 +172,7 @@ export default Order = ({ navigation }) => {
       ) : (
         <Loader />
       )}
+      <Mbottommenu />
     </View>
   );
 };
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     flex: 1,
-    marginBottom: height * 0.15,
+    // marginBottom: height * 0.15,
   },
   contentContainer: {
     marginTop: height * 0.02,

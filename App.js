@@ -43,6 +43,7 @@ import Myprofile from "./src/screens/Account/Myprofile";
 import Mandatelist from "./src/screens/Mandate/Mandatelist";
 import Mfotp from "./src/screens/Uploadscreens/Mfotp";
 import Attachgoal from "./src/screens/Portfolio/Attachgoal";
+import Order from "./src/screens/Dashboard/Order";
 
 const Stack = createNativeStackNavigator();
 
@@ -97,6 +98,7 @@ export default function App() {
           <Stack.Screen name="Mandatelist" component={Mandatelist} />
           <Stack.Screen name="Mfotp" component={Mfotp} />
           <Stack.Screen name="Attachgoal" component={Attachgoal} />
+          <Stack.Screen name="Order" component={Order} />
         </Stack.Navigator>
         <StatusBar />
       </NavigationContainer>

@@ -127,7 +127,7 @@ const Menu = () => {
         name="product"
         component={Order}
         options={{
-          tabBarLabel: "Orders",
+          tabBarLabel: "Cart",
           tabBarIcon: ({ color, size }) => (
             <View
               style={{
