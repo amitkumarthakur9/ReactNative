@@ -5,6 +5,7 @@ import { height, width } from "../../Dimension";
 import Accountpagination from "./Accountpagination";
 import Form from "./Form";
 import Header from "../Components/Header";
+import Mbottommenu from "../Components/Mbottommenu";
 
 const Myprofile = () => {
   const [currentForm, setCurrentForm] = useState(0);
@@ -27,6 +28,7 @@ const Myprofile = () => {
           />
         </View>
       </ScrollView>
+      <Mbottommenu />
     </View>
   );
 };
@@ -38,6 +40,7 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     padding: width * 0.06,
+    marginBottom: height * 0.1,
   },
 });
 export default Myprofile;

@@ -22,6 +22,7 @@ import { Foundation, SimpleLineIcons } from "@expo/vector-icons";
 import Formatfundname from "../Components/Formatfundname";
 import RenderStars from "../Components/Star";
 import { useFonts } from "expo-font";
+import Mbottommenu from "../Components/Mbottommenu";
 
 export default Searchbox = ({ navigation }) => {
   const [search, setSearch] = useState();
@@ -138,6 +139,7 @@ export default Searchbox = ({ navigation }) => {
           mode="outlined"
           style={styles.searchInput}
           placeholder="Search Fund (Min 3 char)"
+          autoFocus={true}
           outlineStyle={{ borderRadius: width * 0.06, borderColor: "white" }}
           right={
             search ? (

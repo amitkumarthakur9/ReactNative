@@ -15,6 +15,7 @@ import { useFonts } from "expo-font";
 import formatNumberWithCommas from "../Components/Inrconverter";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
+import Mbottommenu from "../Components/Mbottommenu";
 
 export default Mandatelist = () => {
   const [mandateData, setMandataData] = useState(null);
@@ -114,6 +115,7 @@ export default Mandatelist = () => {
           <Loader />
         )}
       </ScrollView>
+      <Mbottommenu />
     </View>
   );
 };

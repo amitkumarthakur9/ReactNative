@@ -24,6 +24,7 @@ import Formatdate from "../Components/Formatdate";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Mandateregister } from "../../api/services/endpoints/buyEndpoints";
 import Header from "../Components/Header";
+import Mbottommenu from "../Components/Mbottommenu";
 
 export default Registermandate = () => {
   const [check, setCheck] = useState(true);
@@ -192,6 +193,7 @@ export default Registermandate = () => {
           </View>
         </View>
       </ScrollView>
+      <Mbottommenu />
     </View>
   );
 };

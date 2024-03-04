@@ -15,7 +15,7 @@ const Imagecontainer = (props) => {
   );
 };
 
-const Menu = () => {
+const Index = () => {
   const navigation = useNavigation();
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
@@ -33,25 +33,37 @@ const Menu = () => {
             tabHome="Home"
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.flexBox}>
+        <TouchableOpacity
+          style={styles.flexBox}
+          onPress={() => navigation.push("Goalmenu")}
+        >
           <Imagecontainer
             url={require("../../../assets/menu/Shape.png")}
             tabHome="Goal"
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.flexBox}>
+        <TouchableOpacity
+          style={styles.flexBox}
+          onPress={() => navigation.push("Exploremenu")}
+        >
           <Imagecontainer
             url={require("../../../assets/menu/Explore.png")}
             tabHome="Explore"
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.flexBox}>
+        <TouchableOpacity
+          style={styles.flexBox}
+          onPress={() => navigation.push("Ordermenu")}
+        >
           <Imagecontainer
             url={require("../../../assets/menu/cart.png")}
             tabHome="Cart"
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.flexBox}>
+        <TouchableOpacity
+          style={styles.flexBox}
+          onPress={() => navigation.push("Accountmenu")}
+        >
           <Imagecontainer
             url={require("../../../assets/menu/Person.png")}
             tabHome="Account"
@@ -104,26 +116,6 @@ const styles = StyleSheet.create({
     padding: width * 0.02,
     elevation: width * 0.05,
   },
-  //    screenOptions={{
-  //         tabBarActiveTintColor: "rgba(2, 48, 71, 1)",
-  //         tabBarInactiveTintColor: "rgba(202, 196, 208, 1)",
-  //         headerShown: false,
-  //         tabBarStyle: {
-  //           height: height * 0.1,
-  //           backgroundColor: "rgba(255, 255, 255, 1)",
-  //           borderTopLeftRadius: width * 0.05,
-  //           borderTopRightRadius: width * 0.05,
-  //           borderColor: "rgba(0, 0, 0, 0.1)",
-  //           padding: width * 0.02,
-  //           elevation: width * 0.02,
-  //         },
-  //         tabBarLabelStyle: {
-  //           fontSize: width * 0.035,
-  //           lineHeight: height * 0.025,
-  //           fontFamily: "Inter-Black",
-  //           fontWeight: "500",
-  //           marginBottom: height * 0.015,
-  //         },
 });
 
-export default Menu;
+export default Index;
