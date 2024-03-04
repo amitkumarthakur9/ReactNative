@@ -1,5 +1,13 @@
-import React from "react";
-import { Text, Image, View, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  Text,
+  Image,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  Keyboard,
+} from "react-native";
 import { height, width } from "../../Dimension";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
@@ -17,59 +25,92 @@ const Imagecontainer = (props) => {
 
 const Index = () => {
   const navigation = useNavigation();
+  const [viewportHeight, setViewportHeight] = useState(
+    Dimensions.get("window").height
+  );
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      (event) => {
+        // Update viewport height when the keyboard is opened
+        setViewportHeight(
+          Dimensions.get("window").height - event.endCoordinates.height
+        );
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        // Reset viewport height when the keyboard is closed
+        setViewportHeight(Dimensions.get("window").height);
+      }
+    );
+
+    // Cleanup listeners
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
-      <View style={[styles.flexContainer, styles.flex]}>
-        <TouchableOpacity
-          style={styles.flexBox}
-          onPress={() => navigation.push("Dashboard")}
-        >
-          <Imagecontainer
-            url={require("../../../assets/menu/Home.png")}
-            tabHome="Home"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.flexBox}
-          onPress={() => navigation.push("Goalmenu")}
-        >
-          <Imagecontainer
-            url={require("../../../assets/menu/Shape.png")}
-            tabHome="Goal"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.flexBox}
-          onPress={() => navigation.push("Exploremenu")}
-        >
-          <Imagecontainer
-            url={require("../../../assets/menu/Explore.png")}
-            tabHome="Explore"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.flexBox}
-          onPress={() => navigation.push("Ordermenu")}
-        >
-          <Imagecontainer
-            url={require("../../../assets/menu/cart.png")}
-            tabHome="Cart"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.flexBox}
-          onPress={() => navigation.push("Accountmenu")}
-        >
-          <Imagecontainer
-            url={require("../../../assets/menu/Person.png")}
-            tabHome="Account"
-          />
-        </TouchableOpacity>
-      </View>
+      {viewportHeight == height ? (
+        <View style={[styles.flexContainer, styles.flex]}>
+          <TouchableOpacity
+            style={styles.flexBox}
+            onPress={() => navigation.push("Dashboard")}
+          >
+            <Imagecontainer
+              url={require("../../../assets/menu/Home.png")}
+              tabHome="Home"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.flexBox}
+            onPress={() => navigation.push("Goalmenu")}
+          >
+            <Imagecontainer
+              url={require("../../../assets/menu/Shape.png")}
+              tabHome="Goal"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.flexBox}
+            onPress={() => navigation.push("Exploremenu")}
+          >
+            <Imagecontainer
+              url={require("../../../assets/menu/Explore.png")}
+              tabHome="Explore"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.flexBox}
+            onPress={() => navigation.push("Ordermenu")}
+          >
+            <Imagecontainer
+              url={require("../../../assets/menu/cart.png")}
+              tabHome="Cart"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.flexBox}
+            onPress={() => navigation.push("Accountmenu")}
+          >
+            <Imagecontainer
+              url={require("../../../assets/menu/Person.png")}
+              tabHome="Account"
+            />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        ""
+      )}
     </View>
   );
 };

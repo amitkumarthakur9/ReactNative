@@ -158,6 +158,7 @@ export default Searchbox = ({ navigation }) => {
           keyExtractor={(item) => item.id}
         />
       </View>
+      <Mbottommenu />
     </View>
   );
 };
