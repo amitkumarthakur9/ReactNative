@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     flex: 4,
   },
   thirdflex: {
-    flex: 0.5,
+    flex: 0.2,
   },
   text: {
     fontSize: width * 0.045,
