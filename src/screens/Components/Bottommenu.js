@@ -138,7 +138,7 @@ const Menu = () => {
               }}
             >
               <Image
-                source={require("../../../assets/menu/Product.png")}
+                source={require("../../../assets/menu/cart.png")}
                 style={{
                   width: width * 0.067,
                   height: width * 0.067,
