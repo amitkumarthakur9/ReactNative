@@ -22,12 +22,14 @@ import { useSelector } from "react-redux";
 import Formatfundname from "../Components/Formatfundname";
 import formatNumberWithCommas from "../Components/Inrconverter";
 import Loader from "../Components/Loader";
+import { useNavigation } from "@react-navigation/native";
 export default Index = () => {
   const route = useRoute();
   const { wishId, title } = route.params;
   const userId = useSelector((state) => state.user.id);
   const [goaldata, setGoaldata] = useState(null);
   const [holding, setHolding] = useState(null);
+  const navigation = useNavigation();
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
@@ -239,6 +241,16 @@ export default Index = () => {
             There is no holding attached with this goal . Please attach holding
             first....
           </Text>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.push("Holdings", { Goalassets: "Goalassets" })
+            }
+            style={{ marginTop: height * 0.02 }}
+          >
+            <Button mode="contained" style={styles.Button}>
+              Attach Holdings
+            </Button>
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -467,5 +479,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     padding: width * 0.05,
+  },
+  Button: {
+    alignItems: "center",
+    borderRadius: width * 0.03,
+    borderWidth: 1,
+    borderColor: "#023047",
+    padding: width * 0.01,
+    backgroundColor: "#023047",
   },
 });

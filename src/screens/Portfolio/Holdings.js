@@ -19,7 +19,13 @@ import Modal from "react-native-modal";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import {
+  useNavigation,
+  useFocusEffect,
+  useRoute,
+} from "@react-navigation/native";
+import Header from "../Components/Header";
+import Mbottommenu from "../Components/Mbottommenu";
 const Table = (props) => {
   const { transaction } = props;
   const [fontsLoaded] = useFonts({
@@ -196,6 +202,9 @@ const Holdings = (props) => {
   const [activeMenuModalIndex, setActiveMenuModalIndex] = useState(null);
   const { holdingData } = usePortfolioData();
   const { currentPage, objKey } = props;
+  const route = useRoute();
+  const destination = route.params.Goalassets || "";
+  const navigation = useNavigation();
   const filteredHoldingData =
     objKey == "internal"
       ? Object.entries(holdingData).filter(
@@ -228,181 +237,219 @@ const Holdings = (props) => {
   });
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="always"
-      style={styles.container}
-    >
-      {holdingData != "holdingData" ? (
-        <>
-          {filteredHoldingData.map(
-            ([key, obj], index) =>
-              obj.units > 0 && (
-                <View style={styles.card} key={key}>
-                  <View style={styles.flexRow}>
-                    <View style={styles.trendImage}>
-                      <Image
-                        style={{ width: width * 0.14, height: height * 0.05 }}
-                        source={{
-                          uri: obj.mutualFund.fundHouse.logoUrl,
-                        }}
-                        resizeMode="stretch"
-                      />
+    <>
+      {destination != "" && (
+        <Header title="Attach Holdings" showPlusSign={false} />
+      )}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
+        style={styles.container}
+      >
+        {holdingData != "holdingData" ? (
+          <>
+            {filteredHoldingData.map(
+              ([key, obj], index) =>
+                obj.units > 0 && (
+                  <View style={styles.card} key={key}>
+                    <View style={styles.flexRow}>
+                      <View style={styles.trendImage}>
+                        <Image
+                          style={{ width: width * 0.14, height: height * 0.05 }}
+                          source={{
+                            uri: obj.mutualFund.fundHouse.logoUrl,
+                          }}
+                          resizeMode="stretch"
+                        />
+                      </View>
+                      <View style={{ flex: 4 }}>
+                        <Text style={styles.fundName}>
+                          {Formatfundname(obj.mutualFund.name)}
+                        </Text>
+                        <Text style={styles.folio}>
+                          Folio No: {obj.folioNumberString}
+                        </Text>
+                      </View>
+                      {destination == "" && (
+                        <TouchableOpacity
+                          onPress={() => toggleMenuModal(index)}
+                        >
+                          <Entypo
+                            name="dots-three-vertical"
+                            size={width * 0.06}
+                            color="black"
+                          />
+                        </TouchableOpacity>
+                      )}
                     </View>
-                    <View style={{ flex: 4 }}>
-                      <Text style={styles.fundName}>
-                        {Formatfundname(obj.mutualFund.name)}
-                      </Text>
-                      <Text style={styles.folio}>
-                        Folio No: {obj.folioNumberString}
-                      </Text>
-                    </View>
-                    <TouchableOpacity onPress={() => toggleMenuModal(index)}>
-                      <Entypo
-                        name="dots-three-vertical"
-                        size={width * 0.06}
-                        color="black"
-                      />
-                    </TouchableOpacity>
-                  </View>
 
-                  <Modal
-                    isVisible={activeMenuModalIndex === index}
-                    backdropColor=""
-                    style={{
-                      marginTop: height * 0.5,
-                    }}
-                  >
-                    <View
+                    <Modal
+                      isVisible={activeMenuModalIndex === index}
+                      backdropColor=""
                       style={{
-                        flex: 1,
-                        backgroundColor: "white",
-                        borderWidth: 1,
-                        borderColor: "rgb(217, 217, 217)",
-                        borderRadius: width * 0.05,
+                        marginTop: height * 0.5,
                       }}
                     >
-                      <TouchableOpacity onPress={() => toggleMenuModal(index)}>
-                        <Entypo
-                          name="cross"
-                          size={width * 0.07}
-                          color="black"
-                          style={{
-                            alignSelf: "flex-end",
-                            fontSize: width * 0.05,
-                            padding: width * 0.02,
-                          }}
-                        />
-                      </TouchableOpacity>
-                      <MenuModal holdingDatas={obj} />
-                    </View>
-                  </Modal>
+                      <View
+                        style={{
+                          flex: 1,
+                          backgroundColor: "white",
+                          borderWidth: 1,
+                          borderColor: "rgb(217, 217, 217)",
+                          borderRadius: width * 0.05,
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => toggleMenuModal(index)}
+                        >
+                          <Entypo
+                            name="cross"
+                            size={width * 0.07}
+                            color="black"
+                            style={{
+                              alignSelf: "flex-end",
+                              fontSize: width * 0.05,
+                              padding: width * 0.02,
+                            }}
+                          />
+                        </TouchableOpacity>
+                        <MenuModal holdingDatas={obj} />
+                      </View>
+                    </Modal>
 
-                  <View style={styles.boxBottomContainer}>
-                    <View style={styles.flexRow}>
-                      <Text style={styles.descHeader}>Initial Investment</Text>
-                      <Text style={styles.descHeader}>Current Value</Text>
-                    </View>
-                    <View style={styles.flexRow}>
-                      <Text style={styles.descValue}>
-                        ₹{" "}
-                        {formatNumberWithCommas(Math.round(obj.orignalAmount))}
-                      </Text>
-                      <Text style={styles.descValue}>
-                        ₹ {formatNumberWithCommas(Math.round(obj.currValue))}
-                      </Text>
-                    </View>
-
-                    <View style={styles.valueContainer}>
+                    <View style={styles.boxBottomContainer}>
                       <View style={styles.flexRow}>
-                        <Text style={styles.descHeader}>Current Gain</Text>
-                        <Text style={styles.descHeader}>XIRR</Text>
+                        <Text style={styles.descHeader}>
+                          Initial Investment
+                        </Text>
+                        <Text style={styles.descHeader}>Current Value</Text>
                       </View>
                       <View style={styles.flexRow}>
                         <Text style={styles.descValue}>
                           ₹{" "}
                           {formatNumberWithCommas(
-                            Math.round(obj.currValue) -
-                              Math.round(obj.orignalAmount)
+                            Math.round(obj.orignalAmount)
                           )}
                         </Text>
                         <Text style={styles.descValue}>
-                          {parseFloat(obj.xirr).toFixed(2)}
-                          {"%"}
+                          ₹ {formatNumberWithCommas(Math.round(obj.currValue))}
                         </Text>
                       </View>
+
+                      <View style={styles.valueContainer}>
+                        <View style={styles.flexRow}>
+                          <Text style={styles.descHeader}>Current Gain</Text>
+                          <Text style={styles.descHeader}>XIRR</Text>
+                        </View>
+                        <View style={styles.flexRow}>
+                          <Text style={styles.descValue}>
+                            ₹{" "}
+                            {formatNumberWithCommas(
+                              Math.round(obj.currValue) -
+                                Math.round(obj.orignalAmount)
+                            )}
+                          </Text>
+                          <Text style={styles.descValue}>
+                            {parseFloat(obj.xirr).toFixed(2)}
+                            {"%"}
+                          </Text>
+                        </View>
+                      </View>
                     </View>
-                  </View>
-                  <TouchableOpacity
-                    style={styles.ViewTransactionContainer}
-                    title="Show modal"
-                    onPress={() => toggleModal(index)}
-                  >
-                    <Text style={styles.viewTransactionText}>
-                      View Transactions
-                    </Text>
-                  </TouchableOpacity>
-                  <Modal
-                    isVisible={activeModalIndex === index}
-                    backdropColor=""
-                    deviceWidth={width * 0.5}
-                    style={{
-                      marginTop: height * 0.45,
-                    }}
-                  >
-                    <View
+                    {destination == "" ? (
+                      <TouchableOpacity
+                        style={styles.ViewTransactionContainer}
+                        title="Show modal"
+                        onPress={() => toggleModal(index)}
+                      >
+                        <Text style={styles.viewTransactionText}>
+                          View Transactions
+                        </Text>
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity
+                        style={styles.ViewTransactionContainer}
+                        onPress={() =>
+                          navigation.navigate("Attachgoal", {
+                            holdingId: obj.id,
+                          })
+                        }
+                      >
+                        <Text style={styles.viewTransactionText}>
+                          Attach Goal
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                    <Modal
+                      isVisible={activeModalIndex === index}
+                      backdropColor=""
+                      deviceWidth={width * 0.5}
                       style={{
-                        flex: 1,
-                        backgroundColor: "white",
-                        borderWidth: 1,
-                        borderColor: "rgb(217, 217, 217)",
-                        borderRadius: width * 0.05,
+                        marginTop: height * 0.45,
                       }}
                     >
-                      <View style={[styles.flexRow, { padding: width * 0.05 }]}>
-                        <View style={styles.trendImage}>
-                          <Image
-                            style={{
-                              width: width * 0.14,
-                              height: height * 0.05,
-                            }}
-                            source={{
-                              uri: obj.mutualFund.fundHouse.logoUrl,
-                            }}
-                            resizeMode="stretch"
-                          />
+                      <View
+                        style={{
+                          flex: 1,
+                          backgroundColor: "white",
+                          borderWidth: 1,
+                          borderColor: "rgb(217, 217, 217)",
+                          borderRadius: width * 0.05,
+                        }}
+                      >
+                        <View
+                          style={[styles.flexRow, { padding: width * 0.05 }]}
+                        >
+                          <View style={styles.trendImage}>
+                            <Image
+                              style={{
+                                width: width * 0.14,
+                                height: height * 0.05,
+                              }}
+                              source={{
+                                uri: obj.mutualFund.fundHouse.logoUrl,
+                              }}
+                              resizeMode="stretch"
+                            />
+                          </View>
+                          <View style={{ flex: 4 }}>
+                            <Text style={styles.fundName}>
+                              {Formatfundname(obj.mutualFund.name)}
+                            </Text>
+                            <Text style={styles.folio}>
+                              Folio No: {obj.folioNumberString}
+                            </Text>
+                          </View>
+                          <TouchableOpacity onPress={() => toggleModal(index)}>
+                            <Entypo
+                              name="cross"
+                              size={width * 0.06}
+                              color="black"
+                              style={{
+                                alignSelf: "flex-end",
+                                fontSize: width * 0.05,
+                              }}
+                            />
+                          </TouchableOpacity>
                         </View>
-                        <View style={{ flex: 4 }}>
-                          <Text style={styles.fundName}>
-                            {Formatfundname(obj.mutualFund.name)}
-                          </Text>
-                          <Text style={styles.folio}>
-                            Folio No: {obj.folioNumberString}
-                          </Text>
-                        </View>
-                        <TouchableOpacity onPress={() => toggleModal(index)}>
-                          <Entypo
-                            name="cross"
-                            size={width * 0.06}
-                            color="black"
-                            style={{
-                              alignSelf: "flex-end",
-                              fontSize: width * 0.05,
-                            }}
-                          />
-                        </TouchableOpacity>
+                        <Table transaction={obj.transactions} />
                       </View>
-                      <Table transaction={obj.transactions} />
-                    </View>
-                  </Modal>
-                </View>
-              )
-          )}
+                    </Modal>
+                  </View>
+                )
+            )}
+          </>
+        ) : (
+          <Loader />
+        )}
+      </ScrollView>
+      {destination != "" && (
+        <>
+          <View style={{ marginBottom: height * 0.11 }}></View>
+          <Mbottommenu />
         </>
-      ) : (
-        <Loader />
       )}
-    </ScrollView>
+    </>
   );
 };
 
