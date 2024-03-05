@@ -96,7 +96,7 @@ export default Index = () => {
             "In your selected goal"
           );
           setLoader(false);
-          navigation.push("Goalmenu");
+          navigation.push("Dashboard", "Goal");
         } else {
           Alert.alert("Failed", "please try later .");
           setLoader(false);

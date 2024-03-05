@@ -81,7 +81,7 @@ export default Goalsscreen = () => {
       .then((response) => {
         response.success
           ? (Alert.alert("Goal has been added successfully"),
-            navigation.push("Goalmenu"))
+            navigation.push("Dashboard", "Goal"))
           : Alert.alert("Failed, Try Later");
         setLoader(false);
       })

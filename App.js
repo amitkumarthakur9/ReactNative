@@ -30,9 +30,6 @@ import { Provider } from "react-redux";
 import { store } from "./src/redux/Store";
 import AddToCart from "./src/screens/Cart/Addtocart";
 import Explore from "./src/screens/Dashboard/Explore";
-import Exploremenu from "./src/screens/Dashboard/Exploremenu";
-import Goalmenu from "./src/screens/Dashboard/Goalmenu";
-import Accountmenu from "./src/screens/Dashboard/Accountmenu";
 import UploadDoc from "./src/screens/Account/Upload";
 import Redeem from "./src/screens/Portfolio/Redeem";
 import Switchsearch from "./src/screens/Portfolio/Switchsearch";
@@ -85,9 +82,6 @@ export default function App() {
           <Stack.Screen name="Payment" component={Payment} />
           <Stack.Screen name="AddToCart" component={AddToCart} />
           <Stack.Screen name="Explore" component={Explore} />
-          <Stack.Screen name="Exploremenu" component={Exploremenu} />
-          <Stack.Screen name="Goalmenu" component={Goalmenu} />
-          <Stack.Screen name="Accountmenu" component={Accountmenu} />
           <Stack.Screen name="UploadDoc" component={UploadDoc} />
           <Stack.Screen name="Redeem" component={Redeem} />
           <Stack.Screen name="Switchsearch" component={Switchsearch} />

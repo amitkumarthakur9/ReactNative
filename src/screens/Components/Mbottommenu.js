@@ -73,7 +73,7 @@ const Index = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.flexBox}
-            onPress={() => navigation.push("Goalmenu")}
+            onPress={() => navigation.push("Dashboard", "Goal")}
           >
             <Imagecontainer
               url={require("../../../assets/menu/Shape.png")}
@@ -82,7 +82,7 @@ const Index = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.flexBox}
-            onPress={() => navigation.push("Exploremenu")}
+            onPress={() => navigation.push("Dashboard", "Explore")}
           >
             <Imagecontainer
               url={require("../../../assets/menu/Explore.png")}
@@ -91,7 +91,7 @@ const Index = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.flexBox}
-            onPress={() => navigation.push("Ordermenu")}
+            onPress={() => navigation.push("Dashboard", "AddToCart")}
           >
             <Imagecontainer
               url={require("../../../assets/menu/cart.png")}
@@ -100,7 +100,7 @@ const Index = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.flexBox}
-            onPress={() => navigation.push("Accountmenu")}
+            onPress={() => navigation.push("Dashboard", "Account")}
           >
             <Imagecontainer
               url={require("../../../assets/menu/Person.png")}
@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    width: width * 0.067,
-    height: width * 0.067,
+    width: width * 0.07,
+    height: width * 0.07,
     tintColor: "rgba(202, 196, 208, 1)",
     resizeMode: "contain",
   },

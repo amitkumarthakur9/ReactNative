@@ -3,10 +3,10 @@ import { View, Text, Alert } from "react-native";
 import Bottommenu from "../Components/Bottommenu";
 import { useSelector } from "react-redux";
 import { Mfsendotpoutside } from "../../api/services/endpoints/mfcenteral";
-import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { userDetails } from "../../redux/slices/user/Index";
 import Loader from "../Components/Loader";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 const Dashboard = () => {
   const [clientRefNo, setclientRefNo] = useState(null);
@@ -15,6 +15,9 @@ const Dashboard = () => {
   );
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const route = useRoute();
+  const defaultTab = route.params || "";
+
   useEffect(() => {
     var data = "";
     if (temPan) {
@@ -54,7 +57,13 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <>{temPan == "" && clientRefNo == null ? <Bottommenu /> : <Loader />}</>
+    <>
+      {temPan == "" && clientRefNo == null ? (
+        <Bottommenu defaultTab={defaultTab} />
+      ) : (
+        <Loader />
+      )}
+    </>
   );
 };
 

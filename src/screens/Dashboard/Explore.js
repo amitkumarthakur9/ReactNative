@@ -261,7 +261,7 @@ const Explore = () => {
           <View style={[styles.flexRow, { flex: 1, alignSelf: "center" }]}>
             <TouchableOpacity
               style={styles.headerIcon}
-              onPress={() => navigation.push("AddToCart")}
+              //   onPress={() => navigation.push("AddToCart")}
             >
               {/* <Feather name="shopping-cart" size={width * 0.06} color="white" />
               <Badge

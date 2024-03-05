@@ -7,17 +7,18 @@ import Explore from "../Dashboard/Explore";
 import Account from "../Account/Index";
 import Goal from "../Goal/Index";
 import { useFonts } from "expo-font";
-import Order from "../Dashboard/Order";
+import AddToCart from "../Cart/Addtocart";
 
 const Tab = createBottomTabNavigator();
 
-const Menu = () => {
+const Menu = (props) => {
+  const defaultTab = props.defaultTab || "TabHome";
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
   return (
     <Tab.Navigator
-      initialRouteName="TabHome"
+      initialRouteName={defaultTab}
       screenOptions={{
         tabBarActiveTintColor: "rgba(2, 48, 71, 1)",
         tabBarInactiveTintColor: "rgba(202, 196, 208, 1)",
@@ -124,8 +125,8 @@ const Menu = () => {
         }}
       />
       <Tab.Screen
-        name="product"
-        component={Order}
+        name="AddToCart"
+        component={AddToCart}
         options={{
           tabBarLabel: "Cart",
           tabBarIcon: ({ color, size }) => (
@@ -151,7 +152,7 @@ const Menu = () => {
         }}
       />
       <Tab.Screen
-        name="account"
+        name="Account"
         component={Account}
         options={{
           tabBarLabel: "Account",

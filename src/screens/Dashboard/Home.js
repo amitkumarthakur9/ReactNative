@@ -205,14 +205,18 @@ const Home = ({ navigation }) => {
                         {profileCompleted ? (
                           <TouchableOpacity
                             style={styles.investNow}
-                            onPress={() => navigation.push("Exploremenu")}
+                            onPress={() =>
+                              navigation.push("Dashboard", "Explore")
+                            }
                           >
                             <Text style={styles.investNowText}>Invest Now</Text>
                           </TouchableOpacity>
                         ) : (
                           <TouchableOpacity
                             style={styles.investNow}
-                            onPress={() => navigation.push("Accountmenu")}
+                            onPress={() =>
+                              navigation.push("Dashboard", "Account")
+                            }
                           >
                             <Text style={styles.investNowText}>
                               Complete Profile
@@ -287,7 +291,9 @@ const Home = ({ navigation }) => {
                         </Text>
                         <TouchableOpacity
                           style={styles.investNow}
-                          onPress={() => navigation.push("Exploremenu")}
+                          onPress={() =>
+                            navigation.push("Dashboard", "Explore")
+                          }
                         >
                           <Text style={styles.investNowText}>Invest Now</Text>
                         </TouchableOpacity>
