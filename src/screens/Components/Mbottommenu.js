@@ -18,8 +18,6 @@ const Imagecontainer = (props) => {
   const Cartcount = useSelector((state) => state.cart.count);
   const { url, tabHome, show } = props;
 
-  console.log(props);
-
   return (
     <View style={styles.imageview}>
       {show && (
