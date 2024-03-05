@@ -27,6 +27,8 @@ import { useFonts } from "expo-font";
 import { useFocusEffect } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { userDetails } from "../../redux/slices/user/Index";
+import { Fetchcart } from "../Cart/Data";
+import { incrementWithpayload } from "../../redux/slices/cart/Index";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
@@ -76,6 +78,16 @@ const Home = ({ navigation }) => {
       setSessioncheck(null);
     }, [])
   );
+
+  useEffect(() => {
+    Fetchcart()
+      .then((response) => {
+        dispatch(incrementWithpayload({ data: response.length }));
+      })
+      .catch((erorr) => {
+        console.warn(erorr);
+      });
+  }, []);
 
   const profileCompleted = useSelector((state) => state.user.profileCompleted);
   const Cartcount = useSelector((state) => state.cart.count);

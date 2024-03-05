@@ -141,17 +141,20 @@ const Menu = (props) => {
                 justifyContent: "center",
               }}
             >
-              <Badge
-                style={{
-                  position: "absolute",
-                  top: -height * 0.015,
-                  backgroundColor: "rgba(33, 158, 188, 1)",
-                  fontFamily: "Inter-Black",
-                  fontWeight: "600",
-                }}
-              >
-                {Cartcount}
-              </Badge>
+              {Cartcount > 0 && (
+                <Badge
+                  style={{
+                    position: "absolute",
+                    top: -height * 0.015,
+                    backgroundColor: "rgba(33, 158, 188, 1)",
+                    fontFamily: "Inter-Black",
+                    fontWeight: "600",
+                  }}
+                >
+                  {Cartcount}
+                </Badge>
+              )}
+
               <Image
                 source={require("../../../assets/menu/cart.png")}
                 style={{

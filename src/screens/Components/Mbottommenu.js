@@ -20,7 +20,7 @@ const Imagecontainer = (props) => {
 
   return (
     <View style={styles.imageview}>
-      {show && (
+      {show && Cartcount > 0 && (
         <Badge
           style={{
             position: "absolute",

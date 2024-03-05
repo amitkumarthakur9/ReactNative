@@ -18,6 +18,8 @@ import Paymentoptions from "../Payment/Paymentoptions";
 import Addtocartsip from "./Addtocartsip";
 import { useFonts } from "expo-font";
 import { useFocusEffect } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { removeToCart } from "../../redux/slices/cart/Index";
 
 export const AddToCart = () => {
   const [fetchCart, setFetchCart] = useState(null);
@@ -32,6 +34,8 @@ export const AddToCart = () => {
     mandateId: null,
     paymentFlag: 1,
   });
+
+  const dispatch = useDispatch();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -89,8 +93,10 @@ export const AddToCart = () => {
       cartId: cartId,
     };
     Removecart(data).then((response) => {
-      //   console.log("card removed", response);
       setRemoved(response);
+      if (response) {
+        dispatch(removeToCart());
+      }
     });
   };
 
