@@ -174,14 +174,14 @@ export const SchemesrenderItem = (props) => {
               {RenderStars(item.rating)}
             </View>
             <View style={styles.flexRow}>
-              {/* <TouchableOpacity
+              <TouchableOpacity
                 style={styles.Button}
                 onPress={() =>
                   addToCarts(item.id, item.minPurchase, null, dispatch)
                 }
               >
                 <Text style={styles.AddToCart}>Add To Cart</Text>
-              </TouchableOpacity> */}
+              </TouchableOpacity>
               <TouchableOpacity
                 style={[
                   styles.Button,

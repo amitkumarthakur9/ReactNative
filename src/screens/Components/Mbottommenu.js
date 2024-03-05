@@ -11,12 +11,31 @@ import {
 import { height, width } from "../../Dimension";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { Badge } from "react-native-paper";
 
 const Imagecontainer = (props) => {
-  const { url, tabHome } = props;
+  const Cartcount = useSelector((state) => state.cart.count);
+  const { url, tabHome, show } = props;
+
+  console.log(props);
 
   return (
     <View style={styles.imageview}>
+      {show && (
+        <Badge
+          style={{
+            position: "absolute",
+            top: -height * 0.02,
+            backgroundColor: "rgba(33, 158, 188, 1)",
+            fontFamily: "Inter-Black",
+            fontWeight: "600",
+          }}
+        >
+          {Cartcount}
+        </Badge>
+      )}
+
       <Image source={url} style={styles.image} />
       <Text style={styles.text}>{tabHome}</Text>
     </View>
@@ -69,6 +88,7 @@ const Index = () => {
             <Imagecontainer
               url={require("../../../assets/menu/Home.png")}
               tabHome="Home"
+              show={false}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -78,6 +98,7 @@ const Index = () => {
             <Imagecontainer
               url={require("../../../assets/menu/Shape.png")}
               tabHome="Goal"
+              show={false}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -87,6 +108,7 @@ const Index = () => {
             <Imagecontainer
               url={require("../../../assets/menu/Explore.png")}
               tabHome="Explore"
+              show={false}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -96,6 +118,7 @@ const Index = () => {
             <Imagecontainer
               url={require("../../../assets/menu/cart.png")}
               tabHome="Cart"
+              show={true}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -105,6 +128,7 @@ const Index = () => {
             <Imagecontainer
               url={require("../../../assets/menu/Person.png")}
               tabHome="Account"
+              show={false}
             />
           </TouchableOpacity>
         </View>

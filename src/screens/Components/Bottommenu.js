@@ -8,10 +8,13 @@ import Account from "../Account/Index";
 import Goal from "../Goal/Index";
 import { useFonts } from "expo-font";
 import AddToCart from "../Cart/Addtocart";
+import { useSelector } from "react-redux";
+import { Badge } from "react-native-paper";
 
 const Tab = createBottomTabNavigator();
 
 const Menu = (props) => {
+  const Cartcount = useSelector((state) => state.cart.count);
   const defaultTab = props.defaultTab || "TabHome";
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
@@ -138,6 +141,17 @@ const Menu = (props) => {
                 justifyContent: "center",
               }}
             >
+              <Badge
+                style={{
+                  position: "absolute",
+                  top: -height * 0.015,
+                  backgroundColor: "rgba(33, 158, 188, 1)",
+                  fontFamily: "Inter-Black",
+                  fontWeight: "600",
+                }}
+              >
+                {Cartcount}
+              </Badge>
               <Image
                 source={require("../../../assets/menu/cart.png")}
                 style={{
