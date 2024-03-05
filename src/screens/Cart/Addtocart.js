@@ -17,6 +17,7 @@ import { Entypo } from "@expo/vector-icons";
 import Paymentoptions from "../Payment/Paymentoptions";
 import Addtocartsip from "./Addtocartsip";
 import { useFonts } from "expo-font";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const AddToCart = () => {
   const [fetchCart, setFetchCart] = useState(null);
@@ -31,6 +32,12 @@ export const AddToCart = () => {
     mandateId: null,
     paymentFlag: 1,
   });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setRemoved("");
+    }, [])
+  );
 
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
