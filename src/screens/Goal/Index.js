@@ -47,8 +47,6 @@ const Goal = () => {
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
 
-  console.log("goallistData", goallistData);
-
   return (
     <View style={styles.container}>
       <Header title="Goals" showPlusSign={true} />
@@ -143,6 +141,8 @@ const Goal = () => {
                       navigation.navigate("Goalasset", {
                         wishId: data.id,
                         title: data.goalName,
+                        apiduration: data.apiduration,
+                        targetAmount: data.amount,
                       })
                     }
                   >

@@ -1,5 +1,3 @@
-import React from "react";
-
 const formatNumberWithCommas = (input) => {
   let sign = "";
 
@@ -8,8 +6,8 @@ const formatNumberWithCommas = (input) => {
   }
 
   if (input < 0) {
-    sign = "";
-    input = -1 * input;
+    sign = "-";
+    input = Math.abs(input); // Take absolute value for formatting
   } else {
     sign = "";
   }

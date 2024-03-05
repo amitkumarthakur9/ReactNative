@@ -16,7 +16,7 @@ const Goallist = () => {
       .get($baseUrl)
       .then((response) => {
         setGoaldata(response.data.goals);
-        console.log("api response running", response.data.goals);
+        // console.log("api response running", response.data.goals);
       })
       .catch((error) => {
         console.warn("error", error);
@@ -59,6 +59,7 @@ const Goallist = () => {
         duration: durationWidth + iconWidth / 2,
         amount: data.currentTermAmount,
         id: data.id,
+        apiduration: data.duration,
       };
     });
   }

@@ -23,12 +23,21 @@ import Formatfundname from "../Components/Formatfundname";
 import formatNumberWithCommas from "../Components/Inrconverter";
 import Loader from "../Components/Loader";
 import { useNavigation } from "@react-navigation/native";
+import {
+  Feather,
+  Ionicons,
+  MaterialIcons,
+  FontAwesome,
+  FontAwesome5,
+} from "@expo/vector-icons";
 export default Index = () => {
   const route = useRoute();
-  const { wishId, title } = route.params;
+  const { wishId, title, apiduration, targetAmount } = route.params;
   const userId = useSelector((state) => state.user.id);
   const [goaldata, setGoaldata] = useState(null);
   const [holding, setHolding] = useState(null);
+  const [totalachieved, setTotalachieved] = useState(null);
+  const [totalremaining, setRemaining] = useState(null);
   const navigation = useNavigation();
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
@@ -42,8 +51,24 @@ export default Index = () => {
     Goalassets(data)
       .then((response) => {
         if (response.data.success) {
-          console.log("console.warn(e);", response.data.data);
+          console.log("dd", response.data.data);
           setGoaldata(response.data.data);
+          const data = response.data.data;
+          let totalAmountAcheived = 0;
+          let totalAmountRemaining = 0;
+          data.forEach((subArray) => {
+            subArray.forEach((item) => {
+              totalAmountAcheived += Math.round(
+                (item.currentAmount * item.gp) / 100
+              );
+
+              totalAmountRemaining +=
+                Math.round((item.targetAmount * item.gtp) / 100) -
+                Math.round((item.currentAmount * item.gp) / 100);
+            });
+          });
+          setTotalachieved(totalAmountAcheived);
+          setRemaining(totalAmountRemaining);
           allPortfolio()
             .then((res) => {
               if (res.data.hasOwnProperty("holdingsObj")) {
@@ -84,8 +109,62 @@ export default Index = () => {
   return (
     <View style={styles.container}>
       <Header title={title} showPlusSign={true} />
+
       {goaldata ? (
         <ScrollView>
+          <View style={styles.tableView}>
+            <View style={styles.flexRow}>
+              <View style={[styles.celll, styles.flexRow]}>
+                <Feather name="target" size={width * 0.05} color="red" />
+                <Text style={[styles.text, { marginLeft: width * 0.02 }]}>
+                  Target Amount
+                </Text>
+              </View>
+
+              <Text style={styles.celll}>
+                ₹ {formatNumberWithCommas(Math.round(targetAmount))}
+              </Text>
+            </View>
+            <View style={styles.flexRow}>
+              <View style={[styles.celll, styles.flexRow]}>
+                <Ionicons
+                  name="cash-outline"
+                  size={width * 0.05}
+                  color="deeppink"
+                />
+                <Text style={[styles.text, { marginLeft: width * 0.02 }]}>
+                  Amount Achieved
+                </Text>
+              </View>
+
+              <Text style={styles.celll}>
+                ₹ {formatNumberWithCommas(Math.round(totalachieved))}
+              </Text>
+            </View>
+            <View style={styles.flexRow}>
+              <View style={[styles.celll, styles.flexRow]}>
+                <MaterialIcons name="timer" size={width * 0.05} color="blue" />
+                <Text style={[styles.text, { marginLeft: width * 0.02 }]}>
+                  Time Remaining
+                </Text>
+              </View>
+
+              <Text style={styles.celll}>{`${apiduration}  Months`}</Text>
+            </View>
+            <View style={styles.flexRow}>
+              <View style={[styles.celll, styles.flexRow]}>
+                <FontAwesome5 name="coins" size={width * 0.05} color="peru" />
+                <Text style={[styles.text, { marginLeft: width * 0.02 }]}>
+                  Amount Remaining
+                </Text>
+              </View>
+
+              <Text style={styles.celll}>
+                ₹ {formatNumberWithCommas(Math.round(totalremaining))}
+              </Text>
+            </View>
+          </View>
+
           <View style={styles.contentContainer}>
             <View style={styles.chartItem}>
               <View style={styles.profileImageContainer}>
@@ -113,65 +192,21 @@ export default Index = () => {
                 />
               </View>
             </View>
-            {/* <View style={styles.content}>
-              <View style={{ left: -width * 0.05 }}>
-                <View style={styles.Achieved}>
-                  <Text style={styles.AchievedItem}>Achieved</Text>
-                  <Text style={styles.AchievedPercentage}>15%</Text>
-                  <Fontisto name="angle-up" style={styles.AchievedPercentage} />
-                </View>
-                <Text style={styles.amount}> ₹ 80.4k</Text>
-                <Text style={styles.percentOf}> 20% of 2L </Text>
-              </View>
-              <View
-                style={[
-                  styles.fundDetails,
-                  { borderLeftColor: "rgba(220, 110, 216, 1)" },
-                ]}
-              >
-                <Text style={styles.fundName}>Axis Multi Cap...</Text>
-                <Text style={styles.fundAmount}> ₹ 20.4k</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={styles.fundpercentOf}> 20% of 2L </Text>
-                  <Text style={[styles.fundPercentage]}>
-                    15% <Fontisto name="angle-up" />
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={[
-                  styles.fundDetails,
-                  { borderLeftColor: "rgba(232, 193, 135, 1)" },
-                ]}
-              >
-                <Text style={styles.fundName}>Axis Multi Cap...</Text>
-                <Text style={styles.fundAmount}> ₹ 20.4k</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={styles.fundpercentOf}> 20% of 2L </Text>
-                  <Text style={[styles.fundPercentage]}>
-                    15% <Fontisto name="angle-up" />
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={[
-                  styles.fundDetails,
-                  {
-                    borderLeftColor: "rgba(169, 190, 244, 1)",
-                  },
-                ]}
-              >
-                <Text style={styles.fundName}>Axis Multi Cap...</Text>
-                <Text style={styles.fundAmount}> ₹ 20.4k</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={styles.fundpercentOf}> 20% of 2L </Text>
-                  <Text style={[styles.fundPercentage]}>
-                    15% <Fontisto name="angle-up" />
-                  </Text>
-                </View>
-              </View>
-            </View> */}
           </View>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.push("Holdings", { Goalassets: "Goalassets" })
+            }
+            style={{
+              marginBottom: height * 0.05,
+              width: width * 0.5,
+              alignSelf: "center",
+            }}
+          >
+            <Button mode="contained" style={styles.Button}>
+              Attach Holding
+            </Button>
+          </TouchableOpacity>
           <View style={styles.your}>
             <Text style={styles.yourHeader}> Linked Investment</Text>
             <View style={styles.cart}>
@@ -202,15 +237,18 @@ export default Index = () => {
                             </Text>
                           </View>
                           <View style={[styles.flexRow]}>
-                            <Text style={styles.descHeader}>Holding Value</Text>
-                            <Text style={styles.descHeader}>Contribution</Text>
-                            <Text style={styles.descHeader}>Amount</Text>
+                            <Text style={styles.descHeader}>Target</Text>
+                            <Text style={styles.descHeader}>Achieved</Text>
+                            <Text style={styles.descHeader}>Remaining</Text>
                           </View>
                           <View style={[styles.flexRow]}>
                             <Text style={styles.descValue}>
                               ₹{" "}
                               {formatNumberWithCommas(
-                                Math.round(innerValues.currentAmount)
+                                Math.round(
+                                  (innerValues.targetAmount * innerValues.gtp) /
+                                    100
+                                )
                               )}
                             </Text>
                             <Text style={styles.descValue}>
@@ -222,7 +260,20 @@ export default Index = () => {
                                 )
                               )}
                             </Text>
-                            <Text style={styles.descValue}>3.8%</Text>
+                            <Text style={styles.descValue}>
+                              ₹{" "}
+                              {formatNumberWithCommas(
+                                Math.round(
+                                  (innerValues.targetAmount * innerValues.gtp) /
+                                    100
+                                ) -
+                                  Math.round(
+                                    (innerValues.currentAmount *
+                                      innerValues.gp) /
+                                      100
+                                  )
+                              )}
+                            </Text>
                           </View>
                         </View>
                       </ImageBackground>
@@ -239,7 +290,7 @@ export default Index = () => {
         <View style={styles.Noholdings}>
           <Text style={styles.text}>
             There is no holding attached with this goal . Please attach holding
-            first....
+            first
           </Text>
           <TouchableOpacity
             onPress={() =>
@@ -248,7 +299,7 @@ export default Index = () => {
             style={{ marginTop: height * 0.02 }}
           >
             <Button mode="contained" style={styles.Button}>
-              Attach Holdings
+              Attach Holding
             </Button>
           </TouchableOpacity>
         </View>
@@ -445,7 +496,7 @@ const styles = StyleSheet.create({
   },
   flexRow: {
     flexDirection: "row",
-    width: width * 0.9,
+    // width: width,
   },
   descHeader: {
     marginLeft: width * 0.01,
@@ -487,5 +538,24 @@ const styles = StyleSheet.create({
     borderColor: "#023047",
     padding: width * 0.01,
     backgroundColor: "#023047",
+  },
+  tableView: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: height * 0.02,
+    margin: width * 0.03,
+    // borderWidth: 1,
+    // borderRadius: width * 0.05,
+  },
+  celll: {
+    color: "rgba(0, 0, 0, 1)",
+    lineHeight: height * 0.03,
+    fontSize: width * 0.04,
+    fontFamily: "Inter-Black",
+    fontWeight: "500",
+    textAlign: "center",
+    flex: 1,
+    borderWidth: width * 0.001,
+    padding: width * 0.02,
   },
 });
