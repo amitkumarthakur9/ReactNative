@@ -24,12 +24,13 @@ export default Index = () => {
   const [goal, setGoal] = useState("");
   const [goalid, setGoalid] = useState("");
   const [holdingtimeperiod, setHoldingtimeperiod] = useState(5);
-  const [goaltimeperiod, setGoaltimeperiod] = useState(5);
+  const [goaltimeperiod, setGoaltimeperiod] = useState(100);
   const [goalAmount, setGoalAmount] = useState("");
   const [loader, setLoader] = useState(false);
   const [holdingyear, setHoldingyear] = useState("5");
   const [goalyear, setGoalyear] = useState("5");
   const [goallist, setGoallist] = useState(null);
+  const [availablegtp, setAvailablegtp] = useState(100);
 
   const userId = useSelector((state) => state.user.id);
   const route = useRoute();
@@ -69,6 +70,8 @@ export default Index = () => {
     setGoal(itemValue);
     setGoalid(splitvalue[0]);
     setGoalAmount(splitvalue[1]);
+    setGoaltimeperiod(splitvalue[2]);
+    setAvailablegtp(splitvalue[2]);
   };
 
   const handleSubmit = () => {
@@ -126,7 +129,7 @@ export default Index = () => {
               goallist.map((value, index) => (
                 <Picker.Item
                   label={value.name}
-                  value={`${value.id}-${value.currentTermAmount}`}
+                  value={`${value.id}-${value.currentTermAmount}-${value.availablegtp}`}
                   key={index}
                 />
               ))}
@@ -178,7 +181,7 @@ export default Index = () => {
             animateTransitions
             maximumTrackTintColor={"rgba(26, 28, 23, 0.12)"}
             minimumTrackTintColor={"#023047"}
-            maximumValue={100}
+            maximumValue={availablegtp}
             minimumValue={0}
             onValueChange={(yearValue) => handleSlider(yearValue, "goal")}
             value={goaltimeperiod}
