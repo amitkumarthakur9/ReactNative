@@ -12,7 +12,7 @@ import { Badge, Button } from "react-native-paper";
 
 import { height, width } from "../../Dimension";
 import Header from "../Components/Header";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import Goallist from "../../api/services/endpoints/goalEndpoints";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { useSelector } from "react-redux";
@@ -22,9 +22,10 @@ const Goal = () => {
   const navigation = useNavigation();
   const scrollViewRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
-  const goallistData = Goallist();
   const profilePic = useSelector((state) => state.user.profilepic);
   const [activeTooltipIndex, setActiveTooltipIndex] = useState(null);
+  const [refresh, setRefresh] = useState(0);
+  const goallistData = Goallist(refresh);
 
   const contentItems = [
     {
@@ -46,6 +47,13 @@ const Goal = () => {
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
   });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const randomNumber = Math.random();
+      setRefresh(randomNumber);
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -143,6 +151,7 @@ const Goal = () => {
                         title: data.goalName,
                         apiduration: data.apiduration,
                         targetAmount: data.amount,
+                        imageUrl: data.imageUrl,
                       })
                     }
                   >
@@ -157,8 +166,14 @@ const Goal = () => {
                       >
                         40 %
                       </Badge> */}
+                    {/* <Text>{data.iconWidth}</Text> */}
                     <Image
-                      source={require("../../../assets/Goal/mobile.png")}
+                      //source={require("../../../assets/Goal/mobile.png")}
+                      source={
+                        data.imageUrl != undefined
+                          ? { uri: data.imageUrl }
+                          : require("../../../assets/Goal/mobile.png")
+                      }
                       style={{
                         width: data.iconWidth,
                         height: data.iconWidth,
