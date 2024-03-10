@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { height, width } from "../../Dimension";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 
 export default Header = (Props) => {
-  const { title, showPlusSign } = Props;
+  const { title, showPlusSign, showDeleteSign, fncall } = Props;
   const navigation = useNavigation();
   const [fontsLoaded] = useFonts({
     "Inter-Black": require("../../../assets/fonts/metropolis-latin-500-normal.ttf"),
@@ -23,6 +23,14 @@ export default Header = (Props) => {
             style={styles.item}
           />
           <Text style={[styles.item, styles.goal]}>{title}</Text>
+          {showDeleteSign && (
+            <TouchableOpacity
+              onPress={() => fncall()}
+              style={[styles.plusImage]}
+            >
+              <MaterialIcons name="delete" size={width * 0.08} color="white" />
+            </TouchableOpacity>
+          )}
           {showPlusSign && (
             <TouchableOpacity onPress={() => navigation.push("Goalform")}>
               <Image
