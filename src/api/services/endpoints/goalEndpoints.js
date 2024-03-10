@@ -5,7 +5,7 @@ import { width, height } from "../../../Dimension";
 import apiClient from "../apiClient";
 import queryString from "./queryString";
 
-const Goallist = () => {
+const Goallist = (refresh) => {
   const [goaldata, setGoaldata] = useState([]);
   const [duration, setDuration] = useState(0);
   const userId = useSelector((state) => state.user.id);
@@ -21,12 +21,12 @@ const Goallist = () => {
       .catch((error) => {
         console.warn("error", error);
       });
-  }, []);
+  }, [refresh]);
 
   var maxcurrentamount = 0;
   var maximumduration = 0;
-  const maxWidth = width * 0.32;
-  const fixeddirectionPixel = width * 0.42;
+  const maxWidth = width * 0.2;
+  const fixeddirectionPixel = width * 0.3;
   const allData = [];
 
   const cordinateArr = [{ 1: "top", 2: "bottom", 3: "left", 4: "right" }];
@@ -42,14 +42,14 @@ const Goallist = () => {
     });
 
     goaldata.map((data, index) => {
-      console.log("maxcurrentamount", maxcurrentamount);
-      console.log("currentTermAmount", data.currentTermAmount);
+      // console.log("maxcurrentamount", maxcurrentamount);
+      // console.log("currentTermAmount", data.currentTermAmount);
       const iconWidth =
         (maxWidth / 2) * (data.currentTermAmount / maxcurrentamount);
 
       const durationWidth = data.duration * (maxWidth / maximumduration);
-      console.log("iconWidth", iconWidth);
-      console.log("maxWidth", maxWidth);
+      // console.log("iconWidth", iconWidth);
+      // console.log("maxWidth", maxWidth);
 
       allData[index] = {
         goalName: data.name,
@@ -60,6 +60,7 @@ const Goallist = () => {
         amount: data.currentTermAmount,
         id: data.id,
         apiduration: data.duration,
+        imageUrl: data.imageUrl,
       };
     });
   }
@@ -69,7 +70,7 @@ const Goallist = () => {
 
 export const AddGoal = (data) => {
   const urlEncodedData = queryString(data);
-  console.log("url passed", urlEncodedData);
+  // console.log("url passed", urlEncodedData);
   return apiClient.post("/app/wish?" + urlEncodedData);
 };
 
@@ -87,6 +88,16 @@ export const Goalfetch = (userId) => {
 };
 
 export const Attachgoal = (data) => {
+  const urlEncodedData = queryString(data);
+  return axios.get("https://data.fundexpert.in/goal.php?" + urlEncodedData);
+};
+
+export const Deletelink = (data) => {
+  const urlEncodedData = queryString(data);
+  return axios.get("https://data.fundexpert.in/goal.php?" + urlEncodedData);
+};
+
+export const Deletegoal = (data) => {
   const urlEncodedData = queryString(data);
   return axios.get("https://data.fundexpert.in/goal.php?" + urlEncodedData);
 };
