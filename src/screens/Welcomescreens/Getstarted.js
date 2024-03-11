@@ -10,6 +10,7 @@ import { Text, Button } from "react-native-paper";
 // import Footer from "../../Footer";
 import { width, height } from "../../Dimension";
 import { useFonts } from "expo-font";
+import { useFocusEffect } from "@react-navigation/native";
 
 const carouselData = [
   {
@@ -42,16 +43,33 @@ const Carousels = ({ navigation }) => {
     setActiveIndex(index);
   };
 
-  //   const scrollToNextItem = () => {
-  //     const nextIndex = (activeIndex + 1) % carouselData.length;
-  //     setActiveIndex(nextIndex);
-  //     flatListRef.current.scrollToIndex({ index: nextIndex });
-  //   };
+  const scrollToNextItem = () => {
+    const nextIndex = (activeIndex + 1) % carouselData.length;
+    setActiveIndex(nextIndex);
+    flatListRef.current.scrollToIndex({ index: nextIndex });
+  };
 
   //   useEffect(() => {
   //     const timer = setInterval(scrollToNextItem, 3000); // Change slide every 3 seconds
   //     return () => clearInterval(timer);
   //   }, [activeIndex]);
+
+  //   useEffect(() => {
+  //     console.log("Setting up interval...");
+  //     const timer = setInterval(scrollToNextItem, 3000); // Change slide every 3 seconds
+
+  //     return () => {
+  //       console.log("Clearing interval...");
+  //       clearInterval(timer);
+  //     };
+  //   }, [activeIndex]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const timer = setInterval(scrollToNextItem, 3000);
+      return () => clearInterval(timer);
+    }, [activeIndex])
+  );
 
   const renderItem = ({ item, index }) => {
     return (
@@ -59,10 +77,11 @@ const Carousels = ({ navigation }) => {
         <View style={styles.imageContainer}>
           <Image source={item.image} style={styles.image} />
         </View>
-
-        <Text style={styles.imageText}>{item.text}</Text>
-        <Text style={styles.textDesc}>{item.desc}</Text>
-        <View style={[styles.pagination]}>
+        <View style={styles.contentview}>
+          <Text style={styles.imageText}>{item.text}</Text>
+          <Text style={styles.textDesc}>{item.desc}</Text>
+        </View>
+        <View style={styles.flex}>
           {carouselData.map((_, i) => (
             <TouchableOpacity
               key={i}
@@ -73,6 +92,8 @@ const Carousels = ({ navigation }) => {
               onPress={() => handleImageChange(i)}
             />
           ))}
+
+          <Text style={{ flex: 1 }}></Text>
 
           <Button
             mode="contained"
@@ -122,7 +143,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: width * 1.5,
-    height: height * 0.46, // Adjust the height as needed (e.g., half the screen height),
+    height: height * 0.46,
     marginTop: height * 0.04,
   },
   image: {
@@ -130,64 +151,56 @@ const styles = StyleSheet.create({
     height: height * 0.53,
     marginLeft: width * 0.33,
   },
-  imageText: {
-    width: width * 0.6, // Adjust the width as needed (e.g., 80% of the screen width)
-    fontSize: width * 0.07, // Adjust the font size based on screen width
-    textAlign: "center",
-    color: "rgba(2, 48, 71, 1)",
-    lineHeight: width * 0.09, // Adjust the line height based on screen width
-    fontFamily: "Inter-Black",
-    fontFamily: "Inter-Black",
-    fontWeight: 600,
-    marginTop: height * 0.09,
-    // fontFamily: "italic",
-    // fontSize: 30,
-  },
-  textDesc: {
-    width: width * 0.8, // Adjust the width as needed (e.g., 80% of the screen width)
-    fontSize: width * 0.04, // Adjust the font size based on screen width
-    opacity: 0.7,
-    lineHeight: width * 0.06, // Adjust the line height based on screen width
-    textAlign: "center",
-    color: "rgba(0, 8, 20, 1)",
-    fontFamily: "Inter-Black",
-    fontFamily: "Inter-Black",
-    fontWeight: 500,
-    lineHeight: height * 0.028,
-    marginTop: height * 0.01,
-  },
-  pagination: {
+
+  flex: {
+    position: "absolute",
     flexDirection: "row",
-    marginLeft: width * 0.783,
-    marginTop: height * 0.156,
-    marginLeft: width * -0.7,
+    bottom: height * 0.05,
+    margin: width * 0.04,
   },
   paginationDot: {
-    width: width * 0.03, // Adjust the size based on screen width
-    height: width * 0.03, // Adjust the size based on screen width
-    borderRadius: width * 0.02, // Adjust the size based on screen width
+    flex: 1,
+    width: width * 0.03,
+    height: width * 0.03,
+    borderRadius: width * 0.02,
     backgroundColor: "rgba(33, 158, 188, 0.09)",
-    marginHorizontal: width * 0.01, // Adjust the margin based on screen width
-    bottom: height * 0.02,
+    marginHorizontal: width * 0.01,
+    alignSelf: "center",
   },
   activeDot: {
     backgroundColor: "#FB8500",
-    width: width * 0.1,
-    // marginLeft: width* 0.1
   },
   getStartedButton: {
-    position: "absolute",
-    bottom: height * 0.2, // Adjust the position based on screen height
-    left: "40%",
-    marginLeft: -width * 0.2, // Adjust the margin based on screen width
-    width: width * 0.4, // Adjust the width based on screen width
-    height: width * 0.14, // Adjust the height based on screen width
-    borderRadius: width * 0.04, // Adjust the border radius based on screen width
+    flex: 3,
+    width: width * 0.4,
+    height: width * 0.14,
+    borderRadius: width * 0.04,
     backgroundColor: "rgba(0, 53, 102, 1)",
-    alignItems: "center", // Center the content horizontally
-    justifyContent: "center", // Center the content vertically
-    zIndex: 100,
-    marginBottom: height * -0.2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  contentview: {
+    position: "absolute",
+    margin: width * 0.04,
+    bottom: height * 0.21,
+  },
+  imageText: {
+    fontSize: width * 0.07,
+    textAlign: "center",
+    color: "rgba(2, 48, 71, 1)",
+    lineHeight: width * 0.09,
+    fontFamily: "Inter-Black",
+    fontWeight: 600,
+  },
+  textDesc: {
+    fontSize: width * 0.04,
+    opacity: 0.7,
+    lineHeight: width * 0.06,
+    textAlign: "center",
+    color: "rgba(0, 8, 20, 1)",
+    fontFamily: "Inter-Black",
+    fontWeight: 500,
+    lineHeight: height * 0.028,
   },
 });
 
