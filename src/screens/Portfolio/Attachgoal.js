@@ -13,7 +13,11 @@ import { Picker } from "@react-native-picker/picker";
 import { Slider } from "@miblanchard/react-native-slider";
 import Header from "../Components/Header";
 import Loader from "../Components/Loader";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import {
+  useRoute,
+  useNavigation,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import {
   Goalfetch,
@@ -33,6 +37,7 @@ export default Index = () => {
   const [goallist, setGoallist] = useState(null);
   const [availablegtp, setAvailablegtp] = useState(100);
   const [ha, setHa] = useState(100);
+  const [refresh, setRefresh] = useState(0);
 
   const userId = useSelector((state) => state.user.id);
   const route = useRoute();
@@ -69,6 +74,13 @@ export default Index = () => {
               if (av.data.success) {
                 setHa(av.data.ha);
                 setHoldingtimeperiod(av.data.ha);
+                if (av.data.ha == 0) {
+                  Alert.alert(
+                    "Failed",
+                    "Selected Holding percentage has been exceed , pls select another holding ."
+                  );
+                  navigation.push("Holdings", { Goalassets: "Goalassets" });
+                }
               }
             })
             .catch((e) => {
@@ -79,15 +91,23 @@ export default Index = () => {
       .catch((e) => {
         console.warn(e);
       });
-  }, []);
+  }, [refresh]);
 
   const handleGoal = (itemValue) => {
     const splitvalue = itemValue.split("-");
-    setGoal(itemValue);
-    setGoalid(splitvalue[0]);
-    setGoalAmount(splitvalue[1]);
-    setGoaltimeperiod(splitvalue[2]);
-    setAvailablegtp(splitvalue[2]);
+    if (splitvalue[2] == 0) {
+      Alert.alert(
+        "Note",
+        "Goal percentage has been exceed for selected goal , please select another goal ."
+      );
+      return;
+    } else {
+      setGoal(itemValue);
+      setGoalid(splitvalue[0]);
+      setGoalAmount(splitvalue[1]);
+      setGoaltimeperiod(splitvalue[2]);
+      setAvailablegtp(splitvalue[2]);
+    }
   };
 
   const handleSubmit = () => {
@@ -126,7 +146,12 @@ export default Index = () => {
       });
   };
 
-  console.log("ha", ha);
+  useFocusEffect(
+    React.useCallback(() => {
+      const randomNumber = Math.random();
+      setRefresh(randomNumber);
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
