@@ -87,6 +87,13 @@ export const Goalfetch = (userId) => {
   );
 };
 
+export const Availableholding = (data) => {
+  const { holdingId, userId } = data;
+  return axios.get(
+    `https://data.fundexpert.in/goal.php?action=getHolding&holdingId=${holdingId}&userId=${userId}`
+  );
+};
+
 export const Attachgoal = (data) => {
   const urlEncodedData = queryString(data);
   return axios.get("https://data.fundexpert.in/goal.php?" + urlEncodedData);

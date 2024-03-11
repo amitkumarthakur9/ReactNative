@@ -18,12 +18,13 @@ import { useFonts } from "expo-font";
 import {
   Goalfetch,
   Attachgoal,
+  Availableholding,
 } from "../../api/services/endpoints/goalEndpoints";
 import { useSelector } from "react-redux";
 export default Index = () => {
   const [goal, setGoal] = useState("");
   const [goalid, setGoalid] = useState("");
-  const [holdingtimeperiod, setHoldingtimeperiod] = useState(5);
+  const [holdingtimeperiod, setHoldingtimeperiod] = useState(100);
   const [goaltimeperiod, setGoaltimeperiod] = useState(100);
   const [goalAmount, setGoalAmount] = useState("");
   const [loader, setLoader] = useState(false);
@@ -31,6 +32,7 @@ export default Index = () => {
   const [goalyear, setGoalyear] = useState("5");
   const [goallist, setGoallist] = useState(null);
   const [availablegtp, setAvailablegtp] = useState(100);
+  const [ha, setHa] = useState(100);
 
   const userId = useSelector((state) => state.user.id);
   const route = useRoute();
@@ -53,11 +55,25 @@ export default Index = () => {
   };
 
   useEffect(() => {
+    const data = {
+      userId: userId,
+      holdingId: holdingId,
+    };
     Goalfetch(userId)
       .then((response) => {
         if (response.data.success) {
           console.log("goal lists", response.data.goals);
           setGoallist(response.data.goals);
+          Availableholding(data)
+            .then((av) => {
+              if (av.data.success) {
+                setHa(av.data.ha);
+                setHoldingtimeperiod(av.data.ha);
+              }
+            })
+            .catch((e) => {
+              console.log("error in holding available", e);
+            });
         }
       })
       .catch((e) => {
@@ -110,6 +126,8 @@ export default Index = () => {
       });
   };
 
+  console.log("ha", ha);
+
   return (
     <View style={styles.container}>
       <Header title="Attach Goal" showPlusSign={false} />
@@ -158,7 +176,7 @@ export default Index = () => {
             animateTransitions
             maximumTrackTintColor={"rgba(26, 28, 23, 0.12)"}
             minimumTrackTintColor={"#023047"}
-            maximumValue={100}
+            maximumValue={ha}
             minimumValue={0}
             onValueChange={(yearValue) => handleSlider(yearValue, "holding")}
             value={holdingtimeperiod}
