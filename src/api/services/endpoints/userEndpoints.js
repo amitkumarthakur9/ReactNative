@@ -17,7 +17,7 @@ export const Banksdata = () => {
 export const Userlogin = () => {
   apiClient
     .post(
-      "/app/user?action=login&email=638274&password=Test@1234&addedBy=237106"
+      "/app/user?action=login&email=638274&password=Test@1234&addedBy=969057"
     )
     .then((response) => {
       //   console.log("user login manually", response.data);
@@ -37,20 +37,20 @@ export const Fetchuserdetails = () => {
 
 export const Googlelogin = (googleToken, panNumber = "") => {
   return apiClient.post(
-    `/app/user?action=googleLogin&token=${googleToken}&fromApp=1@&addedBy=237106&panNumber=${panNumber}`
+    `/app/user?action=googleLogin&token=${googleToken}&fromApp=1@&addedBy=969057&panNumber=${panNumber}`
   );
 };
 
 export const Phonelogin = (mobileNumber, panNumber = "") => {
   return apiClient.post(
-    `/app/user?action=sendOTP&mobile=${mobileNumber}&addedBy=237106&firstUserLogin=true&panNumber=${panNumber}`
+    `/app/user?action=sendOTP&mobile=${mobileNumber}&addedBy=969057&firstUserLogin=true&panNumber=${panNumber}`
   );
 };
 
 export const Otpverify = (data) => {
   const { mobileNumber, otp } = data;
   return apiClient.post(
-    `/app/user?action=confirmOtpForLogin&mobile=${mobileNumber}&addedBy=237106&firstUserLogin=true&otp=${otp}`
+    `/app/user?action=confirmOtpForLogin&mobile=${mobileNumber}&addedBy=969057&firstUserLogin=true&otp=${otp}`
   );
 };
 
