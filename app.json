@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "growthvine",
-    "slug": "growthvine",
+    "name": "Growthvine",
+    "slug": "Growthvine",
     "plugins": [
       "@react-native-google-signin/google-signin",
       "@react-native-firebase/app",
@@ -11,13 +11,13 @@
 	  [
         "expo-image-picker",
         {
-          "photosPermission": "growthvine want to access gallery"
+          "photosPermission": "Growthvine want to access gallery"
         }
       ],
 	   [
         "expo-local-authentication",
         {
-          "faceIDPermission": "Allow growthvine to use Face ID."
+          "faceIDPermission": "Allow Growthvine to use Face ID."
         }
       ]
     ],
