@@ -43,7 +43,7 @@ export default Switchsearch = ({ navigation }) => {
       searchFundhouse(data)
         .then((response) => {
           setSearchData(response.data);
-          console.log("data", response.data);
+          //console.log("data", response.data);
         })
         .catch((error) => {
           console.error("search data error:", error);

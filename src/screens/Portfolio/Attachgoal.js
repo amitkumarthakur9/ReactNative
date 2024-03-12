@@ -67,7 +67,7 @@ export default Index = () => {
     Goalfetch(userId)
       .then((response) => {
         if (response.data.success) {
-          console.log("goal lists", response.data.goals);
+          //console.log("goal lists", response.data.goals);
           setGoallist(response.data.goals);
           Availableholding(data)
             .then((av) => {

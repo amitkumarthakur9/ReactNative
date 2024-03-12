@@ -32,11 +32,12 @@ import { incrementWithpayload } from "../../redux/slices/cart/Index";
 
 const Home = ({ navigation }) => {
   const { trendingschemes, trendingNfo } = DashboardData();
-  const { allPortfolioData } = usePortfolioData();
   const { basketData } = Thematicbasket();
   const userData = UserDetails();
   const [sessioncheck, setSessioncheck] = useState(null);
   const [image, setImage] = useState(null);
+  const [refresh, setRefresh] = useState(0);
+  const { allPortfolioData } = usePortfolioData(refresh);
   const dispatch = useDispatch();
   //Userlogin();
   //   console.log("user details amit", userData);
@@ -71,10 +72,15 @@ const Home = ({ navigation }) => {
     ) {
       setImage("https://data.fundexpert.in/profilepic/" + userData.profilepic);
     }
+    if (allPortfolioData == "showZeroValue") {
+      dispatch(userDetails({ portfolio: "showZeroValue" }));
+    }
   }, [userData, sessioncheck]);
 
   useFocusEffect(
     React.useCallback(() => {
+      const randomNumber = Math.random();
+      setRefresh(randomNumber);
       setSessioncheck(null);
     }, [])
   );

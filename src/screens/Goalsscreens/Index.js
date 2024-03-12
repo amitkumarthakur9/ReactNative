@@ -118,7 +118,7 @@ export default Goalsscreen = () => {
 
     const targetYear = +year + +e;
     setTargetdate(`${targetYear}-${month}-${day}`);
-    console.log("e", e);
+    //console.log("e", e);
     handleInflation();
   };
 

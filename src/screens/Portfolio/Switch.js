@@ -94,7 +94,7 @@ export default Switch = () => {
     };
     Switchfund(data)
       .then((response) => {
-        console.log("switch data", response.data);
+        // console.log("switch data", response.data);
         if (response.data.success) {
           Alert.alert("Success");
           setLoader(false);

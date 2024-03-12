@@ -43,6 +43,7 @@ export default Index = () => {
   const route = useRoute();
   const { wishId, title, apiduration, targetAmount, imageUrl } = route.params;
   const userId = useSelector((state) => state.user.id);
+  const portfolio = useSelector((state) => state.user.portfolio);
   const [goaldata, setGoaldata] = useState(null);
   const [holding, setHolding] = useState(null);
   const [totalachieved, setTotalachieved] = useState(null);
@@ -402,20 +403,36 @@ export default Index = () => {
           </ScrollView>
         ) : (
           <View style={styles.Noholdings}>
-            <Text style={styles.text}>
-              There is no holding attached with this goal . Please attach
-              holding first
-            </Text>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.push("Holdings", { Goalassets: "Goalassets" })
-              }
-              style={{ marginTop: height * 0.02 }}
-            >
-              <Button mode="contained" style={styles.Button}>
-                Attach Holding
-              </Button>
-            </TouchableOpacity>
+            {portfolio ? (
+              <>
+                <Text style={styles.text}>You don't have holdings .</Text>
+                <TouchableOpacity
+                  onPress={() => navigation.push("Dashboard", "Explore")}
+                  style={{ marginTop: height * 0.02 }}
+                >
+                  <Button mode="contained" style={styles.Button}>
+                    Invest Now
+                  </Button>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <>
+                <Text style={styles.text}>
+                  There is no holding attached with this goal . Please attach
+                  holding first
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.push("Holdings", { Goalassets: "Goalassets" })
+                  }
+                  style={{ marginTop: height * 0.02 }}
+                >
+                  <Button mode="contained" style={styles.Button}>
+                    Attach Holding
+                  </Button>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         )}
       </View>

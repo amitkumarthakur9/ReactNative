@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { allPortfolio } from "../../api/services/endpoints/portfolioEndpoints";
 
-const usePortfolioData = () => {
+const usePortfolioData = (refresh) => {
   const [allPortfolioData, setAllPortfolioData] = useState("showLoader");
   const [internalPortfolioData, setInternalPortfolioData] = useState(
     "internalPortfolioData"
@@ -46,7 +46,7 @@ const usePortfolioData = () => {
       setholdingData("holdingData");
       setCompletePortfolioData(0);
     };
-  }, []);
+  }, [refresh]);
   return {
     completePortfolioData,
     allPortfolioData,

@@ -5,6 +5,7 @@ const initialState = {
   token: "",
   profilepic: undefined,
   profileCompleted: false,
+  portfolio: undefined,
   name: "",
   pan: "",
   session: "",
@@ -34,6 +35,11 @@ const UserSlice = createSlice({
         action.payload.profileCompleted !== undefined
           ? action.payload.profileCompleted
           : state.profileCompleted;
+
+      state.portfolio =
+        action.payload.portfolio !== undefined
+          ? action.payload.portfolio
+          : state.portfolio;
 
       state.name =
         action.payload.name !== undefined ? action.payload.name : state.name;

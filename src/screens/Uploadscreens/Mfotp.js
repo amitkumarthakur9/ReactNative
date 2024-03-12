@@ -45,7 +45,7 @@ export default Mfotp = () => {
       data = JSON.stringify(data);
 
       const response = await Valideotp(data);
-      console.log("fkdjfajlk", response.data);
+      //console.log("fkdjfajlk", response.data);
       if (response.data.success === false) {
         Alert.alert("Failed", response.data.error);
       } else if (response.data.success === true) {
@@ -85,7 +85,7 @@ export default Mfotp = () => {
         while (!success) {
           const result = await Casdetails(clientRefNo);
           if (!result.data.success) {
-            console.log("Retrying Casdetails...");
+            //console.log("Retrying Casdetails...");
             setShowLoader(true);
           } else {
             success = true;
