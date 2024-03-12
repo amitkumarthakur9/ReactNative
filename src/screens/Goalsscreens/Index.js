@@ -202,7 +202,7 @@ export default Goalsscreen = () => {
             outlineStyle={styles.outline}
             theme={styles.themeStyle}
             contentStyle={styles.contentStyle}
-            label="Number of year"
+            label="Number of years"
             onChangeText={(e) => handleNumberOfYear(e)}
           />
           {numberofyear > 0 && (
