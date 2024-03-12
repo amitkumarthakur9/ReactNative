@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Growthvine",
-    "slug": "Growthvine",
+    "slug": "growthvine",
     "plugins": [
       "@react-native-google-signin/google-signin",
       "@react-native-firebase/app",
