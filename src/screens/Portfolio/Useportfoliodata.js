@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { allPortfolio } from "../../api/services/endpoints/portfolioEndpoints";
+import { useDispatch } from "react-redux";
+import { userDetails } from "../../redux/slices/user/Index";
 
 const usePortfolioData = (refresh) => {
   const [allPortfolioData, setAllPortfolioData] = useState("showLoader");
@@ -11,14 +13,17 @@ const usePortfolioData = (refresh) => {
   );
   const [holdingData, setholdingData] = useState("holdingData");
   const [completePortfolioData, setCompletePortfolioData] = useState(0);
+  const dispatch = useDispatch();
   useEffect(() => {
     allPortfolio()
       .then((response) => {
         // console.log("showZeroValue", response.data);
         response.data.success == false
-          ? setAllPortfolioData("showZeroValue")
+          ? (setAllPortfolioData("showZeroValue"),
+            dispatch(userDetails({ portfolio: "showZeroValue" })))
           : Object.keys(response.data.portfolioObj).length == 0
-          ? setAllPortfolioData("showZeroValue")
+          ? (setAllPortfolioData("showZeroValue"),
+            dispatch(userDetails({ portfolio: "showZeroValue" })))
           : Object.keys(response.data.portfolioObj).length > 0
           ? setAllPortfolioData(response.data.portfolioObj.all.all.all.all)
           : setAllPortfolioData("showLoader");

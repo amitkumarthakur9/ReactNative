@@ -49,6 +49,7 @@ const Home = ({ navigation }) => {
 
   const handleLogout = async () => {
     dispatch(userDetails({ session: true }));
+    dispatch(userDetails({ portfolio: undefined }));
     SessionEnd();
     navigation.push("Navigatescreens");
   };
@@ -71,9 +72,6 @@ const Home = ({ navigation }) => {
       userData.hasOwnProperty("profilepic")
     ) {
       setImage("https://data.fundexpert.in/profilepic/" + userData.profilepic);
-    }
-    if (allPortfolioData == "showZeroValue") {
-      dispatch(userDetails({ portfolio: "showZeroValue" }));
     }
   }, [userData, sessioncheck]);
 
