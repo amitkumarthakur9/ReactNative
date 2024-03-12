@@ -127,7 +127,7 @@ export default Singupwithphone = ({ navigation }) => {
                 uncheckedColor="red"
               />
               <Text style={styles.terms}>
-                I agree to the Terms & Conditions set by growthvine
+                I agree to the Terms & Conditions set by Growthvine
               </Text>
             </View>
             {showLoader ? (
