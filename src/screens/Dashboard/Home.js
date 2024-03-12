@@ -358,7 +358,7 @@ const Home = ({ navigation }) => {
                 <Loader />
               )}
             </ScrollView>
-            <View
+            {/* <View
               style={[
                 styles.flexRow,
                 { marginTop: height * 0.04, marginBottom: height * 0.03 },
@@ -388,7 +388,7 @@ const Home = ({ navigation }) => {
               ) : (
                 <Loader />
               )}
-            </View>
+            </View> */}
           </View>
         </ScrollView>
       </View>
