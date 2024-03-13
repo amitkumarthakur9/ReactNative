@@ -1,5 +1,6 @@
 import apiClient from "../apiClient";
 import querystring from "./queryString";
+const addedBy = 969057;
 
 export const searchFund = (fundName) => {
   const encodedFundName = encodeURIComponent(fundName);
@@ -27,7 +28,7 @@ export const checkHoldingForMf = (fundName) => {
 
 export const TrendingNfo = () => {
   return apiClient.get(
-    "/app/mutualfund?action=getNFOFundsAddedBy&addedBy=186100"
+    `/app/mutualfund?action=getNFOFundsAddedBy&addedBy=${addedBy}`
   );
 };
 

@@ -206,37 +206,40 @@ export const NforenderItem = (props) => {
   });
   return (
     <>
-      {props.nfo.map((item, key) => (
-        <TouchableOpacity
-          style={styles.flexRow}
-          key={key}
-          onPress={() => handleInvest(item.id, navigation, "nfo")}
-        >
-          <View style={styles.card}>
-            <View style={styles.flexRow}>
-              <View style={styles.trendImage}>
-                <Image
-                  style={{ width: width * 0.14, height: width * 0.14 }}
-                  source={{
-                    uri: item.fundHouse.logoUrl,
-                  }}
-                  resizeMode="contain"
-                />
-              </View>
-              <Text style={[styles.fundName, { flex: 2 }]}>
-                {Formatfundname(item.name)}
-              </Text>
-            </View>
+      {props.nfo.map(
+        (item, key) =>
+          item.optionType == "GROWTH" && (
+            <TouchableOpacity
+              style={styles.flexRow}
+              key={key}
+              onPress={() => handleInvest(item.id, navigation, "nfo")}
+            >
+              <View style={styles.card}>
+                <View style={styles.flexRow}>
+                  <View style={styles.trendImage}>
+                    <Image
+                      style={{ width: width * 0.14, height: width * 0.14 }}
+                      source={{
+                        uri: item.fundHouse.logoUrl,
+                      }}
+                      resizeMode="contain"
+                    />
+                  </View>
+                  <Text style={[styles.fundName, { flex: 2 }]}>
+                    {Formatfundname(item.name)}
+                  </Text>
+                </View>
 
-            <View style={styles.flexRow}>
-              <View style={styles.trendImage}></View>
-              <Text style={[styles.type, { flex: 2 }]}>
-                {item.schemeType} {item.type ? "-" + item.type : ""}
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      ))}
+                <View style={styles.flexRow}>
+                  <View style={styles.trendImage}></View>
+                  <Text style={[styles.type, { flex: 2 }]}>
+                    {item.schemeType} {item.type ? "-" + item.type : ""}
+                  </Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+          )
+      )}
     </>
   );
 };
