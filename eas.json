@@ -17,23 +17,28 @@
 //   }
 
   
+//   "build": {
+//     "preview": {
+//       "android": {
+//         "buildType": "apk"
+//       },
+// 	  "node": "16.18.1"
+//     },
+//     "preview2": {
+//       "android": {
+//         "gradleCommand": ":app:assembleRelease"
+//       },
+// 	  "node": "16.18.1"
+//     },
+//     "preview3": {
+//       "developmentClient": true,
+// 	  "node": "16.18.1"
+//     },
+//     "production": {}
+//   }
   "build": {
-    "preview": {
-      "android": {
-        "buildType": "apk"
-      },
-	  "node": "16.18.1"
-    },
-    "preview2": {
-      "android": {
-        "gradleCommand": ":app:assembleRelease"
-      },
-	  "node": "16.18.1"
-    },
-    "preview3": {
-      "developmentClient": true,
-	  "node": "16.18.1"
-    },
     "production": {}
   }
+
+
 }
