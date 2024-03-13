@@ -45,7 +45,9 @@
       },
       "package": "com.growthvinecapitalapp.app",
       "permissions": [
-        "android.permission.RECORD_AUDIO"
+         "android.permission.RECORD_AUDIO",
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
       ]
     },
     "web": {
