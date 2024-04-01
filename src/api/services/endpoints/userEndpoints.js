@@ -2,7 +2,7 @@ import apiClient from "../apiClient";
 import queryString from "./queryString";
 import axios from "axios";
 
-const addedBy = 969057;
+import { addedBy } from "../../../fixed/fixed";
 
 export const Mfuuserdata = (data) => {
   //   const urlEncodedData = Object.keys(data)

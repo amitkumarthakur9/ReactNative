@@ -12,7 +12,7 @@ export default Loader = () => {
         size={"large"}
       />
       <Image
-        source={require("../../../assets/loader.png")}
+        source={require("../../fixed/loader.png")}
         style={{
           position: "absolute",
           width: width * 0.09,

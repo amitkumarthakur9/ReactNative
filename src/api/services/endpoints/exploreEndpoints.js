@@ -1,7 +1,6 @@
 import apiClient from "../apiClient";
 import querystring from "./queryString";
-const addedBy = 969057;
-
+import { addedBy } from "../../../fixed/fixed";
 export const searchFund = (fundName) => {
   const encodedFundName = encodeURIComponent(fundName);
   // console.log("passed url", encodedFundName);
