@@ -37,9 +37,9 @@ export const Fetchuserdetails = () => {
   return apiClient.get("/app/user?action=fetchUserDetails");
 };
 
-export const Googlelogin = (googleToken, panNumber = "") => {
+export const Googlelogin = (googleToken, panNumber = "", clientIdtype3) => {
   return apiClient.post(
-    `/app/user?action=googleLogin&token=${googleToken}&fromApp=1@&addedBy=${addedBy}&panNumber=${panNumber}`
+    `/app/user?action=googleLogin&token=${googleToken}&fromApp=1@&addedBy=${addedBy}&panNumber=${panNumber}&clientId=${clientIdtype3}`
   );
 };
 

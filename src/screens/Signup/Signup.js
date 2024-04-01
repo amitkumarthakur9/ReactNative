@@ -66,7 +66,10 @@ export default Signup = ({ navigation }) => {
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-    Googlelogin(idToken, pan).then((response) => {
+    const clientIdtype3 =
+      "310437389372-h134bk1ns6js774ikhhajuj19ifh4bif.apps.googleusercontent.com";
+
+    Googlelogin(idToken, pan, clientIdtype3).then((response) => {
       if (response.data.success === false) {
         Alert.alert("Failed", response.data.error);
         signOut();
