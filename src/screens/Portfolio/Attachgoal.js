@@ -205,7 +205,7 @@ export default Index = () => {
             minimumValue={0}
             onValueChange={(yearValue) => handleSlider(yearValue, "holding")}
             value={holdingtimeperiod}
-            thumbTintColor={"rgba(33, 158, 188, 1)"}
+            thumbTintColor={"rgb(0, 56, 116 )"}
             trackStyle={{
               width: width * 0.704,
               height: height * 0.008,
@@ -228,7 +228,7 @@ export default Index = () => {
             minimumValue={0}
             onValueChange={(yearValue) => handleSlider(yearValue, "goal")}
             value={goaltimeperiod}
-            thumbTintColor={"rgba(33, 158, 188, 1)"}
+            thumbTintColor={"rgb(0, 56, 116 )"}
             trackStyle={{
               width: width * 0.704,
               height: height * 0.008,

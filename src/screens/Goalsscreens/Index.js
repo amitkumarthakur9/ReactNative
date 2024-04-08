@@ -233,7 +233,7 @@ export default Goalsscreen = () => {
               minimumValue={0}
               onValueChange={(yearValue) => handleSlider(yearValue)}
               value={timePeriod}
-              thumbTintColor={"rgba(33, 158, 188, 1)"}
+              thumbTintColor={"rgb(0, 56, 116 )"}
               trackStyle={{
                 width: width * 0.704,
                 height: height * 0.008,

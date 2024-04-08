@@ -57,7 +57,7 @@ const Dashboardhome = () => {
                     style={[
                       styles.descValue,
                       {
-                        color: "rgba(61, 193, 84, 1)",
+                        color: "rgb(0, 56, 116)",
                         textAlign: "right",
                       },
                     ]}

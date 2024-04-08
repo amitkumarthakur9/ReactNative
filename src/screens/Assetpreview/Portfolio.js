@@ -179,7 +179,7 @@ const Portfolio = () => {
                 width={width}
                 hideDataPoints
                 // spacing={1}
-                color="rgba(61, 193, 84, 1)"
+                color="rgb(0, 56, 116)"
                 // thickness={width * 0.015}
                 startFillColor="rgba(193, 241, 142, 1)"
                 endFillColor="rgba(254, 253, 255, 1)"
@@ -190,9 +190,9 @@ const Portfolio = () => {
                 adjustToWidth={true}
                 pointerConfig={{
                   //   pointerStripHeight: height * 0.2,
-                  //   pointerStripColor: "rgba(61, 193, 84, 1)",
+                  //   pointerStripColor: "rgb(0, 56, 116)",
                   //   pointerStripWidth: width * 0.015,
-                  //   pointerColor: "rgba(61, 193, 84, 1)",
+                  //   pointerColor: "rgb(0, 56, 116)",
                   //   radius: width * 0.02,
                   //   pointerLabelWidth: width * 0.25,
                   //   activatePointersOnLongPress: true,
@@ -318,7 +318,7 @@ const Portfolio = () => {
                   handleslider(Math.floor(value / 1000) * 1000, "investemnt")
                 }
                 value={Math.floor(MonthlyInvestment / 1000) * 1000}
-                thumbTintColor={"rgba(33, 158, 188, 1)"}
+                thumbTintColor={"rgb(0, 56, 116 )"}
                 trackStyle={{
                   height: height * 0.008,
                   borderRadius: width * 0.03,
@@ -345,7 +345,7 @@ const Portfolio = () => {
                   handleslider(Math.floor(yearValue), "timePeriod")
                 }
                 value={timePeriod}
-                thumbTintColor={"rgba(33, 158, 188, 1)"}
+                thumbTintColor={"rgb(0, 56, 116 )"}
                 trackStyle={{
                   height: height * 0.008,
                   borderRadius: width * 0.03,

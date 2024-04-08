@@ -683,7 +683,7 @@ const styles = StyleSheet.create({
     width: width * 0.7,
   },
   downloadReportsText: {
-    color: "rgba(33, 158, 188, 1)",
+    color: "rgb(0, 56, 116 )",
     fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.04,

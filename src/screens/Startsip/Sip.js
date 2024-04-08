@@ -318,7 +318,7 @@ export default Sip = ({ navigation }) => {
                     setTimePeriod(Math.floor(yearValue))
                   }
                   value={timePeriod}
-                  thumbTintColor={"rgba(33, 158, 188, 1)"}
+                  thumbTintColor={"rgb(0, 56, 116 )"}
                   trackStyle={{
                     height: height * 0.008,
                     borderRadius: width * 0.03,

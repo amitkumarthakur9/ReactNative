@@ -25,7 +25,7 @@ const Imagecontainer = (props) => {
           style={{
             position: "absolute",
             top: -height * 0.02,
-            backgroundColor: "rgba(33, 158, 188, 1)",
+            backgroundColor: "rgb(0, 56, 116 )",
             fontFamily: "Inter-Black",
             fontWeight: "600",
           }}

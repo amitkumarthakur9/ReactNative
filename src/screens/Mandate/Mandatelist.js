@@ -147,10 +147,10 @@ const styles = StyleSheet.create({
   Button: {
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "rgba(33, 158, 188, 1)",
+    borderColor: "rgb(0, 56, 116 )",
     borderRadius: width * 0.03,
     padding: width * 0.01,
-    backgroundColor: "rgba(33, 158, 188, 1)",
+    backgroundColor: "rgb(0, 56, 116 )",
     marginTop: height * 0.02,
     width: width * 0.5,
     alignSelf: "center",

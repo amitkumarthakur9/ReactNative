@@ -144,7 +144,7 @@ const Home = ({ navigation }) => {
                 style={{
                   position: "absolute",
                   top: -height * 0.015,
-                  backgroundColor: "rgba(33, 158, 188, 1)",
+                  backgroundColor: "rgb(0, 56, 116 )",
                   fontFamily: "Inter-Black",
                   fontWeight: "600",
                 }}
@@ -210,7 +210,7 @@ const Home = ({ navigation }) => {
                           style={[
                             styles.descValue,
                             {
-                              color: "rgba(61, 193, 84, 1)",
+                              color: "rgb(0, 56, 116)",
                               textAlign: "right",
                             },
                           ]}
@@ -292,7 +292,7 @@ const Home = ({ navigation }) => {
                           style={[
                             styles.descValue,
                             {
-                              color: "rgba(61, 193, 84, 1)",
+                              color: "rgb(0, 56, 116)",
                               textAlign: "right",
                             },
                           ]}

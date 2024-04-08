@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
     opacity: 0.85,
   },
   AchievedPercentage: {
-    color: "rgba(61, 193, 84, 1)",
+    color: "rgb(0, 56, 116)",
     fontSize: width * 0.04,
     lineHeight: height * 0.025,
     fontFamily: "Inter-Black",
@@ -542,7 +542,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   fundPercentage: {
-    color: "rgba(61, 193, 84, 1)",
+    color: "rgb(0, 56, 116)",
     fontSize: width * 0.025,
     lineHeight: height * 0.02,
     fontFamily: "Inter-Black",
@@ -587,7 +587,7 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.02,
   },
   moreDetails: {
-    color: "rgba(33, 158, 188, 1)",
+    color: "rgb(0, 56, 116 )",
     fontSize: width * 0.03,
     fontFamily: "Inter-Black",
     fontWeight: "600",

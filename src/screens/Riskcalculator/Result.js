@@ -91,7 +91,7 @@ const Riskcalculator = ({ navigation }) => {
             maxValue={40}
             clockwise={false}
             title={"Out of 40"}
-            titleColor={"rgba(33, 158, 188, 1)"}
+            titleColor={"rgb(0, 56, 116 )"}
             titleStyle={{  fontFamily: "Inter-Black",fontWeight: "600", fontSize: width * 0.04 }}
             progressValueColor={"rgba(2, 48, 71, 1)"}
             progressValueFontSize={width * 0.175}

@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 53, 102, 1)",
   },
   imageButton: {
-    backgroundColor: "rgba(33, 158, 188, 1)",
+    backgroundColor: "rgb(0, 56, 116 )",
     borderWidth: 1,
     borderRadius: 50,
     width: "70%",

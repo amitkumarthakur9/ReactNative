@@ -119,7 +119,7 @@ export default Uploadscreens = () => {
               minimumValue={isMonthly ? 100 : 1000}
               onValueChange={(value) => setInvestmentAmount(Math.floor(value))}
               value={investmentAmount}
-              thumbTintColor={"rgba(33, 158, 188, 1)"}
+              thumbTintColor={"rgb(0, 56, 116 )"}
               trackStyle={{
                 height: 8,
                 borderRadius: width * 0.03,
@@ -142,7 +142,7 @@ export default Uploadscreens = () => {
               minimumValue={0}
               onValueChange={(value) => setAnnualReturn(Math.floor(value))}
               value={annualReturn}
-              thumbTintColor={"rgba(33, 158, 188, 1)"}
+              thumbTintColor={"rgb(0, 56, 116 )"}
               trackStyle={{
                 height: height * 0.008,
                 borderRadius: width * 0.03,
@@ -165,7 +165,7 @@ export default Uploadscreens = () => {
               minimumValue={1}
               onValueChange={(value) => setTimePeriod(Math.floor(value))}
               value={timePeriod}
-              thumbTintColor={"rgba(33, 158, 188, 1)"}
+              thumbTintColor={"rgb(0, 56, 116 )"}
               trackStyle={{
                 height: height * 0.008,
                 borderRadius: width * 0.03,

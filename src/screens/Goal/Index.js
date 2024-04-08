@@ -127,7 +127,7 @@ const Goal = () => {
                         style={{
                           position: "absolute",
                           bottom: -height * 0.005,
-                          backgroundColor: "rgba(33, 158, 188, 1)",
+                          backgroundColor: "rgb(0, 56, 116 )",
                           fontFamily: "Inter-Black",
                           fontWeight: "600",
                         }}
@@ -159,7 +159,7 @@ const Goal = () => {
                         style={{
                           position: "absolute",
                           bottom: -height * 0.005,
-                          backgroundColor: "rgba(33, 158, 188, 1)",
+                          backgroundColor: "rgb(0, 56, 116 )",
                           fontFamily: "Inter-Black",
                           fontWeight: "600",
                         }}

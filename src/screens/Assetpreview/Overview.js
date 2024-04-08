@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   moreDetails: {
-    color: "rgba(33, 158, 188, 1)",
+    color: "rgb(0, 56, 116 )",
     fontSize: width * 0.03,
     fontFamily: "Inter-Black",
     fontWeight: "600",

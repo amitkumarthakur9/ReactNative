@@ -130,10 +130,7 @@ export default Index = ({ navigation }) => {
               <Text style={styles.AddToCart}>Add To Cart</Text>
             </TouchableOpacity> */}
             <TouchableOpacity
-              style={[
-                styles.Button,
-                { backgroundColor: "rgba(33, 158, 188, 1)" },
-              ]}
+              style={[styles.Button, { backgroundColor: "rgb(0, 56, 116 )" }]}
               onPress={() => Inappbrowser(item.paymentLinkUrl)}
             >
               <Text style={styles.invest}>Pay Now</Text>
@@ -234,7 +231,7 @@ const styles = StyleSheet.create({
   },
   Cagrpercentage: {
     fontSize: width * 0.04,
-    color: "rgba(61, 193, 84, 1)",
+    color: "rgb(0, 56, 116)",
     fontFamily: "Inter-Black",
     fontWeight: "600",
     lineHeight: height * 0.03,
@@ -292,7 +289,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   AddToCart: {
-    color: "rgba(33, 158, 188, 1)",
+    color: "rgb(0, 56, 116 )",
     fontSize: width * 0.035,
     fontFamily: "Inter-Black",
     fontWeight: "500",

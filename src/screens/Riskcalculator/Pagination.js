@@ -24,7 +24,7 @@ export default pagination = ({ data, updateActiveIndex }) => {
               {
                 backgroundColor:
                   index === activeIndex
-                    ? "rgba(33, 158, 188, 1)"
+                    ? "rgb(0, 56, 116 )"
                     : index < activeIndex
                     ? "rgba(2, 48, 71, 1)"
                     : "rgba(26, 28, 23, 0.12)",

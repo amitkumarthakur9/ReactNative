@@ -32,8 +32,8 @@ export default Assetfooter = (props) => {
           style={[
             styles.footerButton,
             {
-              backgroundColor: "rgba(33, 158, 188, 1)",
-              borderColor: "rgba(33, 158, 188, 1)",
+              backgroundColor: "rgb(0, 56, 116 )",
+              borderColor: "rgb(0, 56, 116 )",
             },
           ]}
           labelStyle={[styles.labelStyle, { color: "white" }]}
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   labelStyle: {
-    color: "rgba(33, 158, 188, 1)",
+    color: "rgb(0, 56, 116 )",
     fontFamily: "Inter-Black",
     fontWeight: "600",
     fontSize: width * 0.042,
